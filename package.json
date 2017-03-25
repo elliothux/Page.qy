@@ -1,0 +1,26 @@
+{
+  "name": "Manager",
+  "version": "0.0.1",
+  "description": "My blog manager build by Node.js and React.",
+  "main": "./dist/main.js",
+  "author": "Hu",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^1.6.2",
+    "nedb": "^1.8.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "reactcss": "^1.2.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "electron-devtools-installer": "^2.1.0",
+    "electron-rebuild": "^1.5.7",
+    "webpack": "^2.3.2",
+    "webpack-server": "^0.1.2"
+  },
+  "scripts": {
+    "start": "electron-rebuild && electron ./dist/main.js"
+  }
+}
