@@ -4,7 +4,8 @@ module.exports = {
     },
     output: {
         path: require('path').join(__dirname, './src/'),
-        filename: '[name].build.js'
+        filename: '[name].build.js',
+        publicPath: '/assets/'
     },
     module: {
         loaders: [{
@@ -15,5 +16,5 @@ module.exports = {
             }
         }]
     },
-    target: "electron",
+    target: "web",
 };
