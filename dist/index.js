@@ -1,3 +1,11 @@
-/**
- * Created by HuQingyang on 2017/3/25.
- */
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+
+ReactDOM.render(
+    <div>Hello!</div>,
+    document.getElementById('root')
+);
+
+
+console.log('f');
