@@ -2,12 +2,37 @@ const DataStore = require('nedb');
 const path = require('path');
 
 
+// Define the database of articles
 const articlePath = path.join(__dirname, '../../db/article');
 const article = new DataStore({
     filename: articlePath,
     autoload: true
 });
 
+
+// Export functions to call
+module.exports.isExist = isExist;
+module.exports.createArticle = createArticle;
+module.exports.deleteArticle = deleteArticle;
+module.exports.getArticleList =getArticleList;
+
+
+// Generate an unique key
+async function keyGenerator() {
+    let key = "";
+    const possible = "abcdefghijklmnopqrstuvwxyz0123456789";
+
+    for(let i=0; i < 6; i++)
+        key += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    if (!(await isExist({key: key})))
+        return key;
+    return keyGenerator()
+}
+
+
+
+////////////// Base functions to operate database ////////////////
 
 
 // Rewrite 'insert' method using 'async/await'
@@ -59,7 +84,12 @@ async function remove(options, db) {
 }
 
 
-// Check if one article is exist
+
+////////////// Base functions to operate database ////////////////
+
+
+// Pass an object which contains 'key' or 'title' or both
+// to check if one article is exist
 async function isExist(options, db) {
     if (!options || typeof options !== 'object') {
         console.error(`Function 'isExist' except an object instead of ${typeof options} as the first argument.`);
@@ -74,10 +104,19 @@ async function isExist(options, db) {
 }
 
 
-// Create an article
-async function create(data) {
-    if (checkData(data)) {
-
+// Passing data and create an article
+async function createArticle(data) {
+    if (checkData(data) &&
+        !(await isExist({title: data.content.title}))) {
+        const options = {
+            key: await keyGenerator(),
+            createDate: (new Date()).toISOString(),
+            editDate: (new Date()).toISOString(),
+            
+        };
+        const newArticle = insert(Object.assign(data, options), article);
+        console.log(`Add article ${newArticle.content.title} success at ${newArticle.createDate}`);
+        return newArticle;
     }
 
     function checkData(data) {
@@ -99,3 +138,27 @@ async function create(data) {
         return true;
     }
 }
+
+
+// Pass a 'key' to delete an article
+async function deleteArticle(key) {
+    if (!key || !(await isExist(key))) {
+        console.error(`Delete article failed with invalid argument.`);
+        return false;
+    }
+    await remove({key: key}, article);
+    console.log(`Delete article ${key} success at ${(new Date()).toISOString()}`);
+}
+
+
+// Pass an optional argument 'topic' to get articles
+async function getArticleList(topic) {
+    return (await find(topic ? {topic: topic} : {}, article));
+}
+
+
+async function test() {
+    const data = {}
+}
+
+test().then(a => console.log(a));
