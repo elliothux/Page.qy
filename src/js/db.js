@@ -107,15 +107,15 @@ async function isExist(options, db) {
 // Passing data and create an article
 async function createArticle(data) {
     if (checkData(data) &&
-        !(await isExist({title: data.content.title}))) {
+        !(await isExist({title: data.title}, article))) {
         const options = {
             key: await keyGenerator(),
             createDate: (new Date()).toISOString(),
             editDate: (new Date()).toISOString(),
-            
+            historyContent: {}
         };
         const newArticle = insert(Object.assign(data, options), article);
-        console.log(`Add article ${newArticle.content.title} success at ${newArticle.createDate}`);
+        console.log(`Add article ${newArticle.title} success at ${newArticle.createDate}.`);
         return newArticle;
     }
 
@@ -125,16 +125,11 @@ async function createArticle(data) {
             return false;
         }
 
-        if (!'content' in data || typeof data.content !== 'object') {
+        if (!'content' in data || !'title' in data) {
             console.error('Create article failed with invalid arguments.');
             return false;
         }
 
-        const content = data.content;
-        if (!'title' in content || !'content' in content) {
-            console.error('Create article failed with invalid content.');
-            return false;
-        }
         return true;
     }
 }
@@ -158,7 +153,13 @@ async function getArticleList(topic) {
 
 
 async function test() {
-    const data = {}
+    const data = {
+        title: 'test0',
+        topic: 'js',
+        content: 'test0'
+    };
+    const newArticle = await createArticle(data, article);
+    console.log(await isExist({key: newArticle.key}))
 }
 
 test().then(a => console.log(a));
