@@ -11,7 +11,7 @@ const article = new DataStore({
 
 
 // Export functions to call
-module.exports.isExist = isExist;
+module.exports.isArticleExist = isArticleExist;
 module.exports.createArticle = createArticle;
 module.exports.deleteArticle = deleteArticle;
 module.exports.getArticleList =getArticleList;
@@ -25,7 +25,7 @@ async function keyGenerator() {
     for(let i=0; i < 6; i++)
         key += possible.charAt(Math.floor(Math.random() * possible.length));
 
-    if (!(await isExist({key: key})))
+    if (!(await isArticleExist({key: key})))
         return key;
     return keyGenerator()
 }
@@ -90,16 +90,16 @@ async function remove(options, db) {
 
 // Pass an object which contains 'key' or 'title' or both
 // to check if one article is exist
-async function isExist(options, db) {
+async function isArticleExist(options) {
     if (!options || typeof options !== 'object') {
-        console.error(`Function 'isExist' except an object instead of ${typeof options} as the first argument.`);
+        console.error(`Function 'isArticleExist' except an object instead of ${typeof options} as the first argument.`);
         return;
     }
 
     let keyExist = 'key' in options ?
-        (await find({key: options.key}, db)).length > 0 : false;
+        (await find({key: options.key}, article)).length > 0 : false;
     let titleExist = 'title' in options ?
-        (await find({title: options.title}, db)).length > 0 : false;
+        (await find({title: options.title}, article)).length > 0 : false;
     return keyExist || titleExist;
 }
 
@@ -107,16 +107,19 @@ async function isExist(options, db) {
 // Passing data and create an article
 async function createArticle(data) {
     if (checkData(data) &&
-        !(await isExist({title: data.title}, article))) {
+        !(await isArticleExist({title: data.title}))) {
         const options = {
             key: await keyGenerator(),
             createDate: (new Date()).toISOString(),
             editDate: (new Date()).toISOString(),
             historyContent: {}
         };
-        const newArticle = insert(Object.assign(data, options), article);
-        console.log(`Add article ${newArticle.title} success at ${newArticle.createDate}.`);
+        const newArticle = await insert(Object.assign(data, options), article);
+        console.log(`Create article '${newArticle.title}' success at ${newArticle.createDate}.`);
         return newArticle;
+    } else {
+        console.error(`Create article ${data.title} failed with an invalid title.`);
+        return (await find({title: data.title}, article))[0];
     }
 
     function checkData(data) {
@@ -137,12 +140,17 @@ async function createArticle(data) {
 
 // Pass a 'key' to delete an article
 async function deleteArticle(key) {
-    if (!key || !(await isExist(key))) {
+    if (!key) {
         console.error(`Delete article failed with invalid argument.`);
         return false;
+    } else if (!(await isArticleExist({key: key}))) {
+        console.warn(`Delete article failed for it's not exist.`);
+        return false;
     }
+
+    const title = (await find({key: key}, article))[0].title;
     await remove({key: key}, article);
-    console.log(`Delete article ${key} success at ${(new Date()).toISOString()}`);
+    console.log(`Delete article '${title}' success at ${(new Date()).toISOString()}`);
 }
 
 
@@ -154,12 +162,15 @@ async function getArticleList(topic) {
 
 async function test() {
     const data = {
-        title: 'test0',
+        title: 'test2',
         topic: 'js',
         content: 'test0'
     };
     const newArticle = await createArticle(data, article);
-    console.log(await isExist({key: newArticle.key}))
+    console.log(await isArticleExist({key: newArticle.key}));
+    console.log(newArticle.key);
+    await deleteArticle(newArticle.key);
+    console.log(await isArticleExist({title: newArticle.title}));
 }
 
-test().then(a => console.log(a));
+test().then(a => console.log('end'));
