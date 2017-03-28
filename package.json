@@ -4,6 +4,7 @@
   "description": "Site.qy",
   "main": "main.js",
   "dependencies": {
+    "draft-js": "^0.10.0",
     "electron": "^1.6.1",
     "nedb": "^1.8.0",
     "react": "^15.4.2",
@@ -23,7 +24,7 @@
     "webpack-dev-server": "^2.4.2"
   },
   "scripts": {
-    "start": "electron main.js",
+    "start": "electron-rebuild && electron main.js",
     "dev": "webpack-dev-server --content-base"
   },
   "keywords": [
