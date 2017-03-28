@@ -15,6 +15,7 @@ module.exports.isArticleExist = isArticleExist;
 module.exports.createArticle = createArticle;
 module.exports.deleteArticle = deleteArticle;
 module.exports.getArticleList =getArticleList;
+module.exports.editArticle = editArticle;
 
 
 // Generate an unique key
@@ -155,8 +156,7 @@ async function createArticle(data) {
 
 
 async function editArticle(data) {
-    if (checkData(data) &&
-        (await isArticleExist({title: data.key}))) {
+    if (await checkData(data)) {
         const prevArticle = (await find({key: data.key}, article))[0];
         const editDate = (new Date()).toISOString();
 
@@ -176,13 +176,14 @@ async function editArticle(data) {
             editDate: editDate,
             historyContent: historyContent
         });
-        return await editArticle(newArticle);
-    } else {
-        console.error(`Edit article ${data.title} failed with invalid argument.`);
-        return (await find({key: data.key}, article))[0];
+        console.log(newArticle);
+        return await update(newArticle, article);
     }
+    else
+        return (await find({key: data.key}, article))[0];
 
-    function checkData(data) {
+
+    async function checkData(data) {
         if (!data || typeof data !== 'object') {
             console.error(`Function 'editArticle' except an object instead of ${typeof data} as the first argument.`);
             return false;
@@ -191,6 +192,18 @@ async function editArticle(data) {
         if (!'content' in data || !'title' in data || !'key' in data) {
             console.error('Update article failed with invalid arguments.');
             return false;
+        }
+
+        // Check this article is exist or not.
+        if (! await isArticleExist({key: data.key})) {
+            console.error('Update article failed for this article is not exist.');
+            return false
+        }
+
+        if (data.title !== (await find({key: data.key}, article)).title &&
+            await isArticleExist({title: data.title}, article)) {
+            console.error('Update article failed for the title is already exist.');
+            return false
         }
 
         return true;
@@ -220,9 +233,17 @@ async function getArticleList(topic) {
 
 
 async function test() {
-    const data = {"title":"test101","topic":"test","content":"test0","key":"gviu97","createDate":"2017-03-26T13:06:45.797Z","editDate":"2017-03-26T13:06:45.797Z","historyContent":{},"_id":"V0h6K38emu7OZLPT"};
-    delete data._id;
-    const doc = await update(data, article);
+    const data = { title: 'test78',
+        topic: 'test77',
+        content: 'test0',
+        editDate: '2017-03-28T03:24:08.766Z',
+        historyContent: { '2017-03-28T03:24:08.766Z': { title: 'test77', topic: 'test77', content: 'test0' } } };
+
+    const doc = await editArticle(data);
+    // delete data._id;
+    // const doc = await update(data, article);
+    // console.log(await getArticleList());
+    // const doc = await update(data, article);
     console.log(doc);
 }
 
