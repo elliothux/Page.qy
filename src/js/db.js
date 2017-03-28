@@ -61,7 +61,7 @@ async function update(options, db) {
 
     return new Promise((resolve, reject) => {
         db.update({key: options.key}, options, {}, (error, doc) => {
-            error && reject(`An error occurred inside the 'update' function.`);
+            error && reject(`An error occurred inside the 'update' function: ${error}`);
             doc && resolve(doc);
         })
     })
@@ -127,8 +127,8 @@ async function createArticle(data) {
         !(await isArticleExist({title: data.title}))) {
         const options = {
             key: await keyGenerator(),
-            createDate: (new Date()).toISOString(),
-            editDate: (new Date()).toISOString(),
+            createDate: (new Date()).toString(),
+            editDate: (new Date()).toString(),
             historyContent: {}
         };
         const newArticle = await insert(Object.assign(data, options), article);
@@ -157,27 +157,30 @@ async function createArticle(data) {
 
 async function editArticle(data) {
     if (await checkData(data)) {
+        if (JSON.stringify(data) === JSON.stringify((await find({key: data.key}, article))[0])) {
+            console.log(`Nothing changed of article ${data.title}`);
+            return (await find({key: data.key}, article))[0];
+        }
+
         const prevArticle = (await find({key: data.key}, article))[0];
-        const editDate = (new Date()).toISOString();
+        const editDate = (new Date()).toString();
 
         let historyContent = prevArticle.historyContent;
         historyContent[editDate] = (() => {
-           let content = prevArticle;
-           delete content.createDate; delete content.editDate;
-           delete content.key; delete content.historyContent;
-           delete content._id;
-           return content;
+            const newHistoryData = {
+                title: prevArticle.title,
+                content: prevArticle.content,
+            };
+            'topic' in prevArticle && (newHistoryData.topic =  prevArticle.topic);
+            return newHistoryData;
         })();
 
-        delete data.key; delete data.createDate; delete data.editDate;
-        delete data.historyContent; delete data._id;
-
-        let newArticle = Object.assign({}, prevArticle, data, {
+        const newArticle = Object.assign({}, prevArticle, data, {
             editDate: editDate,
             historyContent: historyContent
         });
-        console.log(newArticle);
-        return await update(newArticle, article);
+        if (await update(newArticle, article))
+            return (await find({key: data.key}, article))[0]
     }
     else
         return (await find({key: data.key}, article))[0];
@@ -200,7 +203,7 @@ async function editArticle(data) {
             return false
         }
 
-        if (data.title !== (await find({key: data.key}, article)).title &&
+        if (data.title !== (await find({key: data.key}, article))[0].title &&
             await isArticleExist({title: data.title}, article)) {
             console.error('Update article failed for the title is already exist.');
             return false
@@ -209,6 +212,7 @@ async function editArticle(data) {
         return true;
     }
 }
+
 
 // Pass a 'key' to delete an article
 async function deleteArticle(key) {
@@ -222,7 +226,7 @@ async function deleteArticle(key) {
 
     const title = (await find({key: key}, article))[0].title;
     await remove({key: key}, article);
-    console.log(`Delete article '${title}' success at ${(new Date()).toISOString()}`);
+    console.log(`Delete article '${title}' success at ${(new Date()).toString()}`);
 }
 
 
@@ -233,17 +237,8 @@ async function getArticleList(topic) {
 
 
 async function test() {
-    const data = { title: 'test78',
-        topic: 'test77',
-        content: 'test0',
-        editDate: '2017-03-28T03:24:08.766Z',
-        historyContent: { '2017-03-28T03:24:08.766Z': { title: 'test77', topic: 'test77', content: 'test0' } } };
-
+    const data = {"title":"test121","topic":"test77","content":"test0","key":"gviu97","createDate":"Tue Mar 28 2017 20:42:46 GMT+0800 (CST)","editDate":"Tue Mar 28 2017 20:52:21 GMT+0800 (CST)","historyContent":{"Tue Mar 28 2017 20:46:20 GMT+0800 (CST)":{"title":"test99","content":"test0","topic":"test77"},"Tue Mar 28 2017 20:46:54 GMT+0800 (CST)":{"title":"test79","content":"test0","topic":"test77"},"Tue Mar 28 2017 20:49:08 GMT+0800 (CST)":{"title":"test100","content":"test0","topic":"test77"},"Tue Mar 28 2017 20:50:20 GMT+0800 (CST)":{"title":"test100","content":"test0","topic":"test77"},"Tue Mar 28 2017 20:52:14 GMT+0800 (CST)":{"title":"test120","content":"test0","topic":"test77"},"Tue Mar 28 2017 20:52:21 GMT+0800 (CST)":{"title":"test120","content":"test0","topic":"test77"}},"_id":"V0h6K38emu7OZLPT"};
     const doc = await editArticle(data);
-    // delete data._id;
-    // const doc = await update(data, article);
-    // console.log(await getArticleList());
-    // const doc = await update(data, article);
     console.log(doc);
 }
 

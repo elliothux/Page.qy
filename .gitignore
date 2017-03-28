@@ -47,4 +47,5 @@ fabric.properties
 
 .idea
 /node_modules/
-/.gitignore
+/yarn.lock
+
