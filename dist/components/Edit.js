@@ -15,7 +15,7 @@ export default class Edit extends React.Component {
     }
 
     handleChange(editorState) {
-        this.state((prevState, props) => ({editorState}))
+        this.setState((prevState, props) => ({editorState}))
     }
 
     render() {return(

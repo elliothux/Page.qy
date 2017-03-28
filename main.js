@@ -32,7 +32,9 @@ function createWindow() {
 
     win.on('ready-to-show', () => {
         win.show()
-    })
+    });
+
+    BrowserWindow.addDevToolsExtension(`C:\\Users\\hqy84\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\2.0.12_0`);
 }
 
 
