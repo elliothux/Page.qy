@@ -1,66 +1,57 @@
 import React from 'react';
 import reactCSS from 'reactcss';
-import { Editor, EditorState, RichUtils } from 'draft-js';
-
+import RichTextEditor from 'react-rte';
 
 export default class Edit extends React.Component {
     constructor(props) {
         super(props);
         this.style = this.style.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.handleKeyCommand = this.handleKeyCommand.bind(this);
-        this._onBoldClick = this._onBoldClick.bind(this);
 
         this.state = {
-            editorState: EditorState.createEmpty()
+            value: RichTextEditor.createEmptyValue()
         }
     }
 
-    handleChange(editorState) {
-        this.setState((prevState, props) => ({editorState}))
-    }
-
-    handleKeyCommand(command) {
-        const newState = RichUtils.handleKeyCommand(this.state.editorState, command);
-        if (newState) {
-            this.handleChange(newState);
-            return 'handled';
-        }
-        return 'not-handled'
-    }
-
-    _onBoldClick() {
-        this.handleChange(RichUtils.toggleInlineStyle(
-            this.state.editorState,
-            'BOLD'
-        ))
-    }
-
-    _onTitleClick(index) {
-
+    handleChange(value) {
+        this.setState((prevState, props) => ({value}));
+        this.props.onChange &&
+            this.props.onChange(value.toString('html'))
     }
 
     render() {return(
         <div>
             <h1>Edit</h1>
-            <button onClick={this._onBoldClick.bind(this)}>Bold</button>
-            <div style={this.style().textArea}>
-                <Editor
-                    editorState={this.state.editorState}
-                    onChange={this.handleChange}
-                    handleKeyCommand={this.handleKeyCommand}
-                />
-            </div>
+            <RichTextEditor
+                value={this.state.value}
+                onChange={this.handleChange}
+                toolbarConfig={
+                    {
+                        // Optionally specify the groups to display (displayed in the order listed).
+                        display: ['INLINE_STYLE_BUTTONS', 'BLOCK_TYPE_BUTTONS', 'LINK_BUTTONS', 'BLOCK_TYPE_DROPDOWN', 'HISTORY_BUTTONS'],
+                        INLINE_STYLE_BUTTONS: [
+                            {label: 'Bold', style: 'BOLD', className: 'custom-css-class'},
+                            {label: 'Italic', style: 'ITALIC'},
+                            {label: 'Underline', style: 'UNDERLINE'}
+                        ],
+                        BLOCK_TYPE_DROPDOWN: [
+                            {label: 'Normal', style: 'unstyled'},
+                            {label: 'Heading Large', style: 'header-one'},
+                            {label: 'Heading Medium', style: 'header-two'},
+                            {label: 'Heading Small', style: 'header-three'}
+                        ],
+                        BLOCK_TYPE_BUTTONS: [
+                            {label: 'UL', style: 'unordered-list-item'},
+                            {label: 'OL', style: 'ordered-list-item'}
+                        ]
+                    }
+                }
+            />
         </div>
     )}
 
     style() {return(reactCSS({
         default: {
-            textArea: {
-                border: '1px solid gray',
-                width: '96%',
-                margin: '10px 2%'
-            }
         }
     }, this.props, this.state))}
 }
