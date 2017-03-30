@@ -2,6 +2,7 @@ import React from 'react';
 import reactCSS from 'reactcss';
 import RichTextEditor from 'wangeditor';
 
+
 export default class Edit extends React.Component {
     constructor(props) {
         super(props);
@@ -29,13 +30,13 @@ export default class Edit extends React.Component {
     }
 
     initContentEditor() {
-        this.refs.container.style.height = `${window.innerHeight - 100}px`;
+        this.refs.container.style.height = `${window.innerHeight - 140}px`;
         const editor = new RichTextEditor('editorContainer');
         const handleChange = this.handleContentChange;
         editor.onchange = function () {
             handleChange(this.$txt.html())
         };
-        editor.config.menus =     [
+        editor.config.menus = [
             'bold',
             'underline',
             'italic',
@@ -66,15 +67,9 @@ export default class Edit extends React.Component {
 
     handleTagsChange(e) {
         let value = e.target.value;
-        value = value.split('#');
+        value = value.split(' ').join('').split('#');
         value.shift();
-        value = value.map(tag => {
-            tag = tag.split('');
-            console.log(tag[tag.length-1]);
-            tag[tag.length] === ' ' && tag.pop();
-            return tag.join('')
-        });
-        console.log(value)
+        this.setState({ tags: value })
     }
 
     handleContentChange(content) {

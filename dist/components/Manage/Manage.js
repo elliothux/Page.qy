@@ -1,6 +1,7 @@
 import React from 'react';
 import reactCSS from 'reactcss';
 import Editor from './Editor';
+import Article from './Article';
 
 
 export default class Manage extends React.Component {
@@ -11,7 +12,13 @@ export default class Manage extends React.Component {
 
     render() {return(
         <div style={this.style().container}>
-            <Editor/>
+            <Article
+                date="03/28/2016"
+                tags={['Hello', 'JS']}
+                title="Welcome to site.qy!"
+                introduction="😉You just set up you’r site.qy successful! It’ quite light and easy to use. Just enjoy writing with it~"
+            />
+            {/*<Editor/>*/}
         </div>
     )}
 
