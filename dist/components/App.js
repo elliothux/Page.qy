@@ -1,5 +1,6 @@
 import React from 'react';
 import reactCSS from 'reactcss';
+import Nav from './Nav';
 import Edit from './Edit';
 
 
@@ -11,7 +12,7 @@ export default class App extends React.Component {
 
     render() {return(
         <div>
-            <Edit/>
+            <Nav/>
         </div>
     )}
 
