@@ -12,8 +12,8 @@ let win;
 // Define a function to create window
 function createWindow() {
     win = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1200,
+        height: 800,
         minHeight: 600,
         minWidth: 400,
         center: true,

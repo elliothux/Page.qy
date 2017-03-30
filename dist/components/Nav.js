@@ -9,7 +9,15 @@ export default class Nav extends React.Component {
 
     render() {return(
         <div>
-
+            <img src="../../src/pic/head.png"/>
+            <div>
+                <div/>
+                <p>HuQingyang</p>
+                <p>huqingyang.github.io</p>
+            </div>
+            <div>
+                <div></div>
+            </div>
         </div>
     )}
 
