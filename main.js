@@ -1,6 +1,7 @@
 const electron = require('electron');
 const path = require('path');
 const url = require('url');
+const db = require('./src/js/db.js');
 const platform = require('os').platform();
 const {app, BrowserWindow} = electron;
 
@@ -56,3 +57,4 @@ app.on('activate', () => {
 
 // Functions for rendering process
 exports.platform = platform;
+exports.db = db;

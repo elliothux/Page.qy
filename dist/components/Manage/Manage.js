@@ -20,7 +20,6 @@ export default class Manage extends React.Component {
             container: {
                 width: 'calc(100% - 200px)',
                 marginLeft: '200px',
-                backgroundColor: 'red'
             }
         }
     }, this.state, this.props))}

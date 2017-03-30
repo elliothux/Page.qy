@@ -73,21 +73,22 @@ export default class Nav extends React.Component {
             },
             userInfo: {
                 width: 'calc(90% - 15px)',
-                height: '40px',
+                height: '45px',
                 margin: '30px 0 0 5%',
                 borderLeft: 'solid 5px white',
                 paddingLeft: '15px',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between',
+                justifyContent: 'space-between'
             },
             userName: {
                 fontSize: '1.3em',
                 fontWeight: 'bold'
             },
             userURL: {
-                fontSize: '0.7em',
-                fontWeight: 'bold'
+                fontSize: '0.6em',
+                fontWeight: 'bold',
+                letterSpacing: '0.1em'
             },
             navButtonContainer: {
                 width: '100%',
