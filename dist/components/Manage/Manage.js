@@ -18,8 +18,8 @@ export default class Manage extends React.Component {
     style() {return(reactCSS({
         default: {
             container: {
-                width: 'calc(100% - 200px)',
-                marginLeft: '200px',
+                width: 'calc(100% - 260px)',
+                marginLeft: '230px',
             }
         }
     }, this.state, this.props))}

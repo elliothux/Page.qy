@@ -7,8 +7,8 @@ import App from './components/App';
 ReactDOM.render(
     <div>
         <App
-            platform={remote.platform}
-            db={platform.db}
+            // platform={remote.platform}
+            // db={platform.db}
         />
     </div>,
     document.getElementById('root')

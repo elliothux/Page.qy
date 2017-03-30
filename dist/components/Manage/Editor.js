@@ -13,12 +13,12 @@ export default class Edit extends React.Component {
         this.state = {
             title: '',
             content: '',
-            tags: ['Add a tag here']
+            tags: []
         }
     }
 
     componentDidMount() {
-        this.refs.container.style.height = `${window.innerHeight - 50}px`;
+        this.refs.container.style.height = `${window.innerHeight - 100}px`;
         const editor = new RichTextEditor('editorContainer');
         const handleChange = this.handleContentChange;
         editor.onchange = function () {
@@ -43,7 +43,8 @@ export default class Edit extends React.Component {
             '|',
             'eraser',
             'undo',
-            'redo'
+            'redo',
+            'fullscreen'
         ];
         editor.create();
     }
@@ -75,7 +76,7 @@ export default class Edit extends React.Component {
             <input
                 onChange={this.handleTitleChange}
                 type="text" style={this.style().title}
-                placeholder="Type your title here..."
+                placeholder="TYPE TITLE HERE..."
             />
             {this.state.tags.map((tag, index) => (
                 <input
@@ -93,11 +94,12 @@ export default class Edit extends React.Component {
     style() {return(reactCSS({
         default: {
             title: {
-                width: '94%',
                 height: '40px',
+                width: 'calc(100% - 30px)',
                 fontSize: '1.5em',
                 border: 'none',
-                margin: '20px 3% 30px 3%'
+                margin: '20px 0 30px 0',
+                padding: '0 15px'
             }
         }
     }, this.props, this.state))}

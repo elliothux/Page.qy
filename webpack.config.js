@@ -26,5 +26,5 @@ module.exports = {
             }
         ]
     },
-    target: "web",
+    target: "electron",
 };
