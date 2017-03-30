@@ -40,6 +40,7 @@ export default class Nav extends React.Component {
                 width: '200px',
                 height: '100%',
                 position: 'fixed',
+                top: 0, left: 0,
                 background: 'linear-gradient(to left bottom, #56CCF2 , #2F80ED)',
                 color: 'white',
                 display: 'flex',
@@ -81,11 +82,11 @@ export default class Nav extends React.Component {
                 justifyContent: 'space-between',
             },
             userName: {
-                fontSize: '2em',
+                fontSize: '1.3em',
                 fontWeight: 'bold'
             },
             userURL: {
-                fontSize: '1.1em',
+                fontSize: '0.7em',
                 fontWeight: 'bold'
             },
             navButtonContainer: {
@@ -102,7 +103,7 @@ export default class Nav extends React.Component {
                 marginRight: '20px'
             },
             navBottomText: {
-                fontSize: '2em',
+                fontSize: '1.3em',
                 fontWeight: 'bold',
             }
         }

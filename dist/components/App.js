@@ -1,7 +1,7 @@
 import React from 'react';
 import reactCSS from 'reactcss';
 import Nav from './Nav';
-import Edit from './Edit';
+import Manage from './Manage/Manage';
 
 
 export default class App extends React.Component {
@@ -13,6 +13,7 @@ export default class App extends React.Component {
     render() {return(
         <div>
             <Nav/>
+            <Manage/>
         </div>
     )}
 
