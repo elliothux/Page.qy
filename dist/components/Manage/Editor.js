@@ -9,6 +9,8 @@ export default class Edit extends React.Component {
         this.handleTitleChange = this.handleTitleChange.bind(this);
         this.handleTagsChange = this.handleTagsChange.bind(this);
         this.handleContentChange = this.handleContentChange.bind(this);
+        this.initContentEditor = this.initContentEditor.bind(this);
+        this.initTagsEditor = this.initTagsEditor.bind(this);
 
         this.state = {
             title: '',
@@ -18,6 +20,15 @@ export default class Edit extends React.Component {
     }
 
     componentDidMount() {
+        this.initContentEditor();
+        this.initTagsEditor();
+    }
+
+    initTagsEditor() {
+
+    }
+
+    initContentEditor() {
         this.refs.container.style.height = `${window.innerHeight - 100}px`;
         const editor = new RichTextEditor('editorContainer');
         const handleChange = this.handleContentChange;
@@ -54,13 +65,16 @@ export default class Edit extends React.Component {
     }
 
     handleTagsChange(e) {
-        if (e.type === 'keyup') return;
-        if (e.type === 'keyup' && e.keyCode !== 13) return;
-        if (e.target.value === '') return;
-        const tags = this.state.tags;
-        const placeHolder = tags.pop();
-        tags.push(e.target.value, placeHolder);
-        this.setState({ tags: tags })
+        let value = e.target.value;
+        value = value.split('#');
+        value.shift();
+        value = value.map(tag => {
+            tag = tag.split('');
+            console.log(tag[tag.length-1]);
+            tag[tag.length] === ' ' && tag.pop();
+            return tag.join('')
+        });
+        console.log(value)
     }
 
     handleContentChange(content) {
@@ -78,13 +92,17 @@ export default class Edit extends React.Component {
                 type="text" style={this.style().title}
                 placeholder="TYPE TITLE HERE..."
             />
-            {this.state.tags.map((tag, index) => (
+            <div style={this.style().tagsContainer}>
+                {this.state.tags.map((tag, index) => (
+                    <div key={index}>{tag}</div>
+                ))}
                 <input
-                    type="text" placeholder={tag} key={index}
-                    onBlur={this.handleTagsChange}
-                    onKeyUp={this.handleTagsChange}
+                    ref="tags"
+                    onChange={this.handleTagsChange}
+                    type="text" style={this.style().tags}
+                    placeholder="ADD TAGS BY '#'"
                 />
-            ))}
+            </div>
             <div ref="container" id="editorContainer">
                 <p>✍️Write something...</p>
             </div>
@@ -98,8 +116,22 @@ export default class Edit extends React.Component {
                 width: 'calc(100% - 30px)',
                 fontSize: '1.5em',
                 border: 'none',
-                margin: '20px 0 30px 0',
+                marginTop: '20px',
                 padding: '0 15px'
+            },
+            tagsContainer: {
+                height: '30px',
+                width: 'calc(100% - 30px)',
+                fontSize: '1.2em',
+                border: 'none',
+                margin: '15px 0 20px 0',
+                padding: '0 15px'
+            },
+            tags: {
+                height: '100%',
+                width: '100%',
+                border: 'none',
+                fontSize: '0.8em',
             }
         }
     }, this.props, this.state))}

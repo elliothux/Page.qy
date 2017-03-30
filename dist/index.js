@@ -14,4 +14,4 @@ ReactDOM.render(
     document.getElementById('root')
 );
 
-console.log(db);
+// console.log(db);

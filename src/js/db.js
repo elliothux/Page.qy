@@ -234,12 +234,3 @@ async function deleteArticle(key) {
 async function getArticleList(tags) {
     return (await find(tags ? {tags: tags} : {}, article));
 }
-
-
-async function test() {
-    const data = {"title":"test121","tags":"test77","content":"test0","key":"gviu97","createDate":"Tue Mar 28 2017 20:42:46 GMT+0800 (CST)","editDate":"Tue Mar 28 2017 20:52:21 GMT+0800 (CST)","historyContent":{"Tue Mar 28 2017 20:46:20 GMT+0800 (CST)":{"title":"test99","content":"test0","tags":"test77"},"Tue Mar 28 2017 20:46:54 GMT+0800 (CST)":{"title":"test79","content":"test0","tags":"test77"},"Tue Mar 28 2017 20:49:08 GMT+0800 (CST)":{"title":"test100","content":"test0","tags":"test77"},"Tue Mar 28 2017 20:50:20 GMT+0800 (CST)":{"title":"test100","content":"test0","topic":"test77"},"Tue Mar 28 2017 20:52:14 GMT+0800 (CST)":{"title":"test120","content":"test0","topic":"test77"},"Tue Mar 28 2017 20:52:21 GMT+0800 (CST)":{"title":"test120","content":"test0","topic":"test77"}},"_id":"V0h6K38emu7OZLPT"};
-    const doc = await editArticle(data);
-    console.log(doc);
-}
-
-test().then(a => console.log('end'));

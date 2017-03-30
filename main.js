@@ -1,7 +1,7 @@
 const electron = require('electron');
 const path = require('path');
 const url = require('url');
-const db = require('./src/js/db.js');
+const db = require('./src/js/db');
 const platform = require('os').platform();
 const {app, BrowserWindow} = electron;
 
