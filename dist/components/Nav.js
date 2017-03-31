@@ -1,5 +1,7 @@
 import React from 'react';
 import reactCSS from 'reactcss';
+import { Link } from 'react-router-dom';
+
 
 export default class Nav extends React.Component {
     constructor(props) {
@@ -17,18 +19,24 @@ export default class Nav extends React.Component {
                 </div>
             </div>
             <div style={this.style().navArea}>
-                <div style={this.style().navButtonContainer}>
-                    <img style={this.style().navButtonImg} src="../../src/pic/previewNav.svg"/>
-                    <p style={this.style().navBottomText}>PREVIEW</p>
-                </div>
-                <div style={this.style().navButtonContainer}>
-                    <img style={this.style().navButtonImg} src="../../src/pic/manageNav.svg"/>
-                    <p style={this.style().navBottomText}>MANAGE</p>
-                </div>
-                <div style={this.style().navButtonContainer}>
-                    <img style={this.style().navButtonImg} src="../../src/pic/optionsNav.svg"/>
-                    <p style={this.style().navBottomText}>OPTIONS</p>
-                </div>
+                <Link to="/">
+                    <div style={this.style().navButtonContainer}>
+                        <img style={this.style().navButtonImg} src="../../src/pic/previewNav.svg"/>
+                        <p style={this.style().navBottomText}>PREVIEW</p>
+                    </div>
+                </Link>
+                <Link to="/manage">
+                    <div style={this.style().navButtonContainer}>
+                        <img style={this.style().navButtonImg} src="../../src/pic/manageNav.svg"/>
+                        <p style={this.style().navBottomText}>MANAGE</p>
+                    </div>
+                </Link>
+                <Link to="/options">
+                    <div style={this.style().navButtonContainer}>
+                        <img style={this.style().navButtonImg} src="../../src/pic/optionsNav.svg"/>
+                        <p style={this.style().navBottomText}>OPTIONS</p>
+                    </div>
+                </Link>
             </div>
             <img style={this.style().toggleButton} src="../../src/pic/toggleNav.svg"/>
         </div>
@@ -63,6 +71,7 @@ export default class Nav extends React.Component {
                 width: '30px',
                 height: 'auto',
                 margin: '0 0 15px 20px',
+                cursor: 'pointer'
             },
             userHead: {
                 width: '80px',
@@ -79,16 +88,19 @@ export default class Nav extends React.Component {
                 paddingLeft: '15px',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                cursor: 'pointer'
             },
             userName: {
                 fontSize: '1.3em',
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                cursor: 'pointer'
             },
             userURL: {
                 fontSize: '0.6em',
                 fontWeight: 'bold',
-                letterSpacing: '0.1em'
+                letterSpacing: '0.1em',
+                cursor: 'pointer'
             },
             navButtonContainer: {
                 width: '100%',
@@ -96,16 +108,21 @@ export default class Nav extends React.Component {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: 'rgba(0, 0, 0, 0.1)'
+                backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                cursor: 'pointer'
             },
             navButtonImg: {
                 width: '40px',
                 height: 'auto',
-                marginRight: '20px'
+                marginRight: '20px',
+                cursor: 'pointer'
             },
             navBottomText: {
                 fontSize: '1.3em',
                 fontWeight: 'bold',
+                cursor: 'pointer',
+                color: 'white',
+                textDecoration: 'none'
             }
         }
     }, this.props, this.state))}
