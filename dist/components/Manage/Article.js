@@ -34,7 +34,26 @@ export default class Article extends React.Component {
                 ref="operateContainer"
                 style={this.style().operateContainer}
             >
-
+                <div style={this.style().operateButton}>
+                    <img style={this.style().operateButtonImg} src="../../src/pic/editOperate.svg"/>
+                    <p style={this.style().operateButtonText}>EDIT</p>
+                </div>
+                <div style={this.style().operateButton}>
+                    <img style={this.style().operateButtonImg} src="../../src/pic/previewOperate.svg"/>
+                    <p style={this.style().operateButtonText}>PREVIEW</p>
+                </div>
+                <div style={this.style().operateButton}>
+                    <img style={this.style().operateButtonImg} src="../../src/pic/uploadOperate.svg"/>
+                    <p style={this.style().operateButtonText}>UPLOAD</p>
+                </div>
+                <div style={this.style().operateButton}>
+                    <img style={this.style().operateButtonImg} src="../../src/pic/historyOperate.svg"/>
+                    <p style={this.style().operateButtonText}>HISTORY</p>
+                </div>
+                <div style={this.style().operateButton}>
+                    <img style={this.style().operateButtonImg} src="../../src/pic/deleteOperate.svg"/>
+                    <p style={this.style().operateButtonText}>DELETE</p>
+                </div>
             </div>
         </div>
     )}
@@ -75,6 +94,21 @@ export default class Article extends React.Component {
                 width: '100%',
                 position: 'relative',
                 backgroundImage: 'linear-gradient(-225deg, rgba(85, 203, 242, 0.9) 0%, rgba(61, 144, 239, 0.96) 100%)'
+            },
+            operateButton: {
+                width: '16%',
+                height: '100%',
+                backgroundColor: 'red',
+                display: 'inline-block'
+            },
+            operateButtonImg: {
+                width: '50%',
+                height: 'auto'
+            },
+            operateButtonText: {
+                fontSize: '1.2em',
+                fontWeight: 'bold',
+                color: 'white'
             }
         }
     }, this.props, this.state)}
