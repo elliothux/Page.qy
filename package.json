@@ -4,7 +4,6 @@
   "description": "Site.qy",
   "main": "main.js",
   "dependencies": {
-    "draft-js": "^0.10.0",
     "electron": "^1.6.2",
     "nedb": "^1.8.0",
     "react": "^15.4.2",
@@ -19,7 +18,6 @@
     "babel-loader": "^6.2.10",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.22.0",
-    "babel-preset-stage-0": "^6.22.0",
     "css-loader": "^0.27.3",
     "electron-devtools-installer": "^2.1.0",
     "electron-rebuild": "^1.5.7",
