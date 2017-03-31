@@ -9,13 +9,11 @@ export default class Article extends React.Component {
     }
 
     componentDidMount() {
-        const height = this.refs.contentContainer.clientHeight + 'px';
-        this.refs.operateContainer.style.height = height;
-        this.refs.operateContainer.style.top = '-' + height;
+
     }
 
     render() {return(
-        <div style={this.style().container}>
+        <div style={this.style().container} className="articleContainer">
             <div
                 ref="contentContainer"
                 style={this.style().contentContainer}
@@ -33,6 +31,7 @@ export default class Article extends React.Component {
             <div
                 ref="operateContainer"
                 style={this.style().operateContainer}
+                className="articleOperateContainer"
             >
                 <div style={this.style().operateButton}>
                     <img style={this.style().operateButtonImg} src="../../src/pic/editOperate.svg"/>
@@ -63,7 +62,10 @@ export default class Article extends React.Component {
             container: {
                 width: '90%',
                 height: 'auto',
-                margin: '30px 0 30px 5%',
+                margin: '80px 0 60px 5%',
+                overflow: 'hidden',
+                position: 'relative',
+                boxShadow: 'rgba(0, 0, 0, 0.1) 0px 5px 20px 5px'
             },
             contentContainer: {
                 width: 'calc(100% - 36px)',
@@ -92,23 +94,32 @@ export default class Article extends React.Component {
             },
             operateContainer: {
                 width: '100%',
-                position: 'relative',
-                backgroundImage: 'linear-gradient(-225deg, rgba(85, 203, 242, 0.9) 0%, rgba(61, 144, 239, 0.96) 100%)'
+                height: '100%',
+                position: 'absolute',
+                top: 0, left: 0,
+                backgroundImage: 'linear-gradient(-225deg, rgba(85, 203, 242, 0.87) 0%, rgba(61, 144, 239, 0.92) 100%)',
             },
             operateButton: {
                 width: '16%',
                 height: '100%',
-                backgroundColor: 'red',
-                display: 'inline-block'
+                display: 'inline-flex',
+                margin: '0 2%',
+                flexDirection: 'column',
+                justifyContent: 'space-around',
+                justifyItems: 'center',
+                cursor: 'pointer'
             },
             operateButtonImg: {
-                width: '50%',
-                height: 'auto'
+                width: 'auto',
+                height: '35px',
+                cursor: 'pointer'
             },
             operateButtonText: {
                 fontSize: '1.2em',
                 fontWeight: 'bold',
-                color: 'white'
+                color: 'white',
+                textAlign: 'center',
+                cursor: 'pointer'
             }
         }
     }, this.props, this.state)}

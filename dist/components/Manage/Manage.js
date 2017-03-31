@@ -18,6 +18,12 @@ export default class Manage extends React.Component {
                 title="Welcome to site.qy!"
                 introduction="😉You just set up you’r site.qy successful! It’ quite light and easy to use. Just enjoy writing with it~"
             />
+            <Article
+                date="03/28/2016"
+                tags={['Hello', 'JS']}
+                title="Welcome to site.qy!"
+                introduction="😉You just set up you’r site.qy successful! It’ quite light and easy to use. Just enjoy writing with it~"
+            />
             {/*<Editor/>*/}
         </div>
     )}

@@ -20,7 +20,15 @@ input, button, textarea, :focus {
     border: none
 }
 
-body {
-    /*background-color: #f5f5f5;*/
+
+
+/* Animation */
+.articleContainer .articleOperateContainer {
+    transform: translateY(100%);
+    transition: all 400ms ease
 }
+.articleContainer:hover .articleOperateContainer {
+    transform: translateY(0);
+}
+
 
