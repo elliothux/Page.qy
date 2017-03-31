@@ -58,3 +58,4 @@ app.on('activate', () => {
 // Functions for rendering process
 exports.platform = platform;
 exports.db = db;
+exports.path = path.join(__dirname);

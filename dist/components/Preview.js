@@ -17,8 +17,7 @@ export default class Preview extends React.Component {
     style() {return reactCSS({
         default: {
             container: {
-                width: 'calc(100% - 200px)',
-                marginLeft: '200px',
+                width: '100%',
                 backgroundColor: 'green'
             }
         }

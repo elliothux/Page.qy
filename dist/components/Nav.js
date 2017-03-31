@@ -1,12 +1,19 @@
 import React from 'react';
 import reactCSS from 'reactcss';
-import { Link } from 'react-router-dom';
+import eventProxy from '../lib/eventProxy';
 
 
 export default class Nav extends React.Component {
     constructor(props) {
         super(props);
         this.style = this.style.bind(this);
+        this.handleViewChange = this.handleViewChange.bind(this);
+    }
+
+    handleViewChange(view) {
+        if (view === 'manage' && this.props.mainView === 'manage')
+            eventProxy.trigger('closeEditor', null);
+        eventProxy.trigger('changeMainView', view)
     }
 
     render() {return(
@@ -19,24 +26,36 @@ export default class Nav extends React.Component {
                 </div>
             </div>
             <div style={this.style().navArea}>
-                <Link to="/">
-                    <div style={this.style().navButtonContainer}>
-                        <img style={this.style().navButtonImg} src="../../src/pic/previewNav.svg"/>
-                        <p style={this.style().navBottomText}>PREVIEW</p>
-                    </div>
-                </Link>
-                <Link to="/manage">
-                    <div style={this.style().navButtonContainer}>
-                        <img style={this.style().navButtonImg} src="../../src/pic/manageNav.svg"/>
-                        <p style={this.style().navBottomText}>MANAGE</p>
-                    </div>
-                </Link>
-                <Link to="/options">
-                    <div style={this.style().navButtonContainer}>
-                        <img style={this.style().navButtonImg} src="../../src/pic/optionsNav.svg"/>
-                        <p style={this.style().navBottomText}>OPTIONS</p>
-                    </div>
-                </Link>
+                <div
+                    style={Object.assign({}, this.style().navButtonContainer,
+                        this.props.mainView === 'preview' ?
+                            {backgroundColor: 'rgba(0, 0, 0, 0.3)'} :
+                            {backgroundColor: 'rgba(0, 0, 0, 0.1)'})}
+                    onClick={this.handleViewChange.bind(null, 'preview')}
+                >
+                    <img style={this.style().navButtonImg} src="../../src/pic/previewNav.svg"/>
+                    <p style={this.style().navBottomText}>PREVIEW</p>
+                </div>
+                <div
+                    style={Object.assign({}, this.style().navButtonContainer,
+                        this.props.mainView === 'manage' ?
+                            {backgroundColor: 'rgba(0, 0, 0, 0.3)'} :
+                            {backgroundColor: 'rgba(0, 0, 0, 0.1)'})}
+                    onClick={this.handleViewChange.bind(null, 'manage')}
+                >
+                    <img style={this.style().navButtonImg} src="../../src/pic/manageNav.svg"/>
+                    <p style={this.style().navBottomText}>MANAGE</p>
+                </div>
+                <div
+                    style={Object.assign({}, this.style().navButtonContainer,
+                        this.props.mainView === 'options' ?
+                            {backgroundColor: 'rgba(0, 0, 0, 0.3)'} :
+                            {backgroundColor: 'rgba(0, 0, 0, 0.1)'})}
+                    onClick={this.handleViewChange.bind(null, 'options')}
+                >
+                    <img style={this.style().navButtonImg} src="../../src/pic/optionsNav.svg"/>
+                    <p style={this.style().navBottomText}>OPTIONS</p>
+                </div>
             </div>
             <img style={this.style().toggleButton} src="../../src/pic/toggleNav.svg"/>
         </div>
@@ -108,7 +127,6 @@ export default class Nav extends React.Component {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: 'rgba(0, 0, 0, 0.1)',
                 cursor: 'pointer'
             },
             navButtonImg: {

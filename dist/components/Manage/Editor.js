@@ -1,6 +1,7 @@
 import React from 'react';
 import reactCSS from 'reactcss';
 import RichTextEditor from 'wangeditor';
+import eventProxy from '../../lib/eventProxy';
 
 
 export default class Edit extends React.Component {
@@ -10,29 +11,37 @@ export default class Edit extends React.Component {
         this.handleTitleChange = this.handleTitleChange.bind(this);
         this.handleTagsChange = this.handleTagsChange.bind(this);
         this.handleContentChange = this.handleContentChange.bind(this);
+        this.handleEditArticle = this.handleEditArticle.bind(this);
         this.initContentEditor = this.initContentEditor.bind(this);
-        this.initTagsEditor = this.initTagsEditor.bind(this);
+        this.saveArticle = this.saveArticle.bind(this);
 
         this.state = {
             title: '',
             content: '',
-            tags: []
+            initContent: '',
+            tags: [],
+            key: ''
         }
+    }
+
+    componentWillMount() {
+        eventProxy.on('editArticle', function (data) {
+            this.handleEditArticle(data);
+        }.bind(this));
+        eventProxy.on('closeEditor', function () {
+            this.saveArticle();
+        }.bind(this))
     }
 
     componentDidMount() {
         this.initContentEditor();
-        this.initTagsEditor();
-    }
-
-    initTagsEditor() {
-
     }
 
     initContentEditor() {
-        this.refs.container.style.height = `${window.innerHeight - 140}px`;
+        this.refs.container.style.height = `${window.innerHeight - 150}px`;
         const editor = new RichTextEditor('editorContainer');
         const handleChange = this.handleContentChange;
+        editor.config.zindex = 10;
         editor.onchange = function () {
             handleChange(this.$txt.html())
         };
@@ -50,15 +59,22 @@ export default class Edit extends React.Component {
             '|',
             'link',
             'table',
-            'emotion',
             'img',
             '|',
             'eraser',
             'undo',
-            'redo',
-            'fullscreen'
+            'redo'
         ];
         editor.create();
+    }
+
+    handleEditArticle(data) {
+        this.setState(() => ({
+            title: data.title,
+            initContent: data.content,
+            tags: data.tags,
+            key: data.key
+        }))
     }
 
     handleTitleChange(e) {
@@ -76,57 +92,62 @@ export default class Edit extends React.Component {
         this.setState({ content: content })
     }
 
-    saveArticle() {
-
+    async saveArticle() {
+        const data = {
+            title: this.state.title,
+            tags: this.state.tags,
+            content: this.state.content,
+            key: this.state.key
+        };
+        await this.props.db.editArticle(data);
+        eventProxy.trigger('changeManageView', 'article');
+        eventProxy.trigger('updateArticleData', data)
     }
 
     render() {return(
         <div>
             <input
+                value={this.state.title}
                 onChange={this.handleTitleChange}
                 type="text" style={this.style().title}
                 placeholder="TYPE TITLE HERE..."
             />
-            <div style={this.style().tagsContainer}>
-                {this.state.tags.map((tag, index) => (
-                    <div key={index}>{tag}</div>
-                ))}
-                <input
-                    ref="tags"
-                    onChange={this.handleTagsChange}
-                    type="text" style={this.style().tags}
-                    placeholder="ADD TAGS BY '#'"
-                />
-            </div>
+            <input
+                ref="tags"
+                value={this.state.tags.length > 0 ?
+                    '#' + this.state.tags.join(' #') : ''}
+                onChange={this.handleTagsChange}
+                type="text" style={this.style().tags}
+                placeholder="ADD TAGS BY '#'"
+            />
             <div ref="container" id="editorContainer">
-                <p>✍️Write something...</p>
+                <p dangerouslySetInnerHTML={{
+                    __html: this.state.initContent
+                }}/>
             </div>
         </div>
     )}
 
     style() {return(reactCSS({
         default: {
+            container: {
+                width: '100%'
+            },
             title: {
-                height: '40px',
                 width: 'calc(100% - 30px)',
+                height: '40px',
                 fontSize: '1.5em',
                 border: 'none',
                 marginTop: '20px',
                 padding: '0 15px'
             },
-            tagsContainer: {
-                height: '30px',
-                width: 'calc(100% - 30px)',
-                fontSize: '1.2em',
-                border: 'none',
-                margin: '15px 0 20px 0',
-                padding: '0 15px'
-            },
             tags: {
-                height: '100%',
-                width: '100%',
+                width: 'calc(100% - 36px)',
+                height: '30px',
+                margin: '15px 0 20px 0',
+                padding: '0 18px',
                 border: 'none',
-                fontSize: '0.8em',
+                fontSize: '1em',
             }
         }
     }, this.props, this.state))}

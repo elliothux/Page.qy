@@ -17,9 +17,8 @@ export default class Options extends React.Component {
     style() {return reactCSS({
         default: {
             container: {
-                width: 'calc(100% - 200px)',
-                marginLeft: '200px',
-                backgroundColor: 'red'
+                width: '100%',
+                backgroundColor: 'red',
             }
         }
     }, this.props, this.state)}

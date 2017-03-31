@@ -4,14 +4,16 @@ import { remote } from 'electron';
 import App from './components/App';
 
 
+const main = remote.require('./main.js');
+
+
 ReactDOM.render(
     <div>
         <App
-            // platform={remote.platform}
-            // db={platform.db}
+            platform={main.platform}
+            db={main.db}
+            path={main.path}
         />
     </div>,
     document.getElementById('root')
 );
-
-// console.log(db);

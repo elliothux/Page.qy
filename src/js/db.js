@@ -9,10 +9,10 @@ const article = new DataStore({
     autoload: true
 });
 
-
 // Export functions to call
 module.exports.isArticleExist = isArticleExist;
 module.exports.createArticle = createArticle;
+module.exports.editArticle = editArticle;
 module.exports.deleteArticle = deleteArticle;
 module.exports.getArticleList =getArticleList;
 module.exports.editArticle = editArticle;
@@ -234,3 +234,15 @@ async function deleteArticle(key) {
 async function getArticleList(tags) {
     return (await find(tags ? {tags: tags} : {}, article));
 }
+
+
+async function test() {
+    const data = {
+        title: 'Welcome to Site.qy!',
+        content: '😉You just set up you’r site.qy successful! It’ quite light and easy to use. Just enjoy writing with it~',
+        tags: ['Welcome', 'Tutorials']
+    };
+    return await createArticle(data)
+}
+
+// test().then(a => console.log(a));

@@ -1,15 +1,32 @@
 import React from 'react';
 import reactCSS from 'reactcss';
+import eventProxy from '../../lib/eventProxy';
 
 
 export default class Article extends React.Component {
     constructor(props) {
         super(props);
         this.style = this.style.bind(this);
+        this.handleEditArticle = this.handleEditArticle.bind(this);
+
+        this.state = {
+            date: this.props.data.createDate,
+            tags: this.props.data.tags,
+            title: this.props.data.title,
+            content: this.props.data.content,
+            key: this.props.data.key
+        }
     }
 
-    componentDidMount() {
+    componentWillMount() {
+        eventProxy.on('updateArticleData', function (data) {
+            if (data.key !== this.state.key) return;
+            this.setState(data)
+        }.bind(this))
+    }
 
+    handleEditArticle() {
+        eventProxy.trigger('editArticle', this.props.data);
     }
 
     render() {return(
@@ -18,39 +35,69 @@ export default class Article extends React.Component {
                 ref="contentContainer"
                 style={this.style().contentContainer}
             >
-                <p style={this.style().date}>{this.props.date}</p>
-                {this.props.tags && this.props.tags.map((tag, index) => (
+                <p style={this.style().date}>{this.state.date}</p>
+                {this.state.tags && this.state.tags.map((tag, index) => (
                     <p
                         style={this.style().tags}
                         key={index}
                     >#{tag}</p>
                 ))}
-                <p style={this.style().title}>{this.props.title}</p>
-                <p>{this.props.introduction}</p>
+                <p style={this.style().title}>{this.state.title}</p>
+                <div dangerouslySetInnerHTML={{
+                    __html: function () {
+                        if (this.state.content === '')
+                            return this.state.content;
+                        const element = document.createElement('div');
+                        element.innerHTML = this.state.content;
+                        console.log(element.lastChild);
+                        while (element.lastChild.innerHTML === '<br>' || element.lastChild.innerHTML === '') {
+                            element.removeChild(element.lastChild)
+                        }
+                        return element.innerHTML || ''
+                    }.bind(this)()
+                }}/>
             </div>
             <div
                 ref="operateContainer"
                 style={this.style().operateContainer}
                 className="articleOperateContainer"
             >
-                <div style={this.style().operateButton}>
-                    <img style={this.style().operateButtonImg} src="../../src/pic/editOperate.svg"/>
+                <div
+                    onClick={this.handleEditArticle}
+                    style={this.style().operateButton}
+                >
+                    <img
+                        style={this.style().operateButtonImg}
+                        src={this.props.mainPath + '/src/pic/editOperate.svg'}
+                    />
                     <p style={this.style().operateButtonText}>EDIT</p>
                 </div>
                 <div style={this.style().operateButton}>
-                    <img style={this.style().operateButtonImg} src="../../src/pic/previewOperate.svg"/>
+                    <img
+                        style={this.style().operateButtonImg}
+                        src={this.props.mainPath + "/src/pic/previewOperate.svg"}
+                    />
                     <p style={this.style().operateButtonText}>PREVIEW</p>
                 </div>
                 <div style={this.style().operateButton}>
-                    <img style={this.style().operateButtonImg} src="../../src/pic/uploadOperate.svg"/>
+                    <img
+                        style={this.style().operateButtonImg}
+                        src={this.props.mainPath + "/src/pic/uploadOperate.svg"}
+                    />
                     <p style={this.style().operateButtonText}>UPLOAD</p>
                 </div>
                 <div style={this.style().operateButton}>
-                    <img style={this.style().operateButtonImg} src="../../src/pic/historyOperate.svg"/>
+                    <img
+                        style={this.style().operateButtonImg}
+                        src={this.props.mainPath + "/src/pic/historyOperate.svg"}
+                    />
                     <p style={this.style().operateButtonText}>HISTORY</p>
                 </div>
                 <div style={this.style().operateButton}>
-                    <img style={this.style().operateButtonImg} src="../../src/pic/deleteOperate.svg"/>
+                    <img
+                        style={this.style().operateButtonImg}
+                        src={this.props.mainPath +"/src/pic/deleteOperate.svg"}
+                    />
                     <p style={this.style().operateButtonText}>DELETE</p>
                 </div>
             </div>
