@@ -44,16 +44,7 @@ export default class Article extends React.Component {
                 ))}
                 <p style={this.style().title}>{this.state.title}</p>
                 <div dangerouslySetInnerHTML={{
-                    __html: function () {
-                        if (this.state.content === '')
-                            return this.state.content;
-                        const element = document.createElement('div');
-                        element.innerHTML = this.state.content;
-                        while (element.lastChild.innerHTML === '<br>' ||
-                        element.lastChild.innerHTML === '')
-                            element.removeChild(element.lastChild);
-                        return element.innerHTML || ''
-                    }.bind(this)()
+                    __html: this.state.content.split('<p><br></p>').join('')
                 }}/>
             </div>
             <div
