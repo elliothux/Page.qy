@@ -83,7 +83,7 @@ export default class Edit extends React.Component {
 
     handleTagsChange(e) {
         let value = e.target.value;
-        value = value.split(' ').join('').split('#');
+        value = value.split('    ').join('').split('#');
         value.shift();
         this.setState({ tags: value })
     }
@@ -96,12 +96,20 @@ export default class Edit extends React.Component {
         const data = {
             title: this.state.title,
             tags: this.state.tags,
-            content: this.state.content,
+            content: this.state.content === '' ?
+                this.state.initContent : this.state.content,
             key: this.state.key
         };
         await this.props.db.editArticle(data);
+        eventProxy.trigger('updateArticleData', data);
         eventProxy.trigger('changeManageView', 'article');
-        eventProxy.trigger('updateArticleData', data)
+        this.setState(() => ({
+            title: '',
+            tags: '',
+            content: '',
+            initContent: '',
+            key: ''
+        }))
     }
 
     render() {return(
@@ -115,7 +123,7 @@ export default class Edit extends React.Component {
             <input
                 ref="tags"
                 value={this.state.tags.length > 0 ?
-                    '#' + this.state.tags.join(' #') : ''}
+                    '#' + this.state.tags.join('    #') : ''}
                 onChange={this.handleTagsChange}
                 type="text" style={this.style().tags}
                 placeholder="ADD TAGS BY '#'"

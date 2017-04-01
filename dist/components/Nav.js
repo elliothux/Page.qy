@@ -12,8 +12,9 @@ export default class Nav extends React.Component {
 
     handleViewChange(view) {
         if (view === 'manage' && this.props.mainView === 'manage')
-            eventProxy.trigger('closeEditor', null);
-        eventProxy.trigger('changeMainView', view)
+            eventProxy.trigger('closeEditor');
+        else
+            eventProxy.trigger('changeMainView', view)
     }
 
     render() {return(

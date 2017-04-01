@@ -238,11 +238,11 @@ async function getArticleList(tags) {
 
 async function test() {
     const data = {
-        title: 'Welcome to Site.qy!',
-        content: '😉You just set up you’r site.qy successful! It’ quite light and easy to use. Just enjoy writing with it~',
-        tags: ['Welcome', 'Tutorials']
+        title: 'Hey! 写点什么吧!',
+        content: '😉恭喜! 你已经完成了了设置 Site.qy 的最后一步! Site.qy 是一个轻量级且易于使用的博客框架。现在开始, 享受使用它写博客的感觉吧~',
+        tags: ['欢迎', '教程']
     };
     return await createArticle(data)
 }
 
-// test().then(a => console.log(a));
+test().then(a => console.log(a));

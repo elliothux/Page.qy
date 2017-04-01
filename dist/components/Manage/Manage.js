@@ -18,7 +18,7 @@ export default class Manage extends React.Component {
     }
 
     async componentWillMount() {
-        this.setState({articleList: await this.props.db.getArticleList()});
+        this.setState({articleList: (await this.props.db.getArticleList()).reverse()});
         eventProxy.on('editArticle', this.handleViewChange.bind(null, 'edit'));
         eventProxy.on('changeManageView', this.handleViewChange.bind(null, 'article'));
     }
