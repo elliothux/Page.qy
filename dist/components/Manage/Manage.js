@@ -19,15 +19,20 @@ export default class Manage extends React.Component {
     }
 
     async componentWillMount() {
-        this.setState({articleList: (await this.props.db.getArticleList()).reverse()});
+        this.setState({articleList: (await this.props.db.getArticleList()).sort((a, b) => (
+                (new Date(b.createDate)).getTime() - (new Date(a.createDate)).getTime()
+            ))});
         eventProxy.on('editArticle', this.handleViewChange.bind(null, 'edit'));
         eventProxy.on('createArticle', this.handleViewChange.bind(null, 'edit'));
         eventProxy.on('changeManageView', this.handleViewChange.bind(null, 'article'));
         eventProxy.on('addArticle', function (data) {
-            const list = this.state.articleList;
-            list.unshift(data);
-            this.setState({ articleList: list });
+            this.setState((prevState) => {
+                const list = prevState.articleList;
+                list.unshift(data);
+                return { articleList: list }
+            });
             eventProxy.on('changeManageView', this.handleViewChange.bind(null, 'article'));
+            this.forceUpdate();
         }.bind(this))
     }
 
@@ -41,14 +46,16 @@ export default class Manage extends React.Component {
 
     render() {return(
         <div style={this.style().container}>
-            {this.state.articleList.map((article, index) => (
-                <Article
-                    isNew={false}
-                    key={index}
-                    mainPath={this.props.mainPath}
-                    data={article}
-                />
-            ))}
+            <div style={this.style().articleContainer}>
+                {this.state.articleList.map((article, index) => (
+                    <Article
+                        isNew={false}
+                        key={this.state.articleList.length - index}
+                        mainPath={this.props.mainPath}
+                        data={article}
+                    />
+                ))}
+            </div>
             <div style={this.style().editorContainer}>
                 <Editor db={this.props.db}/>
             </div>
@@ -69,6 +76,13 @@ export default class Manage extends React.Component {
         'default': {
             container: {
                 width: 'calc(100% - 30px)',
+            },
+            articleContainer: {
+                position: 'fixed',
+                overflow: 'auto',
+                width: '100%',
+                height: '100%',
+                left: 0, top: 0
             },
             editorContainer: {
                 position: 'fixed',

@@ -102,16 +102,16 @@ export default class Edit extends React.Component {
                 'Nothing Here' : this.state.initContent) :
                 this.state.content
         };
-        console.log(data);
         if (this.state.key === '') {
             if (this.state.title === '' &&
                 this.state.tags.length === 0 &&
                 this.state.content === '' &&
-                this.state.initContent === '')
+                this.state.initContent === '') {
+                eventProxy.trigger('changeManageView', 'article');
                 return;
+            }
             else {
                 data = await this.props.db.createArticle(data);
-                console.log(data);
                 eventProxy.trigger('addArticle', data);
             }
         }
