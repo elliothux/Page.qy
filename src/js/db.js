@@ -245,4 +245,4 @@ async function test() {
     return await createArticle(data)
 }
 
-test().then(a => console.log(a));
+// test().then(a => console.log(a));

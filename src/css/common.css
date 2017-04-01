@@ -36,3 +36,12 @@ input, button, textarea, :focus {
 }
 
 
+.addArticleButton {
+    box-shadow: rgba(0, 0, 0, 0.1) 0 5px 20px 5px;
+    transition: all ease-out 200ms;
+    transform: scale(1)
+}
+.addArticleButton:hover {
+    box-shadow: none;
+    transform: scale(1.2)
+}

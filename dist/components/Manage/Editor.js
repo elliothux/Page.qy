@@ -93,19 +93,37 @@ export default class Edit extends React.Component {
     }
 
     async saveArticle() {
-        const data = {
-            title: this.state.title,
+        let data = {
+            title: this.state.title === '' ?
+                'Untitled Article' : this.state.title,
             tags: this.state.tags,
             content: this.state.content === '' ?
-                this.state.initContent : this.state.content,
-            key: this.state.key
+                (this.state.initContent === '' ?
+                'Nothing Here' : this.state.initContent) :
+                this.state.content
         };
-        await this.props.db.editArticle(data);
-        eventProxy.trigger('updateArticleData', data);
+        console.log(data);
+        if (this.state.key === '') {
+            if (this.state.title === '' &&
+                this.state.tags.length === 0 &&
+                this.state.content === '' &&
+                this.state.initContent === '')
+                return;
+            else {
+                data = await this.props.db.createArticle(data);
+                console.log(data);
+                eventProxy.trigger('addArticle', data);
+            }
+        }
+        else {
+            data.key = this.state.key;
+            await this.props.db.editArticle(data);
+            eventProxy.trigger('updateArticleData', data);
+        }
         eventProxy.trigger('changeManageView', 'article');
         this.setState(() => ({
             title: '',
-            tags: '',
+            tags: [],
             content: '',
             initContent: '',
             key: ''
