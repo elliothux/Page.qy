@@ -8,6 +8,8 @@ export default class Article extends React.Component {
         super(props);
         this.style = this.style.bind(this);
         this.handleEditArticle = this.handleEditArticle.bind(this);
+        this.handleConfirm = this.handleConfirm.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
 
         this.state = {
             date: this.props.data.createDate,
@@ -29,8 +31,25 @@ export default class Article extends React.Component {
         eventProxy.trigger('editArticle', this.props.data);
     }
 
+    handleConfirm(flag) {
+        this.refs.confirm.className =
+            `articleConfirm${flag === 'on' ? ' activated' : ''}`
+    }
+
+    async handleDelete() {
+        await this.props.db.deleteArticle(this.state.key);
+        this.refs.article.className = 'articleContainer deleted';
+        setTimeout(function () {
+            this.refs.article.style.display = 'none';
+        }.bind(this), 600)
+    }
+
     render() {return(
-        <div style={this.style().container} className="articleContainer">
+        <div
+            style={this.style().container}
+            className="articleContainer"
+            ref="article"
+        >
             <div
                 ref="contentContainer"
                 style={this.style().contentContainer}
@@ -83,12 +102,32 @@ export default class Article extends React.Component {
                     />
                     <p style={this.style().operateButtonText}>HISTORY</p>
                 </div>
-                <div style={this.style().operateButton}>
+                <div
+                    style={this.style().operateButton}
+                    onClick={this.handleConfirm.bind(null, 'on')}
+                >
                     <img
                         style={this.style().operateButtonImg}
                         src={this.props.mainPath +"/src/pic/deleteOperate.svg"}
                     />
                     <p style={this.style().operateButtonText}>DELETE</p>
+                </div>
+            </div>
+            <div
+                className="articleConfirm"
+                ref="confirm"
+                style={this.style().confirmContainer}
+            >
+                <h3 style={this.style().confirmTitle}>😱 Do You <b>REALLY</b> Want to Delete This Article?</h3>
+                <div>
+                    <div
+                        style={this.style().confirmButton}
+                        onClick={this.handleDelete}
+                    >YES</div>
+                    <div
+                        style={this.style().confirmButton}
+                        onClick={this.handleConfirm.bind(null, 'off')}
+                    >NO</div>
                 </div>
             </div>
         </div>
@@ -97,12 +136,8 @@ export default class Article extends React.Component {
     style() {return reactCSS({
         default: {
             container: {
-                width: '90%',
-                height: 'auto',
-                margin: '80px 0 60px 5%',
-                overflow: 'hidden',
                 position: 'relative',
-                boxShadow: 'rgba(0, 0, 0, 0.1) 0px 5px 20px 5px'
+                boxShadow: 'rgba(0, 0, 0, 0.1) 0px 5px 20px 5px',
             },
             contentContainer: {
                 width: 'calc(100% - 36px)',
@@ -156,6 +191,28 @@ export default class Article extends React.Component {
                 fontWeight: 'bold',
                 color: 'white',
                 textAlign: 'center',
+                cursor: 'pointer'
+            },
+            confirmContainer: {
+                width: '100%',
+                height: '100%',
+                position: 'absolute',
+                top: 0, left: 0,
+                backgroundImage: 'linear-gradient(-225deg, rgba(85, 203, 242, 1) 0%, rgba(61, 144, 239, 1) 100%)',
+                color: 'white',
+                textAlign: 'center',
+                letterSpacing: '0.1em',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                justifyItems: 'center'
+            },
+            confirmButton: {
+                width: '70px',
+                display: 'inline-block',
+                padding: '8px 10px',
+                margin: '10px 30px 0 30px',
+                backgroundColor: 'rgba(255, 255, 255, 0.15)',
                 cursor: 'pointer'
             }
         }

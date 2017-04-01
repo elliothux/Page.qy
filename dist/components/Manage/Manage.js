@@ -14,7 +14,7 @@ export default class Manage extends React.Component {
 
         this.state = {
             articleList: [],
-            viewState: 'article'
+            viewState: 'article',
         }
     }
 
@@ -33,7 +33,7 @@ export default class Manage extends React.Component {
             });
             eventProxy.on('changeManageView', this.handleViewChange.bind(null, 'article'));
             this.forceUpdate();
-        }.bind(this))
+        }.bind(this));
     }
 
     handleViewChange(view) {
@@ -53,6 +53,8 @@ export default class Manage extends React.Component {
                         key={this.state.articleList.length - index}
                         mainPath={this.props.mainPath}
                         data={article}
+                        db={this.props.db}
+                        transformHeight={this.state.deletedArticleHeight}
                     />
                 ))}
             </div>

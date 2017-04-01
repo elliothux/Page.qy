@@ -26,7 +26,7 @@ async function keyGenerator() {
     for(let i=0; i < 6; i++)
         key += possible.charAt(Math.floor(Math.random() * possible.length));
 
-    if (!(await isArticleExist({key: key})))
+    if (!(await isArticleExist(key)))
         return key;
     return keyGenerator()
 }
@@ -107,24 +107,14 @@ async function remove(options, db) {
 
 // Pass an object which contains 'key' or 'title' or both
 // to check if one article is exist
-async function isArticleExist(options) {
-    if (!options || typeof options !== 'object') {
-        console.error(`Function 'isArticleExist' except an object instead of ${typeof options} as the first argument.`);
-        return;
-    }
-
-    let keyExist = 'key' in options ?
-        (await find({key: options.key}, article)).length > 0 : false;
-    let titleExist = 'title' in options ?
-        (await find({title: options.title}, article)).length > 0 : false;
-    return keyExist || titleExist;
+async function isArticleExist(key) {
+    return (await find({key: key}, article)).length > 0
 }
 
 
 // Passing data and create an article
 async function createArticle(data) {
-    if (checkData(data) &&
-        !(await isArticleExist({title: data.title}))) {
+    if (checkData(data)) {
         const options = {
             key: await keyGenerator(),
             createDate: (new Date()).toString(),
@@ -134,9 +124,6 @@ async function createArticle(data) {
         const newArticle = await insert(Object.assign(data, options), article);
         console.log(`Create article '${newArticle.title}' success at ${newArticle.createDate}.`);
         return newArticle;
-    } else {
-        console.error(`Create article ${data.title} failed with invalid argument.`);
-        return (await find({title: data.title}, article))[0];
     }
 
     function checkData(data) {
@@ -192,20 +179,14 @@ async function editArticle(data) {
             return false;
         }
 
-        if (!'content' in data || !'title' in data || !'key' in data) {
+        if (!'key' in data) {
             console.error('Update article failed with invalid arguments.');
             return false;
         }
 
         // Check this article is exist or not.
-        if (! await isArticleExist({key: data.key})) {
+        if (! await isArticleExist(data.key)) {
             console.error('Update article failed for this article is not exist.');
-            return false
-        }
-
-        if (data.title !== (await find({key: data.key}, article))[0].title &&
-            await isArticleExist({title: data.title}, article)) {
-            console.error('Update article failed for the title is already exist.');
             return false
         }
 
@@ -219,7 +200,7 @@ async function deleteArticle(key) {
     if (!key) {
         console.error(`Delete article failed with invalid argument.`);
         return false;
-    } else if (!(await isArticleExist({key: key}))) {
+    } else if (!(await isArticleExist(key))) {
         console.warn(`Delete article failed for it's not exist.`);
         return false;
     }
@@ -246,3 +227,4 @@ async function test() {
 }
 
 // test().then(a => console.log(a));
+

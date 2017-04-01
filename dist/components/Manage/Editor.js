@@ -20,7 +20,8 @@ export default class Edit extends React.Component {
             content: '',
             initContent: '',
             tags: [],
-            key: ''
+            key: '',
+            editor: null
         }
     }
 
@@ -66,6 +67,7 @@ export default class Edit extends React.Component {
             'redo'
         ];
         editor.create();
+        this.editor = editor;
     }
 
     handleEditArticle(data) {
@@ -74,7 +76,8 @@ export default class Edit extends React.Component {
             initContent: data.content,
             tags: data.tags,
             key: data.key
-        }))
+        }));
+        this.editor.$txt = data.content;
     }
 
     handleTitleChange(e) {
@@ -127,7 +130,8 @@ export default class Edit extends React.Component {
             content: '',
             initContent: '',
             key: ''
-        }))
+        }));
+        this.editor.clear();
     }
 
     render() {return(
@@ -147,7 +151,7 @@ export default class Edit extends React.Component {
                 placeholder="ADD TAGS BY '#'"
             />
             <div ref="container" id="editorContainer">
-                <p dangerouslySetInnerHTML={{
+                <p id="test" dangerouslySetInnerHTML={{
                     __html: this.state.initContent
                 }}/>
             </div>
