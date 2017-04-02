@@ -114,44 +114,32 @@ async function isArticleExist(key) {
 
 // Passing data and create an article
 async function createArticle(data) {
-    if (checkData(data)) {
-        const options = {
-            key: await keyGenerator(),
-            createDate: (new Date()).toString(),
-            editDate: (new Date()).toString(),
-            historyContent: {}
-        };
-        const newArticle = await insert(Object.assign(data, options), article);
-        console.log(`Create article '${newArticle.title}' success at ${newArticle.createDate}.`);
-        return newArticle;
-    }
-
-    function checkData(data) {
-        if (!data || typeof data !== 'object') {
-            console.error(`Function 'create' except an object instead of ${typeof data} as the first argument.`);
-            return false;
-        }
-
-        if (!'content' in data || !'title' in data) {
-            console.error('Create article failed with invalid arguments.');
-            return false;
-        }
-
-        return true;
-    }
+    if (!data || typeof data !== 'object')
+        return console.error(`Function 'create' except an object instead of ${typeof data} as the first argument.`);
+    const options = {
+        key: await keyGenerator(),
+        createDate: (new Date()).toString(),
+        editDate: (new Date()).toString(),
+        historyContent: {}
+    };
+    const newArticle = await insert(Object.assign(data, options), article);
+    const title = newArticle.title === '' ? 'Untitled Article' : newArticle.title;
+    console.log(`Create article '${title}' success at ${newArticle.createDate}.`);
+    return newArticle;
 }
 
 
 async function editArticle(data) {
     if (await checkData(data)) {
-        if (JSON.stringify(data) === JSON.stringify((await find({key: data.key}, article))[0])) {
-            console.log(`Nothing changed of article ${data.title}`);
+        const prevArticle = (await find({key: data.key}, article))[0];
+
+        if (JSON.stringify(data) === JSON.stringify(prevArticle)) {
+            const title = prevArticle.title === '' ? 'Untitled Article' : prevArticle.title;
+            console.log(`Nothing changed of article ${title}`);
             return (await find({key: data.key}, article))[0];
         }
 
-        const prevArticle = (await find({key: data.key}, article))[0];
         const editDate = (new Date()).toString();
-
         let historyContent = prevArticle.historyContent;
         historyContent[editDate] = (() => {
             const newHistoryData = {
@@ -166,8 +154,12 @@ async function editArticle(data) {
             editDate: editDate,
             historyContent: historyContent
         });
-        if (await update(newArticle, article))
-            return (await find({key: data.key}, article))[0]
+        if (await update(newArticle, article)) {
+            const title = newArticle.title === '' ?
+                'Untitled Article' : newArticle.title;
+            console.log(`Update article '${title}' success at ${editDate}.`);
+            return (await find({key: data.key}, article))[0];
+        }
     }
     else
         return (await find({key: data.key}, article))[0];
@@ -205,7 +197,8 @@ async function deleteArticle(key) {
         return false;
     }
 
-    const title = (await find({key: key}, article))[0].title;
+    let title = (await find({key: key}, article))[0].title;
+    title === '' && (title = 'Untitled Article');
     await remove({key: key}, article);
     console.log(`Delete article '${title}' success at ${(new Date()).toString()}`);
 }

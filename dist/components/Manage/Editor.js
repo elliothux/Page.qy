@@ -18,10 +18,8 @@ export default class Edit extends React.Component {
         this.state = {
             title: '',
             content: '',
-            initContent: '',
             tags: [],
-            key: '',
-            editor: null
+            key: ''
         }
     }
 
@@ -73,11 +71,11 @@ export default class Edit extends React.Component {
     handleEditArticle(data) {
         this.setState(() => ({
             title: data.title,
-            initContent: data.content,
+            content: data.content,
             tags: data.tags,
             key: data.key
         }));
-        this.editor.$txt = data.content;
+        this.editor.$txt.html(data.content);
     }
 
     handleTitleChange(e) {
@@ -97,19 +95,14 @@ export default class Edit extends React.Component {
 
     async saveArticle() {
         let data = {
-            title: this.state.title === '' ?
-                'Untitled Article' : this.state.title,
+            title: this.state.title,
             tags: this.state.tags,
-            content: this.state.content === '' ?
-                (this.state.initContent === '' ?
-                'Nothing Here' : this.state.initContent) :
-                this.state.content
+            content: this.state.content
         };
         if (this.state.key === '') {
             if (this.state.title === '' &&
-                this.state.tags.length === 0 &&
-                this.state.content === '' &&
-                this.state.initContent === '') {
+                (this.state.content === '' ||
+                this.state.content === '<p><br></p>')) {
                 eventProxy.trigger('changeManageView', 'article');
                 return;
             }
@@ -128,7 +121,6 @@ export default class Edit extends React.Component {
             title: '',
             tags: [],
             content: '',
-            initContent: '',
             key: ''
         }));
         this.editor.clear();
