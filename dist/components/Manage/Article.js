@@ -61,7 +61,10 @@ export default class Article extends React.Component {
                         key={index}
                     >#{tag}</p>
                 ))}
-                <p style={this.style().title}>{this.state.title}</p>
+                <p style={this.style().title}>
+                    {this.state.title === '' ?
+                        'Untitled Article' : this.state.title}
+                </p>
                 <div dangerouslySetInnerHTML={{
                     __html: this.state.content.split('<p><br></p>').join('')
                 }}/>
