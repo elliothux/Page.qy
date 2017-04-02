@@ -1,5 +1,8 @@
 import React from 'react';
 import reactCSS from 'reactcss';
+import Setting from './Setting';
+import Theme from './Theme';
+import About from './About';
 
 
 export default class Options extends React.Component {
@@ -19,7 +22,10 @@ export default class Options extends React.Component {
                             <span style={this.style().selfIntroductionSymbol}>“</span>
                             <p style={this.style().selfIntroductionText}>Create some awsome things.</p>
                         </div>
-                        <p>Writed 32 articles about 8 topics</p>
+                        <p style={this.style().articleCount}>
+                            Writed <span style={this.style().countNumber}>32</span> articles
+                            about <span style={this.style().countNumber}>8</span> topics
+                        </p>
                     </div>
                     <img
                         style={this.style().head}
@@ -28,6 +34,11 @@ export default class Options extends React.Component {
                     <div style={this.style().signButton}>Sign Out</div>
                 </div>
             </div>
+            <div style={this.style().optionsContainer}>
+                <Setting/>
+                <Theme/>
+                <About/>
+            </div>
         </div>
     )}
 
@@ -35,7 +46,7 @@ export default class Options extends React.Component {
         default: {
             container: {
                 position: 'fixed',
-                overflow: 'auto',
+                overflow: 'hidden',
                 width: '100%',
                 height: '100%',
                 left: 0, top: 0
@@ -60,11 +71,12 @@ export default class Options extends React.Component {
             userInfo: {
                 width: '94%',
                 height: '50%',
-                backgroundColor: 'white',
+                backgroundColor: 'rgba(255, 255, 255, 0.9)',
                 position: 'absolute',
                 top: '25%',
                 left: '6%',
                 zIndex: 3,
+                boxShadow: '0px 5px 15px 8px rgba(0,0,0,0.15)'
             },
             info: {
                 width: '70%',
@@ -124,7 +136,19 @@ export default class Options extends React.Component {
                 top: '-10px'
             },
             articleCount: {
-
+                fontSize: '1em',
+                color: 'gray',
+                fontWeight: 'bold',
+                letterSpacing: '0.1em'
+            },
+            countNumber: {
+                fontSize: '1.05em',
+                color: '#0F78C5'
+            },
+            optionsContainer: {
+                width: '100%',
+                height: '55%',
+                overflow: 'hidden'
             }
         }
     }, this.props, this.state)}
