@@ -33,12 +33,17 @@ function isRepoExist() {
 
 async function getGitPath() {
     let dir = fs.readdirSync(userPath);
-    if (!`${config.user.name}.github.io` in dir) {
-        if (await isRepoExist()) {
-
+    if (!dir.includes(`${config.user.name}.github.io`)) {
+        if (await isRepoExist())
+            exec(`cd ${userPath} && 
+            git clone https://github.com/${config.user.name}/${config.user.name}.github.io`);
+        else {
+            exec(`cd ${userPath} && mkdir ${config.user.name}.github.io && 
+            git push origin master`);
         }
     }
+    return `${userPath}/${config.user.name}.github.io`
 }
 
 
-getGitPath();
+getGitPath().then(path => console.log(path));
