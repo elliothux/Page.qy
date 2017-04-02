@@ -148,7 +148,8 @@ export default class Options extends React.Component {
             optionsContainer: {
                 width: '100%',
                 height: '55%',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                position: 'relative'
             }
         }
     }, this.props, this.state)}

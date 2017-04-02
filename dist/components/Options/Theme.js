@@ -23,6 +23,9 @@ export default class Theme extends React.Component {
                 padding: '15px 25px',
                 boxShadow: '-10px 0 20px 0px rgba(0,0,0,0.08)',
                 zIndex: 2,
+                position: 'absolute',
+                top: 0,
+                left: '33%'
             },
             title: {
                 fontSize: '2em',

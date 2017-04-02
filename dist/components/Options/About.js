@@ -11,6 +11,7 @@ export default class About extends React.Component {
     render() {return (
         <div style={this.style().container}>
             <h1 style={this.style().title}>ABOUT</h1>
+
         </div>
     )}
 
@@ -23,6 +24,9 @@ export default class About extends React.Component {
                 padding: '15px 25px',
                 boxShadow: '-10px 0 20px 0px rgba(0,0,0,0.08)',
                 zIndex: 3,
+                position: 'absolute',
+                top: 0,
+                left: '67%'
             },
             title: {
                 fontSize: '2em',
