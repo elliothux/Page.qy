@@ -69,7 +69,7 @@ export default class Nav extends React.Component {
                 height: '100%',
                 position: 'fixed',
                 top: 0, left: 0,
-                background: 'linear-gradient(to left bottom, #56CCF2 , #2F80ED)',
+                backgroundImage: 'linear-gradient(-225deg, rgba(85, 203, 242, 1) 0%, rgba(61, 144, 239, 1) 100%)',
                 color: 'white',
                 display: 'flex',
                 flexDirection: 'column',

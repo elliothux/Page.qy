@@ -4,7 +4,7 @@ import eventProxy from '../lib/eventProxy';
 import Nav from './Nav';
 import Preview from './Preview';
 import Manage from './Manage/Manage';
-import Options from './Options';
+import Options from './Options/Options';
 
 
 export default class App extends React.Component {
@@ -13,7 +13,7 @@ export default class App extends React.Component {
         this.style = this.style.bind(this);
 
         this.state = {
-            viewState: 'manage'
+            viewState: 'options'
         }
     }
 
@@ -37,7 +37,9 @@ export default class App extends React.Component {
                 />
             </div>
             <div style={this.style().optionsContainer}>
-                <Options/>
+                <Options
+                    mainPath={this.props.path}
+                />
             </div>
         </div>
     )}
