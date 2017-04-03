@@ -587,7 +587,7 @@ module.exports = ExecutionEnvironment;
 "use strict";
 
 
-module.exports = __webpack_require__(26);
+module.exports = __webpack_require__(27);
 
 /***/ }),
 /* 7 */
@@ -1078,7 +1078,7 @@ var _prodInvariant = __webpack_require__(2),
 var CallbackQueue = __webpack_require__(117);
 var PooledClass = __webpack_require__(20);
 var ReactFeatureFlags = __webpack_require__(122);
-var ReactReconciler = __webpack_require__(25);
+var ReactReconciler = __webpack_require__(26);
 var Transaction = __webpack_require__(46);
 
 var invariant = __webpack_require__(0);
@@ -2506,6 +2506,63 @@ module.exports = reactProdInvariant;
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var eventProxy = {
+    onObj: {},
+    oneObj: {},
+    on: function on(key, fn) {
+        if (this.onObj[key] === undefined) {
+            this.onObj[key] = [];
+        }
+
+        this.onObj[key].push(fn);
+    },
+    one: function one(key, fn) {
+        if (this.oneObj[key] === undefined) {
+            this.oneObj[key] = [];
+        }
+
+        this.oneObj[key].push(fn);
+    },
+    off: function off(key) {
+        this.onObj[key] = [];
+        this.oneObj[key] = [];
+    },
+    trigger: function trigger() {
+        var key = void 0,
+            args = void 0;
+        if (arguments.length === 0) {
+            return false;
+        }
+        key = arguments[0];
+        args = [].concat(Array.prototype.slice.call(arguments, 1));
+
+        if (this.onObj[key] !== undefined && this.onObj[key].length > 0) {
+            for (var i in this.onObj[key]) {
+                this.onObj[key][i].apply(null, args);
+            }
+        }
+        if (this.oneObj[key] !== undefined && this.oneObj[key].length > 0) {
+            for (var _i in this.oneObj[key]) {
+                this.oneObj[key][_i].apply(null, args);
+                this.oneObj[key][_i] = undefined;
+            }
+            this.oneObj[key] = [];
+        }
+    }
+};
+
+exports.default = eventProxy;
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 /**
@@ -2541,7 +2598,7 @@ function isObject(value) {
 module.exports = isObject;
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2664,7 +2721,7 @@ DOMLazyTree.queueText = queueText;
 module.exports = DOMLazyTree;
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2837,7 +2894,7 @@ var ReactReconciler = {
 module.exports = ReactReconciler;
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2929,63 +2986,6 @@ var React = {
 };
 
 module.exports = React;
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var eventProxy = {
-    onObj: {},
-    oneObj: {},
-    on: function on(key, fn) {
-        if (this.onObj[key] === undefined) {
-            this.onObj[key] = [];
-        }
-
-        this.onObj[key].push(fn);
-    },
-    one: function one(key, fn) {
-        if (this.oneObj[key] === undefined) {
-            this.oneObj[key] = [];
-        }
-
-        this.oneObj[key].push(fn);
-    },
-    off: function off(key) {
-        this.onObj[key] = [];
-        this.oneObj[key] = [];
-    },
-    trigger: function trigger() {
-        var key = void 0,
-            args = void 0;
-        if (arguments.length === 0) {
-            return false;
-        }
-        key = arguments[0];
-        args = [].concat(Array.prototype.slice.call(arguments, 1));
-
-        if (this.onObj[key] !== undefined && this.onObj[key].length > 0) {
-            for (var i in this.onObj[key]) {
-                this.onObj[key][i].apply(null, args);
-            }
-        }
-        if (this.oneObj[key] !== undefined && this.oneObj[key].length > 0) {
-            for (var _i in this.oneObj[key]) {
-                this.oneObj[key][_i].apply(null, args);
-                this.oneObj[key][_i] = undefined;
-            }
-            this.oneObj[key] = [];
-        }
-    }
-};
-
-exports.default = eventProxy;
 
 /***/ }),
 /* 28 */
@@ -5535,7 +5535,7 @@ module.exports = isSymbol;
 
 
 
-var DOMLazyTree = __webpack_require__(24);
+var DOMLazyTree = __webpack_require__(25);
 var Danger = __webpack_require__(274);
 var ReactDOMComponentTree = __webpack_require__(4);
 var ReactInstrumentation = __webpack_require__(8);
@@ -6087,7 +6087,7 @@ module.exports = KeyEscapeUtils;
 
 var _prodInvariant = __webpack_require__(2);
 
-var React = __webpack_require__(26);
+var React = __webpack_require__(27);
 var ReactPropTypesSecret = __webpack_require__(127);
 
 var invariant = __webpack_require__(0);
@@ -8389,7 +8389,7 @@ module.exports = isIndex;
 "use strict";
 
 
-var isObject = __webpack_require__(23);
+var isObject = __webpack_require__(24);
 
 /**
  * Checks if `value` is suitable for strict equality comparisons, i.e. `===`.
@@ -8623,7 +8623,7 @@ module.exports = isArguments;
 
 
 var baseGetTag = __webpack_require__(17),
-    isObject = __webpack_require__(23);
+    isObject = __webpack_require__(24);
 
 /** `Object#toString` result references. */
 var asyncTag = '[object AsyncFunction]',
@@ -9796,9 +9796,9 @@ module.exports = ReactInputSelection;
 
 var _prodInvariant = __webpack_require__(2);
 
-var DOMLazyTree = __webpack_require__(24);
+var DOMLazyTree = __webpack_require__(25);
 var DOMProperty = __webpack_require__(16);
-var React = __webpack_require__(26);
+var React = __webpack_require__(27);
 var ReactBrowserEventEmitter = __webpack_require__(44);
 var ReactCurrentOwner = __webpack_require__(13);
 var ReactDOMComponentTree = __webpack_require__(4);
@@ -9808,7 +9808,7 @@ var ReactFeatureFlags = __webpack_require__(122);
 var ReactInstanceMap = __webpack_require__(33);
 var ReactInstrumentation = __webpack_require__(8);
 var ReactMarkupChecksum = __webpack_require__(306);
-var ReactReconciler = __webpack_require__(25);
+var ReactReconciler = __webpack_require__(26);
 var ReactUpdateQueue = __webpack_require__(70);
 var ReactUpdates = __webpack_require__(12);
 
@@ -10340,7 +10340,7 @@ module.exports = ReactMount;
 
 var _prodInvariant = __webpack_require__(2);
 
-var React = __webpack_require__(26);
+var React = __webpack_require__(27);
 
 var invariant = __webpack_require__(0);
 
@@ -11331,7 +11331,7 @@ var _reactcss = __webpack_require__(14);
 
 var _reactcss2 = _interopRequireDefault(_reactcss);
 
-var _eventProxy = __webpack_require__(27);
+var _eventProxy = __webpack_require__(23);
 
 var _eventProxy2 = _interopRequireDefault(_eventProxy);
 
@@ -11425,7 +11425,8 @@ var App = function (_React$Component) {
                     { style: this.style().optionsContainer },
                     _react2.default.createElement(_Options2.default, {
                         mainPath: this.props.path,
-                        config: this.state.config
+                        config: this.state.config,
+                        setConfig: this.props.setConfig
                     })
                 )
             );
@@ -11512,7 +11513,7 @@ var _reactcss = __webpack_require__(14);
 
 var _reactcss2 = _interopRequireDefault(_reactcss);
 
-var _eventProxy = __webpack_require__(27);
+var _eventProxy = __webpack_require__(23);
 
 var _eventProxy2 = _interopRequireDefault(_eventProxy);
 
@@ -11559,7 +11560,7 @@ var Article = function (_React$Component) {
     }, {
         key: 'handleEditArticle',
         value: function handleEditArticle() {
-            _eventProxy2.default.trigger('editArticle', this.props.data);
+            _eventProxy2.default.trigger('editArticle', this.state);
         }
     }, {
         key: 'handleConfirm',
@@ -11647,7 +11648,7 @@ var Article = function (_React$Component) {
                         _react2.default.createElement(
                             'p',
                             { style: this.style().operateButtonText },
-                            'EDIT'
+                            this.props.config.language === 'zh' ? '编辑' : 'EDIT'
                         )
                     ),
                     _react2.default.createElement(
@@ -11663,7 +11664,7 @@ var Article = function (_React$Component) {
                         _react2.default.createElement(
                             'p',
                             { style: this.style().operateButtonText },
-                            'PREVIEW'
+                            this.props.config.language === 'zh' ? '预览' : 'PREVIEW'
                         )
                     ),
                     _react2.default.createElement(
@@ -11676,7 +11677,7 @@ var Article = function (_React$Component) {
                         _react2.default.createElement(
                             'p',
                             { style: this.style().operateButtonText },
-                            'UPLOAD'
+                            this.props.config.language === 'zh' ? '上传' : 'UPLOAD'
                         )
                     ),
                     _react2.default.createElement(
@@ -11689,7 +11690,7 @@ var Article = function (_React$Component) {
                         _react2.default.createElement(
                             'p',
                             { style: this.style().operateButtonText },
-                            'HISTORY'
+                            this.props.config.language === 'zh' ? '历史' : 'HISTORY'
                         )
                     ),
                     _react2.default.createElement(
@@ -11705,7 +11706,7 @@ var Article = function (_React$Component) {
                         _react2.default.createElement(
                             'p',
                             { style: this.style().operateButtonText },
-                            'DELETE'
+                            this.props.config.language === 'zh' ? '删除' : 'DELETE'
                         )
                     )
                 ),
@@ -11719,13 +11720,7 @@ var Article = function (_React$Component) {
                     _react2.default.createElement(
                         'h3',
                         { style: this.style().confirmTitle },
-                        '\uD83D\uDE31 Do You ',
-                        _react2.default.createElement(
-                            'b',
-                            null,
-                            'REALLY'
-                        ),
-                        ' Want to Delete This Article?'
+                        this.props.config.language === 'zh' ? '😱 你真的确定要删除这篇文章吗？' : '😱 Do You REALLY Want to Delete This Article?'
                     ),
                     _react2.default.createElement(
                         'div',
@@ -11736,7 +11731,7 @@ var Article = function (_React$Component) {
                                 style: this.style().confirmButton,
                                 onClick: this.handleDelete
                             },
-                            'YES'
+                            this.props.config.language === 'zh' ? '是的' : 'YES'
                         ),
                         _react2.default.createElement(
                             'div',
@@ -11744,7 +11739,7 @@ var Article = function (_React$Component) {
                                 style: this.style().confirmButton,
                                 onClick: this.handleConfirm.bind(null, 'off')
                             },
-                            'NO'
+                            this.props.config.language === 'zh' ? '算啦' : 'NO'
                         )
                     )
                 )
@@ -11825,7 +11820,8 @@ var Article = function (_React$Component) {
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'center',
-                        justifyItems: 'center'
+                        justifyItems: 'center',
+                        fontSize: 'normal'
                     },
                     confirmButton: {
                         width: '70px',
@@ -11833,7 +11829,9 @@ var Article = function (_React$Component) {
                         padding: '8px 10px',
                         margin: '10px 30px 0 30px',
                         backgroundColor: 'rgba(255, 255, 255, 0.15)',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
+                        fontWeight: 'bold',
+                        letterSpacing: '0.3em'
                     }
                 }
             }, this.props, this.state);
@@ -11870,7 +11868,7 @@ var _wangeditor = __webpack_require__(358);
 
 var _wangeditor2 = _interopRequireDefault(_wangeditor);
 
-var _eventProxy = __webpack_require__(27);
+var _eventProxy = __webpack_require__(23);
 
 var _eventProxy2 = _interopRequireDefault(_eventProxy);
 
@@ -12082,7 +12080,7 @@ var _reactcss = __webpack_require__(14);
 
 var _reactcss2 = _interopRequireDefault(_reactcss);
 
-var _eventProxy = __webpack_require__(27);
+var _eventProxy = __webpack_require__(23);
 
 var _eventProxy2 = _interopRequireDefault(_eventProxy);
 
@@ -12171,7 +12169,8 @@ var Manage = function (_React$Component) {
                             data: article,
                             db: _this2.props.db,
                             openWindow: _this2.props.openWindow,
-                            dataToHTML: _this2.props.dataToHTML
+                            dataToHTML: _this2.props.dataToHTML,
+                            config: _this2.props.config
                         });
                     })
                 ),
@@ -12268,7 +12267,7 @@ var _reactcss = __webpack_require__(14);
 
 var _reactcss2 = _interopRequireDefault(_reactcss);
 
-var _eventProxy = __webpack_require__(27);
+var _eventProxy = __webpack_require__(23);
 
 var _eventProxy2 = _interopRequireDefault(_eventProxy);
 
@@ -12513,7 +12512,7 @@ var About = function (_React$Component) {
                 _react2.default.createElement(
                     'h1',
                     { style: this.style().title },
-                    'ABOUT'
+                    this.props.config.language === 'zh' ? '关于' : 'ABOUT'
                 )
             );
         }
@@ -12661,16 +12660,19 @@ var Options = function (_React$Component) {
                         _react2.default.createElement(
                             'div',
                             { style: this.style().signButton },
-                            'Sign Out'
+                            this.props.config.language === 'zh' ? '登出' : 'Sign Out'
                         )
                     )
                 ),
                 _react2.default.createElement(
                     'div',
                     { style: this.style().optionsContainer },
-                    _react2.default.createElement(_Setting2.default, null),
-                    _react2.default.createElement(_Theme2.default, null),
-                    _react2.default.createElement(_About2.default, null)
+                    _react2.default.createElement(_Setting2.default, {
+                        config: this.props.config,
+                        setConfig: this.props.setConfig
+                    }),
+                    _react2.default.createElement(_Theme2.default, { config: this.props.config }),
+                    _react2.default.createElement(_About2.default, { config: this.props.config })
                 )
             );
         }
@@ -12687,7 +12689,7 @@ var Options = function (_React$Component) {
                         left: 0, top: 0
                     },
                     userInfoContainer: {
-                        backgroundImage: 'url(\'' + this.props.mainPath + '/src/pic/backgroundOptions.jpg\')',
+                        background: 'url(\'' + this.props.mainPath + '/src/pic/backgroundOptions.jpg\')',
                         backgroundSize: 'cover',
                         width: '100%',
                         height: '45%',
@@ -12745,7 +12747,8 @@ var Options = function (_React$Component) {
                         color: 'white',
                         fontWeight: 'bold',
                         lineHeight: '35px',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
+                        letterSpacing: '0.1em'
                     },
                     userName: {
                         fontSize: '2.8em',
@@ -12817,6 +12820,10 @@ var _reactcss = __webpack_require__(14);
 
 var _reactcss2 = _interopRequireDefault(_reactcss);
 
+var _eventProxy = __webpack_require__(23);
+
+var _eventProxy2 = _interopRequireDefault(_eventProxy);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -12834,10 +12841,17 @@ var Setting = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (Setting.__proto__ || Object.getPrototypeOf(Setting)).call(this, props));
 
         _this.style = _this.style.bind(_this);
+        _this.handleConfigChange = _this.handleConfigChange.bind(_this);
         return _this;
     }
 
     _createClass(Setting, [{
+        key: 'handleConfigChange',
+        value: function handleConfigChange(config) {
+            config = this.props.setConfig(config);
+            _eventProxy2.default.trigger('setConfig', config);
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
@@ -12846,20 +12860,25 @@ var Setting = function (_React$Component) {
                 _react2.default.createElement(
                     'h1',
                     { style: this.style().title },
-                    'SETTING'
+                    this.props.config.language === 'zh' ? '设置' : 'SETTING'
                 ),
                 _react2.default.createElement(
                     'div',
                     { style: this.style().buttonsContainer },
                     _react2.default.createElement(
                         'div',
-                        { style: this.style().button },
-                        '\u4F7F\u7528\u4E2D\u6587'
+                        {
+                            style: this.style().button,
+                            onClick: this.handleConfigChange.bind(null, {
+                                language: this.props.config.language === 'zh' ? 'en' : 'zh'
+                            })
+                        },
+                        this.props.config.language === 'zh' ? 'Use English' : '使用中文'
                     ),
                     _react2.default.createElement(
                         'div',
                         { style: this.style().button },
-                        'Use Markdown'
+                        this.props.config.language === 'zh' ? '使用 Markdown' : 'Use Markdown'
                     )
                 )
             );
@@ -12963,7 +12982,7 @@ var Theme = function (_React$Component) {
                 _react2.default.createElement(
                     'h1',
                     { style: this.style().title },
-                    'THEME'
+                    this.props.config.language === 'zh' ? '主题' : 'THEME'
                 )
             );
         }
@@ -13093,6 +13112,8 @@ var _App = __webpack_require__(140);
 var _App2 = _interopRequireDefault(_App);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+Function.prototype.toString = Object.prototype.toString;
 
 var main = _electron.remote.require('./main.js');
 
@@ -23695,7 +23716,7 @@ var Stack = __webpack_require__(52),
     initCloneObject = __webpack_require__(233),
     isArray = __webpack_require__(10),
     isBuffer = __webpack_require__(60),
-    isObject = __webpack_require__(23),
+    isObject = __webpack_require__(24),
     keys = __webpack_require__(30);
 
 /** Used to compose bitmasks for cloning. */
@@ -23824,7 +23845,7 @@ module.exports = baseClone;
 "use strict";
 
 
-var isObject = __webpack_require__(23);
+var isObject = __webpack_require__(24);
 
 /** Built-in value references. */
 var objectCreate = Object.create;
@@ -24110,7 +24131,7 @@ module.exports = baseIsMatch;
 
 var isFunction = __webpack_require__(112),
     isMasked = __webpack_require__(235),
-    isObject = __webpack_require__(23),
+    isObject = __webpack_require__(24),
     toSource = __webpack_require__(109);
 
 /**
@@ -24293,7 +24314,7 @@ module.exports = baseKeys;
 "use strict";
 
 
-var isObject = __webpack_require__(23),
+var isObject = __webpack_require__(24),
     isPrototype = __webpack_require__(57),
     nativeKeysIn = __webpack_require__(248);
 
@@ -27897,7 +27918,7 @@ module.exports = ChangeEventPlugin;
 
 var _prodInvariant = __webpack_require__(2);
 
-var DOMLazyTree = __webpack_require__(24);
+var DOMLazyTree = __webpack_require__(25);
 var ExecutionEnvironment = __webpack_require__(5);
 
 var createNodesFromMarkup = __webpack_require__(158);
@@ -28401,7 +28422,7 @@ module.exports = HTMLDOMPropertyConfig;
 
 
 
-var ReactReconciler = __webpack_require__(25);
+var ReactReconciler = __webpack_require__(26);
 
 var instantiateReactComponent = __webpack_require__(133);
 var KeyEscapeUtils = __webpack_require__(66);
@@ -28600,14 +28621,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 var _prodInvariant = __webpack_require__(2),
     _assign = __webpack_require__(3);
 
-var React = __webpack_require__(26);
+var React = __webpack_require__(27);
 var ReactComponentEnvironment = __webpack_require__(68);
 var ReactCurrentOwner = __webpack_require__(13);
 var ReactErrorUtils = __webpack_require__(69);
 var ReactInstanceMap = __webpack_require__(33);
 var ReactInstrumentation = __webpack_require__(8);
 var ReactNodeTypes = __webpack_require__(126);
-var ReactReconciler = __webpack_require__(25);
+var ReactReconciler = __webpack_require__(26);
 
 if (process.env.NODE_ENV !== 'production') {
   var checkReactTypeSpec = __webpack_require__(329);
@@ -29509,7 +29530,7 @@ module.exports = ReactCompositeComponent;
 var ReactDOMComponentTree = __webpack_require__(4);
 var ReactDefaultInjection = __webpack_require__(299);
 var ReactMount = __webpack_require__(125);
-var ReactReconciler = __webpack_require__(25);
+var ReactReconciler = __webpack_require__(26);
 var ReactUpdates = __webpack_require__(12);
 var ReactVersion = __webpack_require__(314);
 
@@ -29629,7 +29650,7 @@ var _prodInvariant = __webpack_require__(2),
 
 var AutoFocusUtils = __webpack_require__(270);
 var CSSPropertyOperations = __webpack_require__(272);
-var DOMLazyTree = __webpack_require__(24);
+var DOMLazyTree = __webpack_require__(25);
 var DOMNamespaces = __webpack_require__(64);
 var DOMProperty = __webpack_require__(16);
 var DOMPropertyOperations = __webpack_require__(118);
@@ -30668,7 +30689,7 @@ module.exports = ReactDOMContainerInfo;
 
 var _assign = __webpack_require__(3);
 
-var DOMLazyTree = __webpack_require__(24);
+var DOMLazyTree = __webpack_require__(25);
 var ReactDOMComponentTree = __webpack_require__(4);
 
 var ReactDOMEmptyComponent = function ReactDOMEmptyComponent(instantiate) {
@@ -31225,7 +31246,7 @@ module.exports = ReactDOMNullInputValuePropHook;
 
 var _assign = __webpack_require__(3);
 
-var React = __webpack_require__(26);
+var React = __webpack_require__(27);
 var ReactDOMComponentTree = __webpack_require__(4);
 var ReactDOMSelect = __webpack_require__(120);
 
@@ -31572,7 +31593,7 @@ var _prodInvariant = __webpack_require__(2),
     _assign = __webpack_require__(3);
 
 var DOMChildrenOperations = __webpack_require__(63);
-var DOMLazyTree = __webpack_require__(24);
+var DOMLazyTree = __webpack_require__(25);
 var ReactDOMComponentTree = __webpack_require__(4);
 
 var escapeTextContentForBrowser = __webpack_require__(47);
@@ -33097,7 +33118,7 @@ var ReactInstanceMap = __webpack_require__(33);
 var ReactInstrumentation = __webpack_require__(8);
 
 var ReactCurrentOwner = __webpack_require__(13);
-var ReactReconciler = __webpack_require__(25);
+var ReactReconciler = __webpack_require__(26);
 var ReactChildReconciler = __webpack_require__(279);
 
 var emptyFunction = __webpack_require__(9);

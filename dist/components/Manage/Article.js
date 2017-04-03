@@ -29,7 +29,7 @@ export default class Article extends React.Component {
     }
 
     handleEditArticle() {
-        eventProxy.trigger('editArticle', this.props.data);
+        eventProxy.trigger('editArticle', this.state);
     }
 
     handleConfirm(flag) {
@@ -248,7 +248,8 @@ export default class Article extends React.Component {
                 margin: '10px 30px 0 30px',
                 backgroundColor: 'rgba(255, 255, 255, 0.15)',
                 cursor: 'pointer',
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                letterSpacing: '0.3em'
             }
         }
     }, this.props, this.state)}

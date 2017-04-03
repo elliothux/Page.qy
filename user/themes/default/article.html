@@ -2,10 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    {{ style }}
     <title>{{ title }}</title>
 </head>
 <body>
+<div id="nav">
+    <a href="/">首页</a>
+    <a>标签</a>
+    <a>归档</a>
+    <a>关于</a>
+</div>
+
 <h1 id="title">{{ title }}</h1>
 <div id="content">{{ content }}</div>
+
+{{ script }}
 </body>
 </html>
