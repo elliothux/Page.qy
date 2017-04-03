@@ -34,6 +34,7 @@ export default class App extends React.Component {
                 <Manage
                     db={this.props.db}
                     mainPath={this.props.path}
+                    openWindow={this.props.openWindow}
                 />
             </div>
             <div style={this.style().optionsContainer}>

@@ -13,6 +13,7 @@ ReactDOM.render(
             platform={main.platform}
             db={main.db}
             path={main.path}
+            openWindow={main.openWindow}
         />
     </div>,
     document.getElementById('root')
