@@ -31,13 +31,15 @@ export default class Options extends React.Component {
                         style={this.style().head}
                         src={`${this.props.mainPath}/src/pic/head.png`}
                     />
-                    <div style={this.style().signButton}>Sign Out</div>
+                    <div style={this.style().signButton}>
+                        {this.props.config.language === 'zh' ? '登出' : 'Sign Out'}
+                    </div>
                 </div>
             </div>
             <div style={this.style().optionsContainer}>
-                <Setting/>
-                <Theme/>
-                <About/>
+                <Setting config={this.props.config}/>
+                <Theme config={this.props.config}/>
+                <About config={this.props.config}/>
             </div>
         </div>
     )}
@@ -52,7 +54,7 @@ export default class Options extends React.Component {
                 left: 0, top: 0
             },
             userInfoContainer: {
-                backgroundImage: `url('${this.props.mainPath}/src/pic/backgroundOptions.jpg')`,
+                background: `url('${this.props.mainPath}/src/pic/backgroundOptions.jpg')`,
                 backgroundSize: 'cover',
                 width: '100%',
                 height: '45%',
@@ -110,7 +112,8 @@ export default class Options extends React.Component {
                 color: 'white',
                 fontWeight: 'bold',
                 lineHeight: '35px',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                letterSpacing: '0.1em'
             },
             userName: {
                 fontSize: '2.8em',

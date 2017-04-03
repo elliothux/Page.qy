@@ -79,5 +79,5 @@ exports.db = db;
 exports.path = path.join(__dirname);
 exports.openWindow = openWindow;
 exports.dataToHTML = dataToHTML;
-exports.config = Object.assign(config, {password: '*'});
+exports.config = Object.assign({language: 'zh'}, {password: '*'});
 exports.setConfig = setConfig;

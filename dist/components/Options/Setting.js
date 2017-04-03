@@ -10,10 +10,16 @@ export default class Setting extends React.Component {
 
     render() {return (
         <div style={this.style().container}>
-            <h1 style={this.style().title}>SETTING</h1>
+            <h1 style={this.style().title}>
+                {this.props.config.language === 'zh' ? '设置' : 'SETTING'}
+            </h1>
             <div style={this.style().buttonsContainer}>
-                <div style={this.style().button}>使用中文</div>
-                <div style={this.style().button}>Use Markdown</div>
+                <div style={this.style().button}>
+                    {this.props.config.language === 'zh' ? 'Use English' : '使用中文'}
+                </div>
+                <div style={this.style().button}>
+                    {this.props.config.language === 'zh' ? '使用 Markdown' : 'Use Markdown'}
+                </div>
             </div>
         </div>
     )}

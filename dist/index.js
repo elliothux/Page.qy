@@ -1,3 +1,6 @@
+Function.prototype.toString = Object.prototype.toString;
+
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { remote } from 'electron';

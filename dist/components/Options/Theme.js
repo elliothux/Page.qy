@@ -10,7 +10,9 @@ export default class Theme extends React.Component {
 
     render() {return (
         <div style={this.style().container}>
-            <h1 style={this.style().title}>THEME</h1>
+            <h1 style={this.style().title}>
+                {this.props.config.language === 'zh' ? '主题' : 'THEME'}
+            </h1>
         </div>
     )}
 
