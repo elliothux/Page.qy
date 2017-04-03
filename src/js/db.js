@@ -132,10 +132,11 @@ async function createArticle(data) {
 async function editArticle(data) {
     if (await checkData(data)) {
         const prevArticle = (await find({key: data.key}, article))[0];
+        const changed = compareChange(prevArticle, data);
 
-        if (JSON.stringify(data) === JSON.stringify(prevArticle)) {
+        if (changed.length === 0) {
             const title = prevArticle.title === '' ? 'Untitled Article' : prevArticle.title;
-            console.log(`Nothing changed of article ${title}`);
+            console.log(`Nothing changed of 'article ${title}'`);
             return (await find({key: data.key}, article))[0];
         }
 
@@ -145,6 +146,7 @@ async function editArticle(data) {
             const newHistoryData = {
                 title: prevArticle.title,
                 content: prevArticle.content,
+                changed: changed
             };
             'tags' in prevArticle && (newHistoryData.tags =  prevArticle.tags);
             return newHistoryData;
@@ -183,6 +185,17 @@ async function editArticle(data) {
         }
 
         return true;
+    }
+
+    function compareChange(preData, newData) {
+        const changed = [];
+        preData.title !== newData.title && changed.push('title');
+        preData.content !== newData.content && changed.push('content');
+        let tagChanged = false;
+        for (tag of preData.tags)
+            !newData.tags.includes(tag) && changed.push('tags');
+        tagChanged && changed.push('tags');
+        return changed;
     }
 }
 

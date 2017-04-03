@@ -55,7 +55,35 @@ app.on('activate', () => {
 });
 
 
+function openWindow(path) {
+    let win;
+    win = new BrowserWindow({
+        width: 1200,
+        height: 800,
+        minHeight: 600,
+        minWidth: 400,
+        center: true,
+        show: false
+    });
+
+    win.loadURL(url.format({
+        pathname: path,
+        protocol: 'file',
+        slashes: true
+    }));
+
+    win.on('closed', () => {
+        win = null;
+    });
+
+    win.on('ready-to-show', () => {
+        win.show()
+    });
+}
+
+
 // Functions for rendering process
 exports.platform = platform;
 exports.db = db;
 exports.path = path.join(__dirname);
+exports.openWindow = openWindow;

@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const exec = require('child_process').execSync;
 const GitHub = require('github-api');
-const Git = require('nodegit');
+const Git = require('simple-git');
 
 
 const config = JSON.parse(fs.readFileSync(
@@ -31,13 +31,15 @@ function isRepoExist() {
 }
 
 
+
 async function getRepoPath() {
     const name = config.username;
     if (!fs.readdirSync(userPath).includes(`${name}.github.io`)) {
         if (await isRepoExist())
-            await Git.Clone(
+            await Git(userPath).clone(
                 `https://github.com/${name}/${name}.github.io`,
-                path.join(userPath, `/${name}.github.io`));
+                path.join(userPath, `/${name}.github.io`)
+            );
         else
             await gh.getUser().createRepo({name: `${name}.github.io`});
     }
@@ -45,3 +47,14 @@ async function getRepoPath() {
 }
 
 
+async function pushRepo() {
+    const path = await getRepoPath();
+    const URL = `https://github.com/${config.username}/${config.username}.github.io`;
+    await Git(path)
+        .add(`./*`)
+        .commit('Update')
+        .push(['-u', 'origin', 'master'])
+}
+
+
+// pushRepo().then(a => console.log(a));
