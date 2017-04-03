@@ -35,7 +35,9 @@ export default class Nav extends React.Component {
                     onClick={this.handleViewChange.bind(null, 'preview')}
                 >
                     <img style={this.style().navButtonImg} src="../../src/pic/previewNav.svg"/>
-                    <p style={this.style().navBottomText}>PREVIEW</p>
+                    <p style={this.style().navBottomText}>
+                        {this.props.config.language === 'zh' ? '预览' : 'PREVIEW'}
+                    </p>
                 </div>
                 <div
                     style={Object.assign({}, this.style().navButtonContainer,
@@ -45,7 +47,9 @@ export default class Nav extends React.Component {
                     onClick={this.handleViewChange.bind(null, 'manage')}
                 >
                     <img style={this.style().navButtonImg} src="../../src/pic/manageNav.svg"/>
-                    <p style={this.style().navBottomText}>MANAGE</p>
+                    <p style={this.style().navBottomText}>
+                        {this.props.config.language === 'zh' ? '管理' : 'MANAGE'}
+                    </p>
                 </div>
                 <div
                     style={Object.assign({}, this.style().navButtonContainer,
@@ -55,7 +59,9 @@ export default class Nav extends React.Component {
                     onClick={this.handleViewChange.bind(null, 'options')}
                 >
                     <img style={this.style().navButtonImg} src="../../src/pic/optionsNav.svg"/>
-                    <p style={this.style().navBottomText}>OPTIONS</p>
+                    <p style={this.style().navBottomText}>
+                        {this.props.config.language === 'zh' ? '选项' : 'OPTIONS'}
+                    </p>
                 </div>
             </div>
             <img style={this.style().toggleButton} src="../../src/pic/toggleNav.svg"/>

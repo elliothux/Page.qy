@@ -5,7 +5,8 @@ const Git = require('simple-git');
 
 
 const config = JSON.parse(fs.readFileSync(
-    path.join(__dirname, '../../user/config.json')
+    path.join(__dirname, '../../user/config.json'),
+    'utf-8'
 ));
 const userPath = path.join(__dirname, '../../user/');
 

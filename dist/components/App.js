@@ -13,8 +13,16 @@ export default class App extends React.Component {
         this.style = this.style.bind(this);
 
         this.state = {
-            viewState: 'manage'
+            viewState: 'manage',
+            config: {}
         }
+    }
+
+    componentWillMount() {
+        this.setState({ config: this.props.config });
+        eventProxy.on('setConfig', function (config) {
+            this.setState({ config: config })
+        }.bind(this))
     }
 
     componentDidMount() {
@@ -26,7 +34,10 @@ export default class App extends React.Component {
 
     render() {return (
         <div>
-            <Nav mainView={this.state.viewState}/>
+            <Nav
+                mainView={this.state.viewState}
+                config={this.state.config}
+            />
             <div style={this.style().previewContainer}>
                 <Preview/>
             </div>
@@ -36,11 +47,13 @@ export default class App extends React.Component {
                     mainPath={this.props.path}
                     openWindow={this.props.openWindow}
                     dataToHTML = {this.props.dataToHTML}
+                    config={this.state.config}
                 />
             </div>
             <div style={this.style().optionsContainer}>
                 <Options
                     mainPath={this.props.path}
+                    config={this.state.config}
                 />
             </div>
         </div>
