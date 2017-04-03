@@ -54,7 +54,8 @@ export default class Manage extends React.Component {
                         mainPath={this.props.mainPath}
                         data={article}
                         db={this.props.db}
-                        transformHeight={this.state.deletedArticleHeight}
+                        openWindow={this.props.openWindow}
+                        dataToHTML = {this.props.dataToHTML}
                     />
                 ))}
             </div>

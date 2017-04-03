@@ -1,5 +1,10 @@
 {
   "username": "HuQingyang",
   "password": "hqy5345",
-  "name": null
+  "name": null,
+
+  "language": "ch",
+  "theme": "default",
+  "editor": "default",
+  "UITheme": "default"
 }

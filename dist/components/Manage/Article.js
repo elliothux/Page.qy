@@ -10,6 +10,7 @@ export default class Article extends React.Component {
         this.handleEditArticle = this.handleEditArticle.bind(this);
         this.handleConfirm = this.handleConfirm.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
+        this.handlePreview = this.handlePreview.bind(this);
 
         this.state = {
             date: this.props.data.createDate,
@@ -42,6 +43,14 @@ export default class Article extends React.Component {
         setTimeout(function () {
             this.refs.article.style.display = 'none';
         }.bind(this), 600)
+    }
+
+    handlePreview() {
+        const path = this.props.dataToHTML.dataToArticle(this.state);
+        this.props.openWindow(path, {
+            width: 1000,
+            height: 700
+        });
     }
 
     render() {return(
@@ -84,7 +93,10 @@ export default class Article extends React.Component {
                     />
                     <p style={this.style().operateButtonText}>EDIT</p>
                 </div>
-                <div style={this.style().operateButton}>
+                <div
+                    style={this.style().operateButton}
+                    onClick={this.handlePreview}
+                >
                     <img
                         style={this.style().operateButtonImg}
                         src={this.props.mainPath + "/src/pic/previewOperate.svg"}

@@ -13,7 +13,7 @@ export default class App extends React.Component {
         this.style = this.style.bind(this);
 
         this.state = {
-            viewState: 'options'
+            viewState: 'manage'
         }
     }
 
@@ -35,6 +35,7 @@ export default class App extends React.Component {
                     db={this.props.db}
                     mainPath={this.props.path}
                     openWindow={this.props.openWindow}
+                    dataToHTML = {this.props.dataToHTML}
                 />
             </div>
             <div style={this.style().optionsContainer}>

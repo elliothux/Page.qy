@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const exec = require('child_process').execSync;
 const GitHub = require('github-api');
 const Git = require('simple-git');
 
