@@ -7,7 +7,7 @@ const db = require('./src/js/db');
 const dataToHTML = require('./src/js/dataToHTML');
 const {app, BrowserWindow} = electron;
 const config = JSON.parse(fs.readFileSync(
-    path.join(__dirname, '../../user/config.json')
+    path.join(__dirname, './user/config.json')
 ));
 
 
@@ -56,8 +56,8 @@ function openWindow(path, options, isMax) {
 // App events
 app.on('ready',
     openWindow.bind(null,
-        path.join(__dirname, './src/html/index.html')),
-    true
+        path.join(__dirname, './src/html/index.html'),
+        null, true)
 );
 
 app.on('window-all-closed', () => {
@@ -65,7 +65,8 @@ app.on('window-all-closed', () => {
 });
 
 app.on('activate', () => {
-    win === null && createWindow();
+    win === null &&
+        openWindow(path.join(__dirname, './src/html/index.html'), null, true);
     win.show();
 });
 
@@ -77,4 +78,4 @@ exports.db = db;
 exports.path = path.join(__dirname);
 exports.openWindow = openWindow;
 exports.dataToHTML = dataToHTML;
-exports.config = config;
+exports.config = Object.assign(config, {password: '*'});

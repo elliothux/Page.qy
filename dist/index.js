@@ -15,6 +15,7 @@ ReactDOM.render(
             path={main.path}
             openWindow={main.openWindow}
             dataToHTML = {main.dataToHTML}
+            config={main.config}
         />
     </div>,
     document.getElementById('root')
