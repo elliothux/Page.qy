@@ -1,7 +1,5 @@
 {
-  "user": {
-    "name": "HuQingyang",
-    "password": "hqy5345",
-    "auth": ""
-  }
+  "username": "HuQingyang",
+  "password": "hqy5345",
+  "name": null
 }

@@ -5,8 +5,10 @@
   "main": "main.js",
   "dependencies": {
     "electron": "^1.6.2",
+    "github": "^9.2.0",
     "github-api": "^3.0.0",
     "nedb": "^1.8.0",
+    "nodegit": "^0.18.0",
     "react": "^15.4.2",
     "react-addons-pure-render-mixin": "^15.4.2",
     "react-dom": "^15.4.2",

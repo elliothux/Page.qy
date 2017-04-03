@@ -67,7 +67,6 @@ input, button, textarea, :focus {
     }
     100% {
         transform: translateX(calc(100% + 50px));
-        width: 0;
         height: 0;
         margin: 0;
         opacity: 0;
@@ -80,7 +79,7 @@ input, button, textarea, :focus {
     overflow: hidden
 }
 .articleContainer.deleted {
-    animation: moveDeletedArticle ease 400ms forwards,
+    animation: moveDeletedArticle ease-out 400ms forwards,
         hideDeletedArticle ease 200ms 400ms forwards;
 }
 

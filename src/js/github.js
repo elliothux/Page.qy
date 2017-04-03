@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const exec = require('child_process').execSync;
 const GitHub = require('github-api');
+const Git = require('nodegit');
 
 
 const config = JSON.parse(fs.readFileSync(
@@ -10,40 +11,37 @@ const config = JSON.parse(fs.readFileSync(
 const userPath = path.join(__dirname, '../../user/');
 
 
+const gh = new GitHub({
+    username: config.username,
+    password: config.password
+});
+
 
 function isRepoExist() {
-    const gh = new GitHub({
-        username: config.user.name,
-        password: config.user.password
-    });
-    const user = gh.getUser();
     return new Promise((resolve, reject) => {
-        user.listRepos((error, gists) => {
-            error && reject(error);
+        gh.getUser().listRepos().then(repos => {
             let exist = false;
-            for (let each in gists)
-                if (gists[each].name.toLowerCase() ===
-                    `${config.user.name}.github.io`.toLowerCase())
+            for (repo of repos.data)
+                if (repo.name.toLowerCase() ===
+                    `${config.username}.github.io`.toLowerCase())
                     exist = true;
             resolve(exist);
-        })
-    });
+        }).catch(error => reject(error))
+    })
 }
 
 
-async function getGitPath() {
-    let dir = fs.readdirSync(userPath);
-    if (!dir.includes(`${config.user.name}.github.io`)) {
+async function getRepoPath() {
+    const name = config.username;
+    if (!fs.readdirSync(userPath).includes(`${name}.github.io`)) {
         if (await isRepoExist())
-            exec(`cd ${userPath} && 
-            git clone https://github.com/${config.user.name}/${config.user.name}.github.io`);
-        else {
-            exec(`cd ${userPath} && mkdir ${config.user.name}.github.io && 
-            git push origin master`);
-        }
+            await Git.Clone(
+                `https://github.com/${name}/${name}.github.io`,
+                path.join(userPath, `/${name}.github.io`));
+        else
+            await gh.getUser().createRepo({name: `${name}.github.io`});
     }
-    return `${userPath}/${config.user.name}.github.io`
+    return `${userPath}${name}.github.io`;
 }
 
 
-getGitPath().then(path => console.log(path));

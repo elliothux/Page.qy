@@ -36,16 +36,17 @@ export default class Setting extends React.Component {
                 color: '#4A4A4A'
             },
             buttonsContainer: {
-                marginTop: '50px'
+                marginTop: '50px',
             },
             button: {
                 height: '35px',
+                width: 'fit-content',
                 padding: '0 20px',
-                margin: '15px 0',
+                margin: '20px 0',
                 textAlign: 'center',
                 lineHeight: '35px',
                 borderRadius: '50px',
-                display: 'inline-block',
+                display: 'block',
                 backgroundImage: 'linear-gradient(-225deg, rgba(85, 203, 242, 1) 0%, rgba(61, 144, 239, 1) 100%)',
                 color: 'white',
                 fontSize: '1.2em',
