@@ -20,7 +20,7 @@ export default class Options extends React.Component {
                         <h1 style={this.style().userName}>HuQingyang</h1>
                         <div style={this.style().selfIntroduction}>
                             <span style={this.style().selfIntroductionSymbol}>“</span>
-                            <p style={this.style().selfIntroductionText}>Create some awsome things.</p>
+                            <p style={this.style().selfIntroductionText}>Create something awesome.</p>
                         </div>
                         <p style={this.style().articleCount}>
                             Writed <span style={this.style().countNumber}>32</span> articles
@@ -132,7 +132,7 @@ export default class Options extends React.Component {
                 color: '#676667',
                 fontWeight: 'bold',
                 position: 'absolute',
-                left: '-30px',
+                left: '-55px',
                 top: '-10px'
             },
             articleCount: {
