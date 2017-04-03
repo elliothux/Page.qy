@@ -1,11 +1,18 @@
 import React from 'react';
 import reactCSS from 'reactcss';
+import eventProxy from '../../lib/eventProxy';
 
 
 export default class Setting extends React.Component {
     constructor(props) {
         super(props);
         this.style = this.style.bind(this);
+        this.handleConfigChange = this.handleConfigChange.bind(this);
+    }
+
+    handleConfigChange(config) {
+        config = this.props.setConfig(config);
+        eventProxy.trigger('setConfig', config);
     }
 
     render() {return (
@@ -14,7 +21,13 @@ export default class Setting extends React.Component {
                 {this.props.config.language === 'zh' ? '设置' : 'SETTING'}
             </h1>
             <div style={this.style().buttonsContainer}>
-                <div style={this.style().button}>
+                <div
+                    style={this.style().button}
+                    onClick={this.handleConfigChange.bind(null, {
+                        language: this.props.config.language === 'zh' ?
+                            'en' : 'zh'
+                    })}
+                >
                     {this.props.config.language === 'zh' ? 'Use English' : '使用中文'}
                 </div>
                 <div style={this.style().button}>

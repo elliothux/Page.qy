@@ -54,6 +54,7 @@ export default class App extends React.Component {
                 <Options
                     mainPath={this.props.path}
                     config={this.state.config}
+                    setConfig={this.props.setConfig}
                 />
             </div>
         </div>

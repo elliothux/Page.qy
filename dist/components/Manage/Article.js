@@ -91,7 +91,9 @@ export default class Article extends React.Component {
                         style={this.style().operateButtonImg}
                         src={this.props.mainPath + '/src/pic/editOperate.svg'}
                     />
-                    <p style={this.style().operateButtonText}>EDIT</p>
+                    <p style={this.style().operateButtonText}>
+                        {this.props.config.language === 'zh' ? '编辑' : 'EDIT'}
+                    </p>
                 </div>
                 <div
                     style={this.style().operateButton}
@@ -101,21 +103,27 @@ export default class Article extends React.Component {
                         style={this.style().operateButtonImg}
                         src={this.props.mainPath + "/src/pic/previewOperate.svg"}
                     />
-                    <p style={this.style().operateButtonText}>PREVIEW</p>
+                    <p style={this.style().operateButtonText}>
+                        {this.props.config.language === 'zh' ? '预览' : 'PREVIEW'}
+                    </p>
                 </div>
                 <div style={this.style().operateButton}>
                     <img
                         style={this.style().operateButtonImg}
                         src={this.props.mainPath + "/src/pic/uploadOperate.svg"}
                     />
-                    <p style={this.style().operateButtonText}>UPLOAD</p>
+                    <p style={this.style().operateButtonText}>
+                        {this.props.config.language === 'zh' ? '上传' : 'UPLOAD'}
+                    </p>
                 </div>
                 <div style={this.style().operateButton}>
                     <img
                         style={this.style().operateButtonImg}
                         src={this.props.mainPath + "/src/pic/historyOperate.svg"}
                     />
-                    <p style={this.style().operateButtonText}>HISTORY</p>
+                    <p style={this.style().operateButtonText}>
+                        {this.props.config.language === 'zh' ? '历史' : 'HISTORY'}
+                    </p>
                 </div>
                 <div
                     style={this.style().operateButton}
@@ -125,7 +133,9 @@ export default class Article extends React.Component {
                         style={this.style().operateButtonImg}
                         src={this.props.mainPath +"/src/pic/deleteOperate.svg"}
                     />
-                    <p style={this.style().operateButtonText}>DELETE</p>
+                    <p style={this.style().operateButtonText}>
+                        {this.props.config.language === 'zh' ? '删除' : 'DELETE'}
+                    </p>
                 </div>
             </div>
             <div
@@ -133,16 +143,24 @@ export default class Article extends React.Component {
                 ref="confirm"
                 style={this.style().confirmContainer}
             >
-                <h3 style={this.style().confirmTitle}>😱 Do You <b>REALLY</b> Want to Delete This Article?</h3>
+                <h3 style={this.style().confirmTitle}>
+                    {this.props.config.language === 'zh' ?
+                        '😱 你真的确定要删除这篇文章吗？' :
+                        '😱 Do You REALLY Want to Delete This Article?'}
+                </h3>
                 <div>
                     <div
                         style={this.style().confirmButton}
                         onClick={this.handleDelete}
-                    >YES</div>
+                    >
+                        {this.props.config.language === 'zh' ? '是的' : 'YES'}
+                    </div>
                     <div
                         style={this.style().confirmButton}
                         onClick={this.handleConfirm.bind(null, 'off')}
-                    >NO</div>
+                    >
+                        {this.props.config.language === 'zh' ? '算啦' : 'NO'}
+                    </div>
                 </div>
             </div>
         </div>
@@ -220,7 +238,8 @@ export default class Article extends React.Component {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                justifyItems: 'center'
+                justifyItems: 'center',
+                fontSize: 'normal'
             },
             confirmButton: {
                 width: '70px',
@@ -228,7 +247,8 @@ export default class Article extends React.Component {
                 padding: '8px 10px',
                 margin: '10px 30px 0 30px',
                 backgroundColor: 'rgba(255, 255, 255, 0.15)',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                fontWeight: 'bold'
             }
         }
     }, this.props, this.state)}

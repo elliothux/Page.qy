@@ -11,6 +11,6 @@ const config = JSON.parse(fs.readFileSync(target, 'utf-8'));
 
 function setConfig(newConfig) {
     newConfig = Object.assign(config, newConfig);
-    fs.writeFileSync(target, newConfig);
+    fs.writeFileSync(target, JSON.stringify(newConfig));
     return newConfig;
 }
