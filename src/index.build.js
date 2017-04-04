@@ -11672,7 +11672,7 @@ var Article = function (_React$Component) {
                         { style: this.style().operateButton },
                         _react2.default.createElement('img', {
                             style: this.style().operateButtonImg,
-                            src: this.props.mainPath + "/src/pic/uploadOperate.svg"
+                            src: this.props.mainPath + "/src/pic/uploadManage.svg"
                         }),
                         _react2.default.createElement(
                             'p',
