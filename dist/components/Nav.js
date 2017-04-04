@@ -19,11 +19,19 @@ export default class Nav extends React.Component {
 
     render() {return(
         <div style={this.style().container}>
-            <div style={this.style().userArea}>
+            <div
+                style={this.style().userArea}
+                onClick={this.props.openURL.bind(null,
+                    `https://${this.props.config.username}.github.io`)}
+            >
                 <img style={this.style().userHead} src="../../src/pic/head.png"/>
                 <div style={this.style().userInfo}>
-                    <p style={this.style().userName}>HuQingyang</p>
-                    <p style={this.style().userURL}>huqingyang.github.io</p>
+                    <p style={this.style().userName}>
+                        {this.props.config.name}
+                    </p>
+                    <p style={this.style().userURL}>
+                        {`${this.props.config.username}.github.io`}
+                    </p>
                 </div>
             </div>
             <div style={this.style().navArea}>
@@ -85,6 +93,7 @@ export default class Nav extends React.Component {
             userArea: {
                 width: '100%',
                 height: '200px',
+                cursor: 'pointer'
             },
             navArea: {
                 width: '100%',
@@ -104,7 +113,8 @@ export default class Nav extends React.Component {
                 height: '80px',
                 borderRadius: '10px',
                 margin: '25px 0 0 25px',
-                boxShadow: '0px 6px 32px 5px rgba(0,0,0,0.4)'
+                boxShadow: '0px 6px 32px 5px rgba(0,0,0,0.4)',
+                cursor: 'pointer'
             },
             userInfo: {
                 width: 'calc(90% - 15px)',

@@ -3,7 +3,7 @@ Function.prototype.toString = Object.prototype.toString;
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { remote } from 'electron';
+import { remote, shell } from 'electron';
 import App from './components/App';
 
 
@@ -20,6 +20,7 @@ ReactDOM.render(
             dataToHTML = {main.dataToHTML}
             config={main.config}
             setConfig={main.setConfig}
+            openURL={shell.openExternal}
         />
     </div>,
     document.getElementById('root')

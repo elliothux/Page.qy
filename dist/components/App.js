@@ -37,6 +37,7 @@ export default class App extends React.Component {
             <Nav
                 mainView={this.state.viewState}
                 config={this.state.config}
+                openURL={this.props.openURL}
             />
             <div style={this.style().previewContainer}>
                 <Preview/>
