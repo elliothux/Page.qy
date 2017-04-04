@@ -18,13 +18,11 @@
     </div>
     <h1 id="title">{{ title }}</h1>
     <p id="date">
-        <span>{{ date.year }}</span>
-        <span>{{ date.month }}</span>
-        <span>{{ date.date }}</span>
-        <span>{{ date.hours }}</span>
-        <span>{{ date.minutes }}</span>
+        <span>{{ date.year }}/{{ date.month }}/{{ date.date }}</span>&nbsp;&nbsp;&nbsp;
+        <span>{{ date.hours }}:{{ date.minutes }}</span>&nbsp;&nbsp;&nbsp;
         <span>{{ date.day }}</span>
     </p>
+    <img id="headImg" src="{{ static }}/article.svg">
 </div>
 
 <div id="content">{{ content }}</div>

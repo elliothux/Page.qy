@@ -2,7 +2,6 @@
     margin: 0;
     padding: 0;
     font-family: Microsoft Yahei, "Microsoft Sans Serif", "Apple Braille";
-    font-size: 15px;
 }
 
 
@@ -11,11 +10,23 @@
     height: 260px;
     padding: 30px 5%;
     background-image: linear-gradient(-225deg, rgb(85, 203, 242) 0%, rgb(61, 144, 239) 100%);
+    position: relative;
 }
 
 #homeIcon > img {
     width: 40px;
     height: 40px;
+}
+
+
+#headImg {
+    position: absolute;
+    width: auto;
+    height: 180px;
+    right: 100px;
+    bottom: -20px;
+    opacity: 0.2;
+    z-index: 0;
 }
 
 #nav {
@@ -37,7 +48,7 @@
     font-size: 3em;
     color: white;
     font-weight: bold;
-    margin: 100px 0 0 0;
+    margin: 70px 0 0 0;
     letter-spacing: 0.1em;
 }
 
@@ -45,19 +56,80 @@
     font-size: 1.2em;
     color: white;
     font-weight: lighter;
-    margin: 50px 0 0 0;
+    margin: 70px 0 0 0;
     letter-spacing: 0.15em;
-    opacity: 0.7;
 }
 
 #content {
     width: 55%;
     float: left;
-    margin: 0 2% 0 5%;
+    margin: 50px 2% 0 5%;
+    color: #444444;
+    font-weight: lighter;
 }
 
 #userInfo {
     width: 31%;
     float: right;
-    margin: 0 5% 0 2%;
+    margin: 50px 2% 0 5%
+}
+
+#content p {
+    font-size: 1em;
+    letter-spacing: 0.08em;
+    margin: 20px 0 20px 0;
+    font-weight: lighter;
+}
+
+#content :first-child {
+    margin-top: 0;
+}
+
+#content h2 {
+    font-size: 2em;
+    letter-spacing: 0.1em;
+    font-weight: bold;
+    font-style: italic;
+    color: black;
+    margin: 30px 0 0 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #dcdcdc;
+    position: relative;
+    left: -8px;
+}
+
+#content h3 {
+    font-size: 1.4em;
+    letter-spacing: 0.05em;
+    font-weight: bold;
+    color: #313131;
+    margin: 20px 0 0 6px;
+    padding-bottom: 8px;
+    position: relative;
+    left: -5px;
+}
+
+#content a {
+    text-decoration: none;
+    color: #00d9d9;
+}
+
+#content ul, #content ol {
+    margin: 20px 0;
+    position: relative;
+    left: 30px;
+    width: calc(100% - 30px);
+}
+
+#content li {
+    margin: 10px 0;
+    color: #606060;
+}
+
+#content figure {
+    padding: 10px 15px;
+    background-color: #f8f8f8;
+    border-radius: 2px;
+    overflow: auto;
+    width: 100%;
 }
