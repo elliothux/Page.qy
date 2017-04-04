@@ -47,6 +47,9 @@ export default class Article extends React.Component {
             await this.props.db.unPublishArticle(this.state.key) :
             await this.props.db.publishArticle(this.state.key);
         this.setState({ published: published });
+        published && this.props.dataToHTML.dataToArticle(
+            Object.assign(this.props.data, this.state)
+        );
     }
 
     async handleDelete() {
@@ -58,11 +61,31 @@ export default class Article extends React.Component {
     }
 
     handlePreview() {
-        const path = this.props.dataToHTML.dataToArticle(this.state);
+        const path = this.props.dataToHTML.dataToArticle(
+            Object.assign(this.props.data, this.state)
+        );
         this.props.openWindow(path, {
             width: 1000,
             height: 700
         });
+    }
+
+    dateToString(date) {
+        date = new Date(date);
+        const daysZh = ['日', '一','二','三','四','五','六'];
+        const daysEn = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
+            'Thursday', 'Friday', 'Saturday'];
+        const [year, month, dateString, hours, minutes, day] = [
+            date.getFullYear(),
+            date.getMonth()+1,
+            date.getDate(),
+            date.getHours() < 10 ? '0' + date.getHours() : date.getHours(),
+            date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes(),
+            date.getDay()
+        ];
+        return this.props.config.language === 'zh' ?
+            `${year}年${month}月${dateString}日        ${hours}:${minutes}        星期${daysZh[day]}` :
+            `${year}/${month}/${dateString}        ${hours}:${minutes}        ${daysEn[day]}`
     }
 
     render() {return(
@@ -75,7 +98,7 @@ export default class Article extends React.Component {
                 ref="contentContainer"
                 style={this.style().contentContainer}
             >
-                <p style={this.style().date}>{this.state.date}</p>
+                <p style={this.style().date}>{this.dateToString(this.state.date)}</p>
                 {this.state.tags && this.state.tags.map((tag, index) => (
                     <p
                         style={this.style().tags}
