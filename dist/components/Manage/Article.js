@@ -11,21 +11,26 @@ export default class Article extends React.Component {
         this.handleConfirm = this.handleConfirm.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.handlePreview = this.handlePreview.bind(this);
+        this.handlePublish = this.handlePublish.bind(this);
 
         this.state = {
             date: this.props.data.createDate,
             tags: this.props.data.tags,
             title: this.props.data.title,
             content: this.props.data.content,
-            key: this.props.data.key
+            key: this.props.data.key,
+            published: false
         }
     }
 
-    componentWillMount() {
+    async componentWillMount() {
         eventProxy.on('updateArticleData', function (data) {
             if (data.key !== this.state.key) return;
             this.setState(data)
-        }.bind(this))
+        }.bind(this));
+        this.setState({
+            published: await this.props.db.isArticlePublished(this.props.data.key)
+        })
     }
 
     handleEditArticle() {
@@ -35,6 +40,13 @@ export default class Article extends React.Component {
     handleConfirm(flag) {
         this.refs.confirm.className =
             `articleConfirm${flag === 'on' ? ' activated' : ''}`
+    }
+
+    async handlePublish() {
+        const published = this.state.published ?
+            await this.props.db.unPublishArticle(this.state.key) :
+            await this.props.db.publishArticle(this.state.key);
+        this.setState({ published: published });
     }
 
     async handleDelete() {
@@ -107,13 +119,19 @@ export default class Article extends React.Component {
                         {this.props.config.language === 'zh' ? '预览' : 'PREVIEW'}
                     </p>
                 </div>
-                <div style={this.style().operateButton}>
+                <div
+                    style={this.style().operateButton}
+                    onClick={this.handlePublish}
+                >
                     <img
                         style={this.style().operateButtonImg}
-                        src={this.props.mainPath + "/src/pic/uploadOperate.svg"}
+                        src={this.props.mainPath + "/src/pic/publishOperate.svg"}
                     />
                     <p style={this.style().operateButtonText}>
-                        {this.props.config.language === 'zh' ? '上传' : 'UPLOAD'}
+                        {this.state.published ?
+                            (this.props.config.language === 'zh' ? '取消待发布' : 'UNPUBLISH') :
+                            (this.props.config.language === 'zh' ? '待发布' : 'PUBLISH')
+                        }
                     </p>
                 </div>
                 <div style={this.style().operateButton}>

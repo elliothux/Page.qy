@@ -49,7 +49,6 @@ export default class Manage extends React.Component {
             <div style={this.style().articleContainer}>
                 {this.state.articleList.map((article, index) => (
                     <Article
-                        isNew={false}
                         key={this.state.articleList.length - index}
                         mainPath={this.props.mainPath}
                         data={article}

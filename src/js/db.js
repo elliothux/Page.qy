@@ -9,6 +9,8 @@ const article = new DataStore({
     autoload: true
 });
 
+
+
 // Export functions to call
 module.exports.isArticleExist = isArticleExist;
 module.exports.createArticle = createArticle;
@@ -16,6 +18,9 @@ module.exports.editArticle = editArticle;
 module.exports.deleteArticle = deleteArticle;
 module.exports.getArticleList =getArticleList;
 module.exports.editArticle = editArticle;
+module.exports.publishArticle = publishArticle;
+module.exports.unPublishArticle = unPublishArticle;
+module.exports.isArticlePublished = isArticlePublished;
 
 
 // Generate an unique key
@@ -37,14 +42,14 @@ async function keyGenerator() {
 
 
 // Rewrite 'insert' method using 'async/await'
-async function insert(options, db) {
-    if (!options || typeof options !== 'object') {
-        console.error(`Function 'insert' except an object instead of ${typeof options} as the first argument.`);
+async function insert(data, db) {
+    if (!data || typeof data !== 'object') {
+        console.error(`Function 'insert' except an object instead of ${typeof data} as the first argument.`);
         return;
     }
 
     return new Promise((resolve, reject) => {
-        db.insert(options, (error, doc) => {
+        db.insert(data, (error, doc) => {
             error && reject(`An error occurred inside the 'insert' function.`);
             doc && resolve(doc);
         })
@@ -53,14 +58,14 @@ async function insert(options, db) {
 
 
 // Rewrite 'update' method using 'async/await'
-async function update(options, db) {
-    if (!options || typeof options !== 'object') {
+async function update(data, db) {
+    if (!data || typeof data !== 'object') {
         console.error(`Function 'update' except an object instead of ${typeof options} as the first argument.`);
         return;
     }
 
     return new Promise((resolve, reject) => {
-        db.update({key: options.key}, options, {}, (error, doc) => {
+        db.update({key: data.key}, data, {}, (error, doc) => {
             error && reject(`An error occurred inside the 'update' function: ${error}`);
             doc && resolve(doc);
         })
@@ -69,15 +74,15 @@ async function update(options, db) {
 
 
 // Rewrite 'find' method using 'async/await'
-async function find(options, db) {
-    !options && (options = {});
-    if (typeof options !== 'object') {
-        options = {};
-        console.error(`Function 'find' except an object instead of ${typeof options} as the first argument.`);
+async function find(data, db) {
+    !data && (data = {});
+    if (typeof data !== 'object') {
+        data = {};
+        console.error(`Function 'find' except an object instead of ${typeof data} as the first argument.`);
     }
 
     return new Promise((resolve, reject) => {
-        db.find(options).exec((error, docs) => {
+        db.find(data).exec((error, docs) => {
             error && reject(`An error occurred inside the 'find' function.`);
             docs && resolve(docs);
         })
@@ -86,16 +91,16 @@ async function find(options, db) {
 
 
 // Rewrite 'remove' method using 'async/await'
-async function remove(options, db) {
-    if (!options || typeof options !== 'object') {
-        console.error(`Function 'remove' except an object instead of ${typeof options} as the first argument.`);
+async function remove(data, db) {
+    if (!data || typeof data !== 'object') {
+        console.error(`Function 'remove' except an object instead of ${typeof data} as the first argument.`);
         return;
     }
 
     return new Promise((resolve, reject) => {
-        db.remove(options, {}, (error) => {
+        db.remove(data, {}, (error) => {
             error && reject('An error occurred inside the database.');
-            resolve(options);
+            resolve(data);
         })
     })
 }
@@ -120,7 +125,8 @@ async function createArticle(data) {
         key: await keyGenerator(),
         createDate: (new Date()).toString(),
         editDate: (new Date()).toString(),
-        historyContent: {}
+        historyContent: {},
+        type: 'article'
     };
     const newArticle = await insert(Object.assign(data, options), article);
     const title = newArticle.title === '' ? 'Untitled Article' : newArticle.title;
@@ -191,9 +197,14 @@ async function editArticle(data) {
         const changed = [];
         preData.title !== newData.title && changed.push('title');
         preData.content !== newData.content && changed.push('content');
+        if (preData.tags.length !== newData.tags.length) {
+            changed.push('tags');
+            return changed;
+        }
+
         let tagChanged = false;
-        for (tag of preData.tags)
-            !newData.tags.includes(tag) && changed.push('tags');
+        for (tag of newData.tags)
+            !preData.tags.includes(tag) && (tagChanged = true);
         tagChanged && changed.push('tags');
         return changed;
     }
@@ -219,17 +230,64 @@ async function deleteArticle(key) {
 
 // Pass an optional argument 'tags' to get articles
 async function getArticleList(tags) {
-    return (await find(tags ? {tags: tags} : {}, article));
+    return (await find({type: 'article'}, article));
 }
 
 
-async function test() {
-    const data = {
-        title: 'Hey! 写点什么吧!',
-        content: '😉恭喜! 你已经完成了了设置 Site.qy 的最后一步! Site.qy 是一个轻量级且易于使用的博客框架。现在开始, 享受使用它写博客的感觉吧~',
-        tags: ['欢迎', '教程']
-    };
-    return await createArticle(data)
+
+async function publishArticle(key) {
+    const data = (await find({key: 'publishedArticle'}, article))[0];
+    const list = data.list;
+    if (!list.includes(key))
+        list.push(key);
+    await update({
+        key: 'publishedArticle',
+        list: list
+    }, article);
+    console.log(`Published article '${(await find({key: key}, article)).title}' success!`);
+    return await isArticlePublished(key);
 }
 
-// test().then(a => console.log(a));
+
+async function unPublishArticle(key) {
+    const data = (await find({key: 'publishedArticle'}, article))[0];
+    const list = data.list;
+    const index = list.indexOf(key);
+    if (index < 0)
+        return false;
+    await update({
+        key: 'publishedArticle',
+        list: deleteElement(list, index)
+    }, article);
+    console.log(`Unpublished article '${(await find({key: key}, article)).title}' success!`);
+    return await isArticlePublished(key);
+
+    function deleteElement(array, index) {
+        const a = array.splice(0, index);
+        array.shift();
+        return a.concat(array)
+    }
+}
+
+
+async function isArticlePublished(key) {
+    let data = await find({key: 'publishedArticle'}, article);
+    if (data.length === 0) {
+        await insert({
+            key: 'publishedArticle',
+            list: [key]
+        }, article);
+        return false
+    }
+    const list = data[0].list;
+    return list.includes(key)
+}
+
+
+
+// async function test() {
+//     await publishArticle('6z68ph');
+//     return await isArticlePublished('6z68ph')
+// }
+//
+// test().then(a => console.log(a))

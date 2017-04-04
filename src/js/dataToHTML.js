@@ -9,13 +9,13 @@ const config = JSON.parse(fs.readFileSync(
     path.join(__dirname, '../../user/config.json'),
     'utf-8'
 ));
-const templates = path.join(__dirname, `../../user/themes/${config.theme}/`);
+const theme = path.join(__dirname, `../../user/themes/${config.theme}/`);
 const target = path.join(__dirname, '../../user/temp/');
 
 
 function dataToArticle(data) {
     let article = fs.readFileSync(
-        path.join(templates, 'article.html'),
+        path.join(theme, './templates/article.html'),
         'utf-8'
     );
     article = article.replace(
@@ -42,12 +42,14 @@ function dataToArticle(data) {
     !fs.existsSync(targetPath) && fs.mkdirSync(targetPath);
     fs.writeFileSync(path.join(targetPath, 'index.html'), article, 'utf-8');
     fs.copySync(
-        path.join(templates, './css/'),
+        path.join(theme, './css/'),
         path.join(target, './static/css/')
     );
     fs.copySync(
-        path.join(templates, './js/'),
+        path.join(theme, './js/'),
         path.join(target, './static/js/')
     );
     return path.join(targetPath, 'index.html')
 }
+
+

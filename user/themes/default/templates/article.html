@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {{ style }}
+    <title>{{ title }}</title>
+</head>
+<body>
+<div id="nav">
+    <a id="navHome" href="/">首页</a>
+    <a id="navTags">标签</a>
+    <a id="navArchives">归档</a>
+    <a id="navAbout">关于</a>
+</div>
+
+<h1 id="title">{{ title }}</h1>
+<p id="date">{{ date }}</p>
+<div id="content">{{ content }}</div>
+<div id="userInfo">
+    <div id="avatar">{{ avatar }}</div>
+    <div id="selfIntroduction">{{ selfIntroduction }}</div>
+    <div id="tags">{{ tags }}</div>
+    <div id="archives">{{ archives }}</div>
+</div>
+
+{{ script }}
+</body>
+</html>
