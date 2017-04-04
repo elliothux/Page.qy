@@ -244,7 +244,7 @@ async function publishArticle(key) {
         key: 'publishedArticle',
         list: list
     }, article);
-    console.log(`Published article '${(await find({key: key}, article)).title}' success!`);
+    console.log(`Published article '${(await find({key: key}, article))[0].title}' success!`);
     return await isArticlePublished(key);
 }
 
@@ -259,7 +259,7 @@ async function unPublishArticle(key) {
         key: 'publishedArticle',
         list: deleteElement(list, index)
     }, article);
-    console.log(`Unpublished article '${(await find({key: key}, article)).title}' success!`);
+    console.log(`Unpublished article '${(await find({key: key}, article))[0].title}' success!`);
     return await isArticlePublished(key);
 
     function deleteElement(array, index) {
