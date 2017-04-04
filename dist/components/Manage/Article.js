@@ -84,8 +84,8 @@ export default class Article extends React.Component {
             date.getDay()
         ];
         return this.props.config.language === 'zh' ?
-            `${year}年${month}月${dateString}日        ${hours}:${minutes}        星期${daysZh[day]}` :
-            `${year}/${month}/${dateString}        ${hours}:${minutes}        ${daysEn[day]}`
+            `${year}年${month}月${dateString}日\xa0\xa0\xa0\xa0\xa0\xa0${hours}:${minutes}\xa0\xa0\xa0\xa0\xa0\xa0星期${daysZh[day]}` :
+            `${year}/${month}/${dateString}\xa0\xa0\xa0\xa0\xa0\xa0${hours}:${minutes}\xa0\xa0\xa0\xa0\xa0\xa0${daysEn[day]}`
     }
 
     render() {return(
@@ -101,7 +101,9 @@ export default class Article extends React.Component {
                 <p style={this.style().date}>{this.dateToString(this.state.date)}</p>
                 {this.state.tags && this.state.tags.map((tag, index) => (
                     <p
-                        style={this.style().tags}
+                        style={Object.assign(this.style().tags, {
+                            marginLeft: index === 0 ? '40px': 0
+                        })}
                         key={index}
                     >#{tag}</p>
                 ))}
@@ -110,7 +112,13 @@ export default class Article extends React.Component {
                         'Untitled Article' : this.state.title}
                 </p>
                 <div dangerouslySetInnerHTML={{
-                    __html: this.state.content.split('<p><br></p>').join('')
+                    __html: function () {
+                        let container = document.createElement('div');
+                        container.innerHTML = this.state.content;
+                        container = container.firstChild;
+                        container.innerHTML = container.innerHTML + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0......';
+                        return container.outerHTML
+                    }.bind(this)()
                 }}/>
             </div>
             <div
@@ -230,7 +238,7 @@ export default class Article extends React.Component {
             },
             tags: {
                 display: 'inline-block',
-                marginRight: '10px'
+                marginRight: '20px'
             },
             title: {
                 fontSize: '2em',

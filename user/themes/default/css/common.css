@@ -2,5 +2,62 @@
     margin: 0;
     padding: 0;
     font-family: Microsoft Yahei, "Microsoft Sans Serif", "Apple Braille";
-    font-size: 12px;
+    font-size: 15px;
+}
+
+
+#header {
+    width: 90%;
+    height: 260px;
+    padding: 30px 5%;
+    background-image: linear-gradient(-225deg, rgb(85, 203, 242) 0%, rgb(61, 144, 239) 100%);
+}
+
+#homeIcon > img {
+    width: 40px;
+    height: 40px;
+}
+
+#nav {
+    float: right;
+    margin-top: 20px;
+}
+
+#nav > a {
+    color: white;
+    font-size: 1.1em;
+    font-weight: lighter;
+    text-decoration: none;
+    cursor: pointer;
+    letter-spacing: 0.2em;
+    margin-left: 20px;
+}
+
+#title {
+    font-size: 3em;
+    color: white;
+    font-weight: bold;
+    margin: 100px 0 0 0;
+    letter-spacing: 0.1em;
+}
+
+#date {
+    font-size: 1.2em;
+    color: white;
+    font-weight: lighter;
+    margin: 50px 0 0 0;
+    letter-spacing: 0.15em;
+    opacity: 0.7;
+}
+
+#content {
+    width: 55%;
+    float: left;
+    margin: 0 2% 0 5%;
+}
+
+#userInfo {
+    width: 31%;
+    float: right;
+    margin: 0 5% 0 2%;
 }
