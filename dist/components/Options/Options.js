@@ -20,7 +20,9 @@ export default class Options extends React.Component {
                         <h1 style={this.style().userName}>HuQingyang</h1>
                         <div style={this.style().selfIntroduction}>
                             <span style={this.style().selfIntroductionSymbol}>“</span>
-                            <p style={this.style().selfIntroductionText}>Create something awesome.</p>
+                            <p style={this.style().selfIntroductionText}>
+                                {this.props.config.selfIntroduction}
+                            </p>
                         </div>
                         <p style={this.style().articleCount}>
                             Writed <span style={this.style().countNumber}>32</span> articles
