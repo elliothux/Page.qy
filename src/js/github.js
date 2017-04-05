@@ -2,14 +2,11 @@ const fs = require('fs');
 const path = require('path');
 const GitHub = require('github-api');
 const Git = require('simple-git');
+const config = require('./config').get();
+const setConfig = require('./config').set;
 
 
-const config = JSON.parse(fs.readFileSync(
-    path.join(__dirname, '../../user/config.json'),
-    'utf-8'
-));
 const userPath = path.join(__dirname, '../../user/');
-
 
 const gh = new GitHub({
     username: config.username,
@@ -57,4 +54,20 @@ async function pushRepo() {
 }
 
 
-// pushRepo().then(a => console.log(a));
+async function getUserInfo() {
+    const info = (await gh.getUser().getProfile()).data;
+    const [avatar, name, mail, username] = [
+        info.avatar_url,
+        info.name,
+        info.email,
+        info.login
+    ];
+    setConfig({
+        avatar: avatar,
+        name: name,
+        mail: mail,
+        username: username
+    })
+}
+
+getUserInfo().then(a => console.log(a));

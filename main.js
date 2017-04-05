@@ -5,11 +5,8 @@ const fs = require('fs');
 const platform = require('os').platform();
 const db = require('./src/js/db');
 const dataToHTML = require('./src/js/dataToHTML');
-const setConfig = require('./src/js/setConfig').setConfig;
+const config = require('./src/js/config');
 const {app, BrowserWindow} = electron;
-const config = JSON.parse(fs.readFileSync(
-    path.join(__dirname, './user/config.json')
-));
 
 
 let win;
@@ -79,5 +76,4 @@ exports.db = db;
 exports.path = path.join(__dirname);
 exports.openWindow = openWindow;
 exports.dataToHTML = dataToHTML;
-exports.config = Object.assign(config, {password: '*'});
-exports.setConfig = setConfig;
+exports.config = config;

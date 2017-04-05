@@ -18,8 +18,8 @@ ReactDOM.render(
             path={main.path}
             openWindow={main.openWindow}
             dataToHTML = {main.dataToHTML}
-            config={main.config}
-            setConfig={main.setConfig}
+            config={main.config.get()}
+            setConfig={main.config.set}
             openURL={shell.openExternal}
         />
     </div>,
