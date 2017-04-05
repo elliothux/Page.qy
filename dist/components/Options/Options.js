@@ -17,7 +17,9 @@ export default class Options extends React.Component {
                 <div style={this.style().background}/>
                 <div style={this.style().userInfo}>
                     <div style={this.style().info}>
-                        <h1 style={this.style().userName}>HuQingyang</h1>
+                        <h1 style={this.style().userName}>
+                            {this.props.config.name || this.props.config.username}
+                        </h1>
                         <div style={this.style().selfIntroduction}>
                             <span style={this.style().selfIntroductionSymbol}>“</span>
                             <p style={this.style().selfIntroductionText}>
@@ -31,7 +33,7 @@ export default class Options extends React.Component {
                     </div>
                     <img
                         style={this.style().head}
-                        src={`${this.props.mainPath}/src/pic/head.png`}
+                        src={this.props.config.avatar || "../../src/pic/head.png"}
                     />
                     <div style={this.style().signButton}>
                         {this.props.config.language === 'zh' ? '登出' : 'Sign Out'}

@@ -24,10 +24,13 @@ export default class Nav extends React.Component {
                 onClick={this.props.openURL.bind(null,
                     `https://${this.props.config.username}.github.io`)}
             >
-                <img style={this.style().userHead} src="../../src/pic/head.png"/>
+                <img
+                    style={this.style().userHead}
+                    src={this.props.config.avatar || "../../src/pic/head.png"}
+                />
                 <div style={this.style().userInfo}>
                     <p style={this.style().userName}>
-                        {this.props.config.name}
+                        {this.props.config.name || this.props.config.username}
                     </p>
                     <p style={this.style().userURL}>
                         {`${this.props.config.username}.github.io`}
