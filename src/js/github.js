@@ -53,6 +53,10 @@ async function pushRepo() {
         .push(['-u', 'origin', 'master'])
 }
 
+async function getUser() {
+
+}
+
 
 async function getUserInfo() {
     const info = (await gh.getUser().getProfile()).data;
