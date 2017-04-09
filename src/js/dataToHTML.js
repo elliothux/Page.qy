@@ -42,7 +42,6 @@ function dataToArticle(rawData) {
         selfIntroduction: config.selfIntroduction,
     };
 
-    console.log(data);
     const match = article.match(/\{\{(.|\s)+?\}\}/g);
     for (each of match)
         article = article.replace(each, eval(each.replace(/(\{+|\}+)/g, '')))
@@ -63,13 +62,13 @@ function dataToHome(rawData) {
     );
 
     const [static, script, style, link] = [
-        '../static/static',
-        `<script type="text/javascript" rel="script" src="../static/js/common.js"/>
-        <script type="text/javascript" rel="script" src="../static/js/index.js"/>`,
-        `<link type="text/css" rel="stylesheet" href="../static/css/common.css"/>
-        <link type="text/css" rel="stylesheet" href="../static/css/index.css"/>`,
+        './static/static',
+        `<script type="text/javascript" rel="script" src="./static/js/common.js"/>
+        <script type="text/javascript" rel="script" src="./static/js/index.js"/>`,
+        `<link type="text/css" rel="stylesheet" href="./static/css/common.css"/>
+        <link type="text/css" rel="stylesheet" href="./static/css/index.css"/>`,
         {
-            home: '../index.html'
+            home: './index.html'
         }
     ];
     const data = {
@@ -81,13 +80,12 @@ function dataToHome(rawData) {
         selfIntroduction: config.selfIntroduction,
     };
 
-    const match = article.match(/\{\{(.|\s)+?\}\}/g);
+    const match = home.match(/\{\{(.|\s)+?\}\}/g);
     for (each of match)
         home = home.replace(each, eval(each.replace(/(\{+|\}+)/g, '')))
 
 
     const targetPath = target;
-    !fs.existsSync(targetPath) && fs.mkdirSync(targetPath);
     fs.writeFileSync(path.join(targetPath, 'index.html'), home, 'utf-8');
     updateStaticFiles();
     return path.join(targetPath, 'index.html')
@@ -112,7 +110,6 @@ function updateStaticFiles() {
 
 function formatDate(date) {
     date = new Date(date);
-    console.log(date);
     const daysZh = ['日', '一','二','三','四','五','六'];
     const daysEn = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
         'Thursday', 'Friday', 'Saturday'];

@@ -1,17 +1,28 @@
 import React from 'react';
 import reactCSS from 'reactcss';
-import path from 'path';
+import eventProxy from '../lib/eventProxy';
 
 
 export default class Preview extends React.Component {
     constructor(props) {
         super(props);
         this.style = this.style.bind(this);
+        this.refreshPreview = this.refreshPreview.bind(this);
+
+    }
+
+    componentWillMount() {
+        eventProxy.on('refreshPreview', this.refreshPreview.bind(this))
+    }
+
+    refreshPreview(path) {
+        this.refs.preview.src = path;
     }
 
     render() {return (
         <div style={this.style().container}>
             <iframe
+                ref="preview"
                 src="../../user/temp/index.html"
                 style={this.style().preview}
             />
@@ -31,12 +42,12 @@ export default class Preview extends React.Component {
         default: {
             container: {
                 width: '100%',
-                backgroundColor: 'green'
+                height: '100%',
+                overflow: 'auto',
             },
             preview: {
                 width: '100%',
                 height: '100%',
-                overflow: 'auto',
                 border: 'none'
             },
             addButton: {

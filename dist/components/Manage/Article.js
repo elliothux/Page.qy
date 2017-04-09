@@ -42,16 +42,6 @@ export default class Article extends React.Component {
             `articleConfirm${flag === 'on' ? ' activated' : ''}`
     }
 
-    async handlePublish() {
-        const published = this.state.published ?
-            await this.props.db.unPublishArticle(this.state.key) :
-            await this.props.db.publishArticle(this.state.key);
-        this.setState({ published: published });
-        published && this.props.dataToHTML.dataToArticle(
-            Object.assign(this.props.data, this.state)
-        );
-    }
-
     async handleDelete() {
         await this.props.db.deleteArticle(this.state.key);
         this.refs.article.className = 'articleContainer deleted';
@@ -68,6 +58,22 @@ export default class Article extends React.Component {
             width: 1000,
             height: 700
         });
+    }
+
+    async handlePublish() {
+        const published = this.state.published ?
+            await this.props.db.unPublishArticle(this.state.key) :
+            await this.props.db.publishArticle(this.state.key);
+        this.setState({ published: published });
+        published && this.props.dataToHTML.dataToArticle(
+            Object.assign(this.props.data, this.state)
+        );
+        const path = this.props.dataToHTML.dataToHome(
+            Object.assign(this.props.data, this.state, {
+                articles: await this.props.db.getPublishedArticleList()
+            })
+        );
+        eventProxy.trigger('refreshPreview', path)
     }
 
     dateToString(date) {
