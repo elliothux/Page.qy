@@ -16,13 +16,9 @@
         <a id="navArchives">Archives</a>
         <a id="navAbout">About</a>
     </div>
-    <h1 id="title">{{ data.title }}</h1>
-    <p id="date">
-        <span>{{ data.date.year }}/{{ data.date.month }}/{{ data.date.date }}</span>&nbsp;&nbsp;&nbsp;
-        <span>{{ data.date.hours }}:{{ data.date.minutes }}</span>&nbsp;&nbsp;&nbsp;
-        <span>{{ data.date.day }}</span>
-    </p>
-    <img id="headImg" src="{{ static }}/article.svg">
+    <h1 id="title">Welcome to {{ data.username }}'s!</h1>
+    <p id="date">{{ data.selfIntroduction }}</p>
+    <img id="headImg" src="{{ static }}/home.svg">
 </div>
 
 <div id="articleContainer">

@@ -3,6 +3,7 @@ const path = require('path');
 
 
 module.exports.dataToArticle = dataToArticle;
+module.exports.dataToHome = dataToHome;
 
 
 const config = JSON.parse(fs.readFileSync(
@@ -35,8 +36,10 @@ function dataToArticle(rawData) {
         content: rawData.content,
         avatar: rawData.avatar,
         tags: rawData.tags,
-        selfIntroduction: rawData.selfIntroduction,
-        archives: rawData.archives
+        archives: rawData.archives,
+        name: config.name,
+        username: config.username,
+        selfIntroduction: config.selfIntroduction,
     };
 
     console.log(data);
@@ -48,6 +51,50 @@ function dataToArticle(rawData) {
     const targetPath = path.join(target, `./${data.key}/`);
     !fs.existsSync(targetPath) && fs.mkdirSync(targetPath);
     fs.writeFileSync(path.join(targetPath, 'index.html'), article, 'utf-8');
+    updateStaticFiles();
+    return path.join(targetPath, 'index.html')
+}
+
+
+function dataToHome(rawData) {
+    let home = fs.readFileSync(
+        path.join(theme, './templates/index.html'),
+        'utf-8'
+    );
+
+    const [static, script, style, link] = [
+        '../static/static',
+        `<script type="text/javascript" rel="script" src="../static/js/common.js"/>
+        <script type="text/javascript" rel="script" src="../static/js/index.js"/>`,
+        `<link type="text/css" rel="stylesheet" href="../static/css/common.css"/>
+        <link type="text/css" rel="stylesheet" href="../static/css/index.css"/>`,
+        {
+            home: '../index.html'
+        }
+    ];
+    const data = {
+        avatar: rawData.avatar,
+        archives: rawData.archives,
+        articles: rawData.articles,
+        name: config.name,
+        username: config.username,
+        selfIntroduction: config.selfIntroduction,
+    };
+
+    const match = article.match(/\{\{(.|\s)+?\}\}/g);
+    for (each of match)
+        home = home.replace(each, eval(each.replace(/(\{+|\}+)/g, '')))
+
+
+    const targetPath = target;
+    !fs.existsSync(targetPath) && fs.mkdirSync(targetPath);
+    fs.writeFileSync(path.join(targetPath, 'index.html'), home, 'utf-8');
+    updateStaticFiles();
+    return path.join(targetPath, 'index.html')
+}
+
+
+function updateStaticFiles() {
     fs.copySync(
         path.join(theme, './css/'),
         path.join(target, './static/css/')
@@ -60,11 +107,7 @@ function dataToArticle(rawData) {
         path.join(theme, './static/'),
         path.join(target, './static/static/')
     );
-    return path.join(targetPath, 'index.html')
 }
-
-
-
 
 
 function formatDate(date) {
