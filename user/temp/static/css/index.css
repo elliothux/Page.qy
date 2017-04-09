@@ -1,0 +1,22 @@
+#articleContainer {
+    width: 90%;
+    margin: 50px 5% 20px 5%;
+}
+
+
+.article {
+    display: block;
+    width: calc(100% - 35px);
+    border-left: 5px solid #42A5F0;
+    padding: 0 20px 0 10px;
+}
+
+
+/*.date {*/
+    /*display: inline-block;*/
+/*}*/
+
+/*.tags {*/
+    /*display: inline-block;*/
+    /*float: right;*/
+/*}*/
