@@ -47,6 +47,13 @@ function dataToArticle(rawData) {
     const targetPath = path.join(target, `./${data.key}/`);
     !fs.existsSync(targetPath) && fs.mkdirSync(targetPath);
     fs.writeFileSync(path.join(targetPath, 'index.html'), article, 'utf-8');
+    updateStaticFiles();
+    return path.join(targetPath, 'index.html')
+}
+
+
+
+function updateStaticFiles() {
     fs.copySync(
         path.join(theme, './css/'),
         path.join(target, './static/css/')
@@ -59,10 +66,7 @@ function dataToArticle(rawData) {
         path.join(theme, './static/'),
         path.join(target, './static/static/')
     );
-    return path.join(targetPath, 'index.html')
 }
-
-
 
 
 
