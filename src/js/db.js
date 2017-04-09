@@ -21,6 +21,7 @@ module.exports.editArticle = editArticle;
 module.exports.publishArticle = publishArticle;
 module.exports.unPublishArticle = unPublishArticle;
 module.exports.isArticlePublished = isArticlePublished;
+module.exports.getPublishedArticleList = getPublishedArticleList;
 
 
 // Generate an unique key
@@ -281,6 +282,11 @@ async function isArticlePublished(key) {
     }
     const list = data[0].list;
     return list.includes(key)
+}
+
+
+async function getPublishedArticleList() {
+    return (await find({type: 'article', published: true}, article));
 }
 
 
