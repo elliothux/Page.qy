@@ -3,10 +3,38 @@
 <head>
     <meta charset="UTF-8">
     {{ style }}
-    <title>{{ username }}</title>
+    <title>{{ title }}</title>
 </head>
 <body>
-{{ content }}
+<div id="header">
+    <a id="homeIcon" href="{{ link.home }}">
+        <img src="{{ static }}/home.svg">
+    </a>
+    <div id="nav">
+        <a id="navHome" href="{{ link.home }}">Home</a>
+        <a id="navTags">Tags</a>
+        <a id="navArchives">Archives</a>
+        <a id="navAbout">About</a>
+    </div>
+    <h1 id="title">{{ data.title }}</h1>
+    <p id="date">
+        <span>{{ data.date.year }}/{{ data.date.month }}/{{ data.date.date }}</span>&nbsp;&nbsp;&nbsp;
+        <span>{{ data.date.hours }}:{{ data.date.minutes }}</span>&nbsp;&nbsp;&nbsp;
+        <span>{{ data.date.day }}</span>
+    </p>
+    <img id="headImg" src="{{ static }}/article.svg">
+</div>
+
+<div id="content">{{ data.content }}</div>
+<div id="userInfo">
+    <div id="avatar">{{ data.avatar }}</div>
+    <div id="selfIntroduction">{{ data.selfIntroduction }}</div>
+    <div id="tags">
+        <a href=>{{ tag }}</a>
+    </div>
+    <div id="archives">{{ archives }}</div>
+</div>
+
 {{ script }}
 </body>
 </html>

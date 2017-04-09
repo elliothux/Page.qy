@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     {{ style }}
-    <title>{{ title }}</title>
+    <title>{{ data.title }}</title>
 </head>
 <body>
 <div id="header">
@@ -16,21 +16,21 @@
         <a id="navArchives">Archives</a>
         <a id="navAbout">About</a>
     </div>
-    <h1 id="title">{{ title }}</h1>
+    <h1 id="title">{{ data.title }}</h1>
     <p id="date">
-        <span>{{ date.year }}/{{ date.month }}/{{ date.date }}</span>&nbsp;&nbsp;&nbsp;
-        <span>{{ date.hours }}:{{ date.minutes }}</span>&nbsp;&nbsp;&nbsp;
-        <span>{{ date.day }}</span>
+        <span>{{ data.date.year }}/{{ data.date.month }}/{{ data.date.date }}</span>&nbsp;&nbsp;&nbsp;
+        <span>{{ data.date.hours }}:{{ data.date.minutes }}</span>&nbsp;&nbsp;&nbsp;
+        <span>{{ data.date.day }}</span>
     </p>
     <img id="headImg" src="{{ static }}/article.svg">
 </div>
 
-<div id="content">{{ content }}</div>
+<div id="content">{{ data.content }}</div>
 <div id="userInfo">
-    <div id="avatar">{{ avatar }}</div>
-    <div id="selfIntroduction">{{ selfIntroduction }}</div>
-    <div id="tags">{{ tags }}</div>
-    <div id="archives">{{ archives }}</div>
+    <div id="avatar">{{ data.avatar }}</div>
+    <div id="selfIntroduction">{{ data.selfIntroduction }}</div>
+    <div id="tags">{{ data.tags }}</div>
+    <div id="archives">{{ data.archives }}</div>
 </div>
 
 {{ script }}

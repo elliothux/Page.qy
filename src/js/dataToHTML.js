@@ -13,48 +13,35 @@ const theme = path.join(__dirname, `../../user/themes/${config.theme}/`);
 const target = path.join(__dirname, '../../user/temp/');
 
 
-function dataToArticle(data) {
+function dataToArticle(rawData) {
     let article = fs.readFileSync(
         path.join(theme, './templates/article.html'),
         'utf-8'
     );
-    article = article = article.replace(
-        /\{\{ style \}\}/,
-        `<link type="text/css" rel="stylesheet" href="../static/css/common.css"/>
-        <link type="text/css" rel="stylesheet" href="../static/css/article.css"/>`
-    );
-    article = article = article.replace(
-        /\{\{ script \}\}/,
+
+    const [static, script, style, link] = [
+        '../static/static',
         `<script type="text/javascript" rel="script" src="../static/js/common.js"/>
-        <script type="text/javascript" rel="script" src="../static/js/article.js"/>`
-    );
-    article = article = article.replace(
-        /\{\{ static \}\}/g,
-        '../static/static'
-    );
+        <script type="text/javascript" rel="script" src="../static/js/article.js"/>`,
+        `<link type="text/css" rel="stylesheet" href="../static/css/common.css"/>
+        <link type="text/css" rel="stylesheet" href="../static/css/article.css"/>`,
+        {
+            home: '../index.html'
+        }
+    ];
+    const data = {
+        date: formatDate(data.createDate),
+        title: rawData.title,
+        content: rawData.content,
+        avatar: rawData.avatar,
+        tags: rawData.tags,
+        selfIntroduction: rawData.selfIntroduction,
+        archives: rawData.archives
+    };
 
-    article = article.replace(
-        /\{\{ title \}\}/g,
-        data.title === '' ? 'Untitled Article' : data.title
-    );
-    article = article.replace(
-        /\{\{ content \}\}/,
-        data.content === '' ? 'Nothing here' : data.content
-    );
-    article = article.replace(
-        /\{\{ link.home \}\}/g,
-        '../index.html'
-    );
-
-    const date = formatDate(data.createDate);
-    console.log(date);
-    article = article.replace(/\{\{ date.year \}\}/g, date.year);
-    article = article.replace(/\{\{ date.month \}\}/g, date.month);
-    article = article.replace(/\{\{ date.date \}\}/g, date.date);
-    article = article.replace(/\{\{ date.hours \}\}/g, date.hours);
-    article = article.replace(/\{\{ date.minutes \}\}/g, date.minutes);
-    article = article.replace(/\{\{ date.day \}\}/g, date.day);
-
+    const match = article.match(/\{\{.+\}\}/g);
+    for (each of match)
+        article = article.replace(each, eval(each))
 
 
     const targetPath = path.join(target, `./${data.key}/`);
@@ -96,3 +83,14 @@ function formatDate(date) {
             daysEn[date.getDay()]
     }
 }
+
+
+// function test() {
+//     let article = fs.readFileSync(
+//         path.join(theme, './templates/article.html'),
+//         'utf-8'
+//     );
+//     console.log(article.match(/\{\{.+\}\}/g))
+// }
+//
+// test()
