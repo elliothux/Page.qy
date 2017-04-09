@@ -30,7 +30,7 @@ function dataToArticle(rawData) {
         }
     ];
     const data = {
-        date: formatDate(data.createDate),
+        date: formatDate(rawData.createDate),
         title: rawData.title,
         content: rawData.content,
         avatar: rawData.avatar,
@@ -39,9 +39,10 @@ function dataToArticle(rawData) {
         archives: rawData.archives
     };
 
-    const match = article.match(/\{\{(.|\s)+\}\}/g);
+    console.log(data);
+    const match = article.match(/\{\{(.|\s)+?\}\}/g);
     for (each of match)
-        article = article.replace(each, eval(each))
+        article = article.replace(each, eval(each.replace(/(\{+|\}+)/g, '')))
 
 
     const targetPath = path.join(target, `./${data.key}/`);

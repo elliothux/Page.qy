@@ -30,10 +30,7 @@
     <div id="avatar">{{ data.avatar }}</div>
     <div id="selfIntroduction">{{ data.selfIntroduction }}</div>
     <div id="tags"><ul>{{
-        let temp = '';
-        for(tag of [1, 2, 3])
-            temp += '<li>tag</li>';
-        temp;
+        data.tags.map((tag, index) => '<li>' + tag + '</li>').join('')
         }}</ul></div>
     <div id="archives">{{ data.archives }}</div>
 </div>
