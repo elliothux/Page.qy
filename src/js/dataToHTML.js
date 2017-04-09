@@ -30,7 +30,7 @@ function dataToArticle(rawData) {
         }
     ];
     const data = {
-        date: formatDate(data.createDate),
+        date: formatDate(rawData.createDate),
         title: rawData.title,
         content: rawData.content,
         avatar: rawData.avatar,
@@ -39,9 +39,9 @@ function dataToArticle(rawData) {
         archives: rawData.archives
     };
 
-    const match = article.match(/\{\{.+\}\}/g);
+    const match = article.match(/\{\{.+?\}\}/g);
     for (each of match)
-        article = article.replace(each, eval(each))
+        article = article.replace(each, eval(each.replace(/(\{+|\}+)/g, '')))
 
 
     const targetPath = path.join(target, `./${data.key}/`);
@@ -90,7 +90,7 @@ function formatDate(date) {
 //         path.join(theme, './templates/article.html'),
 //         'utf-8'
 //     );
-//     console.log(article.match(/\{\{.+\}\}/g))
+//     console.log(article.match(/\{\{.+?\}\}/g))
 // }
 //
 // test()
