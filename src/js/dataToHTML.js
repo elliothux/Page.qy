@@ -30,7 +30,7 @@ function dataToArticle(rawData) {
         }
     ];
     const data = {
-        date: formatDate(rawData.createDate),
+        date: formatDate(data.createDate),
         title: rawData.title,
         content: rawData.content,
         avatar: rawData.avatar,
@@ -39,21 +39,14 @@ function dataToArticle(rawData) {
         archives: rawData.archives
     };
 
-    const match = article.match(/\{\{.+?\}\}/g);
+    const match = article.match(/\{\{(.|\s)+\}\}/g);
     for (each of match)
-        article = article.replace(each, eval(each.replace(/(\{+|\}+)/g, '')))
+        article = article.replace(each, eval(each))
 
 
     const targetPath = path.join(target, `./${data.key}/`);
     !fs.existsSync(targetPath) && fs.mkdirSync(targetPath);
     fs.writeFileSync(path.join(targetPath, 'index.html'), article, 'utf-8');
-    updateStaticFiles();
-    return path.join(targetPath, 'index.html')
-}
-
-
-
-function updateStaticFiles() {
     fs.copySync(
         path.join(theme, './css/'),
         path.join(target, './static/css/')
@@ -66,7 +59,10 @@ function updateStaticFiles() {
         path.join(theme, './static/'),
         path.join(target, './static/static/')
     );
+    return path.join(targetPath, 'index.html')
 }
+
+
 
 
 
@@ -94,7 +90,7 @@ function formatDate(date) {
 //         path.join(theme, './templates/article.html'),
 //         'utf-8'
 //     );
-//     console.log(article.match(/\{\{.+?\}\}/g))
+//     console.log(article.match(/\{\{.+\}\}/g))
 // }
 //
 // test()
