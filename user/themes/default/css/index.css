@@ -5,18 +5,22 @@
 
 
 .article {
-    display: block;
     width: calc(100% - 35px);
     border-left: 5px solid #42A5F0;
-    padding: 0 20px 0 10px;
+    padding: 0 10px 0 20px;
+    margin: 80px 0 60px 0
 }
 
+.date {
+    display: inline-block;
+}
 
-/*.date {*/
-    /*display: inline-block;*/
-/*}*/
+.tags {
+    display: inline-block;
+    float: right;
+}
 
-/*.tags {*/
-    /*display: inline-block;*/
-    /*float: right;*/
-/*}*/
+.tag {
+    margin-left: 30px;
+    color: #1d8bd9;
+}
