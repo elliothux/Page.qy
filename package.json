@@ -4,10 +4,9 @@
   "description": "Site.qy",
   "main": "main.js",
   "dependencies": {
+    "cheerio": "^0.22.0",
     "electron": "^1.6.2",
     "github-api": "^3.0.0",
-    "jquery": "^3.2.1",
-    "jsdom": "^3.1.2",
     "nedb": "^1.8.0",
     "node-fs-extra": "^0.8.1",
     "react": "^15.4.2",

@@ -1,20 +1,12 @@
-const path = require('path');
-const fs = require('node-fs-extra');
 
 
 module.exports.parse = parse;
 
 
 function parse(data, template) {
-    let $;
-    require('jsdom').env(template, (error, window) => {
-        if (error)
-            return console.error(error);
-        $ = require("jquery")(window);
-    });
+    let $ = require('cheerio').load(template);
+    const match = $('template');
 
-    const match = $('*[@for*="of"]]');
-    console.log(match);
     // const match = template.match(/\{\{(.|\s)+?\}\}/g);
     // for (each of match)
     //     home = home.replace(each, eval(each.replace(/(\{+|\}+)/g, '')))
@@ -22,6 +14,8 @@ function parse(data, template) {
 
 
 function test() {
+    const fs = require('fs');
+    const path = require('path');
     const config = JSON.parse(fs.readFileSync(
         path.join(__dirname, '../../user/config.json'),
         'utf-8'
