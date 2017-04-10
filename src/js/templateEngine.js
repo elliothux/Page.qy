@@ -1,11 +1,29 @@
-
+const $ = require('cheerio');
 
 module.exports.parse = parse;
 
 
 function parse(data, template) {
-    let $ = require('cheerio').load(template);
-    const match = $('template');
+    const html = $.load(template);
+    const match = html('template');
+    if (match.length > 0) {
+        const innerHTML = $.html(match[0].children);
+        const attr = match[0].attribs['@for'];
+        const a = attr.replace(/\s+of\s+.+/g, '');
+        const b = attr.replace(/.+\s+of\s+/g, '');
+        const exec = `
+        for (${a} of data.${b}) {
+            let temp = '';
+            if ($.load(innerHTML('template') > 0)) {
+                for (each of $.load(innerHTML('template')) {
+                    temp += parse(${a}, $.html(each))
+                }
+            }
+            console.log(${a});
+        }`;
+        eval(exec);
+    }
+    return $.html(html)
 
     // const match = template.match(/\{\{(.|\s)+?\}\}/g);
     // for (each of match)
@@ -25,8 +43,25 @@ function test() {
         path.join(theme, './templates/index.html'),
         'utf-8'
     );
+    const data = {
+        'static': '',
+        'script': '',
+        'style': '',
+        'link': ''
+    };
+    data.data = {
+        avatar: 'test',
+        archives: 'test',
+        articles: [
+            'test1',
+            'test2'
+        ],
+        name: 'hu',
+        username: 'huqingyang',
+        selfIntroduction: 'test',
+    };
 
-    parse(null, template)
+    parse(data, template)
 }
 
 test();
