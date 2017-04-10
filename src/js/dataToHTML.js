@@ -82,7 +82,7 @@ function dataToHome(rawData) {
 
     const match = home.match(/\{\{(.|\s)+?\}\}/g);
     for (each of match)
-        home = home.replace(each, eval(each.replace(/(\{+|\}+)/g, '')))
+        home = home.replace(each, eval(each.replace(/(\{+|\}+)/g, '')));
 
 
     const targetPath = target;
