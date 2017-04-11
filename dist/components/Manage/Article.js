@@ -198,7 +198,7 @@ export default class Article extends React.Component {
                 ref="confirm"
                 style={this.style().confirmContainer}
             >
-                <h3 style={this.style().confirmTitle}>
+                <h3>
                     {this.props.config.language === 'zh' ?
                         '😱 你真的确定要删除这篇文章吗？' :
                         '😱 Do You REALLY Want to Delete This Article?'}

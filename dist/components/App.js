@@ -13,7 +13,7 @@ export default class App extends React.Component {
         this.style = this.style.bind(this);
 
         this.state = {
-            viewState: 'preview',
+            viewState: 'manage',
             config: {}
         }
     }

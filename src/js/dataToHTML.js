@@ -1,5 +1,6 @@
 const fs = require('node-fs-extra');
 const path = require('path');
+const templateEngine = require('./templateEngine');
 
 
 module.exports.dataToArticle = dataToArticle;
@@ -20,7 +21,7 @@ function dataToArticle(rawData) {
         'utf-8'
     );
 
-    const [static, script, style, link] = [
+    const [statics, script, style, link, data] = [
         '../static/static',
         `<script type="text/javascript" rel="script" src="../static/js/common.js"/>
         <script type="text/javascript" rel="script" src="../static/js/article.js"/>`,
@@ -28,23 +29,30 @@ function dataToArticle(rawData) {
         <link type="text/css" rel="stylesheet" href="../static/css/article.css"/>`,
         {
             home: '../index.html'
+        },
+        {
+            date: formatDate(rawData.createDate),
+            title: rawData.title,
+            content: rawData.content,
+            tags: rawData.tags,
+            archives: rawData.archives,
+            avatar: config.avatar,
+            name: config.name,
+            username: config.username,
+            selfIntroduction: config.selfIntroduction,
         }
     ];
-    const data = {
-        date: formatDate(rawData.createDate),
-        title: rawData.title,
-        content: rawData.content,
-        avatar: rawData.avatar,
-        tags: rawData.tags,
-        archives: rawData.archives,
-        name: config.name,
-        username: config.username,
-        selfIntroduction: config.selfIntroduction,
-    };
 
-    const match = article.match(/\{\{(.|\s)+?\}\}/g);
-    for (each of match)
-        article = article.replace(each, eval(each.replace(/(\{+|\}+)/g, '')))
+    article = templateEngine.parse(
+        {
+            statics: statics,
+            script: script,
+            style: style,
+            link: link,
+            data: data
+        },
+        article
+    );
 
 
     const targetPath = path.join(target, `./${data.key}/`);
@@ -61,7 +69,7 @@ function dataToHome(rawData) {
         'utf-8'
     );
 
-    const [static, script, style, link] = [
+    const [statics, script, style, link, data] = [
         './static/static',
         `<script type="text/javascript" rel="script" src="./static/js/common.js"/>
         <script type="text/javascript" rel="script" src="./static/js/index.js"/>`,
@@ -69,21 +77,28 @@ function dataToHome(rawData) {
         <link type="text/css" rel="stylesheet" href="./static/css/index.css"/>`,
         {
             home: './index.html'
+        },
+        {
+            title: config.name,
+            avatar: rawData.avatar,
+            archives: rawData.archives,
+            articles: rawData.articles,
+            name: config.name,
+            username: config.username,
+            selfIntroduction: config.selfIntroduction,
         }
     ];
-    const data = {
-        avatar: rawData.avatar,
-        archives: rawData.archives,
-        articles: rawData.articles,
-        name: config.name,
-        username: config.username,
-        selfIntroduction: config.selfIntroduction,
-    };
 
-    const match = home.match(/\{\{(.|\s)+?\}\}/g);
-    for (each of match)
-        home = home.replace(each, eval(each.replace(/(\{+|\}+)/g, '')));
-
+    home = templateEngine.parse(
+        {
+            statics: statics,
+            script: script,
+            style: style,
+            link: link,
+            data: data
+        },
+        home
+    );
 
     const targetPath = target;
     fs.writeFileSync(path.join(targetPath, 'index.html'), home, 'utf-8');
