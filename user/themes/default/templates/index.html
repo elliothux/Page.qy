@@ -22,20 +22,14 @@
 </div>
 
 <div id="articleContainer">
-    <div class="article">
-        <p class="date">October 03, 2016</p>
-        <div class="tags">
-            <a class="tag">#Hello</a><a class="tag">#Intro</a>
-        </div>
-        <h1 class="title">Welcome to Page.qy!</h1>
-        <p>😉You just set up your site.qy successful! It's quite light and easy to use. Just enjoy writing with it~</p>
-        <a class="viewButton">
-            <img src="{{ static }}/view.svg">
-            <p>VIEW</p>
-        </a>
-    </div>
     <template @for="article of data.articles">
-
+        <div class="article">
+            <h1>{{ article.title }}</h1>
+            <p>{{article.content}}</p>
+            <template @for="tag of article.tags">
+                <a class="tag">{{ tag }}</a>
+            </template>
+        </div>
     </template>
 </div>
 

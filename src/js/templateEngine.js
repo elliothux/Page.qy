@@ -3,36 +3,43 @@ const $ = require('cheerio');
 // module.exports.parse = parse;
 
 
-// function parse(data, template) {
-//     const html = $.load(template);
-//     const match = html('template');
-//     if (match.length > 0) {
-//         const innerHTML = $.html(match[0].children);
-//         const attr = match[0].attribs['@for'];
-//         const a = attr.replace(/\s+of\s+.+/g, '');
-//         const b = attr.replace(/.+\s+of\s+/g, '');
-//         const exec = `
-//         for (${a} of data.${b}) {
-//             let temp = '';
-//             if ($.load(innerHTML('template') > 0)) {
-//                 for (each of $.load(innerHTML('template')) {
-//                     temp += parse(${a}, $.html(each))
-//                 }
-//             }
-//             console.log(${a});
-//         }`;
-//         eval(exec);
-//     }
-//
-//     return $.html(html)
-//
-// }
+function parse(rawData, template) {
+    for (varible in rawData)
+        if (rawData.hasOwnProperty(varible))
+            this[varible] = rawData[varible];
+
+    let templateDOM = $.load(template);
+    let match = templateDOM('template');
+    while (match.length > 0) {
+        template = template.replace($.html(match[0]), (() => {
+            const templateHTML = $.html(match[0].children);
+            const attr = match[0].attribs['@for'];
+            const a = attr.replace(/\s+of\s+.+/g, '');
+            const b = attr.replace(/.+\s+of\s+/g, '');
+            const aString = a;
+            let temp = '';
+            const exec = `for (${a} of ${b}) temp += parse(Object.assign({}, rawData, {${aString}: ${a}}), templateHTML)`
+            // for (a of b)
+            //     temp +=
+            eval(exec);
+            // console.log('----------------');
+            // console.log(template);
+            return temp;
+        })());
+
+        templateDOM = $.load(template);
+        match = templateDOM('template');
+    }
+
+    return parseTemplate(rawData, template)
+}
 
 
 function parseTemplate(rawData, template) {
     for (varible in rawData)
         if (rawData.hasOwnProperty(varible))
             this[varible] = rawData[varible];
+
     const match = template.match(/\{\{(.|\s)+?\}\}/g);
     for (each of match)
         template = template.replace(each, eval(each.replace(/(\{+|\}+)/g, '')));
@@ -109,7 +116,7 @@ function test() {
         username: 'huqingyang',
         selfIntroduction: 'test',
     };
-    return parseTemplate(data, template)
+    return parse(data, template)
 }
 
-console.log(test())
+console.log(test());
