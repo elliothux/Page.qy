@@ -18,8 +18,7 @@ module.exports.editArticle = editArticle;
 module.exports.deleteArticle = deleteArticle;
 module.exports.getArticleList =getArticleList;
 module.exports.editArticle = editArticle;
-module.exports.publishArticle = publishArticle;
-module.exports.unPublishArticle = unPublishArticle;
+module.exports.togglePublish = togglePublish;
 module.exports.isArticlePublished = isArticlePublished;
 module.exports.getPublishedArticleList = getPublishedArticleList;
 
@@ -127,7 +126,8 @@ async function createArticle(data) {
         createDate: (new Date()).toString(),
         editDate: (new Date()).toString(),
         historyContent: {},
-        type: 'article'
+        type: 'article',
+        published: false
     };
     const newArticle = await insert(Object.assign(data, options), article);
     const title = newArticle.title === '' ? 'Untitled Article' : newArticle.title;
@@ -236,52 +236,20 @@ async function getArticleList(tags) {
 
 
 
-async function publishArticle(key) {
-    const data = (await find({key: 'publishedArticle'}, article))[0];
-    const list = data.list;
-    if (!list.includes(key))
-        list.push(key);
-    await update({
-        key: 'publishedArticle',
-        list: list
-    }, article);
-    console.log(`Published article '${(await find({key: key}, article))[0].title}' success!`);
+async function togglePublish(key) {
+    const data = (await find({key: key}, article))[0];
+    const isPublished = data.published;
+    await update(Object.assign(data, {
+        published: !isPublished
+    }), article);
+    console.log(`${isPublished ? 'Unpublished' : 'Published'} article '${(await find({key: key}, article))[0].title}' success!`);
     return await isArticlePublished(key);
-}
-
-
-async function unPublishArticle(key) {
-    const data = (await find({key: 'publishedArticle'}, article))[0];
-    const list = data.list;
-    const index = list.indexOf(key);
-    if (index < 0)
-        return false;
-    await update({
-        key: 'publishedArticle',
-        list: deleteElement(list, index)
-    }, article);
-    console.log(`Unpublished article '${(await find({key: key}, article))[0].title}' success!`);
-    return await isArticlePublished(key);
-
-    function deleteElement(array, index) {
-        const a = array.splice(0, index);
-        array.shift();
-        return a.concat(array)
-    }
 }
 
 
 async function isArticlePublished(key) {
-    let data = await find({key: 'publishedArticle'}, article);
-    if (data.length === 0) {
-        await insert({
-            key: 'publishedArticle',
-            list: [key]
-        }, article);
-        return false
-    }
-    const list = data[0].list;
-    return list.includes(key)
+    let data = (await find({key: key}, article))[0];
+    return data.published
 }
 
 
@@ -291,8 +259,12 @@ async function getPublishedArticleList() {
 
 
 
-// async function test() {
-//     return await getArticleList();
-// }
-//
-// test().then(a => console.log(a))
+async function test() {
+    // key = '80o7kv';
+    // console.log(await isArticlePublished(key));
+    // console.log(await togglePublish(key));
+    // console.log(await isArticlePublished(key));
+    return await getPublishedArticleList();
+}
+
+// test().then(a => console.log(a));

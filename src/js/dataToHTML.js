@@ -1,6 +1,7 @@
 const fs = require('node-fs-extra');
 const path = require('path');
 const templateEngine = require('./templateEngine');
+const db = require('./db');
 
 
 module.exports.dataToArticle = dataToArticle;
@@ -63,7 +64,7 @@ function dataToArticle(rawData) {
 }
 
 
-function dataToHome(rawData) {
+async function dataToHome(rawData) {
     let home = fs.readFileSync(
         path.join(theme, './templates/index.html'),
         'utf-8'
@@ -82,7 +83,7 @@ function dataToHome(rawData) {
             title: config.name,
             avatar: rawData.avatar,
             archives: rawData.archives,
-            articles: rawData.articles,
+            articles: await db.getPublishedArticleList(),
             name: config.name,
             username: config.username,
             selfIntroduction: config.selfIntroduction,

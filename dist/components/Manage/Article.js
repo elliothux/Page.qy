@@ -19,7 +19,7 @@ export default class Article extends React.Component {
             title: this.props.data.title,
             content: this.props.data.content,
             key: this.props.data.key,
-            published: false
+            published: this.props.data.published
         }
     }
 
@@ -28,9 +28,6 @@ export default class Article extends React.Component {
             if (data.key !== this.state.key) return;
             this.setState(data)
         }.bind(this));
-        this.setState({
-            published: await this.props.db.isArticlePublished(this.props.data.key)
-        })
     }
 
     handleEditArticle() {
@@ -61,17 +58,11 @@ export default class Article extends React.Component {
     }
 
     async handlePublish() {
-        const published = this.state.published ?
-            await this.props.db.unPublishArticle(this.state.key) :
-            await this.props.db.publishArticle(this.state.key);
-        this.setState({ published: published });
-        published && this.props.dataToHTML.dataToArticle(
+        this.setState({
+            published: await this.props.db.togglePublish(this.state.key)
+        });
+        const path = await this.props.dataToHTML.dataToHome(
             Object.assign(this.props.data, this.state)
-        );
-        const path = this.props.dataToHTML.dataToHome(
-            Object.assign(this.props.data, this.state, {
-                articles: await this.props.db.getPublishedArticleList()
-            })
         );
         eventProxy.trigger('refreshPreview', path)
     }
@@ -119,6 +110,7 @@ export default class Article extends React.Component {
                 </p>
                 <div dangerouslySetInnerHTML={{
                     __html: function () {
+                        if (this.state.content === '') return '<div></div>'
                         let container = document.createElement('div');
                         container.innerHTML = this.state.content;
                         container = container.firstChild;
