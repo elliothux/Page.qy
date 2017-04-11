@@ -292,8 +292,7 @@ async function getPublishedArticleList() {
 
 
 // async function test() {
-//     await publishArticle('6z68ph');
-//     return await isArticlePublished('6z68ph')
+//     return await getArticleList();
 // }
 //
 // test().then(a => console.log(a))
