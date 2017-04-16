@@ -44,9 +44,11 @@ function openWindow(path, options, isMax) {
         win.show()
     });
 
-    const devToolPath = platform === 'win32' ?
-        `C:\\Users\\hqy84\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\2.0.12_0`:
-        `/Users/huqingyang/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/2.0.12_0`;
+    const devToolPath = {
+        'win32': `C:\\Users\\hqy84\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\2.0.12_0`,
+        'darwin': `/Users/huqingyang/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/2.0.12_0`,
+        'linux': '/home/hu/.config/google-chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/2.0.12_0'
+    }[platform];
     BrowserWindow.addDevToolsExtension(devToolPath);
 }
 

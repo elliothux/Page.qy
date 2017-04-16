@@ -1,17 +1,17 @@
 Arguments: 
-  /usr/local/Cellar/node/7.4.0/bin/node /Users/huqingyang/.yarn/bin/yarn.js add jsdom@3.1.2
+  /usr/bin/nodejs /usr/share/yarn/bin/yarn.js install
 
 PATH: 
-  /Users/huqingyang/.yarn/bin:/Users/huqingyang/.cargo/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/aria2/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands
+  /home/hu/bin:/home/hu/.local/bin:/home/hu/bin:/home/hu/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
 
 Yarn version: 
-  0.21.3
+  0.23.2
 
 Node version: 
-  7.4.0
+  7.9.0
 
 Platform: 
-  darwin x64
+  linux x64
 
 npm manifest: 
   {
@@ -20,9 +20,9 @@ npm manifest:
     "description": "Site.qy",
     "main": "main.js",
     "dependencies": {
+      "cheerio": "^0.22.0",
       "electron": "^1.6.2",
       "github-api": "^3.0.0",
-      "jquery": "^3.2.1",
       "nedb": "^1.8.0",
       "node-fs-extra": "^0.8.1",
       "react": "^15.4.2",
@@ -4623,5 +4623,14 @@ Lockfile:
       fd-slicer "~1.0.1"
 
 Trace: 
-  Error: https://registry.yarnpkg.com/browser-request/-/browser-request-0.3.3.tgz: unexpected end of file
-      at Zlib._handle.onerror (zlib.js:355:17)
+  Error: https://registry.yarnpkg.com/is-number/-/is-number-2.1.0.tgz: tunneling socket could not be established, cause=getaddrinfo ENOTFOUND 127.0.0.1:1080 127.0.0.1:1080:80
+      at ClientRequest.onError (/usr/share/yarn/node_modules/tunnel-agent/index.js:177:17)
+      at Object.onceWrapper (events.js:293:19)
+      at emitOne (events.js:96:13)
+      at ClientRequest.emit (events.js:191:7)
+      at Socket.socketErrorListener (_http_client.js:358:9)
+      at emitOne (events.js:96:13)
+      at Socket.emit (events.js:191:7)
+      at connectErrorNT (net.js:1032:8)
+      at _combinedTickCallback (internal/process/next_tick.js:80:11)
+      at process._tickCallback (internal/process/next_tick.js:104:9)
