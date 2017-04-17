@@ -17,12 +17,18 @@
         <a id="navArchives" href="{{ link.archives }}">Asrchives</a>
         <a id="navAbout" href="{{ link.about }}">About</a>
     </div>
-    <h1 id="title">Welcome to {{ user.username }}'s!</h1>
+    <h1 id="title">Tags</h1>
     <p id="date">{{ user.selfIntroduction }}</p>
     <img id="headImg" src="{{ statics }}/tags.svg">
 </div>
 
-
+<div id="tags">
+    <template @for="tag of data">
+        <div id="tag">
+            <h2></h2>
+        </div>
+    </template>
+</div>
 
 <script type="text/javascript" src="{{ script }}/common.js"></script>
 <script type="text/javascript" src="{{ script }}/tags.js"></script>

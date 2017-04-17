@@ -17,8 +17,8 @@ module.exports = {
                 }
             },
             {
-                test: /\.css$/,
-                loader: 'style-loader!style-loader'
+                test: /\.css$/, // Only .css files
+                loader: 'style-loader!css-loader' // Run both loaders
             },
             {
                 test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
