@@ -4,7 +4,6 @@ module.exports.parse = parse;
 
 
 function parse(rawData, template) {
-    // console.log(rawData);
     with (rawData) {
         let templateDOM = $.load(template);
         let match = templateDOM('template');
@@ -44,9 +43,9 @@ function parseTemplate(rawData, template) {
 
 
 function test() {
-    const rawData = { statics: '../static/static',
-        script: '<script type="text/javascript" rel="script" src="../static/js/common.js"/>\n        <script type="text/javascript" rel="script" src="../static/js/article.js"/>',
-        style: '<link type="text/css" rel="stylesheet" href="../static/css/common.css"/>\n        <link type="text/css" rel="stylesheet" href="../static/css/article.css"/>',
+    const rawData = { statics: '../statics/statics',
+        script: '<script type="text/javascript" rel="script" src="../statics/script/common.script"/>\n        <script type="text/javascript" rel="script" src="../statics/script/article.script"/>',
+        style: '<link type="text/style" rel="stylesheet" href="../statics/style/common.style"/>\n        <link type="text/style" rel="stylesheet" href="../statics/style/article.style"/>',
         link: { home: '../index.html' },
         data:
             { date:

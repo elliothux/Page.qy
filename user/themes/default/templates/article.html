@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    {{ style }}
-    <title>{{ data.title }}</title>
+    <title>{{ title }}</title>
+    <link type="text/css" rel="stylesheet" href="{{ style }}/common.css"/>
+    <link type="text/css" rel="stylesheet" href="{{ style }}/article.css"/>
 </head>
 <body>
 <div id="header">
@@ -12,16 +13,12 @@
     </a>
     <div id="nav">
         <a id="navHome" href="{{ link.home }}">Home</a>
-        <a id="navTags">Tags</a>
-        <a id="navArchives">Archives</a>
-        <a id="navAbout">About</a>
+        <a id="navTags" href="{{ link.tags }}">Tags</a>
+        <a id="navArchives" href="{{ link.archives }}">Asrchives</a>
+        <a id="navAbout" href="{{ link.about }}">About</a>
     </div>
-    <h1 id="title">{{ data.title }}</h1>
-    <p id="date">
-        <span>{{ data.date.year }}/{{ data.date.month }}/{{ data.date.date }}</span>&nbsp;&nbsp;&nbsp;
-        <span>{{ data.date.hours }}:{{ data.date.minutes }}</span>&nbsp;&nbsp;&nbsp;
-        <span>{{ data.date.day }}</span>
-    </p>
+    <h1 id="title">Welcome to {{ user.username }}'s!</h1>
+    <p id="date">{{ user.selfIntroduction }}</p>
     <img id="headImg" src="{{ statics }}/article.svg">
 </div>
 
@@ -37,6 +34,8 @@
     <div id="archives">{{ data.archives }}</div>
 </div>
 
-{{ script }}
+
+<script type="text/javascript" src="{{ script }}/common.js"></script>
+<script type="text/javascript" src="{{ script }}/tags.js"></script>
 </body>
 </html>

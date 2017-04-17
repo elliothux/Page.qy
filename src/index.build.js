@@ -1012,7 +1012,7 @@ module.exports = emptyFunction;
 /**
  * Checks if `value` is classified as an `Array` object.
  *
- * @static
+ * @statics
  * @memberOf _
  * @since 0.1.0
  * @category Lang
@@ -1964,7 +1964,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  * Checks if `value` is object-like. A value is object-like if it's not `null`
  * and has a `typeof` result of "object".
  *
- * @static
+ * @statics
  * @memberOf _
  * @since 4.0.0
  * @category Lang
@@ -2570,7 +2570,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
  * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
  *
- * @static
+ * @statics
  * @memberOf _
  * @since 0.1.0
  * @category Lang
@@ -3044,7 +3044,7 @@ var arrayLikeKeys = __webpack_require__(87),
  * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
  * for more details.
  *
- * @static
+ * @statics
  * @since 0.1.0
  * @memberOf _
  * @category Object
@@ -3839,7 +3839,7 @@ var isFunction = __webpack_require__(112),
  * not a function and has a `value.length` that's an integer greater than or
  * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
  *
- * @static
+ * @statics
  * @memberOf _
  * @since 4.0.0
  * @category Lang
@@ -5312,7 +5312,7 @@ module.exports = isPrototype;
  * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
  * comparison between two values to determine if they are equivalent.
  *
- * @static
+ * @statics
  * @memberOf _
  * @since 4.0.0
  * @category Lang
@@ -5361,7 +5361,7 @@ var baseForOwn = __webpack_require__(93),
  * arguments: (value, key, object). Iteratee functions may exit iteration
  * early by explicitly returning `false`.
  *
- * @static
+ * @statics
  * @memberOf _
  * @since 0.3.0
  * @category Object
@@ -5419,7 +5419,7 @@ var nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined;
 /**
  * Checks if `value` is a buffer.
  *
- * @static
+ * @statics
  * @memberOf _
  * @since 4.3.0
  * @category Lang
@@ -5454,7 +5454,7 @@ var MAX_SAFE_INTEGER = 9007199254740991;
  * **Note:** This method is loosely based on
  * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
  *
- * @static
+ * @statics
  * @memberOf _
  * @since 4.0.0
  * @category Lang
@@ -5498,7 +5498,7 @@ var symbolTag = '[object Symbol]';
 /**
  * Checks if `value` is classified as a `Symbol` primitive or object.
  *
- * @static
+ * @statics
  * @memberOf _
  * @since 4.0.0
  * @category Lang
@@ -7809,7 +7809,7 @@ function arrayLikeKeys(value, inherited) {
     if ((inherited || hasOwnProperty.call(value, key)) && !(skipIndexes && (
     // Safari 9 has enumerable `arguments.length` in strict mode.
     key == 'length' ||
-    // Node.js 0.10 has enumerable non-index properties on buffers.
+    // Node.script 0.10 has enumerable non-index properties on buffers.
     isBuff && (key == 'offset' || key == 'parent') ||
     // PhantomJS 2 has enumerable non-index properties on typed arrays.
     isType && (key == 'buffer' || key == 'byteLength' || key == 'byteOffset') ||
@@ -8225,7 +8225,7 @@ module.exports = equalArrays;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-/** Detect free variable `global` from Node.js. */
+/** Detect free variable `global` from Node.script. */
 var freeGlobal = (typeof global === 'undefined' ? 'undefined' : _typeof(global)) == 'object' && global && global.Object === Object && global;
 
 module.exports = freeGlobal;
@@ -8327,7 +8327,7 @@ var dataViewCtorString = toSource(DataView),
  */
 var getTag = baseGetTag;
 
-// Fallback for data views, maps, sets, and weak maps in IE 11 and promises in Node.js < 6.
+// Fallback for data views, maps, sets, and weak maps in IE 11 and promises in Node.script < 6.
 if (DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag || Map && getTag(new Map()) != mapTag || Promise && getTag(Promise.resolve()) != promiseTag || Set && getTag(new Set()) != setTag || WeakMap && getTag(new WeakMap()) != weakMapTag) {
     getTag = function getTag(value) {
         var result = baseGetTag(value),
@@ -8551,7 +8551,7 @@ module.exports = toSource;
 /**
  * This method returns the first argument it receives.
  *
- * @static
+ * @statics
  * @since 0.1.0
  * @memberOf _
  * @category Util
@@ -8592,7 +8592,7 @@ var propertyIsEnumerable = objectProto.propertyIsEnumerable;
 /**
  * Checks if `value` is likely an `arguments` object.
  *
- * @static
+ * @statics
  * @memberOf _
  * @since 0.1.0
  * @category Lang
@@ -8634,7 +8634,7 @@ var asyncTag = '[object AsyncFunction]',
 /**
  * Checks if `value` is classified as a `Function` object.
  *
- * @static
+ * @statics
  * @memberOf _
  * @since 0.1.0
  * @category Lang
@@ -8671,13 +8671,13 @@ var baseIsTypedArray = __webpack_require__(191),
     baseUnary = __webpack_require__(202),
     nodeUtil = __webpack_require__(249);
 
-/* Node.js helper references. */
+/* Node.script helper references. */
 var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
 
 /**
  * Checks if `value` is classified as a typed array.
  *
- * @static
+ * @statics
  * @memberOf _
  * @since 3.0.0
  * @category Lang
@@ -8711,7 +8711,7 @@ var arrayLikeKeys = __webpack_require__(87),
  *
  * **Note:** Non-object values are coerced to objects.
  *
- * @static
+ * @statics
  * @memberOf _
  * @since 3.0.0
  * @category Object
@@ -8745,7 +8745,7 @@ module.exports = keysIn;
 /**
  * This method returns a new empty array.
  *
- * @static
+ * @statics
  * @memberOf _
  * @since 4.13.0
  * @category Util
@@ -9676,7 +9676,7 @@ function isInDocument(node) {
 }
 
 /**
- * @ReactInputSelection: React input selection module. Based on Selection.js,
+ * @ReactInputSelection: React input selection module. Based on Selection.script,
  * but modified to be suitable for react and has a couple of bug fixes (doesn't
  * assume buttons have range selections allowed).
  * Input selection module for React.
@@ -11065,7 +11065,7 @@ module.exports = REACT_ELEMENT_TYPE;
 /**
  * ReactElementValidator provides a wrapper around a element factory
  * which validates the props passed to the element. This is intended to be
- * used only in DEV and could be replaced by a static type checker for languages
+ * used only in DEV and could be replaced by a statics type checker for languages
  * that support it.
  */
 
@@ -11150,7 +11150,7 @@ function validateExplicitKey(element, parentType) {
 }
 
 /**
- * Ensure that every element either is passed in a static location, in an
+ * Ensure that every element either is passed in a statics location, in an
  * array with an explicit keys property defined, or in an object literal
  * with valid key property.
  *
@@ -11207,7 +11207,7 @@ function validatePropTypes(element) {
     checkReactTypeSpec(componentClass.propTypes, element.props, 'prop', name, element, null);
   }
   if (typeof componentClass.getDefaultProps === 'function') {
-    process.env.NODE_ENV !== 'production' ? warning(componentClass.getDefaultProps.isReactClassApproved, 'getDefaultProps is only used on classic React.createClass ' + 'definitions. Use a static property named `defaultProps` instead.') : void 0;
+    process.env.NODE_ENV !== 'production' ? warning(componentClass.getDefaultProps.isReactClassApproved, 'getDefaultProps is only used on classic React.createClass ' + 'definitions. Use a statics property named `defaultProps` instead.') : void 0;
   }
 }
 
@@ -13142,11 +13142,11 @@ _reactDom2.default.render(_react2.default.createElement(
 	MIT License http://www.opensource.org/licenses/mit-license.php
 	Author Tobias Koppers @sokra
 */
-// css base code, injected by the css-loader
+// style base code, injected by the style-loader
 module.exports = function (useSourceMap) {
 	var list = [];
 
-	// return the list of modules as css string
+	// return the list of modules as style string
 	list.toString = function toString() {
 		return this.map(function (item) {
 			var content = cssWithMappingToString(item, useSourceMap);
@@ -13865,7 +13865,7 @@ module.exports = isTextNode;
  * of patent rights can be found in the PATENTS file in the same directory.
  *
  * 
- * @typechecks static-only
+ * @typechecks statics-only
  */
 
 
@@ -13966,7 +13966,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  * jQuery JavaScript Library v2.2.4
  * http://jquery.com/
  *
- * Includes Sizzle.js
+ * Includes Sizzle.script
  * http://sizzlejs.com/
  *
  * Copyright jQuery Foundation and other contributors
@@ -13982,7 +13982,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		// For CommonJS and CommonJS-like environments where a proper `window`
 		// is present, execute the factory and get jQuery.
 		// For environments that do not have a `window` with a `document`
-		// (such as Node.js), expose a factory as module.exports.
+		// (such as Node.script), expose a factory as module.exports.
 		// This accentuates the need for the creation of a real `window`.
 		// e.g. var jQuery = require("jquery")(window);
 		// See ticket #14549 for more info.
@@ -14307,7 +14307,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			}
 		},
 
-		// Convert dashed to camelCase; used by the css and data modules
+		// Convert dashed to camelCase; used by the style and data modules
 		// Support: IE9-11+
 		// Microsoft forgot to hump their vendor prefix (#9572)
 		camelCase: function camelCase(string) {
@@ -17986,7 +17986,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 		if (initialInUnit && initialInUnit[3] !== unit) {
 
-			// Trust units reported by jQuery.css
+			// Trust units reported by jQuery.style
 			unit = unit || initialInUnit[3];
 
 			// Make sure we update the tween properties later on
@@ -19563,7 +19563,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		}
 
 		// Support: IE9
-		// getPropertyValue is only needed for .css('filter') (#12537)
+		// getPropertyValue is only needed for .style('filter') (#12537)
 		if (computed) {
 
 			// A tribute to the "awesome hack by Dean Edwards"
@@ -19629,7 +19629,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	    cssPrefixes = ["Webkit", "O", "Moz", "ms"],
 	    emptyStyle = document.createElement("div").style;
 
-	// Return a css property mapped to a potentially vendor prefixed property
+	// Return a style property mapped to a potentially vendor prefixed property
 	function vendorPropName(name) {
 
 		// Shortcut for names that are not vendor prefixed
@@ -19716,7 +19716,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		// MathML - https://bugzilla.mozilla.org/show_bug.cgi?id=491668
 		if (val <= 0 || val == null) {
 
-			// Fall back to computed then uncomputed css if necessary
+			// Fall back to computed then uncomputed style if necessary
 			val = curCSS(elem, name, styles);
 			if (val < 0 || val == null) {
 				val = elem.style[name];
@@ -20109,7 +20109,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 					return tween.elem[tween.prop];
 				}
 
-				// Passing an empty string as a 3rd parameter to .css will automatically
+				// Passing an empty string as a 3rd parameter to .style will automatically
 				// attempt a parseFloat and fallback to a string if the parse fails.
 				// Simple values such as "10px" are parsed to Float;
 				// complex values such as "rotate(1rad)" are returned as-is.
@@ -21627,7 +21627,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 
 	/* Prefilters
-  * 1) They are useful to introduce custom dataTypes (see ajax/jsonp.js for an example)
+  * 1) They are useful to introduce custom dataTypes (see ajax/jsonp.script for an example)
   * 2) These are called:
   *    - BEFORE asking for a transport
   *    - AFTER param serialization (s.data is a string if s.processData is true)
@@ -23075,8 +23075,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			    curElem = jQuery(elem),
 			    props = {};
 
-			// Set position first, in-case top/left are set even on static elem
-			if (position === "static") {
+			// Set position first, in-case top/left are set even on statics elem
+			if (position === "statics") {
 				elem.style.position = "relative";
 			}
 
@@ -23203,7 +23203,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			return this.map(function () {
 				var offsetParent = this.offsetParent;
 
-				while (offsetParent && jQuery.css(offsetParent, "position") === "static") {
+				while (offsetParent && jQuery.css(offsetParent, "position") === "statics") {
 					offsetParent = offsetParent.offsetParent;
 				}
 
@@ -23238,7 +23238,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	// Webkit bug: https://bugs.webkit.org/show_bug.cgi?id=29084
 	// Blink bug: https://code.google.com/p/chromium/issues/detail?id=229280
 	// getComputedStyle returns percent when specified for top/left/bottom/right;
-	// rather than make the css module depend on the offset module, just check for it here
+	// rather than make the style module depend on the offset module, just check for it here
 	jQuery.each(["top", "left"], function (i, prop) {
 		jQuery.cssHooks[prop] = addGetHookIf(support.pixelPosition, function (elem, computed) {
 			if (computed) {
@@ -24218,7 +24218,7 @@ typedArrayTags[float32Tag] = typedArrayTags[float64Tag] = typedArrayTags[int8Tag
 typedArrayTags[argsTag] = typedArrayTags[arrayTag] = typedArrayTags[arrayBufferTag] = typedArrayTags[boolTag] = typedArrayTags[dataViewTag] = typedArrayTags[dateTag] = typedArrayTags[errorTag] = typedArrayTags[funcTag] = typedArrayTags[mapTag] = typedArrayTags[numberTag] = typedArrayTags[objectTag] = typedArrayTags[regexpTag] = typedArrayTags[setTag] = typedArrayTags[stringTag] = typedArrayTags[weakMapTag] = false;
 
 /**
- * The base implementation of `_.isTypedArray` without Node.js optimizations.
+ * The base implementation of `_.isTypedArray` without Node.script optimizations.
  *
  * @private
  * @param {*} value The value to check.
@@ -24921,7 +24921,7 @@ module.exports = copySymbolsIn;
 
 var root = __webpack_require__(11);
 
-/** Used to detect overreaching core-js shims. */
+/** Used to detect overreaching core-script shims. */
 var coreJsData = root['__core-js_shared__'];
 
 module.exports = coreJsData;
@@ -26126,10 +26126,10 @@ var freeModule = freeExports && ( false ? 'undefined' : _typeof(module)) == 'obj
 /** Detect the popular CommonJS extension `module.exports`. */
 var moduleExports = freeModule && freeModule.exports === freeExports;
 
-/** Detect free variable `process` from Node.js. */
+/** Detect free variable `process` from Node.script. */
 var freeProcess = moduleExports && freeGlobal.process;
 
-/** Used to access faster Node.js helpers. */
+/** Used to access faster Node.script helpers. */
 var nodeUtil = function () {
   try {
     return freeProcess && freeProcess.binding && freeProcess.binding('util');
@@ -26405,7 +26405,7 @@ var CLONE_DEEP_FLAG = 1,
 /**
  * This method is like `_.clone` except that it recursively clones `value`.
  *
- * @static
+ * @statics
  * @memberOf _
  * @since 1.0.0
  * @category Lang
@@ -26439,7 +26439,7 @@ var baseGet = __webpack_require__(94);
  * Gets the value at `path` of `object`. If the resolved value is
  * `undefined`, the `defaultValue` is returned in its place.
  *
- * @static
+ * @statics
  * @memberOf _
  * @since 3.7.0
  * @category Object
@@ -26480,7 +26480,7 @@ var baseHasIn = __webpack_require__(186),
 /**
  * Checks if `path` is a direct or inherited property of `object`.
  *
- * @static
+ * @statics
  * @memberOf _
  * @since 4.0.0
  * @category Object
@@ -26540,7 +26540,7 @@ var objectCtorString = funcToString.call(Object);
  * Checks if `value` is a plain object, that is, an object created by the
  * `Object` constructor or one with a `[[Prototype]]` of `null`.
  *
- * @static
+ * @statics
  * @memberOf _
  * @since 0.8.0
  * @category Lang
@@ -26595,7 +26595,7 @@ var stringTag = '[object String]';
 /**
  * Checks if `value` is classified as a `String` primitive or object.
  *
- * @static
+ * @statics
  * @since 0.1.0
  * @memberOf _
  * @category Lang
@@ -26641,7 +26641,7 @@ var arrayMap = __webpack_require__(88),
  * `sampleSize`, `slice`, `some`, `sortBy`, `split`, `take`, `takeRight`,
  * `template`, `trim`, `trimEnd`, `trimStart`, and `words`
  *
- * @static
+ * @statics
  * @memberOf _
  * @since 0.1.0
  * @category Collection
@@ -26701,7 +26701,7 @@ var FUNC_ERROR_TEXT = 'Expected a function';
  * [`Map`](http://ecma-international.org/ecma-262/7.0/#sec-properties-of-the-map-prototype-object)
  * method interface of `clear`, `delete`, `get`, `has`, and `set`.
  *
- * @static
+ * @statics
  * @memberOf _
  * @since 0.1.0
  * @category Function
@@ -26772,7 +26772,7 @@ var baseProperty = __webpack_require__(198),
 /**
  * Creates a function that returns the value at `path` of a given object.
  *
- * @static
+ * @statics
  * @memberOf _
  * @since 2.4.0
  * @category Util
@@ -26807,7 +26807,7 @@ module.exports = property;
 /**
  * This method returns `false`.
  *
- * @static
+ * @statics
  * @memberOf _
  * @since 4.13.0
  * @category Util
@@ -26836,7 +26836,7 @@ var baseToString = __webpack_require__(201);
  * Converts `value` to a string. An empty string is returned for `null`
  * and `undefined` values. The sign of `-0` is preserved.
  *
- * @static
+ * @statics
  * @memberOf _
  * @since 4.0.0
  * @category Lang
@@ -27450,7 +27450,7 @@ if (process.env.NODE_ENV !== 'production') {
     }
 
     warnedForNaNValue = true;
-    process.env.NODE_ENV !== 'production' ? warning(false, '`NaN` is an invalid value for the `%s` css style property.%s', name, checkRenderMessage(owner)) : void 0;
+    process.env.NODE_ENV !== 'production' ? warning(false, '`NaN` is an invalid value for the `%s` style style property.%s', name, checkRenderMessage(owner)) : void 0;
   };
 
   var checkRenderMessage = function checkRenderMessage(owner) {
@@ -28841,9 +28841,9 @@ var ReactCompositeComponent = {
       // logic, we can not catch common errors early. Therefore, we have to
       // catch them here, at initialization time, instead.
       process.env.NODE_ENV !== 'production' ? warning(!inst.getInitialState || inst.getInitialState.isReactClassApproved || inst.state, 'getInitialState was defined on %s, a plain JavaScript class. ' + 'This is only supported for classes created using React.createClass. ' + 'Did you mean to define a state property instead?', this.getName() || 'a component') : void 0;
-      process.env.NODE_ENV !== 'production' ? warning(!inst.getDefaultProps || inst.getDefaultProps.isReactClassApproved, 'getDefaultProps was defined on %s, a plain JavaScript class. ' + 'This is only supported for classes created using React.createClass. ' + 'Use a static property to define defaultProps instead.', this.getName() || 'a component') : void 0;
-      process.env.NODE_ENV !== 'production' ? warning(!inst.propTypes, 'propTypes was defined as an instance property on %s. Use a static ' + 'property to define propTypes instead.', this.getName() || 'a component') : void 0;
-      process.env.NODE_ENV !== 'production' ? warning(!inst.contextTypes, 'contextTypes was defined as an instance property on %s. Use a ' + 'static property to define contextTypes instead.', this.getName() || 'a component') : void 0;
+      process.env.NODE_ENV !== 'production' ? warning(!inst.getDefaultProps || inst.getDefaultProps.isReactClassApproved, 'getDefaultProps was defined on %s, a plain JavaScript class. ' + 'This is only supported for classes created using React.createClass. ' + 'Use a statics property to define defaultProps instead.', this.getName() || 'a component') : void 0;
+      process.env.NODE_ENV !== 'production' ? warning(!inst.propTypes, 'propTypes was defined as an instance property on %s. Use a statics ' + 'property to define propTypes instead.', this.getName() || 'a component') : void 0;
+      process.env.NODE_ENV !== 'production' ? warning(!inst.contextTypes, 'contextTypes was defined as an instance property on %s. Use a ' + 'statics property to define contextTypes instead.', this.getName() || 'a component') : void 0;
       process.env.NODE_ENV !== 'production' ? warning(typeof inst.componentShouldUpdate !== 'function', '%s has a method called ' + 'componentShouldUpdate(). Did you mean shouldComponentUpdate()? ' + 'The name is phrased as a question because the function is ' + 'expected to return a value.', this.getName() || 'A component') : void 0;
       process.env.NODE_ENV !== 'production' ? warning(typeof inst.componentDidUnmount !== 'function', '%s has a method called ' + 'componentDidUnmount(). But there is no such lifecycle method. ' + 'Did you mean componentWillUnmount()?', this.getName() || 'A component') : void 0;
       process.env.NODE_ENV !== 'production' ? warning(typeof inst.componentWillRecieveProps !== 'function', '%s has a method called ' + 'componentWillRecieveProps(). Did you mean componentWillReceiveProps()?', this.getName() || 'A component') : void 0;
@@ -30242,7 +30242,7 @@ ReactDOMComponent.Mixin = {
       }
     }
 
-    // For static pages, no need to put React ID and checksum. Saves lots of
+    // For statics pages, no need to put React ID and checksum. Saves lots of
     // bytes.
     if (transaction.renderToStaticMarkup) {
       return ret;
@@ -30717,7 +30717,7 @@ _assign(ReactDOMEmptyComponent.prototype, {
     } else {
       if (transaction.renderToStaticMarkup) {
         // Normally we'd insert a comment node, but since this is a situation
-        // where React won't take over (static pages), we can simply return
+        // where React won't take over (statics pages), we can simply return
         // nothing.
         return '';
       }
@@ -31679,7 +31679,7 @@ _assign(ReactDOMTextComponent.prototype, {
       if (transaction.renderToStaticMarkup) {
         // Normally we'd wrap this between comment nodes for the reasons stated
         // above, but since this is a situation where React won't take over
-        // (static pages), we can simply return the text as it is.
+        // (statics pages), we can simply return the text as it is.
         return escapedText;
       }
 
@@ -35611,7 +35611,7 @@ var isUnitlessNumber = CSSProperty.isUnitlessNumber;
 var styleWarnings = {};
 
 /**
- * Convert a value into the proper css writable value. The style name `name`
+ * Convert a value into the proper style writable value. The style name `name`
  * should be logical (no hyphens), as specified
  * in `CSSProperty.isUnitlessNumber`.
  *
@@ -36690,7 +36690,7 @@ var ReactClassInterface = {
 
   /**
    * An object containing properties and methods that should be defined on
-   * the component's constructor instead of its prototype (static methods).
+   * the component's constructor instead of its prototype (statics methods).
    *
    * @type {object}
    * @optional
@@ -36905,10 +36905,10 @@ var ReactClassInterface = {
  * Mapping from class specification keys to special processing functions.
  *
  * Although these are declared like instance properties in the specification
- * when defining classes using `React.createClass`, they are actually static
+ * when defining classes using `React.createClass`, they are actually statics
  * and are accessible on the constructor instead of the prototype. Despite
- * being static, they must be defined outside of the "statics" key under
- * which all other static methods are defined.
+ * being statics, they must be defined outside of the "statics" key under
+ * which all other statics methods are defined.
  */
 var RESERVED_SPEC_KEYS = {
   displayName: function displayName(Constructor, _displayName) {
@@ -37297,7 +37297,7 @@ var ReactClass = {
     if (process.env.NODE_ENV !== 'production') {
       // This is a tag to indicate that the use of these method names is ok,
       // since it's used with createClass. If it's not, then it's likely a
-      // mistake so we'll warn you to use the static property, property
+      // mistake so we'll warn you to use the statics property, property
       // initializer or constructor respectively.
       if (Constructor.getDefaultProps) {
         Constructor.getDefaultProps.isReactClassApproved = {};
@@ -38793,14 +38793,14 @@ exports.default = mergeClasses;
 
 /**
  * When source maps are enabled, `style-loader` uses a link element with a data-uri to
- * embed the css on the page. This breaks all relative urls because now they are relative to a
+ * embed the style on the page. This breaks all relative urls because now they are relative to a
  * bundle instead of the current page.
  *
  * One solution is to only use full urls, but that may be impossible.
  *
  * Instead, this function "fixes" the relative urls to be absolute according to the current page location.
  *
- * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.
+ * A rudimentary test suite is located at `test/fixUrls.script` and can be run via the `npm test` command.
  *
  */
 
@@ -38875,7 +38875,7 @@ module.exports = function (css) {
 		return "url(" + JSON.stringify(newUrl) + ")";
 	});
 
-	// send back the fixed css
+	// send back the fixed style
 	return fixedCss;
 };
 
@@ -38905,7 +38905,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     } else if (( false ? 'undefined' : _typeof(module)) === "object" && _typeof(module.exports) === "object") {
         // commonjs
 
-        // 引用 css —— webapck
+        // 引用 style —— webapck
         __webpack_require__(361);
         module.exports = factory(
         // 传入 jquery ，支持使用 npm 方式或者自己定义jquery的路径
@@ -38934,7 +38934,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     (function (window, $) {
         if (window.wangEditor) {
             // 重复引用
-            alert('一个页面不能重复引用 wangEditor.js 或 wangEditor.min.js ！！！');
+            alert('一个页面不能重复引用 wangEditor.script 或 wangEditor.min.script ！！！');
             return;
         }
 
@@ -38983,7 +38983,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         window.wangEditor = E;
 
         // 注册 plugin 事件，用于用户自定义插件
-        // 用户在引用 wangEditor.js 之后，还可以通过 E.plugin() 注入自定义函数，
+        // 用户在引用 wangEditor.script 之后，还可以通过 E.plugin() 注入自定义函数，
         // 该函数将会在 editor.create() 方法的最后一步执行
         E.plugin = function (fn) {
             if (!E._plugins) {
@@ -39784,7 +39784,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             var editor = this;
 
             // 检查 E.$body 是否有值
-            // 如果在 body 之前引用了 js 文件，body 尚未加载，可能没有值
+            // 如果在 body 之前引用了 script 文件，body 尚未加载，可能没有值
             if (!E.$body || E.$body.length === 0) {
                 E.$body = $('body');
                 E.$document = $(document);
@@ -42781,7 +42781,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 try {
                     $txt.html(value);
                 } catch (ex) {
-                    // 更新 html 源码出错，一般都是取消了 js 过滤之后，js报错导致的
+                    // 更新 html 源码出错，一般都是取消了 script 过滤之后，js报错导致的
                 }
             }
 
@@ -44622,7 +44622,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             }
             var script = document.createElement("script");
             script.type = "text/javascript";
-            script.src = "//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js";
+            script.src = "//cdn.bootcss.com/highlight.script/9.2.0/highlight.min.js";
             document.body.appendChild(script);
         }
 
@@ -45186,7 +45186,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             }
 
             // 设置宽度（这样设置宽度有问题）
-            // $editorContainer.css('width', $valueContainer.css('width'));
+            // $editorContainer.style('width', $valueContainer.style('width'));
         };
     });
     // 菜单事件
@@ -46479,7 +46479,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 // // 左浮动
                 // $floatLeft.click(function (e) {
                 //     commandFn = function () {
-                //         $currentImg.css({
+                //         $currentImg.style({
                 //             float: 'left'
                 //         });
                 //     };
@@ -46504,7 +46504,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 // // 右浮动
                 // $floatRight.click(function (e) {
                 //     commandFn = function () {
-                //         $currentImg.css({
+                //         $currentImg.style({
                 //             float: 'right'
                 //         });
                 //     };
@@ -46529,7 +46529,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 // // 无浮动
                 // $noFloat.click(function (e) {
                 //     commandFn = function () {
-                //         $currentImg.css({
+                //         $currentImg.style({
                 //             float: 'none'
                 //         });
                 //     };
@@ -47259,7 +47259,7 @@ exports = module.exports = __webpack_require__(153)(undefined);
 
 
 // module
-exports.push([module.i, "/* 编辑器边框颜色 */\n/* 菜单颜色、上边框颜色 */\n/* 菜单选中状态的颜色 */\n/* input focus 时的颜色 */\n/* 按钮颜色 */\n/* tab selected 状态下的颜色 */\n.wangEditor-container {\n  position: relative;\n  background-color: #fff;\n  border: 1px solid #ccc;\n  z-index: 1;\n  width: 100%;\n}\n.wangEditor-container a:focus,\n.wangEditor-container button:focus {\n  outline: none;\n}\n.wangEditor-container,\n.wangEditor-container * {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n  line-height: 1;\n}\n.wangEditor-container img {\n  border: none;\n}\n.wangEditor-container .clearfix:after {\n  content: '';\n  display: table;\n  clear: both;\n}\n.wangEditor-container .clearfix {\n  *zoom: 1;\n}\n.wangEditor-container textarea {\n  border: none;\n}\n.wangEditor-container textarea:focus {\n  outline: none;\n}\n.wangEditor-container .height-tip {\n  position: absolute;\n  width: 3px;\n  background-color: #ccc;\n  left: 0;\n  transition: top .2s;\n}\n.wangEditor-container .txt-toolbar {\n  position: absolute;\n  background-color: #fff;\n  padding: 3px 5px;\n  border-top: 2px solid #666;\n  box-shadow: 1px 3px 3px #999;\n  border-left: 1px\\9 solid\\9 #ccc\\9;\n  border-bottom: 1px\\9 solid\\9 #999\\9;\n  border-right: 1px\\9 solid\\9 #999\\9;\n}\n.wangEditor-container .txt-toolbar .tip-triangle {\n  display: block;\n  position: absolute;\n  width: 0;\n  height: 0;\n  border: 5px solid;\n  border-color: transparent transparent #666 transparent;\n  top: -12px;\n  left: 50%;\n  margin-left: -5px;\n}\n.wangEditor-container .txt-toolbar a {\n  color: #666;\n  display: inline-block;\n  margin: 0 3px;\n  padding: 5px;\n  text-decoration: none;\n  border-radius: 3px;\n}\n.wangEditor-container .txt-toolbar a:hover {\n  background-color: #f1f1f1;\n}\n.wangEditor-container .img-drag-point {\n  display: block;\n  position: absolute;\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  cursor: se-resize;\n  background-color: #666;\n  margin-left: -6px;\n  margin-top: -6px;\n  box-shadow: 1px 1px 5px #999;\n}\n.wangEditor-container .wangEditor-upload-progress {\n  position: absolute;\n  height: 1px;\n  background: #1e88e5;\n  width: 0;\n  display: none;\n  -webkit-transition: width .5s;\n  -o-transition: width .5s;\n  transition: width .5s;\n}\n.wangEditor-fullscreen {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n}\n.wangEditor-container .code-textarea {\n  resize: none;\n  width: 100%;\n  font-size: 14px;\n  line-height: 1.5;\n  font-family: 'Verdana';\n  color: #333;\n  padding: 0 15px 0 15px;\n}\n.wangEditor-menu-container {\n  width: 100%;\n  border-bottom: 1px solid #f1f1f1;\n  background-color: #fff;\n}\n.wangEditor-menu-container a {\n  text-decoration: none;\n}\n.wangEditor-menu-container .menu-group {\n  float: left;\n  padding: 0 8px;\n  border-right: 1px solid #f1f1f1;\n}\n.wangEditor-menu-container .menu-item {\n  float: left;\n  position: relative;\n  text-align: center;\n  height: 31px;\n  width: 35px;\n}\n.wangEditor-menu-container .menu-item:hover {\n  background-color: #f1f1f1;\n}\n.wangEditor-menu-container .menu-item a {\n  display: block;\n  text-align: center;\n  color: #666;\n  width: 100%;\n  padding: 8px 0;\n  font-size: 0.9em;\n}\n.wangEditor-menu-container .menu-item .selected {\n  color: #1e88e5;\n}\n.wangEditor-menu-container .menu-item .active {\n  background-color: #f1f1f1;\n}\n.wangEditor-menu-container .menu-item .disable {\n  opacity: 0.5;\n  filter: alpha(opacity=50);\n}\n.wangEditor-menu-container .menu-tip {\n  display: block;\n  position: absolute;\n  z-index: 20;\n  width: 60px;\n  text-align: center;\n  background-color: #666;\n  color: #fff;\n  padding: 7px 0;\n  font-size: 12px;\n  top: 100%;\n  left: 50%;\n  margin-left: -30px;\n  border-radius: 2px;\n  box-shadow: 1px 1px 5px #999;\n  display: none;\n  /*// 小三角\n        .tip-triangle {\n            display: block;\n            position: absolute;\n            width: 0;\n            height: 0;\n            border:5px solid;\n            border-color: transparent transparent @fore-color transparent;\n            top: -10px;\n            left: 50%;\n            margin-left: -5px;\n        }*/\n}\n.wangEditor-menu-container .menu-tip-40 {\n  width: 40px;\n  margin-left: -20px;\n}\n.wangEditor-menu-container .menu-tip-50 {\n  width: 50px;\n  margin-left: -25px;\n}\n.wangEditor-menu-shadow {\n  /*border-bottom-width: 0;*/\n  border-bottom: 1px\\9 solid\\9 #f1f1f1\\9;\n  box-shadow: 0 1px 3px #999;\n}\n.wangEditor-container .wangEditor-txt {\n  width: 100%;\n  text-align: left;\n  padding: 15px;\n  padding-top: 0;\n  margin-top: 5px;\n  overflow-y: auto;\n}\n.wangEditor-container .wangEditor-txt p,\n.wangEditor-container .wangEditor-txt h1,\n.wangEditor-container .wangEditor-txt h2,\n.wangEditor-container .wangEditor-txt h3,\n.wangEditor-container .wangEditor-txt h4,\n.wangEditor-container .wangEditor-txt h5 {\n  margin: 10px 0;\n  line-height: 1.8;\n}\n.wangEditor-container .wangEditor-txt p *,\n.wangEditor-container .wangEditor-txt h1 *,\n.wangEditor-container .wangEditor-txt h2 *,\n.wangEditor-container .wangEditor-txt h3 *,\n.wangEditor-container .wangEditor-txt h4 *,\n.wangEditor-container .wangEditor-txt h5 * {\n  line-height: 1.8;\n}\n.wangEditor-container .wangEditor-txt ul,\n.wangEditor-container .wangEditor-txt ol {\n  padding-left: 20px;\n}\n.wangEditor-container .wangEditor-txt img {\n  cursor: pointer;\n}\n.wangEditor-container .wangEditor-txt img.clicked {\n  box-shadow: 1px 1px 10px #999;\n}\n.wangEditor-container .wangEditor-txt table.clicked {\n  box-shadow: 1px 1px 10px #999;\n}\n.wangEditor-container .wangEditor-txt pre code {\n  line-height: 1.5;\n}\n.wangEditor-container .wangEditor-txt:focus {\n  outline: none;\n}\n.wangEditor-container .wangEditor-txt blockquote {\n  display: block;\n  border-left: 8px solid #d0e5f2;\n  padding: 5px 10px;\n  margin: 10px 0;\n  line-height: 1.4;\n  font-size: 100%;\n  background-color: #f1f1f1;\n}\n.wangEditor-container .wangEditor-txt table {\n  border: none;\n  border-collapse: collapse;\n}\n.wangEditor-container .wangEditor-txt table td,\n.wangEditor-container .wangEditor-txt table th {\n  border: 1px solid #999;\n  padding: 3px 5px;\n  min-width: 50px;\n  height: 20px;\n}\n.wangEditor-container .wangEditor-txt pre {\n  border: 1px solid #ccc;\n  background-color: #f8f8f8;\n  padding: 10px;\n  margin: 5px 0px;\n  font-size: 0.8em;\n  border-radius: 3px;\n}\n.wangEditor-drop-list {\n  display: none;\n  position: absolute;\n  background-color: #fff;\n  overflow: hidden;\n  z-index: 10;\n  transition: height .7s;\n  border-top: 1px solid #f1f1f1;\n  box-shadow: 1px 3px 3px #999;\n  border-left: 1px\\9 solid\\9 #ccc\\9;\n  border-bottom: 1px\\9 solid\\9 #999\\9;\n  border-right: 1px\\9 solid\\9 #999\\9;\n}\n.wangEditor-drop-list a {\n  text-decoration: none;\n  display: block;\n  color: #666;\n  padding: 3px 5px;\n}\n.wangEditor-drop-list a:hover {\n  background-color: #f1f1f1;\n}\n.wangEditor-drop-panel,\n.txt-toolbar {\n  display: none;\n  position: absolute;\n  padding: 10px;\n  font-size: 14px;\n  /*border: 1px\\9 solid\\9 #cccccc\\9;*/\n  background-color: #fff;\n  z-index: 10;\n  border-top: 2px solid #666;\n  box-shadow: 1px 3px 3px #999;\n  border-left: 1px\\9 solid\\9 #ccc\\9;\n  border-bottom: 1px\\9 solid\\9 #999\\9;\n  border-right: 1px\\9 solid\\9 #999\\9;\n}\n.wangEditor-drop-panel .tip-triangle,\n.txt-toolbar .tip-triangle {\n  display: block;\n  position: absolute;\n  width: 0;\n  height: 0;\n  border: 5px solid;\n  border-color: transparent transparent #666 transparent;\n  top: -12px;\n  left: 50%;\n  margin-left: -5px;\n}\n.wangEditor-drop-panel a,\n.txt-toolbar a {\n  text-decoration: none;\n}\n.wangEditor-drop-panel input[type=text],\n.txt-toolbar input[type=text] {\n  border: none;\n  border-bottom: 1px solid #ccc;\n  font-size: 14px;\n  height: 20px;\n  color: #333;\n  padding: 3px 0;\n}\n.wangEditor-drop-panel input[type=text]:focus,\n.txt-toolbar input[type=text]:focus {\n  outline: none;\n  border-bottom: 2px solid #1e88e5;\n}\n.wangEditor-drop-panel input[type=text].block,\n.txt-toolbar input[type=text].block {\n  display: block;\n  width: 100%;\n}\n.wangEditor-drop-panel textarea,\n.txt-toolbar textarea {\n  border: 1px solid #ccc;\n}\n.wangEditor-drop-panel textarea:focus,\n.txt-toolbar textarea:focus {\n  outline: none;\n  border-color: #1e88e5;\n}\n.wangEditor-drop-panel button,\n.txt-toolbar button {\n  font-size: 14px;\n  color: #1e88e5;\n  border: none;\n  padding: 10px;\n  background-color: #fff;\n  cursor: pointer;\n  border-radius: 3px;\n}\n.wangEditor-drop-panel button:hover,\n.txt-toolbar button:hover {\n  background-color: #f1f1f1;\n}\n.wangEditor-drop-panel button:focus,\n.txt-toolbar button:focus {\n  outline: none;\n}\n.wangEditor-drop-panel button.right,\n.txt-toolbar button.right {\n  float: right;\n  margin-left: 10px;\n}\n.wangEditor-drop-panel button.gray,\n.txt-toolbar button.gray {\n  color: #999;\n}\n.wangEditor-drop-panel button.link,\n.txt-toolbar button.link {\n  padding: 5px 10px;\n}\n.wangEditor-drop-panel button.link:hover,\n.txt-toolbar button.link:hover {\n  background-color: #fff;\n  text-decoration: underline;\n}\n.wangEditor-drop-panel .color-item,\n.txt-toolbar .color-item {\n  display: block;\n  float: left;\n  width: 25px;\n  height: 25px;\n  text-align: center;\n  padding: 2px;\n  border-radius: 2px;\n  text-decoration: underline;\n}\n.wangEditor-drop-panel .color-item:hover,\n.txt-toolbar .color-item:hover {\n  background-color: #f1f1f1;\n}\n.wangEditor-drop-panel .list-menu-item,\n.txt-toolbar .list-menu-item {\n  display: block;\n  float: left;\n  color: #333;\n  padding: 5px 5px;\n  border-radius: 2px;\n}\n.wangEditor-drop-panel .list-menu-item:hover,\n.txt-toolbar .list-menu-item:hover {\n  background-color: #f1f1f1;\n}\n.wangEditor-drop-panel table.choose-table,\n.txt-toolbar table.choose-table {\n  border: none;\n  border-collapse: collapse;\n}\n.wangEditor-drop-panel table.choose-table td,\n.txt-toolbar table.choose-table td {\n  border: 1px solid #ccc;\n  width: 16px;\n  height: 12px;\n}\n.wangEditor-drop-panel table.choose-table td.active,\n.txt-toolbar table.choose-table td.active {\n  background-color: #ccc;\n  opacity: .5;\n  filter: alpha(opacity=50);\n}\n.wangEditor-drop-panel .panel-tab .tab-container,\n.txt-toolbar .panel-tab .tab-container {\n  margin-bottom: 5px;\n}\n.wangEditor-drop-panel .panel-tab .tab-container a,\n.txt-toolbar .panel-tab .tab-container a {\n  display: inline-block;\n  color: #999;\n  text-align: center;\n  margin: 0 5px;\n  padding: 5px 5px;\n}\n.wangEditor-drop-panel .panel-tab .tab-container a.selected,\n.txt-toolbar .panel-tab .tab-container a.selected {\n  color: #1e88e5;\n  border-bottom: 2px solid #1e88e5;\n}\n.wangEditor-drop-panel .panel-tab .content-container .content,\n.txt-toolbar .panel-tab .content-container .content {\n  display: none;\n}\n.wangEditor-drop-panel .panel-tab .content-container .content a,\n.txt-toolbar .panel-tab .content-container .content a {\n  display: inline-block;\n  margin: 2px;\n  padding: 2px;\n  border-radius: 2px;\n}\n.wangEditor-drop-panel .panel-tab .content-container .content a:hover,\n.txt-toolbar .panel-tab .content-container .content a:hover {\n  background-color: #f1f1f1;\n}\n.wangEditor-drop-panel .panel-tab .content-container .selected,\n.txt-toolbar .panel-tab .content-container .selected {\n  display: block;\n}\n.wangEditor-drop-panel .panel-tab .emotion-content-container,\n.txt-toolbar .panel-tab .emotion-content-container {\n  height: 200px;\n  overflow-y: auto;\n}\n.wangEditor-drop-panel .upload-icon-container,\n.txt-toolbar .upload-icon-container {\n  color: #ccc;\n  text-align: center;\n  margin: 20px 20px 15px 20px !important;\n  padding: 5px !important;\n  font-size: 65px;\n  cursor: pointer;\n  border: 2px dotted #f1f1f1;\n  display: block !important;\n}\n.wangEditor-drop-panel .upload-icon-container:hover,\n.txt-toolbar .upload-icon-container:hover {\n  color: #666;\n  border-color: #ccc;\n}\n.wangEditor-modal {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  background-color: #fff;\n  border-top: 1px solid #f1f1f1;\n  box-shadow: 1px 3px 3px #999;\n  border-top: 1px\\9 solid\\9 #ccc\\9;\n  border-left: 1px\\9 solid\\9 #ccc\\9;\n  border-bottom: 1px\\9 solid\\9 #999\\9;\n  border-right: 1px\\9 solid\\9 #999\\9;\n}\n.wangEditor-modal .wangEditor-modal-close {\n  position: absolute;\n  top: 0;\n  right: 0;\n  margin-top: -25px;\n  margin-right: -25px;\n  font-size: 1.5em;\n  color: #666;\n  cursor: pointer;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(" + __webpack_require__(363) + ");\n  src: url(" + __webpack_require__(362) + "?#iefix-qdfu1s) format('embedded-opentype'), url(" + __webpack_require__(365) + ") format('truetype'), url(" + __webpack_require__(366) + ") format('woff'), url(" + __webpack_require__(364) + "#icomoon) format('svg');\n  font-weight: normal;\n  font-style: normal;\n}\n[class^=\"wangeditor-menu-img-\"],\n[class*=\" wangeditor-menu-img-\"] {\n  font-family: 'icomoon';\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.wangeditor-menu-img-link:before {\n  content: \"\\E800\";\n}\n.wangeditor-menu-img-unlink:before {\n  content: \"\\E801\";\n}\n.wangeditor-menu-img-code:before {\n  content: \"\\E802\";\n}\n.wangeditor-menu-img-cancel:before {\n  content: \"\\E803\";\n}\n.wangeditor-menu-img-terminal:before {\n  content: \"\\E804\";\n}\n.wangeditor-menu-img-angle-down:before {\n  content: \"\\E805\";\n}\n.wangeditor-menu-img-font:before {\n  content: \"\\E806\";\n}\n.wangeditor-menu-img-bold:before {\n  content: \"\\E807\";\n}\n.wangeditor-menu-img-italic:before {\n  content: \"\\E808\";\n}\n.wangeditor-menu-img-header:before {\n  content: \"\\E809\";\n}\n.wangeditor-menu-img-align-left:before {\n  content: \"\\E80A\";\n}\n.wangeditor-menu-img-align-center:before {\n  content: \"\\E80B\";\n}\n.wangeditor-menu-img-align-right:before {\n  content: \"\\E80C\";\n}\n.wangeditor-menu-img-list-bullet:before {\n  content: \"\\E80D\";\n}\n.wangeditor-menu-img-indent-left:before {\n  content: \"\\E80E\";\n}\n.wangeditor-menu-img-indent-right:before {\n  content: \"\\E80F\";\n}\n.wangeditor-menu-img-list-numbered:before {\n  content: \"\\E810\";\n}\n.wangeditor-menu-img-underline:before {\n  content: \"\\E811\";\n}\n.wangeditor-menu-img-table:before {\n  content: \"\\E812\";\n}\n.wangeditor-menu-img-eraser:before {\n  content: \"\\E813\";\n}\n.wangeditor-menu-img-text-height:before {\n  content: \"\\E814\";\n}\n.wangeditor-menu-img-brush:before {\n  content: \"\\E815\";\n}\n.wangeditor-menu-img-pencil:before {\n  content: \"\\E816\";\n}\n.wangeditor-menu-img-minus:before {\n  content: \"\\E817\";\n}\n.wangeditor-menu-img-picture:before {\n  content: \"\\E818\";\n}\n.wangeditor-menu-img-file-image:before {\n  content: \"\\E819\";\n}\n.wangeditor-menu-img-cw:before {\n  content: \"\\E81A\";\n}\n.wangeditor-menu-img-ccw:before {\n  content: \"\\E81B\";\n}\n.wangeditor-menu-img-music:before {\n  content: \"\\E911\";\n}\n.wangeditor-menu-img-play:before {\n  content: \"\\E912\";\n}\n.wangeditor-menu-img-location:before {\n  content: \"\\E947\";\n}\n.wangeditor-menu-img-happy:before {\n  content: \"\\E9DF\";\n}\n.wangeditor-menu-img-sigma:before {\n  content: \"\\EA67\";\n}\n.wangeditor-menu-img-enlarge2:before {\n  content: \"\\E98B\";\n}\n.wangeditor-menu-img-shrink2:before {\n  content: \"\\E98C\";\n}\n.wangeditor-menu-img-newspaper:before {\n  content: \"\\E904\";\n}\n.wangeditor-menu-img-camera:before {\n  content: \"\\E90F\";\n}\n.wangeditor-menu-img-video-camera:before {\n  content: \"\\E914\";\n}\n.wangeditor-menu-img-file-zip:before {\n  content: \"\\E92B\";\n}\n.wangeditor-menu-img-stack:before {\n  content: \"\\E92E\";\n}\n.wangeditor-menu-img-credit-card:before {\n  content: \"\\E93F\";\n}\n.wangeditor-menu-img-address-book:before {\n  content: \"\\E944\";\n}\n.wangeditor-menu-img-envelop:before {\n  content: \"\\E945\";\n}\n.wangeditor-menu-img-drawer:before {\n  content: \"\\E95C\";\n}\n.wangeditor-menu-img-download:before {\n  content: \"\\E960\";\n}\n.wangeditor-menu-img-upload:before {\n  content: \"\\E961\";\n}\n.wangeditor-menu-img-lock:before {\n  content: \"\\E98F\";\n}\n.wangeditor-menu-img-unlocked:before {\n  content: \"\\E990\";\n}\n.wangeditor-menu-img-wrench:before {\n  content: \"\\E991\";\n}\n.wangeditor-menu-img-eye:before {\n  content: \"\\E9CE\";\n}\n.wangeditor-menu-img-eye-blocked:before {\n  content: \"\\E9D1\";\n}\n.wangeditor-menu-img-command:before {\n  content: \"\\EA4E\";\n}\n.wangeditor-menu-img-font2:before {\n  content: \"\\EA5C\";\n}\n.wangeditor-menu-img-libreoffice:before {\n  content: \"\\EADE\";\n}\n.wangeditor-menu-img-quotes-left:before {\n  content: \"\\E977\";\n}\n.wangeditor-menu-img-strikethrough:before {\n  content: \"\\EA65\";\n}\n.wangeditor-menu-img-desktop:before {\n  content: \"\\F108\";\n}\n.wangeditor-menu-img-tablet:before {\n  content: \"\\F10A\";\n}\n.wangeditor-menu-img-search-plus:before {\n  content: \"\\F00E\";\n}\n.wangeditor-menu-img-search-minus:before {\n  content: \"\\F010\";\n}\n.wangeditor-menu-img-trash-o:before {\n  content: \"\\F014\";\n}\n.wangeditor-menu-img-align-justify:before {\n  content: \"\\F039\";\n}\n.wangeditor-menu-img-arrows-v:before {\n  content: \"\\F07D\";\n}\n.wangeditor-menu-img-sigma2:before {\n  content: \"\\EA68\";\n}\n.wangeditor-menu-img-omega:before {\n  content: \"\\E900\";\n}\n.wangeditor-menu-img-cancel-circle:before {\n  content: \"\\E901\";\n}\n.hljs {\n  display: block;\n  overflow-x: auto;\n  padding: 0.5em;\n  color: #333;\n  background: #f8f8f8;\n  -webkit-text-size-adjust: none;\n}\n.hljs-comment,\n.diff .hljs-header {\n  color: #998;\n  font-style: italic;\n}\n.hljs-keyword,\n.css .rule .hljs-keyword,\n.hljs-winutils,\n.nginx .hljs-title,\n.hljs-subst,\n.hljs-request,\n.hljs-status {\n  color: #333;\n  font-weight: bold;\n}\n.hljs-number,\n.hljs-hexcolor,\n.ruby .hljs-constant {\n  color: #008080;\n}\n.hljs-string,\n.hljs-tag .hljs-value,\n.hljs-doctag,\n.tex .hljs-formula {\n  color: #d14;\n}\n.hljs-title,\n.hljs-id,\n.scss .hljs-preprocessor {\n  color: #900;\n  font-weight: bold;\n}\n.hljs-list .hljs-keyword,\n.hljs-subst {\n  font-weight: normal;\n}\n.hljs-class .hljs-title,\n.hljs-type,\n.vhdl .hljs-literal,\n.tex .hljs-command {\n  color: #458;\n  font-weight: bold;\n}\n.hljs-tag,\n.hljs-tag .hljs-title,\n.hljs-rule .hljs-property,\n.django .hljs-tag .hljs-keyword {\n  color: #000080;\n  font-weight: normal;\n}\n.hljs-attribute,\n.hljs-variable,\n.lisp .hljs-body,\n.hljs-name {\n  color: #008080;\n}\n.hljs-regexp {\n  color: #009926;\n}\n.hljs-symbol,\n.ruby .hljs-symbol .hljs-string,\n.lisp .hljs-keyword,\n.clojure .hljs-keyword,\n.scheme .hljs-keyword,\n.tex .hljs-special,\n.hljs-prompt {\n  color: #990073;\n}\n.hljs-built_in {\n  color: #0086b3;\n}\n.hljs-preprocessor,\n.hljs-pragma,\n.hljs-pi,\n.hljs-doctype,\n.hljs-shebang,\n.hljs-cdata {\n  color: #999;\n  font-weight: bold;\n}\n.hljs-deletion {\n  background: #fdd;\n}\n.hljs-addition {\n  background: #dfd;\n}\n.diff .hljs-change {\n  background: #0086b3;\n}\n.hljs-chunk {\n  color: #aaa;\n}\n", ""]);
+exports.push([module.i, "/* 编辑器边框颜色 */\n/* 菜单颜色、上边框颜色 */\n/* 菜单选中状态的颜色 */\n/* input focus 时的颜色 */\n/* 按钮颜色 */\n/* tab selected 状态下的颜色 */\n.wangEditor-container {\n  position: relative;\n  background-color: #fff;\n  border: 1px solid #ccc;\n  z-index: 1;\n  width: 100%;\n}\n.wangEditor-container a:focus,\n.wangEditor-container button:focus {\n  outline: none;\n}\n.wangEditor-container,\n.wangEditor-container * {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n  line-height: 1;\n}\n.wangEditor-container img {\n  border: none;\n}\n.wangEditor-container .clearfix:after {\n  content: '';\n  display: table;\n  clear: both;\n}\n.wangEditor-container .clearfix {\n  *zoom: 1;\n}\n.wangEditor-container textarea {\n  border: none;\n}\n.wangEditor-container textarea:focus {\n  outline: none;\n}\n.wangEditor-container .height-tip {\n  position: absolute;\n  width: 3px;\n  background-color: #ccc;\n  left: 0;\n  transition: top .2s;\n}\n.wangEditor-container .txt-toolbar {\n  position: absolute;\n  background-color: #fff;\n  padding: 3px 5px;\n  border-top: 2px solid #666;\n  box-shadow: 1px 3px 3px #999;\n  border-left: 1px\\9 solid\\9 #ccc\\9;\n  border-bottom: 1px\\9 solid\\9 #999\\9;\n  border-right: 1px\\9 solid\\9 #999\\9;\n}\n.wangEditor-container .txt-toolbar .tip-triangle {\n  display: block;\n  position: absolute;\n  width: 0;\n  height: 0;\n  border: 5px solid;\n  border-color: transparent transparent #666 transparent;\n  top: -12px;\n  left: 50%;\n  margin-left: -5px;\n}\n.wangEditor-container .txt-toolbar a {\n  color: #666;\n  display: inline-block;\n  margin: 0 3px;\n  padding: 5px;\n  text-decoration: none;\n  border-radius: 3px;\n}\n.wangEditor-container .txt-toolbar a:hover {\n  background-color: #f1f1f1;\n}\n.wangEditor-container .img-drag-point {\n  display: block;\n  position: absolute;\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  cursor: se-resize;\n  background-color: #666;\n  margin-left: -6px;\n  margin-top: -6px;\n  box-shadow: 1px 1px 5px #999;\n}\n.wangEditor-container .wangEditor-upload-progress {\n  position: absolute;\n  height: 1px;\n  background: #1e88e5;\n  width: 0;\n  display: none;\n  -webkit-transition: width .5s;\n  -o-transition: width .5s;\n  transition: width .5s;\n}\n.wangEditor-fullscreen {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n}\n.wangEditor-container .code-textarea {\n  resize: none;\n  width: 100%;\n  font-size: 14px;\n  line-height: 1.5;\n  font-family: 'Verdana';\n  color: #333;\n  padding: 0 15px 0 15px;\n}\n.wangEditor-menu-container {\n  width: 100%;\n  border-bottom: 1px solid #f1f1f1;\n  background-color: #fff;\n}\n.wangEditor-menu-container a {\n  text-decoration: none;\n}\n.wangEditor-menu-container .menu-group {\n  float: left;\n  padding: 0 8px;\n  border-right: 1px solid #f1f1f1;\n}\n.wangEditor-menu-container .menu-item {\n  float: left;\n  position: relative;\n  text-align: center;\n  height: 31px;\n  width: 35px;\n}\n.wangEditor-menu-container .menu-item:hover {\n  background-color: #f1f1f1;\n}\n.wangEditor-menu-container .menu-item a {\n  display: block;\n  text-align: center;\n  color: #666;\n  width: 100%;\n  padding: 8px 0;\n  font-size: 0.9em;\n}\n.wangEditor-menu-container .menu-item .selected {\n  color: #1e88e5;\n}\n.wangEditor-menu-container .menu-item .active {\n  background-color: #f1f1f1;\n}\n.wangEditor-menu-container .menu-item .disable {\n  opacity: 0.5;\n  filter: alpha(opacity=50);\n}\n.wangEditor-menu-container .menu-tip {\n  display: block;\n  position: absolute;\n  z-index: 20;\n  width: 60px;\n  text-align: center;\n  background-color: #666;\n  color: #fff;\n  padding: 7px 0;\n  font-size: 12px;\n  top: 100%;\n  left: 50%;\n  margin-left: -30px;\n  border-radius: 2px;\n  box-shadow: 1px 1px 5px #999;\n  display: none;\n  /*// 小三角\n        .tip-triangle {\n            display: block;\n            position: absolute;\n            width: 0;\n            height: 0;\n            border:5px solid;\n            border-color: transparent transparent @fore-color transparent;\n            top: -10px;\n            left: 50%;\n            margin-left: -5px;\n        }*/\n}\n.wangEditor-menu-container .menu-tip-40 {\n  width: 40px;\n  margin-left: -20px;\n}\n.wangEditor-menu-container .menu-tip-50 {\n  width: 50px;\n  margin-left: -25px;\n}\n.wangEditor-menu-shadow {\n  /*border-bottom-width: 0;*/\n  border-bottom: 1px\\9 solid\\9 #f1f1f1\\9;\n  box-shadow: 0 1px 3px #999;\n}\n.wangEditor-container .wangEditor-txt {\n  width: 100%;\n  text-align: left;\n  padding: 15px;\n  padding-top: 0;\n  margin-top: 5px;\n  overflow-y: auto;\n}\n.wangEditor-container .wangEditor-txt p,\n.wangEditor-container .wangEditor-txt h1,\n.wangEditor-container .wangEditor-txt h2,\n.wangEditor-container .wangEditor-txt h3,\n.wangEditor-container .wangEditor-txt h4,\n.wangEditor-container .wangEditor-txt h5 {\n  margin: 10px 0;\n  line-height: 1.8;\n}\n.wangEditor-container .wangEditor-txt p *,\n.wangEditor-container .wangEditor-txt h1 *,\n.wangEditor-container .wangEditor-txt h2 *,\n.wangEditor-container .wangEditor-txt h3 *,\n.wangEditor-container .wangEditor-txt h4 *,\n.wangEditor-container .wangEditor-txt h5 * {\n  line-height: 1.8;\n}\n.wangEditor-container .wangEditor-txt ul,\n.wangEditor-container .wangEditor-txt ol {\n  padding-left: 20px;\n}\n.wangEditor-container .wangEditor-txt img {\n  cursor: pointer;\n}\n.wangEditor-container .wangEditor-txt img.clicked {\n  box-shadow: 1px 1px 10px #999;\n}\n.wangEditor-container .wangEditor-txt table.clicked {\n  box-shadow: 1px 1px 10px #999;\n}\n.wangEditor-container .wangEditor-txt pre code {\n  line-height: 1.5;\n}\n.wangEditor-container .wangEditor-txt:focus {\n  outline: none;\n}\n.wangEditor-container .wangEditor-txt blockquote {\n  display: block;\n  border-left: 8px solid #d0e5f2;\n  padding: 5px 10px;\n  margin: 10px 0;\n  line-height: 1.4;\n  font-size: 100%;\n  background-color: #f1f1f1;\n}\n.wangEditor-container .wangEditor-txt table {\n  border: none;\n  border-collapse: collapse;\n}\n.wangEditor-container .wangEditor-txt table td,\n.wangEditor-container .wangEditor-txt table th {\n  border: 1px solid #999;\n  padding: 3px 5px;\n  min-width: 50px;\n  height: 20px;\n}\n.wangEditor-container .wangEditor-txt pre {\n  border: 1px solid #ccc;\n  background-color: #f8f8f8;\n  padding: 10px;\n  margin: 5px 0px;\n  font-size: 0.8em;\n  border-radius: 3px;\n}\n.wangEditor-drop-list {\n  display: none;\n  position: absolute;\n  background-color: #fff;\n  overflow: hidden;\n  z-index: 10;\n  transition: height .7s;\n  border-top: 1px solid #f1f1f1;\n  box-shadow: 1px 3px 3px #999;\n  border-left: 1px\\9 solid\\9 #ccc\\9;\n  border-bottom: 1px\\9 solid\\9 #999\\9;\n  border-right: 1px\\9 solid\\9 #999\\9;\n}\n.wangEditor-drop-list a {\n  text-decoration: none;\n  display: block;\n  color: #666;\n  padding: 3px 5px;\n}\n.wangEditor-drop-list a:hover {\n  background-color: #f1f1f1;\n}\n.wangEditor-drop-panel,\n.txt-toolbar {\n  display: none;\n  position: absolute;\n  padding: 10px;\n  font-size: 14px;\n  /*border: 1px\\9 solid\\9 #cccccc\\9;*/\n  background-color: #fff;\n  z-index: 10;\n  border-top: 2px solid #666;\n  box-shadow: 1px 3px 3px #999;\n  border-left: 1px\\9 solid\\9 #ccc\\9;\n  border-bottom: 1px\\9 solid\\9 #999\\9;\n  border-right: 1px\\9 solid\\9 #999\\9;\n}\n.wangEditor-drop-panel .tip-triangle,\n.txt-toolbar .tip-triangle {\n  display: block;\n  position: absolute;\n  width: 0;\n  height: 0;\n  border: 5px solid;\n  border-color: transparent transparent #666 transparent;\n  top: -12px;\n  left: 50%;\n  margin-left: -5px;\n}\n.wangEditor-drop-panel a,\n.txt-toolbar a {\n  text-decoration: none;\n}\n.wangEditor-drop-panel input[type=text],\n.txt-toolbar input[type=text] {\n  border: none;\n  border-bottom: 1px solid #ccc;\n  font-size: 14px;\n  height: 20px;\n  color: #333;\n  padding: 3px 0;\n}\n.wangEditor-drop-panel input[type=text]:focus,\n.txt-toolbar input[type=text]:focus {\n  outline: none;\n  border-bottom: 2px solid #1e88e5;\n}\n.wangEditor-drop-panel input[type=text].block,\n.txt-toolbar input[type=text].block {\n  display: block;\n  width: 100%;\n}\n.wangEditor-drop-panel textarea,\n.txt-toolbar textarea {\n  border: 1px solid #ccc;\n}\n.wangEditor-drop-panel textarea:focus,\n.txt-toolbar textarea:focus {\n  outline: none;\n  border-color: #1e88e5;\n}\n.wangEditor-drop-panel button,\n.txt-toolbar button {\n  font-size: 14px;\n  color: #1e88e5;\n  border: none;\n  padding: 10px;\n  background-color: #fff;\n  cursor: pointer;\n  border-radius: 3px;\n}\n.wangEditor-drop-panel button:hover,\n.txt-toolbar button:hover {\n  background-color: #f1f1f1;\n}\n.wangEditor-drop-panel button:focus,\n.txt-toolbar button:focus {\n  outline: none;\n}\n.wangEditor-drop-panel button.right,\n.txt-toolbar button.right {\n  float: right;\n  margin-left: 10px;\n}\n.wangEditor-drop-panel button.gray,\n.txt-toolbar button.gray {\n  color: #999;\n}\n.wangEditor-drop-panel button.link,\n.txt-toolbar button.link {\n  padding: 5px 10px;\n}\n.wangEditor-drop-panel button.link:hover,\n.txt-toolbar button.link:hover {\n  background-color: #fff;\n  text-decoration: underline;\n}\n.wangEditor-drop-panel .color-item,\n.txt-toolbar .color-item {\n  display: block;\n  float: left;\n  width: 25px;\n  height: 25px;\n  text-align: center;\n  padding: 2px;\n  border-radius: 2px;\n  text-decoration: underline;\n}\n.wangEditor-drop-panel .color-item:hover,\n.txt-toolbar .color-item:hover {\n  background-color: #f1f1f1;\n}\n.wangEditor-drop-panel .list-menu-item,\n.txt-toolbar .list-menu-item {\n  display: block;\n  float: left;\n  color: #333;\n  padding: 5px 5px;\n  border-radius: 2px;\n}\n.wangEditor-drop-panel .list-menu-item:hover,\n.txt-toolbar .list-menu-item:hover {\n  background-color: #f1f1f1;\n}\n.wangEditor-drop-panel table.choose-table,\n.txt-toolbar table.choose-table {\n  border: none;\n  border-collapse: collapse;\n}\n.wangEditor-drop-panel table.choose-table td,\n.txt-toolbar table.choose-table td {\n  border: 1px solid #ccc;\n  width: 16px;\n  height: 12px;\n}\n.wangEditor-drop-panel table.choose-table td.active,\n.txt-toolbar table.choose-table td.active {\n  background-color: #ccc;\n  opacity: .5;\n  filter: alpha(opacity=50);\n}\n.wangEditor-drop-panel .panel-tab .tab-container,\n.txt-toolbar .panel-tab .tab-container {\n  margin-bottom: 5px;\n}\n.wangEditor-drop-panel .panel-tab .tab-container a,\n.txt-toolbar .panel-tab .tab-container a {\n  display: inline-block;\n  color: #999;\n  text-align: center;\n  margin: 0 5px;\n  padding: 5px 5px;\n}\n.wangEditor-drop-panel .panel-tab .tab-container a.selected,\n.txt-toolbar .panel-tab .tab-container a.selected {\n  color: #1e88e5;\n  border-bottom: 2px solid #1e88e5;\n}\n.wangEditor-drop-panel .panel-tab .content-container .content,\n.txt-toolbar .panel-tab .content-container .content {\n  display: none;\n}\n.wangEditor-drop-panel .panel-tab .content-container .content a,\n.txt-toolbar .panel-tab .content-container .content a {\n  display: inline-block;\n  margin: 2px;\n  padding: 2px;\n  border-radius: 2px;\n}\n.wangEditor-drop-panel .panel-tab .content-container .content a:hover,\n.txt-toolbar .panel-tab .content-container .content a:hover {\n  background-color: #f1f1f1;\n}\n.wangEditor-drop-panel .panel-tab .content-container .selected,\n.txt-toolbar .panel-tab .content-container .selected {\n  display: block;\n}\n.wangEditor-drop-panel .panel-tab .emotion-content-container,\n.txt-toolbar .panel-tab .emotion-content-container {\n  height: 200px;\n  overflow-y: auto;\n}\n.wangEditor-drop-panel .upload-icon-container,\n.txt-toolbar .upload-icon-container {\n  color: #ccc;\n  text-align: center;\n  margin: 20px 20px 15px 20px !important;\n  padding: 5px !important;\n  font-size: 65px;\n  cursor: pointer;\n  border: 2px dotted #f1f1f1;\n  display: block !important;\n}\n.wangEditor-drop-panel .upload-icon-container:hover,\n.txt-toolbar .upload-icon-container:hover {\n  color: #666;\n  border-color: #ccc;\n}\n.wangEditor-modal {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  background-color: #fff;\n  border-top: 1px solid #f1f1f1;\n  box-shadow: 1px 3px 3px #999;\n  border-top: 1px\\9 solid\\9 #ccc\\9;\n  border-left: 1px\\9 solid\\9 #ccc\\9;\n  border-bottom: 1px\\9 solid\\9 #999\\9;\n  border-right: 1px\\9 solid\\9 #999\\9;\n}\n.wangEditor-modal .wangEditor-modal-close {\n  position: absolute;\n  top: 0;\n  right: 0;\n  margin-top: -25px;\n  margin-right: -25px;\n  font-size: 1.5em;\n  color: #666;\n  cursor: pointer;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(" + __webpack_require__(363) + ");\n  src: url(" + __webpack_require__(362) + "?#iefix-qdfu1s) format('embedded-opentype'), url(" + __webpack_require__(365) + ") format('truetype'), url(" + __webpack_require__(366) + ") format('woff'), url(" + __webpack_require__(364) + "#icomoon) format('svg');\n  font-weight: normal;\n  font-style: normal;\n}\n[class^=\"wangeditor-menu-img-\"],\n[class*=\" wangeditor-menu-img-\"] {\n  font-family: 'icomoon';\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.wangeditor-menu-img-link:before {\n  content: \"\\E800\";\n}\n.wangeditor-menu-img-unlink:before {\n  content: \"\\E801\";\n}\n.wangeditor-menu-img-code:before {\n  content: \"\\E802\";\n}\n.wangeditor-menu-img-cancel:before {\n  content: \"\\E803\";\n}\n.wangeditor-menu-img-terminal:before {\n  content: \"\\E804\";\n}\n.wangeditor-menu-img-angle-down:before {\n  content: \"\\E805\";\n}\n.wangeditor-menu-img-font:before {\n  content: \"\\E806\";\n}\n.wangeditor-menu-img-bold:before {\n  content: \"\\E807\";\n}\n.wangeditor-menu-img-italic:before {\n  content: \"\\E808\";\n}\n.wangeditor-menu-img-header:before {\n  content: \"\\E809\";\n}\n.wangeditor-menu-img-align-left:before {\n  content: \"\\E80A\";\n}\n.wangeditor-menu-img-align-center:before {\n  content: \"\\E80B\";\n}\n.wangeditor-menu-img-align-right:before {\n  content: \"\\E80C\";\n}\n.wangeditor-menu-img-list-bullet:before {\n  content: \"\\E80D\";\n}\n.wangeditor-menu-img-indent-left:before {\n  content: \"\\E80E\";\n}\n.wangeditor-menu-img-indent-right:before {\n  content: \"\\E80F\";\n}\n.wangeditor-menu-img-list-numbered:before {\n  content: \"\\E810\";\n}\n.wangeditor-menu-img-underline:before {\n  content: \"\\E811\";\n}\n.wangeditor-menu-img-table:before {\n  content: \"\\E812\";\n}\n.wangeditor-menu-img-eraser:before {\n  content: \"\\E813\";\n}\n.wangeditor-menu-img-text-height:before {\n  content: \"\\E814\";\n}\n.wangeditor-menu-img-brush:before {\n  content: \"\\E815\";\n}\n.wangeditor-menu-img-pencil:before {\n  content: \"\\E816\";\n}\n.wangeditor-menu-img-minus:before {\n  content: \"\\E817\";\n}\n.wangeditor-menu-img-picture:before {\n  content: \"\\E818\";\n}\n.wangeditor-menu-img-file-image:before {\n  content: \"\\E819\";\n}\n.wangeditor-menu-img-cw:before {\n  content: \"\\E81A\";\n}\n.wangeditor-menu-img-ccw:before {\n  content: \"\\E81B\";\n}\n.wangeditor-menu-img-music:before {\n  content: \"\\E911\";\n}\n.wangeditor-menu-img-play:before {\n  content: \"\\E912\";\n}\n.wangeditor-menu-img-location:before {\n  content: \"\\E947\";\n}\n.wangeditor-menu-img-happy:before {\n  content: \"\\E9DF\";\n}\n.wangeditor-menu-img-sigma:before {\n  content: \"\\EA67\";\n}\n.wangeditor-menu-img-enlarge2:before {\n  content: \"\\E98B\";\n}\n.wangeditor-menu-img-shrink2:before {\n  content: \"\\E98C\";\n}\n.wangeditor-menu-img-newspaper:before {\n  content: \"\\E904\";\n}\n.wangeditor-menu-img-camera:before {\n  content: \"\\E90F\";\n}\n.wangeditor-menu-img-video-camera:before {\n  content: \"\\E914\";\n}\n.wangeditor-menu-img-file-zip:before {\n  content: \"\\E92B\";\n}\n.wangeditor-menu-img-stack:before {\n  content: \"\\E92E\";\n}\n.wangeditor-menu-img-credit-card:before {\n  content: \"\\E93F\";\n}\n.wangeditor-menu-img-address-book:before {\n  content: \"\\E944\";\n}\n.wangeditor-menu-img-envelop:before {\n  content: \"\\E945\";\n}\n.wangeditor-menu-img-drawer:before {\n  content: \"\\E95C\";\n}\n.wangeditor-menu-img-download:before {\n  content: \"\\E960\";\n}\n.wangeditor-menu-img-upload:before {\n  content: \"\\E961\";\n}\n.wangeditor-menu-img-lock:before {\n  content: \"\\E98F\";\n}\n.wangeditor-menu-img-unlocked:before {\n  content: \"\\E990\";\n}\n.wangeditor-menu-img-wrench:before {\n  content: \"\\E991\";\n}\n.wangeditor-menu-img-eye:before {\n  content: \"\\E9CE\";\n}\n.wangeditor-menu-img-eye-blocked:before {\n  content: \"\\E9D1\";\n}\n.wangeditor-menu-img-command:before {\n  content: \"\\EA4E\";\n}\n.wangeditor-menu-img-font2:before {\n  content: \"\\EA5C\";\n}\n.wangeditor-menu-img-libreoffice:before {\n  content: \"\\EADE\";\n}\n.wangeditor-menu-img-quotes-left:before {\n  content: \"\\E977\";\n}\n.wangeditor-menu-img-strikethrough:before {\n  content: \"\\EA65\";\n}\n.wangeditor-menu-img-desktop:before {\n  content: \"\\F108\";\n}\n.wangeditor-menu-img-tablet:before {\n  content: \"\\F10A\";\n}\n.wangeditor-menu-img-search-plus:before {\n  content: \"\\F00E\";\n}\n.wangeditor-menu-img-search-minus:before {\n  content: \"\\F010\";\n}\n.wangeditor-menu-img-trash-o:before {\n  content: \"\\F014\";\n}\n.wangeditor-menu-img-align-justify:before {\n  content: \"\\F039\";\n}\n.wangeditor-menu-img-arrows-v:before {\n  content: \"\\F07D\";\n}\n.wangeditor-menu-img-sigma2:before {\n  content: \"\\EA68\";\n}\n.wangeditor-menu-img-omega:before {\n  content: \"\\E900\";\n}\n.wangeditor-menu-img-cancel-circle:before {\n  content: \"\\E901\";\n}\n.hljs {\n  display: block;\n  overflow-x: auto;\n  padding: 0.5em;\n  color: #333;\n  background: #f8f8f8;\n  -webkit-text-size-adjust: none;\n}\n.hljs-comment,\n.diff .hljs-header {\n  color: #998;\n  font-style: italic;\n}\n.hljs-keyword,\n.style .rule .hljs-keyword,\n.hljs-winutils,\n.nginx .hljs-title,\n.hljs-subst,\n.hljs-request,\n.hljs-status {\n  color: #333;\n  font-weight: bold;\n}\n.hljs-number,\n.hljs-hexcolor,\n.ruby .hljs-constant {\n  color: #008080;\n}\n.hljs-string,\n.hljs-tag .hljs-value,\n.hljs-doctag,\n.tex .hljs-formula {\n  color: #d14;\n}\n.hljs-title,\n.hljs-id,\n.scss .hljs-preprocessor {\n  color: #900;\n  font-weight: bold;\n}\n.hljs-list .hljs-keyword,\n.hljs-subst {\n  font-weight: normal;\n}\n.hljs-class .hljs-title,\n.hljs-type,\n.vhdl .hljs-literal,\n.tex .hljs-command {\n  color: #458;\n  font-weight: bold;\n}\n.hljs-tag,\n.hljs-tag .hljs-title,\n.hljs-rule .hljs-property,\n.django .hljs-tag .hljs-keyword {\n  color: #000080;\n  font-weight: normal;\n}\n.hljs-attribute,\n.hljs-variable,\n.lisp .hljs-body,\n.hljs-name {\n  color: #008080;\n}\n.hljs-regexp {\n  color: #009926;\n}\n.hljs-symbol,\n.ruby .hljs-symbol .hljs-string,\n.lisp .hljs-keyword,\n.clojure .hljs-keyword,\n.scheme .hljs-keyword,\n.tex .hljs-special,\n.hljs-prompt {\n  color: #990073;\n}\n.hljs-built_in {\n  color: #0086b3;\n}\n.hljs-preprocessor,\n.hljs-pragma,\n.hljs-pi,\n.hljs-doctype,\n.hljs-shebang,\n.hljs-cdata {\n  color: #999;\n  font-weight: bold;\n}\n.hljs-deletion {\n  background: #fdd;\n}\n.hljs-addition {\n  background: #dfd;\n}\n.diff .hljs-change {\n  background: #0086b3;\n}\n.hljs-chunk {\n  color: #aaa;\n}\n", ""]);
 
 // exports
 
@@ -47420,7 +47420,7 @@ function removeStyleElement(styleElement) {
 
 function createStyleElement(options) {
 	var styleElement = document.createElement("style");
-	options.attrs.type = "text/css";
+	options.attrs.type = "text/style";
 
 	attachTagAttrs(styleElement, options.attrs);
 	insertStyleElement(options, styleElement);
@@ -47429,7 +47429,7 @@ function createStyleElement(options) {
 
 function createLinkElement(options) {
 	var linkElement = document.createElement("link");
-	options.attrs.type = "text/css";
+	options.attrs.type = "text/style";
 	options.attrs.rel = "stylesheet";
 
 	attachTagAttrs(linkElement, options.attrs);
@@ -47549,7 +47549,7 @@ function updateLink(linkElement, options, obj) {
 		css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
 	}
 
-	var blob = new Blob([css], { type: "text/css" });
+	var blob = new Blob([css], { type: "text/style" });
 
 	var oldSrc = linkElement.href;
 
@@ -47564,7 +47564,7 @@ function updateLink(linkElement, options, obj) {
 /* 361 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// style-loader: Adds some css to the DOM by adding a <style> tag
+// style-loader: Adds some style to the DOM by adding a <style> tag
 
 // load the styles
 var content = __webpack_require__(359);
@@ -47576,8 +47576,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../css-loader/index.js!./wangEditor.css", function() {
-			var newContent = require("!!../../../css-loader/index.js!./wangEditor.css");
+		module.hot.accept("!!../../../style-loader/index.script!./wangEditor.css", function() {
+			var newContent = require("!!../../../style-loader/index.script!./wangEditor.style");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});

@@ -16,24 +16,16 @@ const theme = path.join(__dirname, `../../user/themes/${config.theme}/`);
 const target = path.join(__dirname, '../../user/temp/');
 
 
+
 function dataToArticle(rawData) {
     let article = fs.readFileSync(
         path.join(theme, './templates/article.html'),
         'utf-8'
     );
 
-    const [statics, script, style, link, data] = [
-        '../static/static',
-        `<script type="text/javascript" rel="script" src="../static/js/common.js"/>
-        <script type="text/javascript" rel="script" src="../static/js/article.js"/>`,
-        `<link type="text/css" rel="stylesheet" href="../static/css/common.css"/>
-        <link type="text/css" rel="stylesheet" href="../static/css/article.css"/>`,
-        {
-            home: '../index.html'
-        },
-        {
+    const templateData = {
+        data: {
             date: formatDate(rawData.createDate),
-            title: rawData.title,
             content: rawData.content,
             tags: rawData.tags,
             archives: rawData.archives,
@@ -41,27 +33,28 @@ function dataToArticle(rawData) {
             name: config.name,
             username: config.username,
             selfIntroduction: config.selfIntroduction,
-        }
-    ];
-
-    article = templateEngine.parse(
-        {
-            statics: statics,
-            script: script,
-            style: style,
-            link: link,
-            data: data
         },
-        article
-    );
+        link: {},
+        script: `../statics/script`,
+        statics: '../statics/statics',
+        style: `../statics/style`,
+        title: rawData.title,
+        user: {
+            avatar: config.avatar,
+            name: config.name,
+            selfIntroduction: config.selfIntroduction,
+            username: config.username,
+        }
+    };
+    article = templateEngine.parse(templateData, article);
 
-
-    const targetPath = path.join(target, `./${data.key}/`);
+    const targetPath = path.join(target, `./articles/`);
     !fs.existsSync(targetPath) && fs.mkdirSync(targetPath);
-    fs.writeFileSync(path.join(targetPath, 'index.html'), article, 'utf-8');
+    fs.writeFileSync(path.join(targetPath, `${rawData.key}.html`), article, 'utf-8');
     updateStaticFiles();
-    return path.join(targetPath, 'index.html')
+    return path.join(targetPath, `${rawData.key}.html`)
 }
+
 
 
 async function dataToHome(rawData) {
@@ -71,7 +64,7 @@ async function dataToHome(rawData) {
     );
 
     const [statics, script, style, link, data] = [
-        './static/static',
+        './statics/statics',
         `<script type="text/javascript" rel="script" src="./static/js/common.js"/>
         <script type="text/javascript" rel="script" src="./static/js/index.js"/>`,
         `<link type="text/css" rel="stylesheet" href="./static/css/common.css"/>
@@ -110,16 +103,16 @@ async function dataToHome(rawData) {
 
 function updateStaticFiles() {
     fs.copySync(
-        path.join(theme, './css/'),
-        path.join(target, './static/css/')
+        path.join(theme, './style/'),
+        path.join(target, './statics/style/')
     );
     fs.copySync(
-        path.join(theme, './js/'),
-        path.join(target, './static/js/')
+        path.join(theme, './script/'),
+        path.join(target, './statics/script/')
     );
     fs.copySync(
-        path.join(theme, './static/'),
-        path.join(target, './static/static/')
+        path.join(theme, './statics/'),
+        path.join(target, './statics/statics/')
     );
 }
 
@@ -140,14 +133,3 @@ function formatDate(date) {
             daysEn[date.getDay()]
     }
 }
-
-
-// function test() {
-//     let article = fs.readFileSync(
-//         path.join(theme, './templates/article.html'),
-//         'utf-8'
-//     );
-//     console.log(article.match(/\{\{.+\}\}/g))
-// }
-//
-// test()

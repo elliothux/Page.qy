@@ -2,9 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Tags</title>
+    <title>{{ title }}</title>
+    <link type="text/css" rel="stylesheet" href="{{ style }}/common.css"/>
+    <link type="text/css" rel="stylesheet" href="{{ style }}/tags.css"/>
 </head>
 <body>
+<div id="header">
+    <a id="homeIcon" href="{{ link.home }}">
+        <img src="{{ statics }}/home.svg">
+    </a>
+    <div id="nav">
+        <a id="navHome" href="{{ link.home }}">Home</a>
+        <a id="navTags" href="{{ link.tags }}">Tags</a>
+        <a id="navArchives" href="{{ link.archives }}">Asrchives</a>
+        <a id="navAbout" href="{{ link.about }}">About</a>
+    </div>
+    <h1 id="title">Welcome to {{ user.username }}'s!</h1>
+    <p id="date">{{ user.selfIntroduction }}</p>
+    <img id="headImg" src="{{ statics }}/tags.svg">
+</div>
 
+
+
+<script type="text/javascript" src="{{ script }}/common.js"></script>
+<script type="text/javascript" src="{{ script }}/tags.js"></script>
 </body>
 </html>
