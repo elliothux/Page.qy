@@ -8,6 +8,10 @@ a {
     text-decoration: none;
 }
 
+body {
+    background-color: #fafafa;
+}
+
 
 #header {
     width: 100%;
@@ -86,4 +90,18 @@ a {
     font-weight: lighter;
     letter-spacing: 0.1em;
     color: white;
+}
+
+#footerLine {
+    margin: 50px 0 20px 0;
+    height: 0;
+    width: 70%;
+    margin-left: 15%;
+}
+#footer {
+    text-align: center;
+    font-size: 0.8em;
+    color: #898989;
+    margin-bottom: 30px;
+    letter-spacing: 0.1em;
 }

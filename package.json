@@ -4,8 +4,10 @@
   "description": "Site.qy",
   "main": "main.js",
   "dependencies": {
+    "babel-polyfill": "^6.23.0",
     "cheerio": "^0.22.0",
     "electron": "^1.6.2",
+    "electron-prebuilt": "^1.4.13",
     "github-api": "^3.0.0",
     "nedb": "^1.8.0",
     "node-fs-extra": "^0.8.1",

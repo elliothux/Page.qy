@@ -17,7 +17,8 @@
     </div>
     <h1 id="headTitle">{{ title }}</h1>
     <hr/>
-    <p id="introduction">{{ user.selfIntroduction }}</p>
+    <p id="introduction">Written With ❤ By {{ user.name }}
+        on {{ data.date.month }}/{{ data.date.date }} {{ data.date.year }}</p>
 </div>
 
 <ul id="tags">
@@ -28,7 +29,8 @@
 
 <div id="content">{{ data.content }}</div>
 
-
+<hr id="footerLine"/>
+<p id="footer">Powered With ❤ By <a>Page.qy</a></p>
 
 <script type="text/javascript" src="{{ script }}/common.js"></script>
 <script type="text/javascript" src="{{ script }}/tags.js"></script>

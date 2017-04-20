@@ -47,3 +47,5 @@ fabric.properties
 
 .idea
 /node_modules/
+/npm-debug.log
+/yarn-error.log
