@@ -42,7 +42,7 @@ a {
 
 #nav > a, #navHome{
     display: inline-block;
-    font-size: larger;
+    font-size: 1em;
     font-weight: bolder;
     color: white;
     margin: 20px 50px 20px 0;
@@ -79,7 +79,7 @@ a {
     margin-left: calc(50% - 8%);
 }
 
-#selfIntroduction {
+#introduction {
     text-align: center;
     margin-top: 30px;
     font-size: 1em;

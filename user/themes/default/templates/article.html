@@ -15,22 +15,19 @@
         <a href="{{ link.archives }}">ARCHIVES</a>
         <a href="{{ link.about }}">ABOUT</a>
     </div>
-    <h1 id="headTitle">{{ user.username }}'s Blog</h1>
+    <h1 id="headTitle">{{ title }}</h1>
     <hr/>
-    <p id="selfIntroduction">{{ user.selfIntroduction }}</p>
+    <p id="introduction">{{ user.selfIntroduction }}</p>
 </div>
 
-<!--<div id="content">{{ data.content }}</div>-->
-<!--<div id="userInfo">-->
-<!--<div id="avatar">{{ data.avatar }}</div>-->
-<!--<div id="selfIntroduction">{{ data.selfIntroduction }}</div>-->
-<!--<div id="tags"><ul>-->
-<!--<template @for="tag of data.tags">-->
-<!--<li>{{ tag }}</li>-->
-<!--</template>-->
-<!--</ul></div>-->
-<!--<div id="archives">{{ data.archives }}</div>-->
-<!--</div>-->
+<ul id="tags">
+    <template @for="tag of data.tags">
+        <li><a>#{{ tag }}</a></li>
+    </template>
+</ul>
+
+<div id="content">{{ data.content }}</div>
+
 
 
 <script type="text/javascript" src="{{ script }}/common.js"></script>

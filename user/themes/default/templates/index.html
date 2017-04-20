@@ -2,43 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    {{ style }}
+    <link type="text/css" rel="stylesheet" href="{{ style }}/common.css"/>
+    <!--<link type="text/css" rel="stylesheet" href="{{ style }}/article.css"/>-->
     <title>{{ data.title }}</title>
 </head>
 <body>
 <div id="header">
-    <a id="homeIcon" href="{{ link.home }}">
-        <img src="{{ statics }}/home.svg">
-    </a>
+    <img src="{{ statics }}/nav.jpg">
+    <a id="navHome" href="{{ link.home }}">HOME</a>
     <div id="nav">
-        <a id="navHome" href="{{ link.home }}">Home</a>
-        <a id="navTags">Tags</a>
-        <a id="navArchives">Archives</a>
-        <a id="navAbout">About</a>
+        <a href="{{ link.tags }}">TAGS</a>
+        <a href="{{ link.archives }}">ARCHIVES</a>
+        <a href="{{ link.about }}">ABOUT</a>
     </div>
-    <h1 id="title">Welcome to {{ data.username }}'s!</h1>
-    <p id="date">{{ data.selfIntroduction }}</p>
-    <img id="headImg" src="{{ statics }}/home.svg">
+    <h1 id="headTitle">{{ user.username }}'s Blog</h1>
+    <hr/>
+    <p id="selfIntroduction">{{ user.selfIntroduction }}</p>
 </div>
 
-<div id="articleContainer">
-    <template @for="article of data.articles">
-        <div class="article">
-            <p class="date">{{ article.date }}</p>
-            <div class="tags">
-                <template @for="tag of article.tags">
-                    <a class="tag">{{ tag }}</a>
-                </template>
-            </div>
-            <h1 class="title">{{ article.title }}</h1>
-            <div>{{ article.content }}</div>
-            <a class="viewButton">
-                <img src="{{ statics }}/view.svg">
-                <p>VIEW</p>
-            </a>
-        </div>
-    </template>
-</div>
+<!--<div id="articleContainer">-->
+    <!--<template @for="article of data.articles">-->
+        <!--<div class="article">-->
+            <!--<p class="date">{{ article.date }}</p>-->
+            <!--<div class="tags">-->
+                <!--<template @for="tag of article.tags">-->
+                    <!--<a class="tag">{{ tag }}</a>-->
+                <!--</template>-->
+            <!--</div>-->
+            <!--<h1 class="title">{{ article.title }}</h1>-->
+            <!--<div>{{ article.content }}</div>-->
+            <!--<a class="viewButton">-->
+                <!--<img src="{{ statics }}/view.svg">-->
+                <!--<p>VIEW</p>-->
+            <!--</a>-->
+        <!--</div>-->
+    <!--</template>-->
+<!--</div>-->
 
 {{ script }}
 </body>

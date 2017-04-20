@@ -1,0 +1,32 @@
+
+#headTitle, #introduction {
+    text-align: left;
+    margin-left: 15%;
+}
+
+#header hr {
+    margin-left: 15%;
+}
+
+#tags {
+    position: relative;
+    top: -45px;
+    margin-left: 15%;
+    list-style: none;
+}
+
+#tags > li {
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 15px;
+    padding: 5px 8px;
+    margin-right: 30px;
+    box-shadow: 1px 1px 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+#content {
+    width: 70%;
+    margin-left: 15%;
+    margin-top: 40px;
+}
