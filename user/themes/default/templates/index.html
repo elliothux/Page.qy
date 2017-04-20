@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>{{ title }}</title>
     <link type="text/css" rel="stylesheet" href="{{ style }}/common.css"/>
-    <!--<link type="text/css" rel="stylesheet" href="{{ style }}/article.css"/>-->
-    <title>{{ data.title }}</title>
+    <link type="text/css" rel="stylesheet" href="{{ style }}/index.css"/>
 </head>
 <body>
 <div id="header">
@@ -17,28 +17,23 @@
     </div>
     <h1 id="headTitle">{{ user.username }}'s Blog</h1>
     <hr/>
-    <p id="selfIntroduction">{{ user.selfIntroduction }}</p>
+    <p id="introduction">{{ user.selfIntroduction }}</p>
 </div>
 
-<!--<div id="articleContainer">-->
-    <!--<template @for="article of data.articles">-->
-        <!--<div class="article">-->
-            <!--<p class="date">{{ article.date }}</p>-->
-            <!--<div class="tags">-->
-                <!--<template @for="tag of article.tags">-->
-                    <!--<a class="tag">{{ tag }}</a>-->
-                <!--</template>-->
-            <!--</div>-->
-            <!--<h1 class="title">{{ article.title }}</h1>-->
-            <!--<div>{{ article.content }}</div>-->
-            <!--<a class="viewButton">-->
-                <!--<img src="{{ statics }}/view.svg">-->
-                <!--<p>VIEW</p>-->
-            <!--</a>-->
-        <!--</div>-->
-    <!--</template>-->
-<!--</div>-->
+<div id="articles">
+    <template @for="article of data">
+        <div class="article">
 
-{{ script }}
+        </div>
+    </template>
+</div>
+
+
+
+<hr id="footerLine"/>
+<p id="footer">Powered With ❤ By <a>Page.qy</a></p>
+
+<script type="text/javascript" src="{{ script }}/common.js"></script>
+<script type="text/javascript" src="{{ script }}/index.js"></script>
 </body>
 </html>

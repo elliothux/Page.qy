@@ -68,36 +68,27 @@ async function dataToHome(rawData) {
         'utf-8'
     );
 
-    const [statics, script, style, link, data] = [
-        './statics/statics',
-        `<script type="text/javascript" rel="script" src="./static/js/common.js"/>
-        <script type="text/javascript" rel="script" src="./static/js/index.js"/>`,
-        `<link type="text/css" rel="stylesheet" href="./static/css/common.css"/>
-        <link type="text/css" rel="stylesheet" href="./static/css/index.css"/>`,
-        {
-            home: './index.html'
+    const templateData = {
+        data: await db.getPublishedArticleList(),
+        link: {
+            home: '/',
+            tags: '',
+            archives: '',
+            about: ''
         },
-        {
-            title: config.name,
-            avatar: rawData.avatar,
-            archives: rawData.archives,
-            articles: await db.getPublishedArticleList(),
+        script: `./statics/script`,
+        statics: './statics/statics',
+        style: `./statics/style`,
+        title: 'Home',
+        user: {
+            avatar: config.avatar,
             name: config.name,
-            username: config.username,
             selfIntroduction: config.selfIntroduction,
+            username: config.username,
         }
-    ];
+    };
 
-    home = templateEngine.parse(
-        {
-            statics: statics,
-            script: script,
-            style: style,
-            link: link,
-            data: data
-        },
-        home
-    );
+    home = templateEngine.parse(templateData, home);
 
     const targetPath = target;
     fs.writeFileSync(path.join(targetPath, 'index.html'), home, 'utf-8');
