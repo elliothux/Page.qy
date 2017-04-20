@@ -100,7 +100,7 @@ export default class Nav extends React.Component {
             },
             navArea: {
                 width: '100%',
-                height: 'calc(100% - 350px)',
+                height: '45%',
                 display: 'flex',
                 flexFlow: 'column wrap',
                 justifyContent: 'space-between',
@@ -143,15 +143,15 @@ export default class Nav extends React.Component {
             },
             navButtonContainer: {
                 width: '100%',
-                height: '75px',
+                height: '23%',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
                 cursor: 'pointer'
             },
             navButtonImg: {
-                width: '40px',
-                height: 'auto',
+                width: 'auto',
+                height: '48%',
                 marginRight: '20px',
                 cursor: 'pointer'
             },
