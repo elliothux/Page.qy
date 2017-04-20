@@ -8,31 +8,29 @@
 </head>
 <body>
 <div id="header">
-    <a id="homeIcon" href="{{ link.home }}">
-        <img src="{{ statics }}/home.svg">
-    </a>
+    <img src="{{ statics }}/nav.jpg">
+    <a id="navHome" href="{{ link.home }}">HOME</a>
     <div id="nav">
-        <a id="navHome" href="{{ link.home }}">Home</a>
-        <a id="navTags" href="{{ link.tags }}">Tags</a>
-        <a id="navArchives" href="{{ link.archives }}">Asrchives</a>
-        <a id="navAbout" href="{{ link.about }}">About</a>
+        <a href="{{ link.tags }}">TAGS</a>
+        <a href="{{ link.archives }}">ARCHIVES</a>
+        <a href="{{ link.about }}">ABOUT</a>
     </div>
-    <h1 id="title">Welcome to {{ user.username }}'s!</h1>
-    <p id="date">{{ user.selfIntroduction }}</p>
-    <img id="headImg" src="{{ statics }}/article.svg">
+    <h1 id="headTitle">{{ user.username }}'s Blog</h1>
+    <hr/>
+    <p id="selfIntroduction">{{ user.selfIntroduction }}</p>
 </div>
 
-<div id="content">{{ data.content }}</div>
-<div id="userInfo">
-    <div id="avatar">{{ data.avatar }}</div>
-    <div id="selfIntroduction">{{ data.selfIntroduction }}</div>
-    <div id="tags"><ul>
-        <template @for="tag of data.tags">
-            <li>{{ tag }}</li>
-        </template>
-    </ul></div>
-    <div id="archives">{{ data.archives }}</div>
-</div>
+<!--<div id="content">{{ data.content }}</div>-->
+<!--<div id="userInfo">-->
+<!--<div id="avatar">{{ data.avatar }}</div>-->
+<!--<div id="selfIntroduction">{{ data.selfIntroduction }}</div>-->
+<!--<div id="tags"><ul>-->
+<!--<template @for="tag of data.tags">-->
+<!--<li>{{ tag }}</li>-->
+<!--</template>-->
+<!--</ul></div>-->
+<!--<div id="archives">{{ data.archives }}</div>-->
+<!--</div>-->
 
 
 <script type="text/javascript" src="{{ script }}/common.js"></script>

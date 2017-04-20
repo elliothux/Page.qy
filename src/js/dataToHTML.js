@@ -34,7 +34,12 @@ function dataToArticle(rawData) {
             username: config.username,
             selfIntroduction: config.selfIntroduction,
         },
-        link: {},
+        link: {
+            home: '../index.html',
+            tags: '',
+            archives: '',
+            about: ''
+        },
         script: `../statics/script`,
         statics: '../statics/statics',
         style: `../statics/style`,

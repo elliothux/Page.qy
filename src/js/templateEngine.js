@@ -4,6 +4,7 @@ module.exports.parse = parse;
 
 
 function parse(rawData, template) {
+    template = template.replace(/\<\!\-\-.*\-\-\>/g, '');
     with (rawData) {
         let templateDOM = $.load(template);
         let match = templateDOM('template');
