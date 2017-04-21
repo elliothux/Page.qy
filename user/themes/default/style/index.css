@@ -17,3 +17,52 @@
     font-weight: bolder;
     letter-spacing: 0.03em;
 }
+
+.article .introduction {
+    margin: 15px 0;
+    font-size: 1em;
+    letter-spacing: 0.05em;
+    font-weight: lighter;
+}
+
+.article .date{
+    display: inline-block;
+    font-size: 0.9em;
+    font-style: italic;
+    color: gray;
+    letter-spacing: 0.1em;
+}
+
+.article .tags {
+    display: inline-block;
+    float: right;
+    /*position: relative;*/
+    /*top: 3px;*/
+    font-size: 0.9em;
+    font-style: italic;
+    color: gray;
+    letter-spacing: 0.1em;
+}
+
+.article .tags li {
+    display: inline-block;
+    background-color: #dddddd;
+    color: white;
+    border-radius: 15px;
+    height: 15px;
+    line-height: 15px;
+    padding: 5px 8px;
+    margin-left: 10px;
+    transition: all ease 200ms;
+}
+
+.article .tags li:hover {
+    background-color: #bfbfbf;
+    transform: scale(1.1);
+}
+
+.article hr {
+    width: 100%;
+    margin-top: 30px;
+    opacity: 0.3;
+}

@@ -29,16 +29,15 @@
                 on {{ article.date.month }}/{{ article.date.date }} {{ article.date.year }}</p>
             <ul class="tags">
                 <template @for="tag of article.tags">
-                    <li>#{{ tag }}</li>
+                    <li><a>#{{ tag }}</a></li>
                 </template>
             </ul>
+            <hr>
         </a>
     </template>
 </div>
 
 
-
-<hr id="footerLine"/>
 <p id="footer">Powered With ❤ By <a>Page.qy</a></p>
 
 <script type="text/javascript" src="{{ script }}/common.js"></script>
