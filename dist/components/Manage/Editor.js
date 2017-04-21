@@ -100,7 +100,14 @@ export default class Edit extends React.Component {
             title: this.state.title,
             tags: this.state.tags,
             content: this.state.content,
-            introduction: this.state.introduction
+            introduction: function () {
+                if (this.state.content === '') return '<div></div>';
+                let container = document.createElement('div');
+                container.innerHTML = this.state.content;
+                container = container.firstChild;
+                container.innerHTML = container.innerHTML + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0......';
+                return container.outerHTML
+            }.bind(this)()
         };
         if (this.state.key === '') {
             if (this.state.title === '' &&
@@ -118,7 +125,6 @@ export default class Edit extends React.Component {
             data.key = this.state.key;
             await this.props.db.editArticle(data);
             eventProxy.trigger('updateArticleData', data);
-            console.log(data);
         }
         eventProxy.trigger('changeManageView', 'article');
         this.setState(() => ({

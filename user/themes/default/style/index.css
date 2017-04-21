@@ -1,0 +1,19 @@
+
+#articles {
+    width: 70%;
+    margin-left: 15%;
+    margin-top: 50px;
+}
+
+.article {
+    width: 100%;
+    margin-bottom: 50px;
+    display: block;
+    color: black;
+}
+
+.article .title {
+    font-size: 2.2em;
+    font-weight: bolder;
+    letter-spacing: 0.03em;
+}

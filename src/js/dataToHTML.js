@@ -69,7 +69,11 @@ async function dataToHome(rawData) {
     );
 
     const templateData = {
-        data: await db.getPublishedArticleList(),
+        data: (await db.getPublishedArticleList()).map(article => {
+            article.date = formatDate(article.createDate);
+            article.link = `./articles/${article.key}.html`;
+            return article
+        }),
         link: {
             home: '/',
             tags: '',
@@ -87,9 +91,6 @@ async function dataToHome(rawData) {
             username: config.username,
         }
     };
-
-    console.log(templateData);
-
     home = templateEngine.parse(templateData, home);
 
     const targetPath = target;

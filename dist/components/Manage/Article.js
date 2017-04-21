@@ -32,17 +32,7 @@ export default class Article extends React.Component {
     }
 
     handleEditArticle() {
-        const introduction = function () {
-            if (this.state.content === '') return '<div></div>';
-            let container = document.createElement('div');
-            container.innerHTML = this.state.content;
-            container = container.firstChild;
-            container.innerHTML = container.innerHTML + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0......';
-            return container.outerHTML
-        }.bind(this)();
-        eventProxy.trigger('editArticle', Object.assign(this.state, {
-            introduction: introduction
-        }));
+        eventProxy.trigger('editArticle', this.state);
     }
 
     handleConfirm(flag) {
