@@ -1,0 +1,90 @@
+.wangEditor-container {
+  position: fixed;
+}
+
+.wangEditor-txt#editorContainer a {
+    font-size: 1em;
+    color: black;
+    font-weight: bold;
+    transition: all ease 300ms;
+}
+
+.wangEditor-txt#editorContainer a:hover {
+  text-decoration: underline;
+}
+
+.wangEditor-txt#editorContainer h1 {
+  font-size: 2em;
+  line-height: 2.5em;
+  margin: 35px 0 15px 0;
+}
+
+.wangEditor-txt#editorContainer h2 {
+  font-size: 1.6em;
+  line-height: 2em;
+  margin: 30px 0 10px 0;
+}
+
+.wangEditor-txt#editorContainer h3 {
+  font-size: 1.3em;
+  line-height: 2.3em;
+  margin: 25px 0 8px 0;
+}
+
+.wangEditor-txt#editorContainer h4,
+.wangEditor-txt#editorContainer h5,
+.wangEditor-txt#editorContainer h6 {
+  font-size: 1.15em;
+  line-height: 1.8em;
+  margin: 15px 0 5px 0;
+}
+
+.wangEditor-txt#editorContainer p,
+.wangEditor-txt#editorContainer dl,
+.wangEditor-txt#editorContainer ol,
+.wangEditor-txt#editorContainer ul,
+.wangEditor-txt#editorContainer pre,
+.wangEditor-txt#editorContainer code {
+  font-size: 1em;
+  line-height: 1.5em;
+  margin: 7px 0;
+}
+
+.wangEditor-txt#editorContainer ul,
+.wangEditor-txt#editorContainer ol {
+  margin-bottom: 20px;
+  margin-left: 20px;
+}
+
+.wangEditor-txt#editorContainer li {
+  margin: 6px 0 6px 0;
+}
+
+.wangEditor-txt#editorContainer abbr {
+  border-bottom: 1px black dotted;
+  cursor: help;
+}
+
+.wangEditor-txt#editorContainer pre,
+.wangEditor-txt#editorContainer code {
+  color: #898989;
+  background-color: white;
+  padding: 10px 15px;
+  border: 1px solid #dbdbdb;
+  border-radius: 8px;
+  font-size: 0.9em;
+  line-height: 1.5em;
+}
+
+.wangEditor-txt#editorContainer table {
+  width: 100%;
+  font-size: 1.125rem;
+}
+
+.wangEditor-txt#editorContainer figure,
+.wangEditor-txt#editorContainer figure table,
+.wangEditor-txt#editorContainer figure tbody,
+.wangEditor-txt#editorContainer figure tr,
+.wangEditor-txt#editorContainer figure td{
+  border: none;
+}
