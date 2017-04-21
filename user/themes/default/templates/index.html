@@ -23,8 +23,8 @@
 <div id="articles">
     <template @for="article of data">
         <div class="article">
-            <h1>{{ article.title }}</h1>
-
+            <h1 class="title">{{ article.title }}</h1>
+            <div class="introduction">{{ article.introduction }}</div>
         </div>
     </template>
 </div>

@@ -18,6 +18,7 @@ export default class Article extends React.Component {
             tags: this.props.data.tags,
             title: this.props.data.title,
             content: this.props.data.content,
+            introduction: this.props.data.introduction,
             key: this.props.data.key,
             published: this.props.data.published
         }
@@ -31,7 +32,17 @@ export default class Article extends React.Component {
     }
 
     handleEditArticle() {
-        eventProxy.trigger('editArticle', this.state);
+        const introduction = function () {
+            if (this.state.content === '') return '<div></div>';
+            let container = document.createElement('div');
+            container.innerHTML = this.state.content;
+            container = container.firstChild;
+            container.innerHTML = container.innerHTML + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0......';
+            return container.outerHTML
+        }.bind(this)();
+        eventProxy.trigger('editArticle', Object.assign(this.state, {
+            introduction: introduction
+        }));
     }
 
     handleConfirm(flag) {
@@ -109,14 +120,7 @@ export default class Article extends React.Component {
                         'Untitled Article' : this.state.title}
                 </p>
                 <div dangerouslySetInnerHTML={{
-                    __html: function () {
-                        if (this.state.content === '') return '<div></div>'
-                        let container = document.createElement('div');
-                        container.innerHTML = this.state.content;
-                        container = container.firstChild;
-                        container.innerHTML = container.innerHTML + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0......';
-                        return container.outerHTML
-                    }.bind(this)()
+                    __html: this.state.introduction
                 }}/>
             </div>
             <div

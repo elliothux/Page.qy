@@ -88,6 +88,8 @@ async function dataToHome(rawData) {
         }
     };
 
+    console.log(templateData);
+
     home = templateEngine.parse(templateData, home);
 
     const targetPath = target;

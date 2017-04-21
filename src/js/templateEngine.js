@@ -69,7 +69,6 @@ function test() {
     for (varible in rawData)
         if (rawData.hasOwnProperty(varible))
             this[varible] = rawData[varible];
-    console.log(data)
 }
 
 // console.log(test());

@@ -19,6 +19,7 @@ export default class Edit extends React.Component {
             title: '',
             content: '',
             tags: [],
+            introduction: '',
             key: ''
         }
     }
@@ -73,6 +74,7 @@ export default class Edit extends React.Component {
             title: data.title,
             content: data.content,
             tags: data.tags,
+            introduction: data.introduction,
             key: data.key
         }));
         this.editor.$txt.html(data.content);
@@ -97,7 +99,8 @@ export default class Edit extends React.Component {
         let data = {
             title: this.state.title,
             tags: this.state.tags,
-            content: this.state.content
+            content: this.state.content,
+            introduction: this.state.introduction
         };
         if (this.state.key === '') {
             if (this.state.title === '' &&
@@ -122,7 +125,8 @@ export default class Edit extends React.Component {
             title: '',
             tags: [],
             content: '',
-            key: ''
+            key: '',
+            introduction: ''
         }));
         this.editor.clear();
     }
