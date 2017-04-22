@@ -59,9 +59,10 @@ export default class Article extends React.Component {
     }
 
     async handlePublish() {
-        this.setState({
-            published: await this.props.db.togglePublish(this.state.key)
-        });
+        this.setState((prevState) => ({
+            published: !prevState.published
+        }));
+        await this.props.db.togglePublish(this.state.key);
         const path = await this.props.dataToHTML.dataToHome(
             Object.assign(this.props.data, this.state)
         );
