@@ -16,14 +16,13 @@
         <a href="{{ link.about }}">ABOUT</a>
     </div>
     <h1 id="headTitle">{{ user.username }}'s Blog</h1>
-    <hr/>
+    <hr>
     <p id="introduction">{{ user.selfIntroduction }}</p>
 </div>
-
 <div id="articles">
     <template @for="article of data">
-        <a class="article" href="{{ article.link }}">
-            <h1 class="title">{{ article.title }}</h1>
+        <div class="article">
+            <a class="title" href="{{ article.link }}">{{ article.title }}</a>
             <div class="introduction">{{ article.introduction }}</div>
             <p class="date">Written By {{ user.name }}
                 on {{ article.date.month }}/{{ article.date.date }} {{ article.date.year }}</p>
@@ -33,7 +32,7 @@
                 </template>
             </ul>
             <hr>
-        </a>
+        </div>
     </template>
 </div>
 

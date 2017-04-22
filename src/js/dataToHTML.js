@@ -91,7 +91,7 @@ async function dataToHome(rawData) {
             username: config.username,
         }
     };
-    home = templateEngine.parse(templateData, home);
+    home = await templateEngine.parse(templateData, home);
 
     const targetPath = target;
     fs.writeFileSync(path.join(targetPath, 'index.html'), home, 'utf-8');
