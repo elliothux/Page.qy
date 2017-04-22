@@ -3,8 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Archives</title>
+    <link type="text/css" rel="stylesheet" href="{{ style }}/common.css"/>
+    <link type="text/css" rel="stylesheet" href="{{ style }}/archives.css"/>
 </head>
 <body>
+<div id="header">
+    <img src="{{ statics }}/nav.jpg">
+    <a id="navHome" href="{{ link.home }}">HOME</a>
+    <div id="nav">
+        <a href="{{ link.tags }}">TAGS</a>
+        <a href="{{ link.archives }}">ARCHIVES</a>
+        <a href="{{ link.about }}">ABOUT</a>
+    </div>
+    <h1 id="headTitle">Archives</h1>
+    <hr>
+    <p id="introduction">{{ user.selfIntroduction }}</p>
+</div>
+<div id="archives">
+    <template @for="yearData of data">
+        <h1>YEAR {{ yearData.year }}</h1>
+        <template @for="monthData of yearData.monthData">
+            <h2>MONTH {{ monthData.month }}</h2>
+            <template @for="article of monthData.articles">
+                <a href="{{ article.link }}"><h3>{{ article.title }}</h3></a>
+                <p>Written By {{ user.name }}
+                    on {{ article.date.month }}/{{ article.date.date }} {{ article.date.year }}</p>
+            </template>
+        </template>
+    </template>
+</div>
 
+
+<p id="footer">Powered With ❤ By <a>Page.qy</a></p>
+
+<script type="text/javascript" src="{{ script }}/common.js"></script>
+<script type="text/javascript" src="{{ script }}/index.js"></script>
 </body>
 </html>

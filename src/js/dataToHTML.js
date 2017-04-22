@@ -6,6 +6,7 @@ const db = require('./db');
 
 module.exports.dataToArticle = dataToArticle;
 module.exports.dataToHome = dataToHome;
+module.exports.dataToArchives = dataToArchives;
 
 
 const config = JSON.parse(fs.readFileSync(
@@ -36,9 +37,9 @@ function dataToArticle(rawData) {
         },
         link: {
             home: '../index.html',
-            tags: '',
-            archives: '',
-            about: ''
+            tags: '../tags.html',
+            archives: '../archives.html',
+            about: '../about.html'
         },
         script: `../statics/script`,
         statics: '../statics/statics',
@@ -62,7 +63,7 @@ function dataToArticle(rawData) {
 
 
 
-async function dataToHome(rawData) {
+async function dataToHome() {
     let home = fs.readFileSync(
         path.join(theme, './templates/index.html'),
         'utf-8'
@@ -78,9 +79,9 @@ async function dataToHome(rawData) {
         )),
         link: {
             home: './index.html',
-            tags: '',
-            archives: '',
-            about: ''
+            tags: './tags.html',
+            archives: './archives.html',
+            about: './about.html'
         },
         script: `./statics/script`,
         statics: './statics/statics',
@@ -99,6 +100,85 @@ async function dataToHome(rawData) {
     fs.writeFileSync(path.join(targetPath, 'index.html'), home, 'utf-8');
     updateStaticFiles();
     return path.join(targetPath, 'index.html')
+}
+
+
+async function dataToArchives() {
+    let archives = fs.readFileSync(
+        path.join(theme, './templates/archives.html'),
+        'utf-8'
+    );
+
+    const templateData = {
+        data: await getArchiveData(),
+        link: {
+            home: './index.html',
+            tags: './tags.html',
+            archives: './archives.html',
+            about: './about.html'
+        },
+        script: `./statics/script`,
+        statics: './statics/statics',
+        style: `./statics/style`,
+        title: 'Archives',
+        user: {
+            avatar: config.avatar,
+            name: config.name,
+            selfIntroduction: config.selfIntroduction,
+            username: config.username,
+        }
+    };
+
+    console.log(templateData.data);
+    archives = await templateEngine.parse(templateData, archives);
+
+    const targetPath = target;
+    fs.writeFileSync(path.join(targetPath, 'archives.html'), archives, 'utf-8');
+    updateStaticFiles();
+    return path.join(targetPath, 'archives.html')
+}
+
+
+async function getArchiveData() {
+    const articles = (await db.getPublishedArticleList())
+        .sort((a, b) => (
+                (new Date(b.createDate)).getTime() - (new Date(a.createDate)).getTime()
+            ));
+    const data = [];
+    let yearData = {
+        year: null,
+        monthData: []
+    };
+    let monthData = {
+        month: null,
+        articles: []
+    };
+    for (article of articles) {
+        article.date = formatDate(article.createDate);
+        article.link = `./articles/${article.key}.html`;
+
+        !monthData.month && (monthData.month = article.date.month);
+        if (monthData.month !== article.date.month) {
+            yearData.monthData.push(monthData);
+            monthData = {
+                month: null,
+                articles: []
+            };
+        }
+        monthData.articles.push(article);
+
+        !yearData.year && (yearData.year = article.date.year);
+        if (yearData.year !== article.date.year) {
+            data.push(yearData);
+            yearData = {
+                year: null,
+                monthData: []
+            };
+        }
+    }
+    yearData.monthData.push(monthData);
+    data.push(yearData);
+    return data
 }
 
 

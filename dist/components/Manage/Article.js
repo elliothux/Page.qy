@@ -66,6 +66,7 @@ export default class Article extends React.Component {
         const path = await this.props.dataToHTML.dataToHome(
             Object.assign(this.props.data, this.state)
         );
+        this.props.dataToHTML.dataToArchives();
         eventProxy.trigger('refreshPreview', path)
     }
 
