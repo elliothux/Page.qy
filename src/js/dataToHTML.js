@@ -73,9 +73,11 @@ async function dataToHome(rawData) {
             article.date = formatDate(article.createDate);
             article.link = `./articles/${article.key}.html`;
             return article
-        }),
+        }).sort((a, b) => (
+            (new Date(b.createDate)).getTime() - (new Date(a.createDate)).getTime()
+        )),
         link: {
-            home: '/',
+            home: './index.html',
             tags: '',
             archives: '',
             about: ''

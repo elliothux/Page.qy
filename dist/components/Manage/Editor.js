@@ -70,13 +70,7 @@ export default class Edit extends React.Component {
     }
 
     handleEditArticle(data) {
-        this.setState(() => ({
-            title: data.title,
-            content: data.content,
-            tags: data.tags,
-            introduction: data.introduction,
-            key: data.key
-        }));
+        this.setState(data);
         this.editor.$txt.html(data.content);
     }
 
@@ -126,6 +120,7 @@ export default class Edit extends React.Component {
             await this.props.db.editArticle(data);
             eventProxy.trigger('updateArticleData', data);
         }
+        this.props.dataToHTML.dataToHome(this.state);
         eventProxy.trigger('changeManageView', 'article');
         this.setState(() => ({
             title: '',

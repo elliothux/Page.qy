@@ -16,6 +16,8 @@
     font-size: 2.2em;
     font-weight: bolder;
     letter-spacing: 0.03em;
+    color: black;
+    margin-left: -5px;
 }
 
 .article .introduction {
@@ -36,8 +38,6 @@
 .article .tags {
     display: inline-block;
     float: right;
-    /*position: relative;*/
-    /*top: 3px;*/
     font-size: 0.9em;
     font-style: italic;
     color: gray;
@@ -46,7 +46,7 @@
 
 .article .tags li {
     display: inline-block;
-    background-color: #dddddd;
+    background-color: #d7d7d7;
     color: white;
     border-radius: 15px;
     height: 15px;

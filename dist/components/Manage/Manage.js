@@ -20,8 +20,8 @@ export default class Manage extends React.Component {
 
     async componentWillMount() {
         this.setState({articleList: (await this.props.db.getArticleList()).sort((a, b) => (
-                (new Date(b.createDate)).getTime() - (new Date(a.createDate)).getTime()
-            ))});
+            (new Date(b.createDate)).getTime() - (new Date(a.createDate)).getTime()
+        ))});
         eventProxy.on('editArticle', this.handleViewChange.bind(null, 'edit'));
         eventProxy.on('createArticle', this.handleViewChange.bind(null, 'edit'));
         eventProxy.on('changeManageView', this.handleViewChange.bind(null, 'article'));
@@ -60,7 +60,10 @@ export default class Manage extends React.Component {
                 ))}
             </div>
             <div style={this.style().editorContainer}>
-                <Editor db={this.props.db}/>
+                <Editor
+                    db={this.props.db}
+                    dataToHTML = {this.props.dataToHTML}
+                />
             </div>
             <div
                 className="addArticleButton"
