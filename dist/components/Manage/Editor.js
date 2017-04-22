@@ -120,7 +120,8 @@ export default class Edit extends React.Component {
             await this.props.db.editArticle(data);
             eventProxy.trigger('updateArticleData', data);
         }
-        this.props.dataToHTML.dataToHome(this.state);
+        this.props.dataToHTML.dataToArticle(this.state);
+        this.props.dataToHTML.dataToHome();
         eventProxy.trigger('changeManageView', 'article');
         this.setState(() => ({
             title: '',
