@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="19px" height="23px" viewBox="0 0 19 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
+    <title>arrow-up</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="680x680" transform="translate(-131.000000, -48.000000)" fill="#FFFFFF">
+            <g id="Row-1" transform="translate(51.000000, 48.000000)">
+                <path d="M87.1227262,23 L91.1265234,23 C92.2379184,23 93.1246252,22.1047419 93.1246252,21.000385 L93.1246249,13.9970781 C93.1246248,13.4464071 93.5689982,13 94.1156644,13 L97.1338297,13 C98.2333155,13 98.5727372,12.2825461 97.908426,11.4189415 L90.3408236,1.58105847 C89.6691356,0.707863987 88.5727372,0.717453882 87.908426,1.58105847 L80.3408236,11.4189415 C79.6691356,12.292136 80.0228372,13 81.1154199,13 L84.1335852,13 C84.6809212,13 85.1246248,13.4530581 85.1246248,13.9970781 L85.1246248,21.000385 C85.1246248,22.1125667 86.0192052,23 87.1227262,23 Z" id="arrow-up"></path>
+            </g>
+        </g>
+    </g>
+</svg>
