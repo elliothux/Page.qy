@@ -286,7 +286,7 @@ function updateStaticFiles() {
         path.join(theme, './statics/'),
         path.join(target, './statics/statics/')
     );
-    checkPath();
+    // checkPath();
 }
 
 
