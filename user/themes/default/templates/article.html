@@ -5,6 +5,7 @@
     <title>{{ title }}</title>
     <link type="text/css" rel="stylesheet" href="{{ style }}/common.css"/>
     <link type="text/css" rel="stylesheet" href="{{ style }}/article.css"/>
+    <link type="text/css" rel="stylesheet" href="{{ style }}/highlight.css"/>
 </head>
 <body>
 <div id="header">
@@ -33,5 +34,7 @@
 <p id="footer">Powered With ❤ By <a>Page.qy</a></p>
 
 <script type="text/javascript" src="{{ script }}/common.js"></script>
+<script type="text/javascript" src="{{ script }}/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 </body>
 </html>

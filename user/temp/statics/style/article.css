@@ -73,14 +73,13 @@
 
 #content p, #content dl, #content ol,
 #content ul, #content pre, #content code {
-    font-size: 1em;
-    line-height: 1.5em;
     margin: 7px 0;
+    font-size: 1.05em;
+    line-height: 1.8em;
 }
 
 #content ul, #content ol {
-    margin-bottom: 20px;
-    margin-left: 20px;
+    margin: 20px;
 }
 
 #content li {
@@ -92,7 +91,7 @@
     cursor: help;
 }
 
-#content pre, #content code {
+#content pre {
     color: #898989;
     background-color: white;
     padding: 10px 15px;
@@ -105,4 +104,48 @@
 #content table {
     width: 100%;
     font-size: 1.125rem;
+}
+
+#content a {
+    text-decoration: underline;
+    transition: all ease 200ms;
+}
+
+#content a:hover {
+    transform: scale(1.05);
+}
+
+#content img {
+    display: block;
+    margin: 20px auto;
+    border-radius: 8px;
+}
+
+#content table {
+    width: 100%;
+    border: none;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+#content table tr {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border-collapse: collapse;
+}
+
+#content table td, #content table th {
+    border: 1px solid #999;
+    padding: 3px 5px;
+    min-width: 50px;
+    height: 20px;
+    box-sizing: border-box;
+}
+
+#content blockquote {
+    padding: 5px 0 5px 15px;
+    border-left: 5px solid gray;
+    background-color: rgba(0, 0, 0, 0.05);
+    margin: 20px 0;
 }

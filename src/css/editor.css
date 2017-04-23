@@ -1,6 +1,3 @@
-.wangEditor-container {
-  position: fixed;
-}
 
 .wangEditor-txt#editorContainer a {
     font-size: 1em;
@@ -10,33 +7,33 @@
 }
 
 .wangEditor-txt#editorContainer a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 .wangEditor-txt#editorContainer h1 {
-  font-size: 2em;
-  line-height: 2.5em;
-  margin: 35px 0 15px 0;
+    font-size: 2em;
+    line-height: 2.5em;
+    margin: 35px 0 15px 0;
 }
 
 .wangEditor-txt#editorContainer h2 {
-  font-size: 1.6em;
-  line-height: 2em;
-  margin: 30px 0 10px 0;
+    font-size: 1.6em;
+    line-height: 2em;
+    margin: 30px 0 10px 0;
 }
 
 .wangEditor-txt#editorContainer h3 {
-  font-size: 1.3em;
-  line-height: 2.3em;
-  margin: 25px 0 8px 0;
+    font-size: 1.3em;
+    line-height: 2.3em;
+    margin: 25px 0 8px 0;
 }
 
 .wangEditor-txt#editorContainer h4,
 .wangEditor-txt#editorContainer h5,
 .wangEditor-txt#editorContainer h6 {
-  font-size: 1.15em;
-  line-height: 1.8em;
-  margin: 15px 0 5px 0;
+    font-size: 1.15em;
+    line-height: 1.8em;
+    margin: 15px 0 5px 0;
 }
 
 .wangEditor-txt#editorContainer p,
@@ -45,46 +42,81 @@
 .wangEditor-txt#editorContainer ul,
 .wangEditor-txt#editorContainer pre,
 .wangEditor-txt#editorContainer code {
-  font-size: 1em;
-  line-height: 1.5em;
-  margin: 7px 0;
+    margin: 7px 0;
+    font-size: 1.05em;
+    line-height: 1.8em;
 }
 
 .wangEditor-txt#editorContainer ul,
 .wangEditor-txt#editorContainer ol {
-  margin-bottom: 20px;
-  margin-left: 20px;
+    margin: 20px;
 }
 
 .wangEditor-txt#editorContainer li {
-  margin: 6px 0 6px 0;
+    margin: 6px 0 6px 0;
 }
 
 .wangEditor-txt#editorContainer abbr {
-  border-bottom: 1px black dotted;
-  cursor: help;
+    border-bottom: 1px black dotted;
+    cursor: help;
 }
 
-.wangEditor-txt#editorContainer pre,
-.wangEditor-txt#editorContainer code {
-  color: #898989;
-  background-color: white;
-  padding: 10px 15px;
-  border: 1px solid #dbdbdb;
-  border-radius: 8px;
-  font-size: 0.9em;
-  line-height: 1.5em;
+.wangEditor-txt#editorContainer pre {
+    color: #898989;
+    padding: 10px 15px;
+    border: 1px solid #dbdbdb;
+    border-radius: 8px;
+    font-size: 0.9em;
+    line-height: 1.5em;
+    background-color: rgba(0,0,0, 0.02);
 }
 
 .wangEditor-txt#editorContainer table {
-  width: 100%;
-  font-size: 1.125rem;
+    width: 100%;
+    font-size: 1.125rem;
 }
 
-.wangEditor-txt#editorContainer figure,
-.wangEditor-txt#editorContainer figure table,
-.wangEditor-txt#editorContainer figure tbody,
-.wangEditor-txt#editorContainer figure tr,
-.wangEditor-txt#editorContainer figure td{
-  border: none;
+.wangEditor-txt#editorContainer a {
+    text-decoration: underline;
+    transition: all ease 200ms;
+}
+
+.wangEditor-txt#editorContainer a:hover {
+    transform: scale(1.05);
+}
+
+.wangEditor-txt#editorContainer img {
+    display: block;
+    margin: 20px auto;
+    border-radius: 8px;
+}
+
+.wangEditor-txt#editorContainer table {
+    width: 100%;
+    border: none;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.wangEditor-txt#editorContainer table tr {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border-collapse: collapse;
+}
+
+.wangEditor-txt#editorContainer table td,
+.wangEditor-txt#editorContainer table th {
+    border: 1px solid #999;
+    padding: 3px 5px;
+    min-width: 50px;
+    height: 20px;
+    box-sizing: border-box;
+}
+
+.wangEditor-txt#editorContainer blockquote {
+    padding: 5px 0 5px 15px;
+    border-left: 5px solid gray;
+    background-color: rgba(0, 0, 0, 0.05);
+    margin: 20px 0;
 }

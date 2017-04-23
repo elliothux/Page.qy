@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/Cellar/node/7.4.0/bin/node /Users/huqingyang/.yarn/bin/yarn.js add jquery
+  /usr/local/Cellar/node/7.4.0/bin/node /Users/huqingyang/.yarn/bin/yarn.js install
 
 PATH: 
   /Users/huqingyang/.yarn/bin:/Users/huqingyang/.cargo/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/aria2/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands
@@ -20,12 +20,12 @@ npm manifest:
     "description": "Site.qy",
     "main": "main.js",
     "dependencies": {
-      "babel-polyfill": "^6.23.0",
       "cheerio": "^0.22.0",
       "electron": "^1.6.2",
       "electron-prebuilt": "^1.4.13",
+      "express": "^4.15.2",
       "github-api": "^3.0.0",
-      "jquery": "^3.2.1",
+      "multer": "^1.3.0",
       "nedb": "^1.8.0",
       "node-fs-extra": "^0.8.1",
       "react": "^15.4.2",
@@ -51,7 +51,7 @@ npm manifest:
       "webpack-dev-server": "^2.4.2"
     },
     "scripts": {
-      "start": "electron-rebuild && electron main.js",
+      "start": "electron-rebuild && electron --js-flags=\"--harmony-async-await\" main.js",
       "dev": "webpack-dev-server --content-base"
     },
     "keywords": [
@@ -818,14 +818,6 @@ Lockfile:
     dependencies:
       babel-runtime "^6.22.0"
       babel-types "^6.22.0"
-  
-  babel-polyfill@^6.23.0:
-    version "6.23.0"
-    resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-6.23.0.tgz#8364ca62df8eafb830499f699177466c3b03499d"
-    dependencies:
-      babel-runtime "^6.22.0"
-      core-js "^2.4.0"
-      regenerator-runtime "^0.10.0"
   
   babel-preset-es2015@^6.22.0:
     version "6.24.0"
@@ -1922,7 +1914,7 @@ Lockfile:
     dependencies:
       fill-range "^2.1.0"
   
-  express@^4.13.3:
+  express@^4.13.3, express@^4.15.2:
     version "4.15.2"
     resolved "https://registry.yarnpkg.com/express/-/express-4.15.2.tgz#af107fc148504457f2dca9a6f2571d7129b97b35"
     dependencies:
@@ -2613,10 +2605,6 @@ Lockfile:
   jquery@^2.2.3:
     version "2.2.4"
     resolved "https://registry.yarnpkg.com/jquery/-/jquery-2.2.4.tgz#2c89d6889b5eac522a7eea32c14521559c6cbf02"
-  
-  jquery@^3.2.1:
-    version "3.2.1"
-    resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
   
   js-base64@^2.1.9:
     version "2.1.9"

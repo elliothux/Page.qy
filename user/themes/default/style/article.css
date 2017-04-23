@@ -73,9 +73,9 @@
 
 #content p, #content dl, #content ol,
 #content ul, #content pre, #content code {
-    font-size: 1em;
-    line-height: 1.5em;
     margin: 7px 0;
+    font-size: 1.05em;
+    line-height: 1.8em;
 }
 
 #content ul, #content ol {
@@ -91,7 +91,7 @@
     cursor: help;
 }
 
-#content pre, #content code {
+#content pre {
     color: #898989;
     background-color: white;
     padding: 10px 15px;
@@ -108,40 +108,44 @@
 
 #content a {
     text-decoration: underline;
+    transition: all ease 200ms;
+}
+
+#content a:hover {
+    transform: scale(1.05);
 }
 
 #content img {
     display: block;
-    margin: 0 auto;
+    margin: 20px auto;
+    border-radius: 8px;
 }
 
-table {
+#content table {
     width: 100%;
-    font-size: 1.125rem;
+    border: none;
+    border-collapse: collapse;
+    margin: 20px 0;
 }
-table > thead > tr > th,
-table > thead > tr > td,
-table > tbody > tr > th,
-table > tbody > tr > td,
-table > tfoot > tr > th,
-table > tfoot > tr > td {
-    padding: 12px;
-    line-height: 1.2;
-    vertical-align: top;
-    border-top: 1px solid #333;
+
+#content table tr {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border-collapse: collapse;
 }
-table > thead > tr > th {
-    vertical-align: bottom;
-    border-bottom: 2px solid #333;
+
+#content table td, #content table th {
+    border: 1px solid #999;
+    padding: 3px 5px;
+    min-width: 50px;
+    height: 20px;
+    box-sizing: border-box;
 }
-table > caption + thead > tr:first-child > th,
-table > caption + thead > tr:first-child > td,
-table > colgroup + thead > tr:first-child > th,
-table > colgroup + thead > tr:first-child > td,
-table > thead:first-child > tr:first-child > th,
-table > thead:first-child > tr:first-child > td {
-    border-top: 0;
-}
-table > tbody + tbody {
-    border-top: 2px solid #333;
+
+#content blockquote {
+    padding: 5px 0 5px 15px;
+    border-left: 5px solid gray;
+    background-color: rgba(0, 0, 0, 0.05);
+    margin: 20px 0;
 }

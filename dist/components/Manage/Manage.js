@@ -63,6 +63,7 @@ export default class Manage extends React.Component {
                 <Editor
                     db={this.props.db}
                     dataToHTML = {this.props.dataToHTML}
+                    config={this.props.config}
                 />
             </div>
             <div
