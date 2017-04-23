@@ -1,0 +1,108 @@
+
+#headTitle, #introduction {
+    text-align: left;
+    margin-left: 15%;
+}
+
+#header hr {
+    margin-left: 15%;
+}
+
+#tags {
+    position: relative;
+    top: -45px;
+    margin-left: 15%;
+    list-style: none;
+}
+
+#tags > li {
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 15px;
+    padding: 5px 8px;
+    margin-right: 30px;
+    box-shadow: 1px 1px 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+#tags > li a {
+    color: white;
+}
+
+#content {
+    width: 70%;
+    margin-left: 15%;
+    margin-top: 40px;
+}
+
+
+#content a {
+    font-size: 1em;
+    color: black;
+    font-weight: bold;
+    transition: all ease 300ms;
+}
+
+#content a:hover {
+    text-decoration: underline;
+}
+
+#content h1 {
+    font-size: 2em;
+    line-height: 2.5em;
+    margin: 35px 0 15px 0;
+}
+
+#content h2 {
+    font-size: 1.6em;
+    line-height: 2em;
+    margin: 30px 0 10px 0;
+}
+
+#content h3 {
+    font-size: 1.3em;
+    line-height: 2.3em;
+    margin: 25px 0 8px 0;
+}
+
+#content h4, #content h5, #content h6 {
+    font-size: 1.15em;
+    line-height: 1.8em;
+    margin: 15px 0 5px 0;
+}
+
+#content p, #content dl, #content ol,
+#content ul, #content pre, #content code {
+    font-size: 1em;
+    line-height: 1.5em;
+    margin: 7px 0;
+}
+
+#content ul, #content ol {
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+
+#content li {
+    margin: 6px 0 6px 0;
+}
+
+#content abbr {
+    border-bottom: 1px black dotted;
+    cursor: help;
+}
+
+#content pre, #content code {
+    color: #898989;
+    background-color: white;
+    padding: 10px 15px;
+    border: 1px solid #dbdbdb;
+    border-radius: 8px;
+    font-size: 0.9em;
+    line-height: 1.5em;
+}
+
+#content table {
+    width: 100%;
+    font-size: 1.125rem;
+}
