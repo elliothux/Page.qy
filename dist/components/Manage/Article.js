@@ -46,7 +46,10 @@ export default class Article extends React.Component {
         this.refs.article.className = 'articleContainer deleted';
         setTimeout(function () {
             this.refs.article.style.display = 'none';
-        }.bind(this), 600)
+        }.bind(this), 600);
+        this.props.dataToHTML.dataToHome();
+        this.props.dataToHTML.dataToArchives();
+        this.props.dataToHTML.dataToTags();
     }
 
     handlePreview() {
@@ -62,9 +65,7 @@ export default class Article extends React.Component {
             published: !prevState.published
         }));
         await this.props.db.togglePublish(this.state.key);
-        const path = await this.props.dataToHTML.dataToHome(
-            Object.assign(this.props.data, this.state)
-        );
+        const path = await this.props.dataToHTML.dataToHome();
         this.props.dataToHTML.dataToArchives();
         this.props.dataToHTML.dataToTags();
         eventProxy.trigger('refreshPreview', path)

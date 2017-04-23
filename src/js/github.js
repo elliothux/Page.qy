@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
 const GitHub = require('github-api');
 const Git = require('simple-git');
@@ -43,18 +43,29 @@ async function getRepoPath() {
     return `${userPath}${name}.github.io`;
 }
 
+function copyFile() {
+    const name = config.username;
+    const from = path.join(__dirname, '../../user/temp/');
+    const to = `${userPath}${name}.github.io`;
+    fs.existsSync(path.join(to, './articles')) &&
+        fs.removeSync(path.join(to, './articles'));
+    fs.existsSync(path.join(to, './statics')) &&
+        fs.removeSync(path.join(to, './statics'));
+    for (each of fs.readdirSync(from))
+        fs.copySync(
+            path.join(from, `./${each}`),
+            path.join(to, `./${each}`)
+        )
+}
+
 
 async function pushRepo() {
     const path = await getRepoPath();
     const URL = `https://github.com/${config.username}/${config.username}.github.io`;
     await Git(path)
         .add(`./*`)
-        .commit('Update')
+        .commit(`Update on ${(new Date()).toLocaleString()}`)
         .push(['-u', 'origin', 'master'])
-}
-
-async function getUser() {
-
 }
 
 
@@ -74,4 +85,6 @@ async function getUserInfo() {
     })
 }
 
-getUserInfo().then(a => console.log(a));
+// getUserInfo().then(a => console.log(a));
+copyFile();
+pushRepo().then(() => console.log('done'));

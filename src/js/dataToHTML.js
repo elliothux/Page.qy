@@ -25,6 +25,17 @@ function getArticlePath(key) {
 }
 
 
+async function checkPath() {
+    const articles = await db.getPublishedArticleList();
+    const keys = [];
+    for (article of articles)
+        keys.push(article.key)
+    for (file of fs.readdirSync(path.join(target, './articles')))
+        if (!keys.includes(file.split('.')[0]))
+            fs.removeSync(path.join(target, `./articles/${file}`));
+}
+
+
 function dataToArticle(rawData) {
     let article = fs.readFileSync(
         path.join(theme, './templates/article.html'),
@@ -275,6 +286,7 @@ function updateStaticFiles() {
         path.join(theme, './statics/'),
         path.join(target, './statics/statics/')
     );
+    checkPath();
 }
 
 

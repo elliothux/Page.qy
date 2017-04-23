@@ -32,7 +32,7 @@ export default class Preview extends React.Component {
             >
                 <img
                     style={this.style().addButtonImg}
-                    src='../../src/pic/addManage.svg'
+                    src='../../src/pic/upload.svg'
                 />
             </div>
         </div>
