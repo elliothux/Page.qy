@@ -23,7 +23,7 @@
 
 <ul id="tags">
     <template @for="tag of data.tags">
-        <li><a>#{{ tag }}</a></li>
+        <li><a href="{{ link.tags }}#tag-{{ tag }}">#{{ tag }}</a></li>
     </template>
 </ul>
 
@@ -33,6 +33,5 @@
 <p id="footer">Powered With ❤ By <a>Page.qy</a></p>
 
 <script type="text/javascript" src="{{ script }}/common.js"></script>
-<script type="text/javascript" src="{{ script }}/article.js"></script>
 </body>
 </html>

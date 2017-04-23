@@ -7,6 +7,8 @@ const db = require('./db');
 module.exports.dataToArticle = dataToArticle;
 module.exports.dataToHome = dataToHome;
 module.exports.dataToArchives = dataToArchives;
+module.exports.dataToTags = dataToTags;
+module.exports.getArticlePath = getArticlePath;
 
 
 const config = JSON.parse(fs.readFileSync(
@@ -17,6 +19,11 @@ const theme = path.join(__dirname, `../../user/themes/${config.theme}/`);
 const target = path.join(__dirname, '../../user/temp/');
 
 
+function getArticlePath(key) {
+    const target = path.join(__dirname, '../../user/temp/articles');
+    return path.join(target, `${key}.html`)
+}
+
 
 function dataToArticle(rawData) {
     let article = fs.readFileSync(
@@ -26,7 +33,7 @@ function dataToArticle(rawData) {
 
     const templateData = {
         data: {
-            date: formatDate(rawData.createDate),
+            date: formatDate(rawData.date),
             content: rawData.content,
             tags: rawData.tags,
             archives: rawData.archives,
@@ -103,6 +110,80 @@ async function dataToHome() {
 }
 
 
+async function dataToTags() {
+    let tags = fs.readFileSync(
+        path.join(theme, './templates/tags.html'),
+        'utf-8'
+    );
+
+    const templateData = {
+        data: await getTagsData(),
+        link: {
+            home: './index.html',
+            tags: './tags.html',
+            archives: './archives.html',
+            about: './about.html'
+        },
+        script: `./statics/script`,
+        statics: './statics/statics',
+        style: `./statics/style`,
+        title: 'Tags',
+        user: {
+            avatar: config.avatar,
+            name: config.name,
+            selfIntroduction: config.selfIntroduction,
+            username: config.username,
+        }
+    };
+    tags = await templateEngine.parse(templateData, tags);
+
+    const targetPath = target;
+    fs.writeFileSync(path.join(targetPath, 'tags.html'), tags, 'utf-8');
+    updateStaticFiles();
+    return path.join(targetPath, 'tags.html')
+}
+
+async function getTagsData() {
+    const articles = (await db.getPublishedArticleList())
+        .sort((a, b) => (
+            (new Date(b.createDate)).getTime() - (new Date(a.createDate)).getTime()
+        ));
+    let data = [];
+    for (article of articles) {
+        article.date = formatDate(article.createDate);
+        article.link = `./articles/${article.key}.html`;
+        for (tag of article.tags) {
+            data = pushTagToData(data, tag, article)
+        }
+    }
+    return data;
+
+    function pushTagToData(data, tag, article) {
+        if (data.length === 0 ) {
+            data.push({
+                name: tag,
+                articles: [article]
+            });
+            return data;
+        }
+        for (each of data) {
+            if (each.name === tag) {
+                each.articles.push(article);
+                return data
+            }
+            if (each === data[data.length-1]) {
+                data.push({
+                    name: tag,
+                    articles: [article]
+                });
+                return data;
+            }
+        }
+        return data;
+    }
+}
+
+
 async function dataToArchives() {
     let archives = fs.readFileSync(
         path.join(theme, './templates/archives.html'),
@@ -129,7 +210,6 @@ async function dataToArchives() {
         }
     };
 
-    console.log(templateData.data);
     archives = await templateEngine.parse(templateData, archives);
 
     const targetPath = target;

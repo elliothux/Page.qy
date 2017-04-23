@@ -122,6 +122,7 @@ export default class Edit extends React.Component {
         }
         this.props.dataToHTML.dataToArticle(this.state);
         this.props.dataToHTML.dataToHome();
+        this.props.dataToHTML.dataToTags();
         eventProxy.trigger('changeManageView', 'article');
         this.setState(() => ({
             title: '',

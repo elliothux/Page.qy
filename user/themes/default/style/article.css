@@ -25,6 +25,10 @@
     box-shadow: 1px 1px 5px 5px rgba(0, 0, 0, 0.1);
 }
 
+#tags > li a {
+    color: white;
+}
+
 #content {
     width: 70%;
     margin-left: 15%;
@@ -75,8 +79,7 @@
 }
 
 #content ul, #content ol {
-    margin-bottom: 20px;
-    margin-left: 20px;
+    margin: 20px;
 }
 
 #content li {
@@ -101,4 +104,13 @@
 #content table {
     width: 100%;
     font-size: 1.125rem;
+}
+
+#content a {
+    text-decoration: underline;
+}
+
+#content img {
+    display: block;
+    margin: 0 auto;
 }

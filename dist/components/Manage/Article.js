@@ -1,6 +1,7 @@
 import React from 'react';
 import reactCSS from 'reactcss';
 import eventProxy from '../../lib/eventProxy';
+import path from 'path';
 
 
 export default class Article extends React.Component {
@@ -49,9 +50,7 @@ export default class Article extends React.Component {
     }
 
     handlePreview() {
-        const path = this.props.dataToHTML.dataToArticle(
-            Object.assign(this.props.data, this.state)
-        );
+        const path = this.props.dataToHTML.getArticlePath(this.state.key);
         this.props.openWindow(path, {
             width: 1000,
             height: 700
@@ -67,6 +66,7 @@ export default class Article extends React.Component {
             Object.assign(this.props.data, this.state)
         );
         this.props.dataToHTML.dataToArchives();
+        this.props.dataToHTML.dataToTags();
         eventProxy.trigger('refreshPreview', path)
     }
 
