@@ -5,6 +5,7 @@ const fs = require('fs');
 const platform = require('os').platform();
 const db = require('./src/js/db');
 const dataToHTML = require('./src/js/dataToHTML');
+const github = require('./src/js/github');
 const config = require('./src/js/config');
 const {app, BrowserWindow} = electron;
 
@@ -50,6 +51,21 @@ function openWindow(path, options, isMax) {
         'linux': '/home/hu/.config/google-chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/2.0.12_0'
     }[platform];
     BrowserWindow.addDevToolsExtension(devToolPath);
+    return win;
+}
+
+
+function pushRepo() {
+    const win = openWindow(
+        path.join(__dirname, './src/html/uploading.html'),
+        {
+            width: 500,
+            height: 200
+        }
+    );
+    // github.pushRepo().then(() => {
+    //     win.close();
+    // })
 }
 
 
@@ -77,5 +93,6 @@ exports.platform = platform;
 exports.db = db;
 exports.path = path.join(__dirname);
 exports.openWindow = openWindow;
+exports.pushRepo = pushRepo;
 exports.dataToHTML = dataToHTML;
 exports.config = config;

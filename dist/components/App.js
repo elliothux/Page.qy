@@ -40,7 +40,7 @@ export default class App extends React.Component {
                 openURL={this.props.openURL}
             />
             <div style={this.style().previewContainer}>
-                <Preview/>
+                <Preview pushRepo={this.props.pushRepo}/>
             </div>
             <div style={this.style().manageContainer}>
                 <Manage

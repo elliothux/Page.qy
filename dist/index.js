@@ -17,6 +17,7 @@ ReactDOM.render(
             db={main.db}
             path={main.path}
             openWindow={main.openWindow}
+            pushRepo={main.pushRepo}
             dataToHTML = {main.dataToHTML}
             config={main.config.get()}
             setConfig={main.config.set}

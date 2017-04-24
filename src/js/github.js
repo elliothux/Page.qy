@@ -5,6 +5,9 @@ const Git = require('simple-git');
 const config = require('./config').get();
 const setConfig = require('./config').set;
 
+module.getUserINfo = getUserInfo;
+module.exports.pushRepo = pushRepo;
+
 
 const userPath = path.join(__dirname, '../../user/');
 
@@ -60,9 +63,10 @@ function copyFile() {
 
 
 async function pushRepo() {
+    copyFile();
     const path = await getRepoPath();
     const URL = `https://github.com/${config.username}/${config.username}.github.io`;
-    await Git(path)
+    return Git(path)
         .add(`./*`)
         .commit(`Update on ${(new Date()).toLocaleString()}`)
         .push(['-u', 'origin', 'master'])
@@ -86,5 +90,4 @@ async function getUserInfo() {
 }
 
 // getUserInfo().then(a => console.log(a));
-copyFile();
-pushRepo().then(() => console.log('done'));
+// pushRepo().then(() => console.log('done'));

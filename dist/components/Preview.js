@@ -31,6 +31,7 @@ export default class Preview extends React.Component {
                 style={this.style().addButton}
             >
                 <img
+                    onClick={this.props.pushRepo}
                     style={this.style().addButtonImg}
                     src='../../src/pic/upload.svg'
                 />
