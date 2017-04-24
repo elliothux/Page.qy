@@ -8,7 +8,7 @@ export default class Preview extends React.Component {
         super(props);
         this.style = this.style.bind(this);
         this.refreshPreview = this.refreshPreview.bind(this);
-
+        this.upload = this.upload.bind(this);
     }
 
     componentWillMount() {
@@ -17,6 +17,10 @@ export default class Preview extends React.Component {
 
     refreshPreview(path) {
         this.refs.preview.src = path;
+    }
+
+    upload() {
+        this.props.upload();
     }
 
     render() {return (
@@ -31,7 +35,7 @@ export default class Preview extends React.Component {
                 style={this.style().addButton}
             >
                 <img
-                    onClick={this.props.pushRepo}
+                    onClick={this.upload}
                     style={this.style().addButtonImg}
                     src='../../src/pic/upload.svg'
                 />

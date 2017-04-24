@@ -3,8 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <title>Uploading</title>
+    <style type="text/css" rel="stylesheet">
+        #load {
+            position:absolute;
+            width:600px;
+            height:36px;
+            left:50%;
+            top:25%;
+            margin-left:-300px;
+            overflow:visible;
+            user-select:none;
+            cursor:default;
+        }
+
+        #load div {
+            position:absolute;
+            width:20px;
+            height:36px;
+            opacity:0;
+            font-family:Helvetica, Arial, sans-serif;
+            font-size: 1.1em;
+            animation:move 2s linear infinite;
+            transform:rotate(180deg);
+            color: #16bfed;
+        }
+
+        #load div:nth-child(2) {
+            animation-delay:0.2s;
+        }
+        #load div:nth-child(3) {
+            animation-delay:0.4s;
+        }
+        #load div:nth-child(4) {
+            animation-delay:0.6s;
+        }
+        #load div:nth-child(5) {
+            animation-delay:0.8s;
+        }
+        #load div:nth-child(6) {
+            animation-delay:1s;
+        }
+        #load div:nth-child(7) {
+            animation-delay:1.2s;
+        }
+        #load div:nth-child(8) {
+            animation-delay:1.4s;
+        }
+        #load div:nth-child(9) {
+            animation-delay:1.6s;
+        }
+
+        @keyframes move {
+            0% {
+                left:0;
+                opacity:0;
+            }
+            35% {
+                left: 41%;
+                -moz-transform:rotate(0deg);
+                -webkit-transform:rotate(0deg);
+                -o-transform:rotate(0deg);
+                transform:rotate(0deg);
+                opacity:1;
+            }
+            65% {
+                left:59%;
+                -moz-transform:rotate(0deg);
+                -webkit-transform:rotate(0deg);
+                -o-transform:rotate(0deg);
+                transform:rotate(0deg);
+                opacity:1;
+            }
+            100% {
+                left:100%;
+                -moz-transform:rotate(-180deg);
+                -webkit-transform:rotate(-180deg);
+                -o-transform:rotate(-180deg);
+                transform:rotate(-180deg);
+                opacity:0;
+            }
+        }
+        #message {
+            font-size: 1.2em;
+            text-align: center;
+            margin-top: 100px;
+        }
+        #cancel, #retry {
+            width: 12%;
+            height: 24px;
+            border-radius: 30px;
+            border: none;
+            background-image: linear-gradient(-225deg, rgba(85, 203, 242, 1) 0%, rgba(61, 144, 239, 1) 100%);
+            color: white;
+            font-size: 0.8em;
+            cursor: pointer;
+            margin: 0 15px;
+        }
+        #cancel:focus, #retry:focus {
+            outline: none;
+        }
+    </style>
 </head>
 <body>
-    <p>Uploading...</p>
+<div id="load">
+    <div>G</div>
+    <div>N</div>
+    <div>I</div>
+    <div>D</div>
+    <div>A</div>
+    <div>O</div>
+    <div>L</div>
+    <div>P</div>
+    <div>U</div>
+</div>
+<h1 id="message">🏃Working hard on updating...</h1>
+<div id="buttons">
+    <button id="cancel">Cancel</button>
+    <button id="retry">Retry</button>
+</div>
+
+<script type="text/javascript" src="http://localhost:8080/assets/uploading.build.js"></script>
 </body>
 </html>

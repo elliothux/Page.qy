@@ -13,7 +13,7 @@ export default class App extends React.Component {
         this.style = this.style.bind(this);
 
         this.state = {
-            viewState: 'manage',
+            viewState: 'preview',
             config: {}
         }
     }
@@ -40,7 +40,7 @@ export default class App extends React.Component {
                 openURL={this.props.openURL}
             />
             <div style={this.style().previewContainer}>
-                <Preview pushRepo={this.props.pushRepo}/>
+                <Preview upload={this.props.upload}/>
             </div>
             <div style={this.style().manageContainer}>
                 <Manage

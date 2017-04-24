@@ -23,7 +23,7 @@ function openWindow(path, options, isMax) {
             minHeight: 600,
             minWidth: 400,
             center: true,
-            show: false
+            show: false,
         },
         options
     );
@@ -55,19 +55,27 @@ function openWindow(path, options, isMax) {
 }
 
 
-function pushRepo() {
-    const win = openWindow(
-        path.join(__dirname, './src/html/uploading.html'),
-        {
-            width: 500,
-            height: 200
-        }
-    );
-    // github.pushRepo().then(() => {
-    //     win.close();
-    // })
-}
-
+const upload = {
+    win: null,
+    client: null,
+    start: function() {
+        this.win = openWindow(
+            path.join(__dirname, './src/html/uploading.html'),
+            {
+                width: 500,
+                height: 200,
+                frame: false
+            }
+        );
+        this.win.show();
+        // this.client = github.pushRepo()
+    },
+    end: function () {
+        this.win.close();
+        this.win = null;
+        this.client = null;
+    }
+};
 
 // App events
 app.on('ready',
@@ -93,6 +101,6 @@ exports.platform = platform;
 exports.db = db;
 exports.path = path.join(__dirname);
 exports.openWindow = openWindow;
-exports.pushRepo = pushRepo;
+exports.upload = upload;
 exports.dataToHTML = dataToHTML;
 exports.config = config;

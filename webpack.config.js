@@ -1,6 +1,7 @@
 module.exports = {
     entry: {
         index: require('path').join(__dirname, './dist/index.js'),
+        uploading: require('path').join(__dirname, './dist/uploading.js'),
     },
     output: {
         path: require('path').join(__dirname, './src/'),

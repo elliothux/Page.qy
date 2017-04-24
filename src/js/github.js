@@ -46,6 +46,7 @@ async function getRepoPath() {
     return `${userPath}${name}.github.io`;
 }
 
+
 function copyFile() {
     const name = config.username;
     const from = path.join(__dirname, '../../user/temp/');
@@ -65,7 +66,7 @@ function copyFile() {
 async function pushRepo() {
     copyFile();
     const path = await getRepoPath();
-    const URL = `https://github.com/${config.username}/${config.username}.github.io`;
+    // const URL = `https://github.com/${config.username}/${config.username}.github.io`;
     return Git(path)
         .add(`./*`)
         .commit(`Update on ${(new Date()).toLocaleString()}`)
