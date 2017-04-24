@@ -4,6 +4,8 @@ const GitHub = require('github-api');
 const Git = require('simple-git');
 const config = require('./config').get();
 const setConfig = require('./config').set;
+const db = require('./db');
+
 
 module.getUserINfo = getUserInfo;
 module.exports.pushRepo = pushRepo;
@@ -60,6 +62,7 @@ function copyFile() {
             path.join(from, `./${each}`),
             path.join(to, `./${each}`)
         )
+    db.backup();
 }
 
 

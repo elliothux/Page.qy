@@ -1,5 +1,12 @@
 const DataStore = require('nedb');
 const path = require('path');
+const fs = require('node-fs-extra');
+
+
+const config = JSON.parse(fs.readFileSync(
+    path.join(__dirname, '../../user/config.json'),
+    'utf-8'
+));
 
 
 // Define the database of articles
@@ -21,6 +28,7 @@ module.exports.editArticle = editArticle;
 module.exports.togglePublish = togglePublish;
 module.exports.isArticlePublished = isArticlePublished;
 module.exports.getPublishedArticleList = getPublishedArticleList;
+module.backup = backup();
 
 
 // Generate an unique key
@@ -258,6 +266,12 @@ async function getPublishedArticleList() {
     return (await find({type: 'article', published: true}, article));
 }
 
+
+function backup() {
+    const target = path.join(__dirname, `../../user/${config.username}.github.io/backup`);
+    !fs.existsSync(target) && fs.mkdirsSync(target);
+    fs.copySync(articlePath, path.join(target, './article'))
+}
 
 
 async function test() {
