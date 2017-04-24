@@ -62,7 +62,7 @@ function copyFile() {
             path.join(from, `./${each}`),
             path.join(to, `./${each}`)
         )
-    // db.backup();
+    db.backup();
 }
 
 
