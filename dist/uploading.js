@@ -1,41 +1,49 @@
-// const remote = require('electron').remote.app.getPath(global.module);
 import { remote } from 'electron';
-const main = remote.require('./main.js');
-const upload = main.upload;
+const upload = remote.require('./main.js').upload;
 
 
-const button = document.getElementById('cancel');
+const cancelButton = document.getElementById('cancel');
+const retryButton = document.getElementById('retry');
 const load = document.getElementById('load');
 const message = document.getElementById('message');
+const operateArea = document.getElementById('operateArea');
 
-function closeWindow() {
+
+
+cancelButton.addEventListener('click', function () {
     upload.end()
+});
+retryButton.addEventListener('click', retry);
+
+
+upload.start(callback);
+
+
+function callback(error) {
+    if (error) return failed();
+    return success()
 }
-
-
-button.addEventListener('click', closeWindow);
-
-
-upload.client.then(success).catch(failed);
-
 
 function success() {
     load.style.display = 'none';
     message.innerHTML = '✨Upload success!';
-    button.innerHTML = 'Done';
+    cancelButton.innerHTML = 'Done';
+    operateArea.className = 'center';
 }
 
 function failed() {
     load.style.display = 'none';
+    retryButton.style.display = 'inline-block';
     message.innerHTML = '😢Upload failed!';
-    button.innerHTML = 'Retry';
-    button.addEventListener('click', retry)
+    cancelButton.innerHTML = 'Done';
+    operateArea.className = 'center';
 }
 
 function retry() {
     load.style.display = 'block';
+    retryButton.style.display = 'none';
     message.innerHTML = '🏃Working hard on updating...';
-    button.innerHTML = 'Cancel';
-    upload.removeEventListener('click', closeWindow);
-    upload.client.then(success).catch(failed);
+    cancelButton.innerHTML = 'Cancel';
+    upload.start();
+    operateArea.className = '';
 }

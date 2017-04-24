@@ -57,8 +57,7 @@ function openWindow(path, options, isMax) {
 
 const upload = {
     win: null,
-    client: null,
-    start: function() {
+    openWindow: function () {
         this.win = openWindow(
             path.join(__dirname, './src/html/uploading.html'),
             {
@@ -68,7 +67,9 @@ const upload = {
             }
         );
         this.win.show();
-        // this.client = github.pushRepo()
+    },
+    start: function(callback) {
+        github.pushRepo(callback)
     },
     end: function () {
         this.win.close();

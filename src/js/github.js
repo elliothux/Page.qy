@@ -63,14 +63,14 @@ function copyFile() {
 }
 
 
-async function pushRepo() {
+async function pushRepo(callback) {
     copyFile();
     const path = await getRepoPath();
     // const URL = `https://github.com/${config.username}/${config.username}.github.io`;
     return Git(path)
-        .add(`./*`)
-        .commit(`Update on ${(new Date()).toLocaleString()}`)
-        .push(['-u', 'origin', 'master'])
+        .add(`./*`, callback)
+        .commit(`Update on ${(new Date()).toLocaleString()}`, callback)
+        .push(['-u', 'origin', 'master'], callback)
 }
 
 

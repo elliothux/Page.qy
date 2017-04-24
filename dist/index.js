@@ -17,7 +17,7 @@ ReactDOM.render(
             db={main.db}
             path={main.path}
             openWindow={main.openWindow}
-            upload={main.upload.start}
+            upload={main.upload.openWindow}
             dataToHTML = {main.dataToHTML}
             config={main.config.get()}
             setConfig={main.config.set}
