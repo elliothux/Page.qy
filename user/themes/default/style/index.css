@@ -62,6 +62,7 @@
 
 .article .tags li a {
     font-family: cursive;
+    color: white;
 }
 
 .article .tags li:hover {

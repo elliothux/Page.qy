@@ -28,7 +28,7 @@
                 on {{ article.date.month }}/{{ article.date.date }} {{ article.date.year }}</p>
             <ul class="tags">
                 <template @for="tag of article.tags">
-                    <li><a>#{{ tag }}</a></li>
+                    <li><a href="{{ link.tags }}#tag-{{ tag }}">#{{ tag }}</a></li>
                 </template>
             </ul>
             <hr>

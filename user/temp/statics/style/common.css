@@ -8,6 +8,10 @@ a {
     text-decoration: none;
 }
 
+hr {
+    display: inline-block;
+}
+
 body {
     background-color: #fafafa;
 }
