@@ -62,7 +62,7 @@ function copyFile() {
             path.join(from, `./${each}`),
             path.join(to, `./${each}`)
         )
-    db.backup();
+    // db.backup();
 }
 
 
@@ -71,8 +71,8 @@ async function pushRepo(callback) {
     const path = await getRepoPath();
     // const URL = `https://github.com/${config.username}/${config.username}.github.io`;
     return Git(path)
-        .add(`./*`, callback)
-        .commit(`Update on ${(new Date()).toLocaleString()}`, callback)
+        .add(`./*`)
+        .commit(`Update on ${(new Date()).toLocaleString()}`)
         .push(['-u', 'origin', 'master'], callback)
 }
 
