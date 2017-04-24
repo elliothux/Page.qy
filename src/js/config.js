@@ -4,6 +4,7 @@ const path = require('path');
 
 module.exports.set = setConfig;
 module.exports.get = getConfig;
+module.initConfig = initConfig;
 
 
 const target = path.join(__dirname, '../../user/config.json');
@@ -22,3 +23,16 @@ function setConfig(newConfig) {
 }
 
 
+function initConfig() {
+    setConfig({
+        "username": "",
+        "password": "",
+        "name": "",
+        "selfIntroduction": "",
+        "language": "en",
+        "editor": "default",
+        "theme": "default",
+        "avatar": "",
+        "mail": ""
+    })
+}

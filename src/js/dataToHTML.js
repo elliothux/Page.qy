@@ -2,6 +2,7 @@ const fs = require('node-fs-extra');
 const path = require('path');
 const templateEngine = require('./templateEngine');
 const db = require('./db');
+const config = require('./config').get();
 
 
 module.exports.dataToArticle = dataToArticle;
@@ -11,10 +12,7 @@ module.exports.dataToTags = dataToTags;
 module.exports.getArticlePath = getArticlePath;
 
 
-const config = JSON.parse(fs.readFileSync(
-    path.join(__dirname, '../../user/config.json'),
-    'utf-8'
-));
+
 const theme = path.join(__dirname, `../../user/themes/${config.theme}/`);
 const target = path.join(__dirname, '../../user/temp/');
 
