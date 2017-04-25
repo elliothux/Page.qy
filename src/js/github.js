@@ -25,7 +25,7 @@ const gh = new GitHub({
     password: config.password
 });
 
-
+_copyFile();
 async function pushRepo(callback) {
     const path = await _getRepoPath();
     _copyFile();
