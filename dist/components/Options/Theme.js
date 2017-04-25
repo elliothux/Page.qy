@@ -8,6 +8,7 @@ export default class Theme extends React.Component {
         super(props);
         this.style = this.style.bind(this);
         this.setTheme = this.setTheme.bind(this);
+        this.installTheme = this.installTheme.bind(this);
 
         this.state = {
             themes: this.props.theme.getThemesList(),
@@ -27,6 +28,16 @@ export default class Theme extends React.Component {
                     '应用' : 'Apply';
             eventProxy.trigger('refreshPreview', null)
         }.bind(this));
+    }
+
+    installTheme(e) {
+        if (e.target.files.length === 0) return;
+        const path = e.target.files[0].path;
+        this.props.theme.install(path).then(function () {
+            this.setState(() => ({
+                themes: this.props.theme.getThemesList()
+            }));
+        }.bind(this))
     }
 
     render() {return (
@@ -83,6 +94,13 @@ export default class Theme extends React.Component {
                     </div>
                 ))}
             </div>
+            <label style={this.style().installButton}>
+                {this.props.config.get().language === 'zh' ?
+                    '安装主题' : 'Install Theme'}
+                <input
+                    onClick={this.installTheme}
+                    accept=".zip" type="file" style={this.style().fileChooser}/>
+            </label>
         </div>
     )}
 
@@ -168,6 +186,27 @@ export default class Theme extends React.Component {
                 cursor: 'pointer',
                 marginBottom: '15px',
                 letterSpacing: '0.05em'
+            },
+            installButton: {
+                height: '35px',
+                width: 'fit-content',
+                padding: '0 20px',
+                margin: '25px auto',
+                textAlign: 'center',
+                lineHeight: '35px',
+                borderRadius: '50px',
+                display: 'block',
+                backgroundImage: 'linear-gradient(-225deg, rgba(85, 203, 242, 1) 0%, rgba(61, 144, 239, 1) 100%)',
+                color: 'white',
+                fontSize: '1.2em',
+                letterSpacing: '0.1em',
+                cursor: 'pointer',
+                boxShadow: '0px 4px 11px 1px rgba(0,0,0,0.21)',
+                border: 'none',
+            },
+            fileChooser: {
+                left: '-9999px',
+                position: 'absolute'
             }
         }
     }, this.props, this.state)}
