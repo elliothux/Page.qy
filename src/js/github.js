@@ -12,64 +12,17 @@ module.exports.pushRepo = pushRepo;
 
 
 const userPath = path.join(__dirname, '../../user/');
-
 const gh = new GitHub({
     username: config.username,
     password: config.password
 });
 
-
-function isRepoExist() {
-    return new Promise((resolve, reject) => {
-        gh.getUser().listRepos().then(repos => {
-            let exist = false;
-            for (repo of repos.data)
-                if (repo.name.toLowerCase() ===
-                    `${config.username}.github.io`.toLowerCase())
-                    exist = true;
-            resolve(exist);
-        }).catch(error => reject(error))
-    })
-}
-
-
-
-async function getRepoPath() {
-    const name = config.username;
-    if (!fs.readdirSync(userPath).includes(`${name}.github.io`)) {
-        if (await isRepoExist())
-            await Git(userPath).clone(
-                `https://github.com/${name}/${name}.github.io`,
-                path.join(userPath, `/${name}.github.io`)
-            );
-        else
-            await gh.getUser().createRepo({name: `${name}.github.io`});
-    }
-    return `${userPath}${name}.github.io`;
-}
-
-
-function copyFile() {
-    const name = config.username;
-    const from = path.join(__dirname, '../../user/temp/');
-    const to = `${userPath}${name}.github.io`;
-    fs.existsSync(path.join(to, './articles')) &&
-        fs.removeSync(path.join(to, './articles'));
-    fs.existsSync(path.join(to, './statics')) &&
-        fs.removeSync(path.join(to, './statics'));
-    for (each of fs.readdirSync(from))
-        fs.copySync(
-            path.join(from, `./${each}`),
-            path.join(to, `./${each}`)
-        )
-    db.backup();
-}
-
+pushRepo().then(a => console.log(a)).catch(e => console.log(e))
 
 async function pushRepo(callback) {
-    copyFile();
-    const path = await getRepoPath();
-    // const URL = `https://github.com/${config.username}/${config.username}.github.io`;
+    const path = await _getRepoPath();
+    _copyFile();
+    console.log('Pushing repo...');
     return Git(path)
         .add(`./*`)
         .commit(`Update on ${(new Date()).toLocaleString()}`)
@@ -90,8 +43,57 @@ async function getUserInfo() {
         name: name,
         mail: mail,
         username: username
+    });
+    console.log('Get user info success.')
+}
+
+
+async function _getRepoPath() {
+    const name = config.username;
+    if (!fs.readdirSync(userPath).includes(`${name}.github.io`)) {
+        if (await _isRepoExist()) {
+            console.log('Cloning repo ...');
+            await Git(userPath).clone(
+                `https://github.com/${name}/${name}.github.io`,
+                path.join(userPath, `/${name}.github.io`)
+            );
+            console.log('Clone repo success.')
+        }
+        else {
+            await gh.getUser().createRepo({name: `${name}.github.io`});
+            console.log('Create an new repo success.')
+        }
+    }
+    return `${userPath}${name}.github.io`;
+}
+
+
+function _isRepoExist() {
+    return new Promise((resolve, reject) => {
+        gh.getUser().listRepos().then(repos => {
+            let exist = false;
+            for (repo of repos.data)
+                if (repo.name.toLowerCase() ===
+                    `${config.username}.github.io`.toLowerCase())
+                    exist = true;
+            resolve(exist);
+        }).catch(error => reject(error))
     })
 }
 
-// getUserInfo().then(a => console.log(a));
-// pushRepo().then(() => console.log('done'));
+
+function _copyFile() {
+    const name = config.username;
+    const from = path.join(__dirname, '../../user/temp/');
+    const to = `${userPath}${name}.github.io`;
+    fs.existsSync(path.join(to, './articles')) &&
+    fs.removeSync(path.join(to, './articles'));
+    fs.existsSync(path.join(to, './statics')) &&
+    fs.removeSync(path.join(to, './statics'));
+    for (each of fs.readdirSync(from))
+        fs.copySync(
+            path.join(from, `./${each}`),
+            path.join(to, `./${each}`)
+        )
+    db.backup();
+}

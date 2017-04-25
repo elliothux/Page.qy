@@ -42,7 +42,7 @@ function failed() {
 function retry() {
     load.style.display = 'block';
     retryButton.style.display = 'none';
-    message.innerHTML = '🏃Working hard on updating...';
+    message.innerHTML = '🏃Working hard on uploading...';
     cancelButton.innerHTML = 'Cancel';
     upload.start();
     operateArea.className = '';

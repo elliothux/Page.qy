@@ -28,7 +28,7 @@ module.exports.editArticle = editArticle;
 module.exports.togglePublish = togglePublish;
 module.exports.isArticlePublished = isArticlePublished;
 module.exports.getPublishedArticleList = getPublishedArticleList;
-module.backup = backup;
+module.exports.backup = backup;
 
 
 // Generate an unique key
