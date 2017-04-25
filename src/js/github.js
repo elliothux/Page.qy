@@ -1,5 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
+const exec = require('child_process').execSync;
+const platform = require('os').platform();
 const GitHub = require('github-api');
 const Git = require('simple-git');
 const config = require('./config').get();
@@ -11,13 +13,18 @@ module.getUserINfo = getUserInfo;
 module.exports.pushRepo = pushRepo;
 
 
+if (platform === 'win32') {
+    exec('set GIT_CURL_VERBOSE=1');
+    exec('set GIT_TRACK_PACKET=2');
+}
+
+
 const userPath = path.join(__dirname, '../../user/');
 const gh = new GitHub({
     username: config.username,
     password: config.password
 });
 
-// pushRepo().then(a => console.log(a)).catch(e => console.log(e))
 
 async function pushRepo(callback) {
     const path = await _getRepoPath();
