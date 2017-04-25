@@ -24,7 +24,10 @@ async function pushRepo(callback) {
     _copyFile();
     console.log('Pushing repo...');
     return Git(path)
-        .add(`./*`)
+        .raw([
+            'add',
+            '--all'
+        ])
         .commit(`Update on ${(new Date()).toLocaleString()}`)
         .push(['-u', 'origin', 'master'], callback)
 }
