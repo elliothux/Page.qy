@@ -28,7 +28,6 @@ const gh = new GitHub({
 _copyFile();
 async function pushRepo(callback) {
     const path = await _getRepoPath();
-    console.log('Pushing repo...');
     return Git(path)
         .pull((error) => {
             if (error) return callback(error);
@@ -38,9 +37,18 @@ async function pushRepo(callback) {
         .raw([
             'add',
             '--all'
-        ], callback)
-        .commit(`Update on ${(new Date()).toLocaleString()}`, callback)
-        .push(['-u', 'origin', 'master'], callback)
+        ], (error) => {
+            if (error) return callback(error);
+            console.log('Add files success.')
+        })
+        .commit(`Update on ${(new Date()).toLocaleString()}`, (error) => {
+            if (error) return callback(error);
+            console.log('Pushing repo...');
+        })
+        .push(['-u', 'origin', 'master'], (error) => {
+            if (error) return callback(error);
+            console.log('Push repo success.')
+        });
 }
 
 
