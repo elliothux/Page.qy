@@ -41,7 +41,7 @@ export default class Edit extends React.Component {
         this.refs.container.style.height = `${window.innerHeight - 150}px`;
         const editor = new RichTextEditor('editorContainer');
         const handleChange = this.handleContentChange;
-        this.props.config.language === 'en' &&
+        this.props.config.get().language === 'en' &&
             (editor.config.lang = wangEditor.langs['en']);
         editor.config.zindex = 10;
         editor.config.uploadImgUrl = 'http://127.0.0.1:3000/upload';

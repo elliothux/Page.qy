@@ -11,7 +11,7 @@ export default class About extends React.Component {
     render() {return (
         <div style={this.style().container}>
             <h1 style={this.style().title}>
-                {this.props.config.language === 'zh' ? '关于' : 'ABOUT'}
+                {this.props.config.get().language === 'zh' ? '关于' : 'ABOUT'}
             </h1>
         </div>
     )}

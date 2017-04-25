@@ -1,13 +1,22 @@
 const path = require('path');
 const fs = require('node-fs-extra');
 const extract = require('extract-zip');
+const config = require('./config');
+const dataToHTML = require('./dataToHTML');
 
 
 module.exports.getThemesList = getThemesList;
 module.exports.install = install;
+module.exports.set = set;
 
 
 const target = path.join(__dirname, `../../user/themes/`);
+
+
+function set(theme) {
+    config.set({theme: theme});
+    return dataToHTML.reGenerateAll();
+}
 
 
 function getThemesList() {

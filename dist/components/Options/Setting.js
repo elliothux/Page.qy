@@ -11,27 +11,26 @@ export default class Setting extends React.Component {
     }
 
     handleConfigChange(config) {
-        config = this.props.setConfig(config);
-        eventProxy.trigger('setConfig', config);
+        eventProxy.trigger('setConfig', this.props.config.set(config));
     }
 
     render() {return (
         <div style={this.style().container}>
             <h1 style={this.style().title}>
-                {this.props.config.language === 'zh' ? '设置' : 'SETTING'}
+                {this.props.config.get().language === 'zh' ? '设置' : 'SETTING'}
             </h1>
             <div style={this.style().buttonsContainer}>
                 <div
                     style={this.style().button}
                     onClick={this.handleConfigChange.bind(null, {
-                        language: this.props.config.language === 'zh' ?
+                        language: this.props.config.get().language === 'zh' ?
                             'en' : 'zh'
                     })}
                 >
-                    {this.props.config.language === 'zh' ? 'Use English' : '使用中文'}
+                    {this.props.config.get().language === 'zh' ? 'Use English' : '使用中文'}
                 </div>
                 <div style={this.style().button}>
-                    {this.props.config.language === 'zh' ? '使用 Markdown' : 'Use Markdown'}
+                    {this.props.config.get().language === 'zh' ? '使用 Markdown' : 'Use Markdown'}
                 </div>
             </div>
         </div>

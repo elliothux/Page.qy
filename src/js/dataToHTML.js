@@ -2,7 +2,7 @@ const fs = require('node-fs-extra');
 const path = require('path');
 const templateEngine = require('./templateEngine');
 const db = require('./db');
-const config = require('./config').get();
+const getConfig = require('./config').get;
 
 
 module.exports.dataToArticle = dataToArticle;
@@ -10,10 +10,11 @@ module.exports.dataToHome = dataToHome;
 module.exports.dataToArchives = dataToArchives;
 module.exports.dataToTags = dataToTags;
 module.exports.getArticlePath = getArticlePath;
+module.exports.reGenerateAll = reGenerateAll;
 
 
 
-const theme = path.join(__dirname, `../../user/themes/${config.theme}/`);
+const theme = () => path.join(__dirname, `../../user/themes/${getConfig().theme}/`);
 const target = path.join(__dirname, '../../user/temp/');
 
 
@@ -23,20 +24,23 @@ function getArticlePath(key) {
 }
 
 
-async function checkPath() {
+reGenerateAll();
+
+
+async function reGenerateAll() {
     const articles = await db.getPublishedArticleList();
-    const keys = [];
     for (article of articles)
-        keys.push(article.key)
-    for (file of fs.readdirSync(path.join(target, './articles')))
-        if (!keys.includes(file.split('.')[0]))
-            fs.removeSync(path.join(target, `./articles/${file}`));
+        dataToArticle(article);
+    await dataToTags();
+    await dataToArchives();
+    await dataToHome();
 }
 
 
 function dataToArticle(rawData) {
+    const config = getConfig();
     let article = fs.readFileSync(
-        path.join(theme, './templates/article.html'),
+        path.join(theme(), './templates/article.html'),
         'utf-8'
     );
 
@@ -80,8 +84,9 @@ function dataToArticle(rawData) {
 
 
 async function dataToHome() {
+    const config = getConfig();
     let home = fs.readFileSync(
-        path.join(theme, './templates/index.html'),
+        path.join(theme(), './templates/index.html'),
         'utf-8'
     );
 
@@ -120,8 +125,9 @@ async function dataToHome() {
 
 
 async function dataToTags() {
+    const config = getConfig();
     let tags = fs.readFileSync(
-        path.join(theme, './templates/tags.html'),
+        path.join(theme(), './templates/tags.html'),
         'utf-8'
     );
 
@@ -194,8 +200,9 @@ async function getTagsData() {
 
 
 async function dataToArchives() {
+    const config = getConfig();
     let archives = fs.readFileSync(
-        path.join(theme, './templates/archives.html'),
+        path.join(theme(), './templates/archives.html'),
         'utf-8'
     );
 
@@ -271,17 +278,28 @@ async function getArchiveData() {
 }
 
 
+async function checkPath() {
+    const articles = await db.getPublishedArticleList();
+    const keys = [];
+    for (article of articles)
+        keys.push(article.key)
+    for (file of fs.readdirSync(path.join(target, './articles')))
+        if (!keys.includes(file.split('.')[0]))
+            fs.removeSync(path.join(target, `./articles/${file}`));
+}
+
+
 function updateStaticFiles() {
     fs.copySync(
-        path.join(theme, './style/'),
+        path.join(theme(), './style/'),
         path.join(target, './statics/style/')
     );
     fs.copySync(
-        path.join(theme, './script/'),
+        path.join(theme(), './script/'),
         path.join(target, './statics/script/')
     );
     fs.copySync(
-        path.join(theme, './statics/'),
+        path.join(theme(), './statics/'),
         path.join(target, './statics/statics/')
     );
     checkPath();
@@ -299,7 +317,7 @@ function formatDate(date) {
         date: date.getDate()+1 < 10 ? '0' + date.getDate() : date.getDate(),
         hours: date.getHours() < 10 ? '0' + date.getHours() : date.getHours(),
         minutes: date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes(),
-        day: config.language === 'zh' ?
+        day: getConfig().language === 'zh' ?
             `星期${daysZh[date.getDay()]}`:
             daysEn[date.getDay()]
     }

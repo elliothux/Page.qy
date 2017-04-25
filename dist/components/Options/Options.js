@@ -18,12 +18,12 @@ export default class Options extends React.Component {
                 <div style={this.style().userInfo}>
                     <div style={this.style().info}>
                         <h1 style={this.style().userName}>
-                            {this.props.config.name || this.props.config.username}
+                            {this.props.config.get().name || this.props.config.username}
                         </h1>
                         <div style={this.style().selfIntroduction}>
                             <span style={this.style().selfIntroductionSymbol}>“</span>
                             <p style={this.style().selfIntroductionText}>
-                                {this.props.config.selfIntroduction}
+                                {this.props.config.get().selfIntroduction}
                             </p>
                         </div>
                         <p style={this.style().articleCount}>
@@ -33,21 +33,19 @@ export default class Options extends React.Component {
                     </div>
                     <img
                         style={this.style().head}
-                        src={this.props.config.avatar || "../../src/pic/head.png"}
+                        src={this.props.config.get().avatar || "../../src/pic/head.png"}
                     />
                     <div style={this.style().signButton}>
-                        {this.props.config.language === 'zh' ? '登出' : 'Sign Out'}
+                        {this.props.config.get().language === 'zh' ? '登出' : 'Sign Out'}
                     </div>
                 </div>
             </div>
             <div style={this.style().optionsContainer}>
-                <Setting
-                    config={this.props.config}
-                    setConfig={this.props.setConfig}
-                />
+                <Setting config={this.props.config}/>
                 <Theme
                     config={this.props.config}
                     theme={this.props.theme}
+                    mainPath={this.props.mainPath}
                 />
                 <About config={this.props.config}/>
             </div>

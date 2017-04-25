@@ -70,5 +70,5 @@ function test() {
     return parse(data, template);
 }
 
-// console.log(test());
-// test();
+// console.log(Test());
+// Test();

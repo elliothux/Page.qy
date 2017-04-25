@@ -89,7 +89,7 @@ export default class Article extends React.Component {
             date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes(),
             date.getDay()
         ];
-        return this.props.config.language === 'zh' ?
+        return this.props.config.get().language === 'zh' ?
             `${year}年${month}月${dateString}日\xa0\xa0\xa0\xa0\xa0\xa0${hours}:${minutes}\xa0\xa0\xa0\xa0\xa0\xa0星期${daysZh[day]}` :
             `${year}/${month}/${dateString}\xa0\xa0\xa0\xa0\xa0\xa0${hours}:${minutes}\xa0\xa0\xa0\xa0\xa0\xa0${daysEn[day]}`
     }
@@ -135,7 +135,7 @@ export default class Article extends React.Component {
                         src={this.props.mainPath + '/src/pic/editOperate.svg'}
                     />
                     <p style={this.style().operateButtonText}>
-                        {this.props.config.language === 'zh' ? '编辑' : 'EDIT'}
+                        {this.props.config.get().language === 'zh' ? '编辑' : 'EDIT'}
                     </p>
                 </div>
                 <div
@@ -147,7 +147,7 @@ export default class Article extends React.Component {
                         src={this.props.mainPath + "/src/pic/previewOperate.svg"}
                     />
                     <p style={this.style().operateButtonText}>
-                        {this.props.config.language === 'zh' ? '预览' : 'PREVIEW'}
+                        {this.props.config.get().language === 'zh' ? '预览' : 'PREVIEW'}
                     </p>
                 </div>
                 <div
@@ -160,8 +160,8 @@ export default class Article extends React.Component {
                     />
                     <p style={this.style().operateButtonText}>
                         {this.state.published ?
-                            (this.props.config.language === 'zh' ? '取消待发布' : 'UNPUBLISH') :
-                            (this.props.config.language === 'zh' ? '待发布' : 'PUBLISH')
+                            (this.props.config.get().language === 'zh' ? '取消待发布' : 'UNPUBLISH') :
+                            (this.props.config.get().language === 'zh' ? '待发布' : 'PUBLISH')
                         }
                     </p>
                 </div>
@@ -171,7 +171,7 @@ export default class Article extends React.Component {
                         src={this.props.mainPath + "/src/pic/historyOperate.svg"}
                     />
                     <p style={this.style().operateButtonText}>
-                        {this.props.config.language === 'zh' ? '历史' : 'HISTORY'}
+                        {this.props.config.get().language === 'zh' ? '历史' : 'HISTORY'}
                     </p>
                 </div>
                 <div
@@ -183,7 +183,7 @@ export default class Article extends React.Component {
                         src={this.props.mainPath +"/src/pic/deleteOperate.svg"}
                     />
                     <p style={this.style().operateButtonText}>
-                        {this.props.config.language === 'zh' ? '删除' : 'DELETE'}
+                        {this.props.config.get().language === 'zh' ? '删除' : 'DELETE'}
                     </p>
                 </div>
             </div>
@@ -193,7 +193,7 @@ export default class Article extends React.Component {
                 style={this.style().confirmContainer}
             >
                 <h3>
-                    {this.props.config.language === 'zh' ?
+                    {this.props.config.get().language === 'zh' ?
                         '😱 你真的确定要删除这篇文章吗？' :
                         '😱 Do You REALLY Want to Delete This Article?'}
                 </h3>
@@ -202,13 +202,13 @@ export default class Article extends React.Component {
                         style={this.style().confirmButton}
                         onClick={this.handleDelete}
                     >
-                        {this.props.config.language === 'zh' ? '是的' : 'YES'}
+                        {this.props.config.get().language === 'zh' ? '是的' : 'YES'}
                     </div>
                     <div
                         style={this.style().confirmButton}
                         onClick={this.handleConfirm.bind(null, 'off')}
                     >
-                        {this.props.config.language === 'zh' ? '算啦' : 'NO'}
+                        {this.props.config.get().language === 'zh' ? '算啦' : 'NO'}
                     </div>
                 </div>
             </div>

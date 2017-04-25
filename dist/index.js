@@ -19,8 +19,7 @@ ReactDOM.render(
             openWindow={main.openWindow}
             upload={main.upload.openWindow}
             dataToHTML = {main.dataToHTML}
-            config={main.config.get()}
-            setConfig={main.config.set}
+            config={main.config}
             theme={main.theme}
             openURL={shell.openExternal}
         />

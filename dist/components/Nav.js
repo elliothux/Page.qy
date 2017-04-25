@@ -22,18 +22,18 @@ export default class Nav extends React.Component {
             <div
                 style={this.style().userArea}
                 onClick={this.props.openURL.bind(null,
-                    `https://${this.props.config.username}.github.io`)}
+                    `https://${this.props.config.get().username}.github.io`)}
             >
                 <img
                     style={this.style().userHead}
-                    src={this.props.config.avatar || "../../src/pic/head.png"}
+                    src={this.props.config.get().avatar || "../../src/pic/head.png"}
                 />
                 <div style={this.style().userInfo}>
                     <p style={this.style().userName}>
-                        {this.props.config.name || this.props.config.username}
+                        {this.props.config.get().name || this.props.config.get().username}
                     </p>
                     <p style={this.style().userURL}>
-                        {`${this.props.config.username}.github.io`}
+                        {`${this.props.config.get().username}.github.io`}
                     </p>
                 </div>
             </div>
@@ -47,7 +47,7 @@ export default class Nav extends React.Component {
                 >
                     <img style={this.style().navButtonImg} src="../../src/pic/previewNav.svg"/>
                     <p style={this.style().navBottomText}>
-                        {this.props.config.language === 'zh' ? '预览' : 'PREVIEW'}
+                        {this.props.config.get().language === 'zh' ? '预览' : 'PREVIEW'}
                     </p>
                 </div>
                 <div
@@ -59,7 +59,7 @@ export default class Nav extends React.Component {
                 >
                     <img style={this.style().navButtonImg} src="../../src/pic/manageNav.svg"/>
                     <p style={this.style().navBottomText}>
-                        {this.props.config.language === 'zh' ? '管理' : 'MANAGE'}
+                        {this.props.config.get().language === 'zh' ? '管理' : 'MANAGE'}
                     </p>
                 </div>
                 <div
@@ -71,7 +71,7 @@ export default class Nav extends React.Component {
                 >
                     <img style={this.style().navButtonImg} src="../../src/pic/optionsNav.svg"/>
                     <p style={this.style().navBottomText}>
-                        {this.props.config.language === 'zh' ? '选项' : 'OPTIONS'}
+                        {this.props.config.get().language === 'zh' ? '选项' : 'OPTIONS'}
                     </p>
                 </div>
             </div>

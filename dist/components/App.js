@@ -14,12 +14,11 @@ export default class App extends React.Component {
 
         this.state = {
             viewState: 'options',
-            config: {}
+            config: this.props.config.get()
         }
     }
 
     componentWillMount() {
-        this.setState({ config: this.props.config });
         eventProxy.on('setConfig', function (config) {
             this.setState({ config: config })
         }.bind(this))
@@ -36,7 +35,7 @@ export default class App extends React.Component {
         <div>
             <Nav
                 mainView={this.state.viewState}
-                config={this.state.config}
+                config={this.props.config}
                 openURL={this.props.openURL}
             />
             <div style={this.style().previewContainer}>
@@ -48,14 +47,13 @@ export default class App extends React.Component {
                     mainPath={this.props.path}
                     openWindow={this.props.openWindow}
                     dataToHTML = {this.props.dataToHTML}
-                    config={this.state.config}
+                    config={this.props.config}
                 />
             </div>
             <div style={this.style().optionsContainer}>
                 <Options
                     mainPath={this.props.path}
-                    config={this.state.config}
-                    setConfig={this.props.setConfig}
+                    config={this.props.config}
                     theme={this.props.theme}
                 />
             </div>

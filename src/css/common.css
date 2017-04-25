@@ -35,6 +35,14 @@ input, button, textarea, :focus {
     transform: translateY(0);
 }
 
+.theme .themeOperate {
+    transform: translateY(100%);
+    transition: all 400ms ease
+}
+.theme:hover .themeOperate {
+    transform: translateY(0);
+}
+
 
 .addArticleButton {
     box-shadow: rgba(0, 0, 0, 0.1) 0 5px 20px 5px;

@@ -2257,7 +2257,7 @@ function defineRefPropWarningGetter(props, displayName) {
 /**
  * Factory method to create a new React element. This no longer adheres to
  * the class pattern, so do not use new to call it. Also, no instanceof check
- * will work. Instead test $$typeof field against Symbol.for('react.element') to check
+ * will work. Instead Test $$typeof field against Symbol.for('react.element') to check
  * if something is a React Element.
  *
  * @param {*} type
@@ -2298,7 +2298,7 @@ var ReactElement = function ReactElement(type, key, ref, self, source, owner, pr
 
     // To make comparing ReactElements easier for testing purposes, we make
     // the validation flag non-enumerable (where possible, which should
-    // include every environment we run tests in), so the test framework
+    // include every environment we run tests in), so the Test framework
     // ignores it.
     if (canDefineProperty) {
       Object.defineProperty(element._store, 'validated', {
@@ -2387,7 +2387,7 @@ ReactElement.createElement = function (type, config, children) {
     props.children = childArray;
   }
 
-  // Resolve test props
+  // Resolve Test props
   if (type && type.defaultProps) {
     var defaultProps = type.defaultProps;
     for (propName in defaultProps) {
@@ -2474,7 +2474,7 @@ ReactElement.cloneElement = function (element, config, children) {
     for (propName in config) {
       if (hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
         if (config[propName] === undefined && defaultProps !== undefined) {
-          // Resolve test props
+          // Resolve Test props
           props[propName] = defaultProps[propName];
         } else {
           props[propName] = config[propName];
@@ -3178,7 +3178,7 @@ function shouldPreventMouseEvent(name, type, props) {
  *
  *   `executeDispatch` {function(object, function, string)}
  *     Optional, allows plugins to override how an event gets dispatched. By
- *     test, the listener is simply invoked.
+ *     Test, the listener is simply invoked.
  *
  * Each plugin that is injected into `EventsPluginHub` is immediately operable.
  *
@@ -3623,7 +3623,7 @@ module.exports = function (module) {
 	if (!module.webpackPolyfill) {
 		module.deprecate = function () {};
 		module.paths = [];
-		// module.parent = undefined by test
+		// module.parent = undefined by Test
 		if (!module.children) module.children = [];
 		Object.defineProperty(module, "loaded", {
 			enumerable: true,
@@ -6415,7 +6415,7 @@ var ReactUpdateQueue = {
 
   /**
    * Checks whether or not this composite component is mounted.
-   * @param {ReactClass} publicInstance The instance we want to test.
+   * @param {ReactClass} publicInstance The instance we want to Test.
    * @return {boolean} True if mounted, false otherwise.
    * @protected
    * @final
@@ -6810,7 +6810,7 @@ function isEventSupported(eventNameSuffix, capture) {
   }
 
   if (!isSupported && useHasFeature && eventNameSuffix === 'wheel') {
-    // This is the only way to test support for the `wheel` event in IE9+.
+    // This is the only way to Test support for the `wheel` event in IE9+.
     isSupported = document.implementation.hasFeature('Events.wheel', '3.0');
   }
 
@@ -7290,7 +7290,7 @@ function ReactComponent(props, context, updater) {
   this.props = props;
   this.context = context;
   this.refs = emptyObject;
-  // We initialize the test updater but the real one gets injected by the
+  // We initialize the Test updater but the real one gets injected by the
   // renderer.
   this.updater = updater || ReactNoopUpdateQueue;
 }
@@ -7413,7 +7413,7 @@ var ReactNoopUpdateQueue = {
 
   /**
    * Checks whether or not this composite component is mounted.
-   * @param {ReactClass} publicInstance The instance we want to test.
+   * @param {ReactClass} publicInstance The instance we want to Test.
    * @return {boolean} True if mounted, false otherwise.
    * @protected
    * @final
@@ -7701,7 +7701,7 @@ module.exports = EventListener;
 function focusNode(node) {
   // IE8 can throw "Can't move focus to the control because it is invisible,
   // not enabled, or of a type that does not accept the focus." for all kinds of
-  // reasons that are too expensive and fragile to test.
+  // reasons that are too expensive and fragile to Test.
   try {
     node.focus();
   } catch (e) {}
@@ -8017,7 +8017,7 @@ var castPath = __webpack_require__(97),
     toKey = __webpack_require__(41);
 
 /**
- * The base implementation of `_.get` without support for test values.
+ * The base implementation of `_.get` without support for Test values.
  *
  * @private
  * @param {Object} object The object to query.
@@ -9493,7 +9493,7 @@ var ReactDOMSelect = {
       if (props.defaultValue != null) {
         updateOptions(inst, Boolean(props.multiple), props.defaultValue);
       } else {
-        // Revert the select back to its test unselected state.
+        // Revert the select back to its Test unselected state.
         updateOptions(inst, Boolean(props.multiple), props.multiple ? [] : '');
       }
     }
@@ -13527,7 +13527,7 @@ function toArray(obj) {
 }
 
 /**
- * Perform a heuristic test to determine if an object is "array-like".
+ * Perform a heuristic Test to determine if an object is "array-like".
  *
  *   A monk asked Joshu, a Zen master, "Has a dog Buddha nature?"
  *   Joshu replied: "Mu."
@@ -17166,8 +17166,8 @@ var baseGet = __webpack_require__(94);
  * _.get(object, ['a', '0', 'b', 'c']);
  * // => 3
  *
- * _.get(object, 'a.b.c', 'test');
- * // => 'test'
+ * _.get(object, 'a.b.c', 'Test');
+ * // => 'Test'
  */
 function get(object, path, defaultValue) {
   var result = object == null ? undefined : baseGet(object, path);
@@ -17400,7 +17400,7 @@ var FUNC_ERROR_TEXT = 'Expected a function';
 /**
  * Creates a function that memoizes the result of `func`. If `resolver` is
  * provided, it determines the cache key for storing the result based on the
- * arguments provided to the memoized function. By test, the first argument
+ * arguments provided to the memoized function. By Test, the first argument
  * provided to the memoized function is used as the map cache key. The `func`
  * is invoked with the `this` binding of the memoized function.
  *
@@ -17917,9 +17917,9 @@ function getNativeBeforeInputChars(topLevelType, nativeEvent) {
       /**
        * If native `textInput` events are available, our goal is to make
        * use of them. However, there is a special case: the spacebar key.
-       * In Webkit, preventing test on a spacebar `textInput` event
+       * In Webkit, preventing Test on a spacebar `textInput` event
        * cancels character insertion, but it *also* causes the browser
-       * to fall back to its test spacebar behavior of scrolling the
+       * to fall back to its Test spacebar behavior of scrolling the
        * page.
        *
        * Tracking at:
@@ -18685,7 +18685,7 @@ module.exports = Danger;
  * having plugins be ordered in the same order that they are injected because
  * that ordering would be influenced by the packaging order.
  * `ResponderEventPlugin` must occur before `SimpleEventPlugin` so that
- * preventing test on events is convenient in `SimpleEventPlugin` handlers.
+ * preventing Test on events is convenient in `SimpleEventPlugin` handlers.
  */
 
 var DefaultEventPluginOrder = ['ResponderEventPlugin', 'SimpleEventPlugin', 'TapEventPlugin', 'EnterLeaveEventPlugin', 'ChangeEventPlugin', 'SelectEventPlugin', 'BeforeInputEventPlugin'];
@@ -19887,7 +19887,7 @@ var ReactCompositeComponent = {
    * skipped) the remaining update lifecycle methods are called and the DOM
    * representation is updated.
    *
-   * By test, this implements React's rendering and reconciliation algorithm.
+   * By Test, this implements React's rendering and reconciliation algorithm.
    * Sophisticated clients may wish to override this.
    *
    * @param {ReactReconcileTransaction} transaction
@@ -20390,7 +20390,7 @@ var getNode = ReactDOMComponentTree.getNodeFromInstance;
 var listenTo = ReactBrowserEventEmitter.listenTo;
 var registrationNameModules = EventPluginRegistry.registrationNameModules;
 
-// For quickly matching children type, to test if can be treated as content.
+// For quickly matching children type, to Test if can be treated as content.
 var CONTENT_TYPES = { 'string': true, 'number': true };
 
 var STYLE = 'style';
@@ -21699,7 +21699,7 @@ var ReactDOMInput = {
     // Detach value from defaultValue. We won't do anything if we're working on
     // submit or reset inputs as those values & defaultValues are linked. They
     // are not resetable nodes so this operation doesn't matter and actually
-    // removes browser-test values (eg "Submit Query") when no value is
+    // removes browser-Test values (eg "Submit Query") when no value is
     // provided.
 
     switch (props.type) {
@@ -22537,7 +22537,7 @@ var ReactDOMTextarea = {
     var value = LinkedValueUtils.getValue(props);
     var initialValue = value;
 
-    // Only bother fetching test value if we're going to use it
+    // Only bother fetching Test value if we're going to use it
     if (value == null) {
       var defaultValue = props.defaultValue;
       // TODO (yungsters): Remove support for children content in <textarea>.
@@ -23372,7 +23372,7 @@ function inject() {
   ReactInjection.EventPluginUtils.injectTreeTraversal(ReactDOMTreeTraversal);
 
   /**
-   * Some important event plugins included by test (without having to require
+   * Some important event plugins included by Test (without having to require
    * them).
    */
   ReactInjection.EventPluginHub.injectEventPluginsByName({
@@ -24813,7 +24813,7 @@ var ReactServerUpdateQueue = function () {
 
   /**
    * Checks whether or not this composite component is mounted.
-   * @param {ReactClass} publicInstance The instance we want to test.
+   * @param {ReactClass} publicInstance The instance we want to Test.
    * @return {boolean} True if mounted, false otherwise.
    * @protected
    * @final
@@ -27599,7 +27599,7 @@ var ReactClassInterface = {
   /**
    * Updates the component's currently mounted DOM representation.
    *
-   * By test, this implements React's rendering and reconciliation algorithm.
+   * By Test, this implements React's rendering and reconciliation algorithm.
    * Sophisticated clients may wish to override this.
    *
    * @param {ReactReconcileTransaction} transaction
@@ -28691,7 +28691,7 @@ function ReactPureComponent(props, context, updater) {
   this.props = props;
   this.context = context;
   this.refs = emptyObject;
-  // We initialize the test updater but the real one gets injected by the
+  // We initialize the Test updater but the real one gets injected by the
   // renderer.
   this.updater = updater || ReactNoopUpdateQueue;
 }
@@ -29509,7 +29509,7 @@ exports.default = mergeClasses;
  *
  * Instead, this function "fixes" the relative urls to be absolute according to the current page location.
  *
- * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.
+ * A rudimentary Test suite is located at `Test/fixUrls.js` and can be run via the `npm Test` command.
  *
  */
 
@@ -30735,8 +30735,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             if (menuUI == null) {
                 E.warn('editor.UI配置中，没有菜单 "' + menuId + '" 的UI配置，只能取默认值');
 
-                // 必须写成 uiConfig['test'];
-                // 写成 uiConfig.test IE8会报错
+                // 必须写成 uiConfig['Test'];
+                // 写成 uiConfig.Test IE8会报错
                 menuUI = uiConfig['default'];
             }
 
@@ -32815,7 +32815,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         // 表情包
         E.config.emotionsShow = 'icon'; // 显示项，默认为'icon'，也可以配置成'value'
         E.config.emotions = {
-            // 'test': {
+            // 'Test': {
             //     title: '默认',
             //     data: './emotions.data'
             // },
@@ -32917,7 +32917,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
         // 为菜单自定义配置的UI
         E.UI.menus = {
-            // 这个 test 不加引号，在 IE8 会报错
+            // 这个 Test 不加引号，在 IE8 会报错
             'default': {
                 normal: '<a href="#" tabindex="-1"><i class="wangeditor-menu-img-command"></i></a>',
                 selected: '.selected'
@@ -35934,7 +35934,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             txt.updateMenuStyleEvent();
 
             // // 鼠标hover时，显示 p head 高度（暂时关闭这个功能）
-            // if (!/ie/i.test(E.userAgent)) {
+            // if (!/ie/i.Test(E.userAgent)) {
             //     // 暂时不支持IE
             //     txt.showHeightOnHover();
             // }
@@ -38067,7 +38067,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		// Start with an empty selector
 		selector: "",
 
-		// The test length of a jQuery object is 0
+		// The Test length of a jQuery object is 0
 		length: 0,
 
 		toArray: function toArray() {
@@ -38864,7 +38864,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			} catch (e) {
 				return false;
 			} finally {
-				// Remove from its parent by test
+				// Remove from its parent by Test
 				if (div.parentNode) {
 					div.parentNode.removeChild(div);
 				}
@@ -39041,7 +39041,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			// Support: IE<10
 			// Check if getElementById returns elements by name
 			// The broken getElementById methods don't pick up programatically-set names,
-			// so use a roundabout getElementsByName test
+			// so use a roundabout getElementsByName Test
 			support.getById = assert(function (div) {
 				docElem.appendChild(div).id = expando;
 				return !document.getElementsByName || !document.getElementsByName(expando).length;
@@ -39132,7 +39132,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				// Regex strategy adopted from Diego Perini
 				assert(function (div) {
 					// Select is set to empty string on purpose
-					// This is to test IE's treatment of not explicitly
+					// This is to Test IE's treatment of not explicitly
 					// setting a boolean content attribute,
 					// since its presence should be enough
 					// http://bugs.jquery.com/ticket/12359
@@ -39140,7 +39140,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 					// Support: IE8, Opera 11-12.16
 					// Nothing should be selected when empty strings follow ^= or $= or *=
-					// The test attribute must be unknown in Opera but "safe" for WinRT
+					// The Test attribute must be unknown in Opera but "safe" for WinRT
 					// http://msdn.microsoft.com/en-us/library/ie/hh465388.aspx#attribute_section
 					if (div.querySelectorAll("[msallowcapture^='']").length) {
 						rbuggyQSA.push("[*^$]=" + whitespace + "*(?:''|\"\")");
@@ -39838,7 +39838,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				},
 
 				"selected": function selected(elem) {
-					// Accessing this property makes selected-by-test
+					// Accessing this property makes selected-by-Test
 					// options in Safari work properly
 					if (elem.parentNode) {
 						elem.parentNode.selectedIndex;
@@ -40491,7 +40491,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		// Always assume duplicates if they aren't passed to the comparison function
 		support.detectDuplicates = !!hasDuplicate;
 
-		// Initialize against the test document
+		// Initialize against the Test document
 		setDocument();
 
 		// Support: Webkit<537.32 - Safari 6.0.3/Chrome 25 (fixed in Chrome 27)
@@ -40953,7 +40953,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   *	options: an optional list of space-separated options that will change how
   *			the callback list behaves or a more traditional option object
   *
-  * By test a callback list will act like an event callback list and can be
+  * By Test a callback list will act like an event callback list and can be
   * "fired" multiple times.
   *
   * Possible options:
@@ -41930,7 +41930,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		},
 
 		// Get a promise resolved when queues of a certain type
-		// are emptied (fx is the type by test)
+		// are emptied (fx is the type by Test)
 		promise: function promise(type, obj) {
 			var tmp,
 			    count = 1,
@@ -42968,7 +42968,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		if (nodeName === "input" && rcheckableType.test(src.type)) {
 			dest.checked = src.checked;
 
-			// Fails to return the selected option to the test selected state when cloning options
+			// Fails to return the selected option to the Test selected state when cloning options
 		} else if (nodeName === "input" || nodeName === "textarea") {
 			dest.defaultValue = src.defaultValue;
 		}
@@ -43368,7 +43368,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	}
 
 	/**
-  * Try to determine the test display value of an element
+  * Try to determine the Test display value of an element
   * @param {String} nodeName
   */
 	function defaultDisplay(nodeName) {
@@ -43395,7 +43395,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				iframe.detach();
 			}
 
-			// Store the correct test display
+			// Store the correct Test display
 			elemdisplay[nodeName] = display;
 		}
 
@@ -43491,9 +43491,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		jQuery.extend(support, {
 			pixelPosition: function pixelPosition() {
 
-				// This test is executed only once but we still do memoizing
+				// This Test is executed only once but we still do memoizing
 				// since we can use the boxSizingReliable pre-computing.
-				// No need to check if the test was already performed, though.
+				// No need to check if the Test was already performed, though.
 				computeStyleTests();
 				return pixelPositionVal;
 			},
@@ -43615,7 +43615,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 					return;
 				}
 
-				// Hook needed; redefine it so that the support test is not executed again.
+				// Hook needed; redefine it so that the support Test is not executed again.
 				return (this.get = hookFn).apply(this, arguments);
 			}
 		};
@@ -43770,7 +43770,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				}
 
 				// Set elements which have been overridden with display: none
-				// in a stylesheet to whatever the test browser style is
+				// in a stylesheet to whatever the Test browser style is
 				// for such an element
 				if (elem.style.display === "" && isHidden(elem)) {
 					values[index] = dataPriv.access(elem, "olddisplay", defaultDisplay(elem.nodeName));
@@ -43801,7 +43801,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	jQuery.extend({
 
-		// Add in style property hooks for overriding the test
+		// Add in style property hooks for overriding the Test
 		// behavior of getting and setting a style property
 		cssHooks: {
 			opacity: {
@@ -44268,7 +44268,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			// animations on inline elements that are having width/height animated
 			display = jQuery.css(elem, "display");
 
-			// Test test display if display is currently "none"
+			// Test Test display if display is currently "none"
 			checkDisplay = display === "none" ? dataPriv.get(elem, "olddisplay") || defaultDisplay(elem.nodeName) : display;
 
 			if (checkDisplay === "inline" && jQuery.css(elem, "float") === "none") {
@@ -44791,7 +44791,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		support.checkOn = input.value !== "";
 
 		// Support: IE<=11+
-		// Must access selectedIndex to make test options select
+		// Must access selectedIndex to make Test options select
 		support.optSelected = opt.selected;
 
 		// Support: Android<=2.3
@@ -45010,7 +45010,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	// Accessing the selectedIndex property
 	// forces the browser to respect setting selected
 	// on the option
-	// The getter ensures a test option is selected
+	// The getter ensures a Test option is selected
 	// when in an optgroup
 	if (!support.optSelected) {
 		jQuery.propHooks.selected = {
@@ -45474,13 +45474,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			}
 			event.type = type;
 
-			// If nobody prevented the test action, do it now
+			// If nobody prevented the Test action, do it now
 			if (!onlyHandlers && !event.isDefaultPrevented()) {
 
 				if ((!special._default || special._default.apply(eventPath.pop(), data) === false) && acceptData(elem)) {
 
 					// Call a native DOM method on the target with the same name name as the event.
-					// Don't do test actions on window, that's where global variables be (#6170)
+					// Don't do Test actions on window, that's where global variables be (#6170)
 					if (ontype && jQuery.isFunction(elem[type]) && !jQuery.isWindow(elem)) {
 
 						// Don't re-trigger an onFOO event when we call its FOO() method
@@ -47439,10 +47439,10 @@ module.exports = function(list, options) {
 	// tags it will allow on a page
 	if (typeof options.singleton === "undefined") options.singleton = isOldIE();
 
-	// By test, add <style> tags to the <head> element
+	// By Test, add <style> tags to the <head> element
 	if (typeof options.insertInto === "undefined") options.insertInto = "head";
 
-	// By test, add <style> tags to the bottom of the target
+	// By Test, add <style> tags to the bottom of the target
 	if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
 
 	var styles = listToStyles(list);
@@ -47658,7 +47658,7 @@ function updateLink(linkElement, options, obj) {
 
 	/* If convertToAbsoluteUrls isn't defined, but sourcemaps are enabled
 	and there is no publicPath defined then lets turn convertToAbsoluteUrls
-	on by test.  Otherwise test to the convertToAbsoluteUrls option
+	on by Test.  Otherwise Test to the convertToAbsoluteUrls option
 	directly
 	*/
 	var autoFixUrls = options.convertToAbsoluteUrls === undefined && sourceMap;

@@ -16,6 +16,10 @@ export default class Preview extends React.Component {
     }
 
     refreshPreview(path) {
+        if(!path) {
+            path = this.refs.preview.src;
+            this.refs.preview.src = null;
+        }
         this.refs.preview.src = path;
     }
 
