@@ -30,15 +30,16 @@ async function pushRepo(callback) {
     const path = await _getRepoPath();
     console.log('Pushing repo...');
     return Git(path)
-        .pull(() => {
-            console.log('Pull repo success.')
+        .pull((error) => {
+            if (error) return callback(error);
+            console.log('Pull repo success.');
             _copyFile();
         })
         .raw([
             'add',
             '--all'
-        ])
-        .commit(`Update on ${(new Date()).toLocaleString()}`)
+        ], callback)
+        .commit(`Update on ${(new Date()).toLocaleString()}`, callback)
         .push(['-u', 'origin', 'master'], callback)
 }
 
