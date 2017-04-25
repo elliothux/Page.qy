@@ -17,7 +17,7 @@ const gh = new GitHub({
     password: config.password
 });
 
-pushRepo().then(a => console.log(a)).catch(e => console.log(e))
+// pushRepo().then(a => console.log(a)).catch(e => console.log(e))
 
 async function pushRepo(callback) {
     const path = await _getRepoPath();
