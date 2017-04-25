@@ -22,11 +22,12 @@ function set(theme) {
 function getThemesList() {
     const themes = [];
     for (theme of fs.readdirSync(target))
-        themes.push(JSON.parse(
-            fs.readFileSync(
-                path.join(target, `./${theme}/info.json`),
-                'utf-8')
-        ))
+        if (fs.existsSync(path.join(target, `./${theme}/info.json`)))
+            themes.push(JSON.parse(
+                fs.readFileSync(
+                    path.join(target, `./${theme}/info.json`),
+                    'utf-8')
+            ));
     return themes;
 }
 

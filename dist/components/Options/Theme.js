@@ -33,6 +33,7 @@ export default class Theme extends React.Component {
     installTheme(e) {
         if (e.target.files.length === 0) return;
         const path = e.target.files[0].path;
+        console.log(path);
         this.props.theme.install(path).then(function () {
             this.setState(() => ({
                 themes: this.props.theme.getThemesList()
@@ -98,7 +99,7 @@ export default class Theme extends React.Component {
                 {this.props.config.get().language === 'zh' ?
                     '安装主题' : 'Install Theme'}
                 <input
-                    onClick={this.installTheme}
+                    onChange={this.installTheme}
                     accept=".zip" type="file" style={this.style().fileChooser}/>
             </label>
         </div>
