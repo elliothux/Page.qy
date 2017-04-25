@@ -7,6 +7,7 @@ const db = require('./src/js/db');
 const dataToHTML = require('./src/js/dataToHTML');
 const github = require('./src/js/github');
 const config = require('./src/js/config');
+const theme = require('./src/js/theme');
 const {app, BrowserWindow} = electron;
 
 
@@ -68,8 +69,8 @@ const upload = {
         );
         this.win.show();
     },
-    start: function(callback) {
-        github.pushRepo(callback)
+    start: function(message) {
+        github.pushRepo(message)
     },
     end: function () {
         this.win.close();
@@ -105,3 +106,4 @@ exports.openWindow = openWindow;
 exports.upload = upload;
 exports.dataToHTML = dataToHTML;
 exports.config = config;
+exports.theme = theme;

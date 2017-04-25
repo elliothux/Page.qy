@@ -48,7 +48,7 @@ export default class Preview extends React.Component {
             container: {
                 width: '100%',
                 height: '100%',
-                overflow: 'auto',
+                overflow: 'hidden',
             },
             preview: {
                 width: '100%',

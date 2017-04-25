@@ -9,7 +9,6 @@ const setConfig = require('./config').set;
 const db = require('./db');
 
 
-module.getUserINfo = getUserInfo;
 module.exports.pushRepo = pushRepo;
 
 
@@ -25,12 +24,13 @@ const gh = new GitHub({
     password: config.password
 });
 
-// _copyFile();
-async function pushRepo(callback) {
+
+async function pushRepo(message) {
     const path = await _getRepoPath();
     return Git(path)
         .pull('origin', 'master', (error) => {
-            if (error) return callback(error);
+            if (error) return message('error');
+            message('pull done');
             console.log('Pull repo success.');
             _copyFile();
         })
@@ -38,21 +38,24 @@ async function pushRepo(callback) {
             'add',
             '--all'
         ], (error) => {
-            if (error) return callback(error);
+            if (error) return message('error');
+            message('add done');
             console.log('Add files success.')
         })
         .commit(`Update on ${(new Date()).toLocaleString()}`, (error) => {
-            if (error) return callback(error);
+            if (error) return message('error');
+            message('commit done');
             console.log('Pushing repo...');
         })
         .push(['-u', 'origin', 'master'], (error) => {
-            callback(error);
+            if (error) return message('error');
+            message('done');
             console.log('Push repo success.')
         });
 }
 
 
-async function getUserInfo() {
+async function _getUserInfo() {
     const info = (await gh.getUser().getProfile()).data;
     const [avatar, name, mail, username] = [
         info.avatar_url,
@@ -66,6 +69,7 @@ async function getUserInfo() {
         mail: mail,
         username: username
     });
+    await _getRepoPath();
     console.log('Get user info success.')
 }
 

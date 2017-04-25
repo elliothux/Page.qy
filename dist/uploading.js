@@ -16,13 +16,16 @@ cancelButton.addEventListener('click', function () {
 retryButton.addEventListener('click', retry);
 
 
-upload.start(callback);
+upload.start(messageClient);
 
 
-function callback(error) {
-    if (error) return failed();
-    return success()
+function messageClient(message) {
+    switch (message) {
+        case 'error': failed(); break;
+        case 'done': success(); break;
+    }
 }
+
 
 function success() {
     load.style.display = 'none';
@@ -44,6 +47,6 @@ function retry() {
     retryButton.style.display = 'none';
     message.innerHTML = '🏃Working hard on uploading...';
     cancelButton.innerHTML = 'Cancel';
-    upload.start();
+    upload.start(messageClient);
     operateArea.className = '';
 }

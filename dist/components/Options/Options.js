@@ -45,7 +45,10 @@ export default class Options extends React.Component {
                     config={this.props.config}
                     setConfig={this.props.setConfig}
                 />
-                <Theme config={this.props.config}/>
+                <Theme
+                    config={this.props.config}
+                    theme={this.props.theme}
+                />
                 <About config={this.props.config}/>
             </div>
         </div>

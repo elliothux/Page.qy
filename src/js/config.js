@@ -31,7 +31,7 @@ function initConfig() {
         "selfIntroduction": "",
         "language": "en",
         "editor": "default",
-        "theme": "default",
+        "theme": "Default",
         "avatar": "",
         "mail": ""
     })

@@ -13,7 +13,7 @@ export default class App extends React.Component {
         this.style = this.style.bind(this);
 
         this.state = {
-            viewState: 'preview',
+            viewState: 'options',
             config: {}
         }
     }
@@ -56,6 +56,7 @@ export default class App extends React.Component {
                     mainPath={this.props.path}
                     config={this.state.config}
                     setConfig={this.props.setConfig}
+                    theme={this.props.theme}
                 />
             </div>
         </div>

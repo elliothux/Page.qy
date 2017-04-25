@@ -29,6 +29,7 @@ module.exports.togglePublish = togglePublish;
 module.exports.isArticlePublished = isArticlePublished;
 module.exports.getPublishedArticleList = getPublishedArticleList;
 module.exports.backup = backup;
+module.exports.restore = restore;
 
 
 // Generate an unique key
@@ -271,6 +272,13 @@ function backup() {
     const target = path.join(__dirname, `../../user/${config.username}.github.io/backup`);
     !fs.existsSync(target) && fs.mkdirsSync(target);
     fs.copySync(articlePath, path.join(target, './article'))
+}
+
+function restore() {
+    const from = path.join(__dirname, `../../user/${config.username}.github.io/backup/article`);
+    const to  = articlePath;
+    !fs.existsSync(from) &&
+        fs.copySync(articlePath, path.join(target, './article'));
 }
 
 
