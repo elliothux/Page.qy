@@ -25,11 +25,11 @@ const gh = new GitHub({
     password: config.password
 });
 
-_copyFile();
+// _copyFile();
 async function pushRepo(callback) {
     const path = await _getRepoPath();
     return Git(path)
-        .pull((error) => {
+        .pull('origin', 'master', (error) => {
             if (error) return callback(error);
             console.log('Pull repo success.');
             _copyFile();
@@ -46,7 +46,7 @@ async function pushRepo(callback) {
             console.log('Pushing repo...');
         })
         .push(['-u', 'origin', 'master'], (error) => {
-            if (error) return callback(error);
+            callback(error);
             console.log('Push repo success.')
         });
 }
