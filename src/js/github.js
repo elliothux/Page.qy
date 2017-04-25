@@ -31,6 +31,7 @@ async function pushRepo(callback) {
     _copyFile();
     console.log('Pushing repo...');
     return Git(path)
+        .pull()
         .raw([
             'add',
             '--all'
