@@ -28,10 +28,12 @@ const gh = new GitHub({
 _copyFile();
 async function pushRepo(callback) {
     const path = await _getRepoPath();
-    _copyFile();
     console.log('Pushing repo...');
     return Git(path)
-        .pull()
+        .pull(() => {
+            console.log('Pull repo success.')
+            _copyFile();
+        })
         .raw([
             'add',
             '--all'
