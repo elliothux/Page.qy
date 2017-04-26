@@ -23,7 +23,7 @@ export default class Message extends React.Component {
     }
 
     showMessage() {
-        if (this.state.messages.length === 0)
+        if (this.state.messages.length === 0 || this.state.message)
             return;
         this.setState((prevState) => ({
             message: prevState.messages[0]

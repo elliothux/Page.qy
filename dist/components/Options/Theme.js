@@ -16,17 +16,17 @@ export default class Theme extends React.Component {
     }
 
     setTheme(theme) {
-        this.refs.operateText.innerHTML =
+        eventProxy.trigger('message',
             this.props.config.get().language === 'zh' ?
-                '重新生成页面...' : 'Setting theme...';
+                '正在应用主题...' : 'Applying theme...');
         this.props.theme.set(theme).then(function () {
             this.setState(() => ({
                 themes: this.props.theme.getThemesList()
             }));
-            this.refs.operateText.innerHTML =
+            eventProxy.trigger('message',
                 this.props.config.get().language === 'zh' ?
-                    '应用' : 'Apply';
-            eventProxy.trigger('refreshPreview', null)
+                    '主题应用成功!' : 'Apply theme success!');
+            eventProxy.trigger('refreshPreview', null);
         }.bind(this));
     }
 
@@ -81,10 +81,7 @@ export default class Theme extends React.Component {
                                 style={this.style().operateImg}
                                 src={this.props.mainPath + '/src/pic/ok.svg'}
                             />
-                            <p
-                                ref="operateText"
-                                style={this.style().operateText}
-                            >
+                            <p style={this.style().operateText}>
                                 {
                                     theme.name === this.props.config.get().theme ?
                                         this.props.config.get().language === 'zh' ? '已应用' : 'Applied':
