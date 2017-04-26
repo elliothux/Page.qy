@@ -9,6 +9,7 @@ export default class Theme extends React.Component {
         this.style = this.style.bind(this);
         this.setTheme = this.setTheme.bind(this);
         this.installTheme = this.installTheme.bind(this);
+        this.confirmInstall  = this.confirmInstall.bind(this);
 
         this.state = {
             themes: this.props.theme.getThemesList(),
@@ -33,12 +34,32 @@ export default class Theme extends React.Component {
     installTheme(e) {
         if (e.target.files.length === 0) return;
         const path = e.target.files[0].path;
-        console.log(path);
-        this.props.theme.install(path).then(function () {
-            this.setState(() => ({
-                themes: this.props.theme.getThemesList()
+        this.props.theme.install(path, this.confirmInstall)
+            .then(function () {
+                this.setState(() => ({
+                    themes: this.props.theme.getThemesList()
             }));
         }.bind(this))
+    }
+
+    confirmInstall(newVersion, preVersion) {
+        if (newVersion === preVersion)
+            return window.confirm(
+                this.props.config.get().language === 'zh' ?
+                    '该主题已安装, 要重新安装吗?':
+                    'This theme is already exists, reinstall?'
+            );
+        else if (newVersion > preVersion)
+            return window.confirm(
+                this.props.config.get().language === 'zh' ?
+                    '升级该主题吗?':
+                    'Upgrade this theme?'
+            );
+        return window.confirm(
+            this.props.config.get().language === 'zh' ?
+                '该主题的更高版本已安装, 要替换为更低的版本吗':
+                'The higher version of this theme has already installed, downgrade?'
+        );
     }
 
     render() {return (
