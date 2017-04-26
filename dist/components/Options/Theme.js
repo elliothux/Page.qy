@@ -9,7 +9,7 @@ export default class Theme extends React.Component {
         this.style = this.style.bind(this);
         this.setTheme = this.setTheme.bind(this);
         this.installTheme = this.installTheme.bind(this);
-        this.confirmInstall  = this.confirmInstall.bind(this);
+        this.messageClient  = this.messageClient.bind(this);
 
         this.state = {
             themes: this.props.theme.getThemesList(),
@@ -34,7 +34,7 @@ export default class Theme extends React.Component {
     installTheme(e) {
         if (e.target.files.length === 0) return;
         const path = e.target.files[0].path;
-        this.props.theme.install(path, this.confirmInstall)
+        this.props.theme.confirm(path, this.messageClient)
             .then(function () {
                 this.setState(() => ({
                     themes: this.props.theme.getThemesList()
@@ -42,24 +42,53 @@ export default class Theme extends React.Component {
         }.bind(this))
     }
 
-    confirmInstall(newVersion, preVersion) {
-        if (newVersion === preVersion)
-            return window.confirm(
+    messageClient(message, data) {
+        if (message === 'error')
+            return eventProxy.trigger('message',
                 this.props.config.get().language === 'zh' ?
-                    '该主题已安装, 要重新安装吗?':
-                    'This theme is already exists, reinstall?'
+                    '无效的主题包!' : 'Invalid theme package!'
             );
-        else if (newVersion > preVersion)
-            return window.confirm(
+        if (message === 'done')
+            return eventProxy.trigger('message',
                 this.props.config.get().language === 'zh' ?
-                    '升级该主题吗?':
-                    'Upgrade this theme?'
+                    '安装完成!' : 'Install theme success!'
             );
-        return window.confirm(
-            this.props.config.get().language === 'zh' ?
-                '该主题的更高版本已安装, 要替换为更低的版本吗':
-                'The higher version of this theme has already installed, downgrade?'
-        );
+        if (message === 'confirm') {
+            let confirm;
+            if (data.newVersion === data.preVersion) {
+                confirm = window.confirm(
+                    this.props.config.get().language === 'zh' ?
+                        '该主题已安装, 要重新安装吗?':
+                        'This theme is already exists, reinstall?'
+                );
+            }
+            else if (data.newVersion > data.preVersion)
+                confirm = window.confirm(
+                    this.props.config.get().language === 'zh' ?
+                        '升级该主题吗?':
+                        'Upgrade this theme?'
+                );
+            else
+                confirm = window.confirm(
+                    this.props.config.get().language === 'zh' ?
+                        '该主题的更高版本已安装, 要替换为更低的版本吗':
+                        'The higher version of this theme has already installed, downgrade?'
+                );
+            confirm && this.props.theme.install(data.name)
+                .then(function () {
+                    eventProxy.trigger('message',
+                        this.props.config.get().language === 'zh' ?
+                            '安装完成!' : 'Install theme success!'
+                    )
+                }.bind(this))
+                .catch(function (error) {
+                    console.log(error);
+                    eventProxy.trigger('message',
+                        this.props.config.get().language === 'zh' ?
+                            '安装失败!' : 'Install theme failed!'
+                    )
+                }.bind(this))
+        }
     }
 
     render() {return (

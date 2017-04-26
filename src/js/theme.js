@@ -6,6 +6,7 @@ const dataToHTML = require('./dataToHTML');
 
 
 module.exports.getThemesList = getThemesList;
+module.exports.confirm = confirm;
 module.exports.install = install;
 module.exports.set = set;
 
@@ -22,7 +23,8 @@ function set(theme) {
 function getThemesList() {
     const themes = [];
     for (theme of fs.readdirSync(target))
-        if (fs.existsSync(path.join(target, `./${theme}/info.json`)))
+        if (theme !== '.temp' &&
+            fs.existsSync(path.join(target, `./${theme}/info.json`)))
             themes.push(JSON.parse(
                 fs.readFileSync(
                     path.join(target, `./${theme}/info.json`),
@@ -32,31 +34,49 @@ function getThemesList() {
 }
 
 
-async function install(filePath, confirmInstall) {
+async function confirm(filePath, message) {
     const tempPath = path.join(target, './.temp');
-    !fs.existsSync(tempPath) && fs.mkdirSync(tempPath);
-    for (each of fs.readdirSync(tempPath))
-        fs.removeSync(path.join(tempPath, `./${each}`));
+    fs.existsSync(tempPath) && fs.removeSync(tempPath);
+    fs.mkdirSync(tempPath);
     await _extractFile(filePath, tempPath);
+    if (!_check(tempPath)) {
+        fs.removeSync(tempPath);
+        return message('error');
+    }
+
     const info = JSON.parse(fs.readFileSync(path.join(tempPath, './info.json'), 'utf-8'));
     const themes = getThemesList().map(theme => theme.name);
-    if (!themes.includes(info.name))
-        return _install();
-
-    const preVersion = parseInt(_getInfo(info.name).version.split('.').join(''));
-    const newVersion = parseInt(info.version.split('.').join(''));
-    const con = confirmInstall(newVersion, preVersion);
-    console.log(con);
-    if (con) _install();
-    else fs.removeSync(tempPath);
-
-    function _install() {
-        console.log(tempPath);
-        console.log(path.join(target, `./${info.name}`));
-        fs.existsSync(path.join(target, `./${info.name}`)) &&
-            fs.removeSync(path.join(target, `./${info.name}`));
-        fs.renameSync(tempPath, path.join(target, `./${info.name}`));
+    if (!themes.includes(info.name)) {
+        await install(filePath, message);
+        return message('done');
     }
+
+    console.log(info);
+    console.log(parseInt(_getInfo(info.name).version.split('.').join('')));
+    console.log(parseInt(info.version.split('.').join('')));
+    message('confirm', {
+        name: info.name,
+        preVersion: parseInt(_getInfo(info.name).version.split('.').join('')),
+        newVersion: parseInt(info.version.split('.').join(''))
+    })
+}
+
+
+async function install(name) {
+    const tempPath = path.join(target, './.temp');
+    fs.existsSync(path.join(target, `./${name}`)) &&
+        fs.removeSync(path.join(target, `./${name}`));
+    fs.renameSync(tempPath, name);
+}
+
+
+function _check(tempPath) {
+    const files = fs.readdirSync(tempPath);
+    return files.includes('info.json') &&
+        files.includes('script') &&
+        files.includes('statics') &&
+        files.includes('style') &&
+        files.includes('templates')
 }
 
 
@@ -69,9 +89,6 @@ function _getInfo(theme) {
 
 
 function _extractFile(from, to) {
-    // let name = from.split('/');
-    // name = name[name.length-1];
-    // name = name.replace(/\.zip$/, '');
     !fs.existsSync(to) && fs.mkdirsSync(to);
     return new Promise((resolve, reject) => {
         return extract(
