@@ -14,7 +14,7 @@ export default class Setting extends React.Component {
         eventProxy.trigger('setConfig', this.props.config.set(config));
         eventProxy.trigger('message',
             this.props.config.get().language === 'zh' ?
-                '已应用保存成功!' : 'Apply setting success!')
+                '设置已保存!' : 'Apply setting success!')
     }
 
     render() {return (
