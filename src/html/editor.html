@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit</title>
+    <link rel="stylesheet" type="text/css" href="../../node_modules/wangeditor/dist/css/wangEditor.min.css"/>
+    <style type="text/css" rel="stylesheet">
+        .wangEditor-container {
+            position: absolute;
+            top: 0;  left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="editorContainer"
+     style="position: absolute; top: 35px; left: 0; width: 100%; height: 100%;"
+>
+
+</div>
+
+<script type="text/javascript" src="../../src/lib/highlight.min.js"></script>
+<script type="text/javascript" src="../../node_modules/wangeditor/dist/js/lib/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="../../node_modules/wangeditor/dist/js/wangEditor.min.js"></script>
+<script type="text/javascript">
+    function init(language) {
+        const editor = new wangEditor('editorContainer');
+        language === 'en' && (editor.config.lang = wangEditor.langs['en']);
+        editor.config.zindex = 10;
+        editor.config.uploadImgUrl = 'http://0.0.0.0';
+        editor.config.menus = [
+            'source',
+            '|',
+            'bold',
+            'underline',
+            'italic',
+            'strikethrough',
+            '|',
+            'head',
+            'quote',
+            'insertcode',
+            'unorderlist',
+            'orderlist',
+            '|',
+            'link',
+            'table',
+            'img',
+            '|',
+            'eraser',
+            'undo',
+            'redo'
+        ];
+        editor.create();
+    }
+</script>
+</body>
+</html>

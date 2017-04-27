@@ -24,7 +24,7 @@ function openWindow(path, options, isMax) {
             minHeight: 600,
             minWidth: 400,
             center: true,
-            show: false,
+            show: false
         },
         options
     );

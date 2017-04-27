@@ -14,7 +14,7 @@ export default class App extends React.Component {
         this.style = this.style.bind(this);
 
         this.state = {
-            viewState: 'options',
+            viewState: 'manage',
             config: this.props.config.get()
         }
     }
