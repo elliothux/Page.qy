@@ -67,9 +67,13 @@ export default class Edit extends React.Component {
             tags: this.state.tags,
             content: content,
             introduction: function () {
-                if (content === '') return '<div></div>';
+                if (content === '') return '';
                 let container = document.createElement('div');
                 container.innerHTML = content;
+                for (let script of container.getElementsByTagName('script'))
+                    script.remove();
+                for (let style of container.getElementsByTagName('style'))
+                    style.remove();
                 container = container.firstChild;
                 container.innerHTML = container.innerHTML + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0......';
                 return container.outerHTML
