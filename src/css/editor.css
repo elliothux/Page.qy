@@ -1,4 +1,24 @@
 
+::-webkit-scrollbar {
+    display: none;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, system-ui, "Microsoft YaHei UI","Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";;
+}
+
+.wangEditor-container {
+    position: absolute;
+    top: 0;  left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+
+
 .wangEditor-txt#editorContainer a {
     font-size: 1em;
     color: black;
@@ -115,7 +135,7 @@
 }
 
 .wangEditor-txt#editorContainer blockquote {
-    padding: 5px 0 5px 15px;
+    padding: 5px 15px;
     border-left: 5px solid gray;
     background-color: rgba(0, 0, 0, 0.05);
     margin: 20px 0;

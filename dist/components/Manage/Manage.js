@@ -93,7 +93,7 @@ export default class Manage extends React.Component {
             },
             editorContainer: {
                 position: 'fixed',
-                overflow: 'auto',
+                overflow: 'hidden',
                 width: 'calc(100% - 80px)',
                 height: '100%',
                 left: 0,

@@ -157,8 +157,11 @@ export default class Edit extends React.Component {
                 fontSize: '1em',
             },
             editor: {
-                width: '100%',
-                height: '800px',
+                width: 'calc(100% - 80px)',
+                height: 'calc(100% - 125px)',
+                position: 'absolute',
+                top: '125px',
+                left: '40px',
                 border: 'none'
             }
         }
