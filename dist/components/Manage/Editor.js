@@ -70,13 +70,20 @@ export default class Edit extends React.Component {
                 if (content === '') return '';
                 let container = document.createElement('div');
                 container.innerHTML = content;
-                for (let script of container.getElementsByTagName('script'))
-                    script.remove();
-                for (let style of container.getElementsByTagName('style'))
-                    style.remove();
+                container = removeTag(container, 'style');
+                container = removeTag(container, 'script');
+                container = removeTag(container, 'img');
                 container = container.firstChild;
+                container.innerHTML = container.innerHTML.replace(/\<(\s|.)*?\/?\>/g, '');
+                container.innerHTML = container.innerHTML.slice(0, 40);
                 container.innerHTML = container.innerHTML + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0......';
-                return container.outerHTML
+                return container.outerHTML;
+
+                function removeTag(dom, tag) {
+                    for (let each of dom.getElementsByTagName(tag))
+                        each.remove()
+                    return dom
+                }
             }.bind(this)()
         };
         if (this.state.key === '') {
