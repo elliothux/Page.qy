@@ -38,7 +38,7 @@ export default class Theme extends React.Component {
             .then(function () {
                 this.setState(() => ({
                     themes: this.props.theme.getThemesList()
-            }));
+                }));
         }.bind(this))
     }
 
@@ -58,21 +58,21 @@ export default class Theme extends React.Component {
             if (data.newVersion === data.preVersion) {
                 confirm = window.confirm(
                     this.props.config.get().language === 'zh' ?
-                        '该主题已安装, 要重新安装吗?':
-                        'This theme is already exists, reinstall?'
+                        `主题 "${data.name}" 已安装, 要重新安装吗?`:
+                        `Theme "${data.name}" is already exists, reinstall?`
                 );
             }
             else if (data.newVersion > data.preVersion)
                 confirm = window.confirm(
                     this.props.config.get().language === 'zh' ?
-                        '升级该主题吗?':
-                        'Upgrade this theme?'
+                        `升级主题 "${data.name}" 吗?`:
+                        `Upgrade Theme "${data.name}" ?`
                 );
             else
                 confirm = window.confirm(
                     this.props.config.get().language === 'zh' ?
-                        '该主题的更高版本已安装, 要替换为更低的版本吗':
-                        'The higher version of this theme has already installed, downgrade?'
+                        `主题 "${data.name}" 的更高版本已安装, 要替换为更低的版本吗?`:
+                        `The higher version of theme "${data.name}" has already installed, downgrade??`
                 );
             confirm && this.props.theme.install(data.name)
                 .then(function () {

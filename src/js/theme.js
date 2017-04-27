@@ -44,16 +44,14 @@ async function confirm(filePath, message) {
         return message('error');
     }
 
-    const info = JSON.parse(fs.readFileSync(path.join(tempPath, './info.json'), 'utf-8'));
+    const info = JSON.parse(fs.readFileSync(
+        path.join(tempPath, './info.json'),'utf-8'));
     const themes = getThemesList().map(theme => theme.name);
     if (!themes.includes(info.name)) {
         await install(filePath, message);
         return message('done');
     }
 
-    console.log(info);
-    console.log(parseInt(_getInfo(info.name).version.split('.').join('')));
-    console.log(parseInt(info.version.split('.').join('')));
     message('confirm', {
         name: info.name,
         preVersion: parseInt(_getInfo(info.name).version.split('.').join('')),
@@ -62,11 +60,14 @@ async function confirm(filePath, message) {
 }
 
 
-async function install(name) {
+async function install() {
     const tempPath = path.join(target, './.temp');
+    const name = JSON.parse(fs.readFileSync(
+        path.join(tempPath, './info.json')
+    ), 'utf-8').name;
     fs.existsSync(path.join(target, `./${name}`)) &&
         fs.removeSync(path.join(target, `./${name}`));
-    fs.renameSync(tempPath, name);
+    fs.renameSync(tempPath, path.join(target, `./${name}`));
 }
 
 
