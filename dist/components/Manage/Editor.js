@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import reactCSS from 'reactcss';
 import eventProxy from '../../lib/eventProxy';
 
