@@ -67,7 +67,8 @@ export default class Edit extends React.Component {
             tags: this.state.tags,
             content: content,
             introduction: function () {
-                if (content === '' || !content) return '';
+                console.log(content);
+                if (!content || content.replace(/\<(\s|.)*?\/?\>/g, '').trim() === '') return '';
                 let container = document.createElement('div');
                 container.innerHTML = content;
                 container = removeTag(container, 'style');
@@ -75,9 +76,8 @@ export default class Edit extends React.Component {
                 container = removeTag(container, 'img');
                 container = container.firstChild;
                 container.innerHTML = container.innerHTML.replace(/\<(\s|.)*?\/?\>/g, '');
-                container.innerHTML = container.innerHTML.slice(0, 40);
                 container.innerHTML = container.innerHTML + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0......';
-                return container.outerHTML;
+                return container.innerHTML;
 
                 function removeTag(dom, tag) {
                     for (let each of dom.getElementsByTagName(tag))
@@ -88,7 +88,7 @@ export default class Edit extends React.Component {
         };
         if (this.state.key === '') {
             if (this.state.title === '' &&
-                (content === '' || content === '<p><br></p>')) {
+                (content === '' || content.replace(/\<(\s|.)*?\/?\>/g, '').trim() === '')) {
                 eventProxy.trigger('changeManageView', 'article');
                 return;
             }
