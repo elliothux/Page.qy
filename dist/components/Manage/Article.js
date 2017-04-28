@@ -1,7 +1,6 @@
 import React from 'react';
 import reactCSS from 'reactcss';
 import eventProxy from '../../lib/eventProxy';
-import path from 'path';
 
 
 export default class Article extends React.Component {
@@ -120,14 +119,17 @@ export default class Article extends React.Component {
                 </p>
                 <p style={this.style().introduction}>{this.state.introduction}</p>
                 {/*<p style={this.style().date}>{this.props.dataToHTML.formatDate(this.state.date)}</p>*/}
-                {this.state.tags && this.state.tags.map((tag, index) => (
-                    <p
-                        style={Object.assign(this.style().tags, {
-                            marginLeft: index === 0 ? '40px': 0
-                        })}
-                        key={index}
-                    >#{tag}</p>
-                ))}
+                <ul style={this.style().tags}>
+                    {this.state.tags && this.state.tags.map((tag, index) => (
+                        <li style={this.style().tag} key={index}>
+                            <img
+                                style={this.style().tagImage}
+                                src={`${this.props.mainPath}/src/pic/tag.svg`}
+                            />
+                            {tag}
+                        </li>
+                    ))}
+                </ul>
             </div>
         </div>
     )}
@@ -149,32 +151,47 @@ export default class Article extends React.Component {
                 height: 'calc(100% - 30px)',
                 backgroundColor: 'white',
                 boxShadow: '0px 14px 21px 0px rgba(0,0,0,0.10)',
-                padding: '15px',
-                color: '#413F3F',
+                padding: '0 15px',
                 letterSpacing: '0.1em',
-                fontFamily: '宋体'
+                fontFamily: '宋体',
+                color: '#565656'
             },
             cover: {
                 width: '100%',
                 height: 'auto'
             },
-            date: {
-                display: 'inline-block',
-                marginRight: '30px'
-            },
-            tags: {
-                display: 'inline-block',
-                marginRight: '20px'
-            },
             title: {
                 fontSize: '2em',
                 fontWeight: 'bold',
-                margin: '10px 0',
+                margin: '15px 0 15px 0',
                 letterSpacing: '0.01em',
                 textAlign: 'center'
             },
             introduction: {
+                fontSize: '1.1em',
+                marginBottom: '18px',
+                letterSpacing: '0.01em',
                 textAlign: 'center'
+            },
+            tags: {
+                marginBottom: '18px',
+                textAlign: 'center',
+                listStyle: 'none'
+            },
+            tagImage: {
+                height: '100%',
+                width: 'auto',
+                marginRight: '4px',
+                position: 'relative',
+                top: '1px'
+            },
+            tag: {
+                display: 'inline-block',
+                margin: '0 10px',
+            },
+            date: {
+                display: 'inline-block',
+                marginRight: '30px'
             },
             operateContainer: {
                 width: '100%',

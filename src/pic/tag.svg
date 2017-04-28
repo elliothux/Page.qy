@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="7px" height="12px" viewBox="0 0 7 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
+    <title>ribbon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="edit" transform="translate(-426.000000, -534.000000)" fill="#413F3F">
+            <g id="article" transform="translate(364.000000, 48.000000)">
+                <g id="tags" transform="translate(25.000000, 483.000000)">
+                    <path d="M41.0972079,12.8786864 L43.3255774,14.8948005 C43.5747156,15.1196013 44,14.9602765 44,14.6421724 L44,3.82063211 C44,3.36721104 43.5934161,3 43.0921234,3 L37.9078766,3 C37.4065839,3 37,3.36721104 37,3.82063211 L37,14.6421724 C37,14.9602765 37.4252844,15.1196013 37.6738194,14.8948005 L39.9027921,12.8786864 C40.2327646,12.5807707 40.7672354,12.5807707 41.0972079,12.8786864 L40.9882633,5.82994043" id="ribbon"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
