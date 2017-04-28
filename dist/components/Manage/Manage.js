@@ -65,6 +65,7 @@ export default class Manage extends React.Component {
                     db={this.props.db}
                     dataToHTML = {this.props.dataToHTML}
                     config={this.props.config}
+                    formatContent={this.props.formatContent}
                 />
             </div>
             <div
@@ -87,7 +88,7 @@ export default class Manage extends React.Component {
             },
             articleContainer: {
                 position: 'fixed',
-                overflow: 'hidden',
+                overflow: 'auto',
                 width: '100%',
                 height: '100%',
                 left: 0, top: 0,

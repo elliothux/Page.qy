@@ -61,8 +61,10 @@ export default class Edit extends React.Component {
     }
 
     async saveArticle() {
-        const content = this.refs.editor.contentWindow.document
-            .getElementById('editorContainer').innerHTML;
+        const content = this.props.formatContent(
+            this.refs.editor.contentWindow.document
+                .getElementById('editorContainer').innerHTML
+        );
         let data = {
             title: this.state.title,
             tags: this.state.tags,
@@ -96,6 +98,7 @@ export default class Edit extends React.Component {
         await this.props.dataToHTML.dataToTags();
         await this.props.dataToHTML.dataToArchives();
         eventProxy.trigger('refreshPreview', path);
+        eventProxy.trigger('message', `${data.title}已保存!`);
 
         this.setState(() => ({
             title: '',

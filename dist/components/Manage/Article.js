@@ -22,20 +22,34 @@ export default class Article extends React.Component {
             introduction: this.props.data.introduction,
             key: this.props.data.key,
             published: this.props.data.published,
-            translateY: this.props.index < 3 ? 50 : 0
+            translateY: 50,
+            translateX: `${5 * 100 / 28}%`
         }
-
     }
 
-    async componentWillMount() {
+    componentWillMount() {
         eventProxy.on('updateArticleData', function (data) {
-            if (data.key !== this.state.key) return;
-            this.setState(data)
+            data.key === this.state.key &&
+                this.setState(data)
         }.bind(this));
     }
 
     componentDidMount() {
-
+        eventProxy.on(`translateY-${this.props.index}`, function (value) {
+            this.setState({ translateY: value });
+            const nextValue = this.refs.article.offsetHeight + value + 50;
+            eventProxy.trigger(`translateY-${this.props.index + 3}`, nextValue)
+        }.bind(this));
+        setTimeout(function () {
+            if (this.props.index < 3)
+                eventProxy.trigger(`translateY-${this.props.index + 3}`,
+                this.refs.article.offsetHeight + 50 + 50);
+            const index = this.props.index % 3;
+            index !== 0 && this.setState({
+                translateX: index === 1 ?
+                    `${(28 + 5 + 4) * 100 / 28}%` : `${(28 + 5 + 4 + 28 + 4) * 100 / 28}%`
+            });
+        }.bind(this), 1);
     }
 
     handleEditArticle() {
@@ -106,6 +120,7 @@ export default class Article extends React.Component {
             className="articleContainer"
             ref="article"
         >
+
             <div
                 ref="contentContainer"
                 style={this.style().contentContainer}
@@ -135,15 +150,10 @@ export default class Article extends React.Component {
                 boxShadow: '0px 3px 15px 0px rgba(0,0,0,0.50)',
                 left: 0, top: 0,
                 width: '28%',
-                transition: 'all ease 300ms',
-                transform: `translateX(${function () {
-                    const index = this.props.index % 3;
-                    if (index === 0) return `${(5) * 100 / 28}%`;
-                    if (index === 1) return `${(28 + 5 + 4) * 100 / 28}%`;
-                    else return `${(28 + 5 + 4 + 28 + 4) * 100 / 28}%`
-                }.bind(this)()})
-                    translateY(${this.state.translateY}px)`,
-                display: this.props.index < 3 ? 'inline-block' : 'none',
+                marginBottom: '100px',
+        // transition: 'all ease 400ms',
+                transform: `translateX(${this.state.translateX}) translateY(${this.state.translateY}px)`,
+                // transitionDelay: `${this.props.index * 50}ms`
             },
             contentContainer: {
                 width: 'calc(100% - 30px)',

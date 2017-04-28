@@ -21,6 +21,7 @@ ReactDOM.render(
             dataToHTML = {main.dataToHTML}
             config={main.config}
             theme={main.theme}
+            formatContent = {main.formatContent}
             openURL={shell.openExternal}
         />
     </div>,

@@ -49,6 +49,7 @@ export default class App extends React.Component {
                     openWindow={this.props.openWindow}
                     dataToHTML = {this.props.dataToHTML}
                     config={this.props.config}
+                    formatContent={this.props.formatContent}
                 />
             </div>
             <div style={this.style().optionsContainer}>
