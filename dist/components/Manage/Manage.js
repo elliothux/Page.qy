@@ -87,10 +87,10 @@ export default class Manage extends React.Component {
             },
             articleContainer: {
                 position: 'fixed',
-                overflow: 'auto',
+                overflow: 'hidden',
                 width: '100%',
                 height: '100%',
-                left: 0, top: 0
+                left: 0, top: 0,
             },
             editorContainer: {
                 position: 'fixed',

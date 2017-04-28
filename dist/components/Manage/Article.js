@@ -21,8 +21,10 @@ export default class Article extends React.Component {
             content: this.props.data.content,
             introduction: this.props.data.introduction,
             key: this.props.data.key,
-            published: this.props.data.published
+            published: this.props.data.published,
+            translateY: this.props.index < 3 ? 50 : 0
         }
+
     }
 
     async componentWillMount() {
@@ -30,6 +32,10 @@ export default class Article extends React.Component {
             if (data.key !== this.state.key) return;
             this.setState(data)
         }.bind(this));
+    }
+
+    componentDidMount() {
+
     }
 
     handleEditArticle() {
@@ -119,114 +125,32 @@ export default class Article extends React.Component {
                 </p>
                 <div>{this.state.introduction}</div>
             </div>
-            <div
-                ref="operateContainer"
-                style={this.style().operateContainer}
-                className="articleOperateContainer"
-            >
-                <div
-                    onClick={this.handleEditArticle}
-                    style={this.style().operateButton}
-                >
-                    <img
-                        style={this.style().operateButtonImg}
-                        src={this.props.mainPath + '/src/pic/editOperate.svg'}
-                    />
-                    <p style={this.style().operateButtonText}>
-                        {this.props.config.get().language === 'zh' ? '编辑' : 'EDIT'}
-                    </p>
-                </div>
-                <div
-                    style={this.style().operateButton}
-                    onClick={this.handlePreview}
-                >
-                    <img
-                        style={this.style().operateButtonImg}
-                        src={this.props.mainPath + "/src/pic/previewOperate.svg"}
-                    />
-                    <p style={this.style().operateButtonText}>
-                        {this.props.config.get().language === 'zh' ? '预览' : 'PREVIEW'}
-                    </p>
-                </div>
-                <div
-                    style={this.style().operateButton}
-                    onClick={this.handlePublish}
-                >
-                    <img
-                        style={this.style().operateButtonImg}
-                        src={this.props.mainPath + "/src/pic/publishOperate.svg"}
-                    />
-                    <p style={this.style().operateButtonText}>
-                        {this.state.published ?
-                            (this.props.config.get().language === 'zh' ? '取消待发布' : 'UNPUBLISH') :
-                            (this.props.config.get().language === 'zh' ? '待发布' : 'PUBLISH')
-                        }
-                    </p>
-                </div>
-                <div style={this.style().operateButton}>
-                    <img
-                        style={this.style().operateButtonImg}
-                        src={this.props.mainPath + "/src/pic/historyOperate.svg"}
-                    />
-                    <p style={this.style().operateButtonText}>
-                        {this.props.config.get().language === 'zh' ? '历史' : 'HISTORY'}
-                    </p>
-                </div>
-                <div
-                    style={this.style().operateButton}
-                    onClick={this.handleConfirm.bind(null, 'on')}
-                >
-                    <img
-                        style={this.style().operateButtonImg}
-                        src={this.props.mainPath +"/src/pic/deleteOperate.svg"}
-                    />
-                    <p style={this.style().operateButtonText}>
-                        {this.props.config.get().language === 'zh' ? '删除' : 'DELETE'}
-                    </p>
-                </div>
-            </div>
-            <div
-                className="articleConfirm"
-                ref="confirm"
-                style={this.style().confirmContainer}
-            >
-                <h3>
-                    {this.props.config.get().language === 'zh' ?
-                        '😱 你真的确定要删除这篇文章吗？' :
-                        '😱 Do You REALLY Want to Delete This Article?'}
-                </h3>
-                <div>
-                    <div
-                        style={this.style().confirmButton}
-                        onClick={this.handleDelete}
-                    >
-                        {this.props.config.get().language === 'zh' ? '是的' : 'YES'}
-                    </div>
-                    <div
-                        style={this.style().confirmButton}
-                        onClick={this.handleConfirm.bind(null, 'off')}
-                    >
-                        {this.props.config.get().language === 'zh' ? '算啦' : 'NO'}
-                    </div>
-                </div>
-            </div>
         </div>
     )}
 
     style() {return reactCSS({
         default: {
             container: {
-                position: 'relative',
-                boxShadow: 'rgba(0, 0, 0, 0.1) 0px 5px 20px 5px',
+                position: 'absolute',
+                boxShadow: '0px 3px 15px 0px rgba(0,0,0,0.50)',
+                left: 0, top: 0,
+                width: '28%',
+                transition: 'all ease 300ms',
+                transform: `translateX(${function () {
+                    const index = this.props.index % 3;
+                    if (index === 0) return `${(5) * 100 / 28}%`;
+                    if (index === 1) return `${(28 + 5 + 4) * 100 / 28}%`;
+                    else return `${(28 + 5 + 4 + 28 + 4) * 100 / 28}%`
+                }.bind(this)()})
+                    translateY(${this.state.translateY}px)`,
+                display: this.props.index < 3 ? 'inline-block' : 'none',
             },
             contentContainer: {
-                width: 'calc(100% - 36px)',
-                height: '100%',
+                width: 'calc(100% - 30px)',
+                height: 'calc(100% - 30px)',
                 backgroundColor: 'white',
                 boxShadow: '0px 14px 21px 0px rgba(0,0,0,0.10)',
-                borderLeft: '8px solid #42A5F0',
-                padding: '10px',
-                paddingLeft: '18px',
+                padding: '15px',
                 color: '#413F3F',
                 letterSpacing: '0.1em'
             },
