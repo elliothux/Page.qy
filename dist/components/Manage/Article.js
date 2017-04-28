@@ -117,9 +117,7 @@ export default class Article extends React.Component {
                     {this.state.title === '' ?
                         'Untitled Article' : this.state.title}
                 </p>
-                <div dangerouslySetInnerHTML={{
-                    __html: this.state.introduction
-                }}/>
+                <div>{this.state.introduction}</div>
             </div>
             <div
                 ref="operateContainer"
