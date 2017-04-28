@@ -56,6 +56,7 @@ export default class Manage extends React.Component {
                         openWindow={this.props.openWindow}
                         dataToHTML = {this.props.dataToHTML}
                         config={this.props.config}
+                        index={index}
                     />
                 ))}
             </div>

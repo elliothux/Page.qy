@@ -24,16 +24,19 @@ export default class Edit extends React.Component {
         eventProxy.on('editArticle', function (data) {
             this.handleEditArticle(data);
         }.bind(this));
+        eventProxy.on('createArticle', this.handleEditArticle);
         eventProxy.on('closeEditor', function () {
             this.saveArticle();
         }.bind(this));
     }
 
     handleEditArticle(data) {
-        this.setState(data);
-        this.refs.editor.contentWindow.document
-            .getElementById('editorContainer')
-            .innerHTML = data.content;
+        if (data) {
+            this.setState(data);
+            this.refs.editor.contentWindow.document
+                .getElementById('editorContainer')
+                .innerHTML = data.content;
+        }
         if (this.refs.editor.contentWindow.document
                 .getElementsByClassName('init').length > 0)
             return;
@@ -67,17 +70,16 @@ export default class Edit extends React.Component {
             tags: this.state.tags,
             content: content,
             introduction: function () {
-                console.log(content);
                 if (!content || content.replace(/\<(\s|.)*?\/?\>/g, '').trim() === '') return '';
                 let container = document.createElement('div');
                 container.innerHTML = content;
-                container = removeTag(container, 'style');
-                container = removeTag(container, 'script');
-                container = removeTag(container, 'img');
-                container = container.firstChild;
-                container.innerHTML = container.innerHTML.replace(/\<(\s|.)*?\/?\>/g, '');
-                container.innerHTML = container.innerHTML + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0......';
-                return container.innerHTML;
+                // container = removeTag(container, 'style');
+                // container = removeTag(container, 'script');
+                // container = removeTag(container, 'img');
+                // container = container.firstChild || 'Nothing here!';
+                // // container.innerHTML = container.innerHTML.replace(/\<(\s|.)*?\/?\>/g, '');
+                // container.innerHTML = container.innerHTML + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0......';
+                return container.innerText.slice(0, 150) + '......';
 
                 function removeTag(dom, tag) {
                     for (let each of dom.getElementsByTagName(tag))
