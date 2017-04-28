@@ -11,6 +11,7 @@ module.exports.dataToArchives = dataToArchives;
 module.exports.dataToTags = dataToTags;
 module.exports.getArticlePath = getArticlePath;
 module.exports.reGenerateAll = reGenerateAll;
+module.exports.formatDate = formatDate;
 
 
 

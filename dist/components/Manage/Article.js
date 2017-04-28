@@ -96,36 +96,30 @@ export default class Article extends React.Component {
         eventProxy.trigger('refreshPreview', path);
     }
 
-    dateToString(date) {
-        date = new Date(date);
-        const daysZh = ['日', '一','二','三','四','五','六'];
-        const daysEn = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
-            'Thursday', 'Friday', 'Saturday'];
-        const [year, month, dateString, hours, minutes, day] = [
-            date.getFullYear(),
-            date.getMonth()+1,
-            date.getDate(),
-            date.getHours() < 10 ? '0' + date.getHours() : date.getHours(),
-            date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes(),
-            date.getDay()
-        ];
-        return this.props.config.get().language === 'zh' ?
-            `${year}年${month}月${dateString}日\xa0\xa0\xa0\xa0\xa0\xa0${hours}:${minutes}\xa0\xa0\xa0\xa0\xa0\xa0星期${daysZh[day]}` :
-            `${year}/${month}/${dateString}\xa0\xa0\xa0\xa0\xa0\xa0${hours}:${minutes}\xa0\xa0\xa0\xa0\xa0\xa0${daysEn[day]}`
-    }
-
     render() {return(
         <div
             style={this.style().container}
             className="articleContainer"
             ref="article"
         >
-
+            {function () {
+                const container = document.createElement('div');
+                container.innerHTML = this.state.content;
+                const imgs = container.getElementsByTagName('img');
+                if (imgs.length > 0)
+                    return <img style={this.style().cover} src={imgs[0].src}/>;
+                return false
+            }.bind(this)()}
             <div
                 ref="contentContainer"
                 style={this.style().contentContainer}
             >
-                <p style={this.style().date}>{this.dateToString(this.state.date)}</p>
+                <p style={this.style().title}>
+                    {this.state.title === '' ?
+                        'Untitled Article' : this.state.title}
+                </p>
+                <p style={this.style().introduction}>{this.state.introduction}</p>
+                {/*<p style={this.style().date}>{this.props.dataToHTML.formatDate(this.state.date)}</p>*/}
                 {this.state.tags && this.state.tags.map((tag, index) => (
                     <p
                         style={Object.assign(this.style().tags, {
@@ -134,11 +128,6 @@ export default class Article extends React.Component {
                         key={index}
                     >#{tag}</p>
                 ))}
-                <p style={this.style().title}>
-                    {this.state.title === '' ?
-                        'Untitled Article' : this.state.title}
-                </p>
-                <div>{this.state.introduction}</div>
             </div>
         </div>
     )}
@@ -151,7 +140,7 @@ export default class Article extends React.Component {
                 left: 0, top: 0,
                 width: '28%',
                 marginBottom: '100px',
-        // transition: 'all ease 400ms',
+                // transition: 'all ease 400ms',
                 transform: `translateX(${this.state.translateX}) translateY(${this.state.translateY}px)`,
                 // transitionDelay: `${this.props.index * 50}ms`
             },
@@ -162,7 +151,12 @@ export default class Article extends React.Component {
                 boxShadow: '0px 14px 21px 0px rgba(0,0,0,0.10)',
                 padding: '15px',
                 color: '#413F3F',
-                letterSpacing: '0.1em'
+                letterSpacing: '0.1em',
+                fontFamily: '宋体'
+            },
+            cover: {
+                width: '100%',
+                height: 'auto'
             },
             date: {
                 display: 'inline-block',
@@ -176,7 +170,11 @@ export default class Article extends React.Component {
                 fontSize: '2em',
                 fontWeight: 'bold',
                 margin: '10px 0',
-                letterSpacing: '0.01em'
+                letterSpacing: '0.01em',
+                textAlign: 'center'
+            },
+            introduction: {
+                textAlign: 'center'
             },
             operateContainer: {
                 width: '100%',
