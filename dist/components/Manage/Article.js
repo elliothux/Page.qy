@@ -46,7 +46,6 @@ export default class Article extends React.Component {
 
     async handleDelete() {
         await this.props.db.deleteArticle(this.state.key);
-        this.refs.contentContainer.className = 'articleContainer deleted';
         const path =  await this.props.dataToHTML.dataToHome();
         this.props.dataToHTML.dataToArticle(this.state);
         this.props.dataToHTML.dataToTags();
@@ -231,6 +230,7 @@ export default class Article extends React.Component {
                 width: '100%',
                 height: 'auto',
                 marginBottom: '50px',
+
             },
             contentContainer: {
                 width: '100%',
@@ -304,6 +304,7 @@ export default class Article extends React.Component {
                 width: '100%',
                 height: '20%',
                 display: 'flex',
+                position: 'absolute',
                 justifyContent: 'center',
                 alignItems:'center',
                 alignContent: 'flex-start',
@@ -312,9 +313,11 @@ export default class Article extends React.Component {
             },
             operateButtonImg: {
                 width: 'auto',
-                height: '35px',
+                height: '50%',
+                minHeight: '17px',
+                maxHeight: '35px',
                 cursor: 'pointer',
-                marginRight: '30px'
+                marginRight: '30px',
             },
             operateButtonText: {
                 fontSize: '1.2em',
@@ -323,7 +326,7 @@ export default class Article extends React.Component {
                 textAlign: 'center',
                 cursor: 'pointer',
                 letterSpacing: '0.05em',
-                width: '30%'
+                width: '40%'
             },
             confirmContainer: {
                 width: '100%',
@@ -344,7 +347,8 @@ export default class Article extends React.Component {
                 width: '70px',
                 display: 'inline-block',
                 padding: '8px 10px',
-                margin: '20px 15px',
+                margin: '0 15px',
+                marginTop: `${this.state.introduction.length / 5}px`,
                 backgroundColor: 'rgba(255, 255, 255, 0.15)',
                 cursor: 'pointer',
                 fontWeight: 'bold',

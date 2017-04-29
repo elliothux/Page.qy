@@ -36,17 +36,35 @@ input, button, textarea, :focus {
 
 /* Animation */
 .articleContainer .articleOperateButton {
-    transform: scale(0) rotate(45deg);
-    transition: all 400ms ease;
+    bottom: -20%;
+    transform: scaleY(0) rotate(30deg);
+    transition: all 350ms ease;
 }
-.articleContainer:hover .articleOperateButton {
-    transform: scale(1) rotate(0);
+.articleContainer:hover .articleOperateButton:nth-child(1) {
+    transition-delay: 0ms;
+    bottom: 80%;
+    transform: scaleY(1) rotate(0);
 }
-.articleOperateButton:nth-child(1) {transition-delay: 0ms}
-.articleOperateButton:nth-child(2) {transition-delay: 50ms}
-.articleOperateButton:nth-child(3) {transition-delay: 100ms}
-.articleOperateButton:nth-child(4) {transition-delay: 150ms}
-.articleOperateButton:nth-child(5) {transition-delay: 200ms}
+.articleContainer:hover .articleOperateButton:nth-child(2) {
+    transition-delay: 40ms;
+    bottom: 60%;
+    transform: scaleY(1) rotate(0);
+}
+.articleContainer:hover .articleOperateButton:nth-child(3) {
+    transition-delay: 80ms;
+     bottom: 40%;
+    transform: scaleY(1) rotate(0);
+}
+.articleContainer:hover .articleOperateButton:nth-child(4) {
+    transition-delay: 120ms;
+    bottom: 20%;
+    transform: scaleY(1) rotate(0);
+}
+.articleContainer:hover .articleOperateButton:nth-child(5) {
+    transition-delay: 160ms;
+    bottom: 0;
+    transform: scaleY(1) rotate(0);
+}
 
 
 .theme .themeOperate {
@@ -85,4 +103,3 @@ input, button, textarea, :focus {
 .articleContainer.deleted {
     transform: scale(0);
 }
-
