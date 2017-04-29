@@ -150,10 +150,10 @@ export default class Article extends React.Component {
                 <div
                     className="articleOperateButton"
                     onClick={this.handleEditArticle}
-                    style={this.style().editButton}
+                    style={this.style().operateButton}
                 >
                     <img
-                        style={this.style().editButtonImg}
+                        style={this.style().operateButtonImg}
                         src={this.props.mainPath + '/src/pic/editOperate.svg'}
                     />
                     <p style={this.style().operateButtonText}>
@@ -215,31 +215,31 @@ export default class Article extends React.Component {
                     </p>
                 </div>
             </div>
-            {/*<div*/}
-                {/*className="articleConfirm"*/}
-                {/*ref="confirm"*/}
-                {/*style={this.style().confirmContainer}*/}
-            {/*>*/}
-                {/*<h3>*/}
-                    {/*{this.props.config.get().language === 'zh' ?*/}
-                        {/*'😱 你真的确定要删除这篇文章吗？' :*/}
-                        {/*'😱 Do You REALLY Want to Delete This Article?'}*/}
-                {/*</h3>*/}
-                {/*<div>*/}
-                    {/*<div*/}
-                        {/*style={this.style().confirmButton}*/}
-                        {/*onClick={this.handleDelete}*/}
-                    {/*>*/}
-                        {/*{this.props.config.get().language === 'zh' ? '是的' : 'YES'}*/}
-                    {/*</div>*/}
-                    {/*<div*/}
-                        {/*style={this.style().confirmButton}*/}
-                        {/*onClick={this.handleConfirm.bind(null, 'off')}*/}
-                    {/*>*/}
-                        {/*{this.props.config.get().language === 'zh' ? '算啦' : 'NO'}*/}
-                    {/*</div>*/}
-                {/*</div>*/}
-            {/*</div>*/}
+            <div
+                className="articleConfirm"
+                ref="confirm"
+                style={this.style().confirmContainer}
+            >
+                <h3 dangerouslySetInnerHTML={{__html:
+                    this.props.config.get().language === 'zh' ?
+                    '😱<br/>你真的确定要删除这篇文章吗？' :
+                    '😱<br/>Do You REALLY Want to Delete This Article?'
+                }}/>
+                <div>
+                    <div
+                        style={this.style().confirmButton}
+                        onClick={this.handleDelete}
+                    >
+                        {this.props.config.get().language === 'zh' ? '是的' : 'YES'}
+                    </div>
+                    <div
+                        style={this.style().confirmButton}
+                        onClick={this.handleConfirm.bind(null, 'off')}
+                    >
+                        {this.props.config.get().language === 'zh' ? '算啦' : 'NO'}
+                    </div>
+                </div>
+            </div>
         </div>
     )}
 
@@ -247,14 +247,14 @@ export default class Article extends React.Component {
         default: {
             container: {
                 position: 'absolute',
-                boxShadow: '0px 3px 15px 0px rgba(0,0,0,0.50)',
+                boxShadow: '0px 3px 20px 0px rgba(0,0,0,0.30)',
                 overflow: 'hidden',
                 left: 0, top: 0,
                 width: '28%',
                 marginBottom: '100px',
-                // transition: 'all ease 400ms',
+                transition: 'all ease 400ms',
                 transform: `translateX(${this.state.translateX}) translateY(${this.state.translateY}px)`,
-                // transitionDelay: `${this.props.index * 50}ms`
+                transitionDelay: `${this.props.index * 50}ms`
             },
             contentContainer: {
                 width: '100%',
@@ -271,7 +271,6 @@ export default class Article extends React.Component {
             title: {
                 fontSize: '2em',
                 fontWeight: 'bold',
-                // width: 'calc(100% - 20px)',
                 margin: '15px 10px',
                 letterSpacing: '0.01em',
                 textAlign: 'center'
@@ -325,46 +324,30 @@ export default class Article extends React.Component {
                 flexWrap: 'wrap',
                 overflow: 'hidden'
             },
-            editButton: {
-                width: '100px',
-                height: '100px',
-                borderRadius: '100px',
-                margin: '50px calc(50% - 50px)',
-                display: 'inline-flex',
-                flexDirection: 'column',
-                justifyContent: 'space-around',
-                justifyItems: 'center',
-                cursor: 'pointer',
-                backgroundImage: 'linear-gradient(-225deg, rgba(85, 203, 242, 0.87) 0%, rgba(61, 144, 239, 0.92) 100%)',
-            },
-            editButtonImg: {
-                width: '40%',
-                height: 'auto',
-                cursor: 'pointer'
-            },
             operateButton: {
-                width: '80px',
-                height: '80px',
-                borderRadius: '80px',
-                margin: '0 calc(25% - 40px)',
-                display: 'inline-flex',
-                flexDirection: 'column',
-                justifyContent: 'space-around',
-                justifyItems: 'center',
+                width: '100%',
+                height: '20%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems:'center',
+                alignContent: 'flex-start',
                 cursor: 'pointer',
-                backgroundImage: 'linear-gradient(-225deg, rgba(85, 203, 242, 0.87) 0%, rgba(61, 144, 239, 0.92) 100%)',
+                backgroundImage: 'linear-gradient(90deg, rgba(85, 203, 242, 0.87) 0%, rgba(61, 144, 239, 0.92) 100%)',
             },
             operateButtonImg: {
                 width: 'auto',
                 height: '35px',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                marginRight: '30px'
             },
             operateButtonText: {
                 fontSize: '1.2em',
                 fontWeight: 'bold',
                 color: 'white',
                 textAlign: 'center',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                letterSpacing: '0.05em',
+                width: '30%'
             },
             confirmContainer: {
                 width: '100%',
@@ -385,11 +368,12 @@ export default class Article extends React.Component {
                 width: '70px',
                 display: 'inline-block',
                 padding: '8px 10px',
-                margin: '10px 30px 0 30px',
+                margin: '20px 15px',
                 backgroundColor: 'rgba(255, 255, 255, 0.15)',
                 cursor: 'pointer',
                 fontWeight: 'bold',
-                letterSpacing: '0.3em'
+                letterSpacing: '0.3em',
+                boxShadow: '0px 3px 15px 0px rgba(0,0,0,0.1)',
             }
         }
     }, this.props, this.state)}
