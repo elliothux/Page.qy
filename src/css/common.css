@@ -36,12 +36,24 @@ input, button, textarea, :focus {
 
 /* Animation */
 .articleContainer .articleOperateContainer {
-    transform: translateY(100%);
-    transition: all 400ms ease
+    z-index: -1;
 }
 .articleContainer:hover .articleOperateContainer {
-    transform: translateY(0);
+    z-index: 3;
 }
+.articleContainer .articleOperateButton {
+    transform: scale(0.01);
+    transition: all 400ms ease;
+}
+.articleContainer:hover .articleOperateButton {
+    transform: scale(1);
+}
+.articleOperateButton:nth-child(1) {transition-delay: 0ms}
+.articleOperateButton:nth-child(2) {transition-delay: 50ms}
+.articleOperateButton:nth-child(3) {transition-delay: 100ms}
+.articleOperateButton:nth-child(4) {transition-delay: 150ms}
+.articleOperateButton:nth-child(5) {transition-delay: 200ms}
+
 
 .theme .themeOperate {
     transform: translateY(100%);
