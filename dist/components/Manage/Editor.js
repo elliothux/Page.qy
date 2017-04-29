@@ -99,8 +99,6 @@ export default class Edit extends React.Component {
         await this.props.dataToHTML.dataToTags();
         await this.props.dataToHTML.dataToArchives();
         eventProxy.trigger('refreshPreview', path);
-        eventProxy.trigger('message', `${data.title}已保存!`);
-        // eventProxy.trigger('reLayout', null);
 
         this.setState(() => ({
             title: '',
