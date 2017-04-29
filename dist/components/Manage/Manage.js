@@ -11,6 +11,7 @@ export default class Manage extends React.Component {
         this.style = this.style.bind(this);
         this.handleViewChange = this.handleViewChange.bind(this);
         this.handleCreateArticle = this.handleCreateArticle.bind(this);
+        this.refreshArticleList = this.refreshArticleList.bind(this);
 
         this.state = {
             articleList: [],
@@ -25,15 +26,13 @@ export default class Manage extends React.Component {
         eventProxy.on('editArticle', this.handleViewChange.bind(null, 'edit'));
         eventProxy.on('createArticle', this.handleViewChange.bind(null, 'edit'));
         eventProxy.on('changeManageView', this.handleViewChange.bind(null, 'article'));
-        eventProxy.on('addArticle', function (data) {
-            this.setState((prevState) => {
-                const list = prevState.articleList;
-                list.unshift(data);
-                return { articleList: list }
-            });
-            eventProxy.on('changeManageView', this.handleViewChange.bind(null, 'article'));
-            this.forceUpdate();
-        }.bind(this));
+        eventProxy.on('refreshArticleList', this.refreshArticleList)
+    }
+
+    async refreshArticleList() {
+        this.setState({articleList: (await this.props.db.getArticleList()).sort((a, b) => (
+            (new Date(b.createDate)).getTime() - (new Date(a.createDate)).getTime()
+        ))});
     }
 
     handleViewChange(view) {
@@ -46,19 +45,52 @@ export default class Manage extends React.Component {
 
     render() {return(
         <div style={this.style().container}>
-            <div style={this.style().articleContainer}>
-                {this.state.articleList.map((article, index) => (
-                    <Article
-                        key={this.state.articleList.length - index}
-                        mainPath={this.props.mainPath}
-                        data={article}
-                        db={this.props.db}
-                        openWindow={this.props.openWindow}
-                        dataToHTML = {this.props.dataToHTML}
-                        config={this.props.config}
-                        index={index}
-                    />
-                ))}
+            <div style={this.style().articleColumnContainer}>
+                <div style={this.style().articleContainer}>
+                    {this.state.articleList.map((article, index) => (
+                        index % 3 === 0 ?
+                            <Article
+                                key={this.state.articleList.length - index}
+                                mainPath={this.props.mainPath}
+                                data={article}
+                                db={this.props.db}
+                                openWindow={this.props.openWindow}
+                                dataToHTML = {this.props.dataToHTML}
+                                config={this.props.config}
+                                index={index}
+                            /> : false
+                    ))}
+                </div>
+                <div style={this.style().articleContainer}>
+                    {this.state.articleList.map((article, index) => (
+                        index % 3 === 1 ?
+                            <Article
+                                key={this.state.articleList.length - index}
+                                mainPath={this.props.mainPath}
+                                data={article}
+                                db={this.props.db}
+                                openWindow={this.props.openWindow}
+                                dataToHTML = {this.props.dataToHTML}
+                                config={this.props.config}
+                                index={index}
+                            /> : false
+                    ))}
+                </div>
+                <div style={this.style().articleContainer}>
+                    {this.state.articleList.map((article, index) => (
+                        index % 3 === 2 ?
+                            <Article
+                                key={this.state.articleList.length - index}
+                                mainPath={this.props.mainPath}
+                                data={article}
+                                db={this.props.db}
+                                openWindow={this.props.openWindow}
+                                dataToHTML = {this.props.dataToHTML}
+                                config={this.props.config}
+                                index={index}
+                            /> : false
+                    ))}
+                </div>
             </div>
             <div style={this.style().editorContainer}>
                 <Editor
@@ -86,12 +118,22 @@ export default class Manage extends React.Component {
             container: {
                 width: 'calc(100% - 30px)',
             },
-            articleContainer: {
-                position: 'fixed',
-                overflow: 'auto',
-                width: '100%',
+            articleColumnContainer: {
+                width: '92%',
                 height: '100%',
-                left: 0, top: 0,
+                margin: '0 4%',
+                overflow: 'auto',
+                position: 'fixed',
+                top: 0, left: 0,
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+            },
+            articleContainer: {
+                display: 'inline-block',
+                width: '28%',
+                height: 'auto',
+                margin: '60px 0',
             },
             editorContainer: {
                 position: 'fixed',

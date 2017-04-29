@@ -33,24 +33,6 @@ export default class Article extends React.Component {
         }.bind(this));
     }
 
-    componentDidMount() {
-        eventProxy.on(`translateY-${this.props.index}`, function (value) {
-            this.setState({ translateY: value });
-            const nextValue = this.refs.contentContainer.offsetHeight + value + 50;
-            eventProxy.trigger(`translateY-${this.props.index + 3}`, nextValue)
-        }.bind(this));
-        setTimeout(function () {
-            if (this.props.index < 3)
-                eventProxy.trigger(`translateY-${this.props.index + 3}`,
-                this.refs.contentContainer.offsetHeight + 50 + 50);
-            const index = this.props.index % 3;
-            index !== 0 && this.setState({
-                translateX: index === 1 ?
-                    `${(28 + 5 + 4) * 100 / 28}%` : `${(28 + 5 + 4 + 28 + 4) * 100 / 28}%`
-            });
-        }.bind(this), 50);
-    }
-
     handleEditArticle() {
         eventProxy.trigger('editArticle', Object.assign(
             {}, this.props.data, this.state
@@ -65,13 +47,11 @@ export default class Article extends React.Component {
     async handleDelete() {
         await this.props.db.deleteArticle(this.state.key);
         this.refs.contentContainer.className = 'articleContainer deleted';
-        setTimeout(function () {
-            this.refs.contentContainer.style.display = 'none';
-        }.bind(this), 600);
         const path =  await this.props.dataToHTML.dataToHome();
         this.props.dataToHTML.dataToArticle(this.state);
         this.props.dataToHTML.dataToTags();
         this.props.dataToHTML.dataToArchives();
+        eventProxy.trigger('refreshArticleList', null);
         eventProxy.trigger('refreshPreview', path);
     }
 
@@ -246,15 +226,11 @@ export default class Article extends React.Component {
     style() {return reactCSS({
         default: {
             container: {
-                position: 'absolute',
                 boxShadow: '0px 3px 20px 0px rgba(0,0,0,0.30)',
                 overflow: 'hidden',
-                left: 0, top: 0,
-                width: '28%',
-                marginBottom: '100px',
-                transition: 'all ease 400ms',
-                transform: `translateX(${this.state.translateX}) translateY(${this.state.translateY}px)`,
-                transitionDelay: `${this.props.index * 50}ms`
+                width: '100%',
+                height: 'auto',
+                marginBottom: '50px',
             },
             contentContainer: {
                 width: '100%',

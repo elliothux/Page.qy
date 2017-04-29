@@ -78,30 +78,11 @@ input, button, textarea, :focus {
 }
 
 
-@keyframes moveDeletedArticle {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(calc(100% + 50px)); }
+.articleContainer {
+    transition: all ease 300ms;
+    transform: scale(1);
 }
-@keyframes hideDeletedArticle {
-    0% {
-        transform: translateX(calc(100% + 50px));
-        opacity: 0;
-    }
-    100% {
-        transform: translateX(calc(100% + 50px));
-        height: 0;
-        margin: 0;
-        opacity: 0;
-    }
+.articleContainer.deleted {
+    transform: scale(0);
 }
-/*.articleContainer {*/
-    /*width: 90%;*/
-    /*height: auto;*/
-    /*margin: 80px 0 60px 5%;*/
-    /*overflow: hidden*/
-/*}*/
-/*.articleContainer.deleted {*/
-    /*animation: moveDeletedArticle ease-out 400ms forwards,*/
-        /*hideDeletedArticle ease 200ms 400ms forwards;*/
-/*}*/
 

@@ -84,7 +84,7 @@ export default class Edit extends React.Component {
             }
             else {
                 data = await this.props.db.createArticle(data);
-                eventProxy.trigger('addArticle', data);
+                eventProxy.trigger('refreshArticleList', null);
             }
         }
         else {
@@ -100,6 +100,7 @@ export default class Edit extends React.Component {
         await this.props.dataToHTML.dataToArchives();
         eventProxy.trigger('refreshPreview', path);
         eventProxy.trigger('message', `${data.title}已保存!`);
+        // eventProxy.trigger('reLayout', null);
 
         this.setState(() => ({
             title: '',
