@@ -63,7 +63,8 @@ export default class Edit extends React.Component {
     async saveArticle() {
         const content = this.props.formatContent(
             this.refs.editor.contentWindow.document
-                .getElementById('editorContainer').innerHTML
+                .getElementById('editorContainer').innerHTML,
+            this.state.key
         );
         let data = {
             title: this.state.title,
