@@ -25,9 +25,6 @@ function getArticlePath(key) {
 }
 
 
-reGenerateAll();
-
-
 async function reGenerateAll() {
     const articles = await db.getPublishedArticleList();
     for (article of articles)
@@ -38,16 +35,18 @@ async function reGenerateAll() {
 }
 
 
-function dataToArticle(rawData) {
+async function dataToArticle(key) {
+    const rawData = (await db.find({key: key}))[0];
     const config = getConfig();
     let article = fs.readFileSync(
         path.join(theme(), './templates/article.html'),
         'utf-8'
     );
+    console.log(rawData.createDate);
 
     const templateData = {
         data: {
-            date: formatDate(rawData.date),
+            date: formatDate(rawData.createDate),
             content: rawData.content,
             tags: rawData.tags,
             archives: rawData.archives,

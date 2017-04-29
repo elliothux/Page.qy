@@ -30,6 +30,7 @@ module.exports.isArticlePublished = isArticlePublished;
 module.exports.getPublishedArticleList = getPublishedArticleList;
 module.exports.backup = backup;
 module.exports.restore = restore;
+module.exports.find = find;
 
 
 // Generate an unique key
@@ -85,6 +86,7 @@ async function update(data, db) {
 // Rewrite 'find' method using 'async/await'
 async function find(data, db) {
     !data && (data = {});
+    !db && (db = article);
     if (typeof data !== 'object') {
         data = {};
         console.error(`Function 'find' except an object instead of ${typeof data} as the first argument.`);

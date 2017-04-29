@@ -93,12 +93,12 @@ export default class Edit extends React.Component {
             eventProxy.trigger('updateArticleData', data);
         }
         eventProxy.trigger('changeManageView', 'article');
-        const path =  await this.props.dataToHTML.dataToHome();
-        await this.props.dataToHTML.dataToArticle(
-            Object.assign(this.state, data));
-        await this.props.dataToHTML.dataToTags();
-        await this.props.dataToHTML.dataToArchives();
-        eventProxy.trigger('refreshPreview', path);
+        this.props.dataToHTML.dataToArticle(data.key);
+        console.log(data.key);
+        this.props.dataToHTML.dataToHome()
+            .then(path => eventProxy.trigger('refreshPreview', path));
+        this.props.dataToHTML.dataToTags();
+        this.props.dataToHTML.dataToArchives();
 
         this.setState(() => ({
             title: '',
