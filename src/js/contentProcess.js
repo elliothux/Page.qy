@@ -15,7 +15,7 @@ function formatContent(content, key) {
     if (match && match.length > 0) {
         const imgData = match.map((img, index) => {
             let data = img.match(/\"data:image\/.+?\"/);
-            if (data.length === 0) return null;
+            if (!data || data.length === 0) return null;
             data = data[0].replace(/\"data:image\/[a-zA-z]+?\;base64\,/, '').slice(0, -1);
             const extensionName = img.match(/data:image\/.+?;base64/)[0]
                 .replace(/data:image\//, '').replace(/;base64/, '');
