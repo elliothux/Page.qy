@@ -36,13 +36,13 @@ async function reGenerateAll() {
 
 
 async function dataToArticle(key) {
-    const rawData = (await db.find({key: key}))[0];
+    const rawData = await db.getArticle(key);
     const config = getConfig();
     let article = fs.readFileSync(
         path.join(theme(), './templates/article.html'),
         'utf-8'
     );
-    console.log(rawData.createDate);
+    console.log(rawData);
 
     const templateData = {
         data: {

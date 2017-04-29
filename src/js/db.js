@@ -30,7 +30,7 @@ module.exports.isArticlePublished = isArticlePublished;
 module.exports.getPublishedArticleList = getPublishedArticleList;
 module.exports.backup = backup;
 module.exports.restore = restore;
-module.exports.find = find;
+module.exports.getArticle = getArticle;
 
 
 // Generate an unique key
@@ -270,6 +270,11 @@ async function getPublishedArticleList() {
 }
 
 
+async function getArticle(key) {
+    return (await find({key: key}, article))[0]
+}
+
+
 function backup() {
     const target = path.join(__dirname, `../../user/${config.username}.github.io/backup`);
     !fs.existsSync(target) && fs.mkdirsSync(target);
@@ -289,7 +294,7 @@ async function test() {
     // console.log(await isArticlePublished(key));
     // console.log(await togglePublish(key));
     // console.log(await isArticlePublished(key));
-    return await getPublishedArticleList();
+    return await getArticle("egefkq");
 }
 
-// Test().then(a => console.log(a));
+// test().then(a => console.log(a));
