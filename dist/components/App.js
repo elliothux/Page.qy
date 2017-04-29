@@ -12,6 +12,7 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.style = this.style.bind(this);
+        this.handleViewChange = this.handleViewChange.bind(this)
 
         this.state = {
             viewState: 'manage',
@@ -25,10 +26,9 @@ export default class App extends React.Component {
         }.bind(this))
     }
 
-    componentDidMount() {
-        eventProxy.on('changeMainView', (view) => {
-            this.setState({ viewState: view });
-            this.style = this.style.bind(this);
+    handleViewChange(view) {
+        this.setState({
+            viewState: view
         })
     }
 
@@ -38,27 +38,27 @@ export default class App extends React.Component {
                 mainView={this.state.viewState}
                 config={this.props.config}
                 openURL={this.props.openURL}
+                handleViewChange={this.handleViewChange}
             />
-            <div style={this.style().previewContainer}>
-                <Preview upload={this.props.upload}/>
-            </div>
-            <div style={this.style().manageContainer}>
-                <Manage
-                    db={this.props.db}
-                    mainPath={this.props.path}
-                    openWindow={this.props.openWindow}
-                    dataToHTML = {this.props.dataToHTML}
-                    config={this.props.config}
-                    formatContent={this.props.formatContent}
-                />
-            </div>
-            <div style={this.style().optionsContainer}>
-                <Options
-                    mainPath={this.props.path}
-                    config={this.props.config}
-                    theme={this.props.theme}
-                />
-            </div>
+            <Preview
+                upload={this.props.upload}
+                show={this.state.viewState === 'preview'}
+            />
+            <Manage
+                db={this.props.db}
+                mainPath={this.props.path}
+                openWindow={this.props.openWindow}
+                dataToHTML = {this.props.dataToHTML}
+                config={this.props.config}
+                formatContent={this.props.formatContent}
+                show={this.state.viewState === 'manage'}
+            />
+            <Options
+                mainPath={this.props.path}
+                config={this.props.config}
+                theme={this.props.theme}
+                show={this.state.viewState === 'options'}
+            />
             <Message/>
         </div>
     )}
@@ -68,42 +68,6 @@ export default class App extends React.Component {
             container: {
                 width: '100%',
                 height: '100%'
-            },
-            previewContainer: {
-                width: 'calc(100% - 200px)',
-                height: '100%',
-                position: 'fixed',
-                overflow: 'auto',
-                top: 0, left: '200px',
-                transform: `translateY(
-                    ${this.state.viewState === 'preview' ?
-                    0 : '100%'
-                })`,
-                transition: 'all ease 700ms'
-            },
-            manageContainer: {
-                width: 'calc(100% - 200px)',
-                height: '100%',
-                position: 'fixed',
-                overflow: 'auto',
-                top: 0, left: '200px',
-                transform: `translateY(
-                    ${this.state.viewState === 'manage' ?
-                    0 : '100%'
-                    })`,
-                transition: 'all ease 700ms'
-            },
-            optionsContainer: {
-                width: 'calc(100% - 200px)',
-                height: '100%',
-                position: 'fixed',
-                overflow: 'auto',
-                top: 0, left: '200px',
-                transform: `translateY(
-                    ${this.state.viewState === 'options' ?
-                    0 : '100%'
-                    })`,
-                transition: 'all ease 700ms'
             }
         }
     }, this.props, this.state))}

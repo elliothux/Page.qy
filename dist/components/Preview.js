@@ -50,9 +50,13 @@ export default class Preview extends React.Component {
     style() {return reactCSS({
         default: {
             container: {
-                width: '100%',
+                width: 'calc(100% - 220px)',
                 height: '100%',
-                overflow: 'hidden',
+                position: 'fixed',
+                top: '0', left: '200px',
+                transition: 'all ease 700ms',
+                backgroundColor: 'white',
+                transform: `translateY(${this.props.show ? 0 : '100%'})`,
             },
             preview: {
                 width: '100%',

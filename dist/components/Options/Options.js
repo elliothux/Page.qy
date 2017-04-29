@@ -55,11 +55,13 @@ export default class Options extends React.Component {
     style() {return reactCSS({
         default: {
             container: {
-                position: 'fixed',
-                overflow: 'hidden',
-                width: '100%',
+                width: 'calc(100% - 200px)',
                 height: '100%',
-                left: 0, top: 0
+                position: 'fixed',
+                top: '0', left: '200px',
+                transition: 'all ease 700ms',
+                backgroundColor: 'white',
+                transform: `translateY(${this.props.show ? 0 : '100%'})`,
             },
             userInfoContainer: {
                 background: `url('${this.props.mainPath}/src/pic/backgroundOptions.jpg')`,

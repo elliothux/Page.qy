@@ -7,14 +7,6 @@ export default class Nav extends React.Component {
     constructor(props) {
         super(props);
         this.style = this.style.bind(this);
-        this.handleViewChange = this.handleViewChange.bind(this);
-    }
-
-    handleViewChange(view) {
-        if (view === 'manage' && this.props.mainView === 'manage')
-            eventProxy.trigger('closeEditor');
-        else
-            eventProxy.trigger('changeMainView', view)
     }
 
     render() {return(
@@ -43,7 +35,7 @@ export default class Nav extends React.Component {
                         this.props.mainView === 'preview' ?
                             {backgroundColor: 'rgba(0, 0, 0, 0.3)'} :
                             {backgroundColor: 'rgba(0, 0, 0, 0.1)'})}
-                    onClick={this.handleViewChange.bind(null, 'preview')}
+                    onClick={this.props.handleViewChange.bind(null, 'preview')}
                 >
                     <img style={this.style().navButtonImg} src="../../src/pic/previewNav.svg"/>
                     <p style={this.style().navBottomText}>
@@ -55,7 +47,11 @@ export default class Nav extends React.Component {
                         this.props.mainView === 'manage' ?
                             {backgroundColor: 'rgba(0, 0, 0, 0.3)'} :
                             {backgroundColor: 'rgba(0, 0, 0, 0.1)'})}
-                    onClick={this.handleViewChange.bind(null, 'manage')}
+                    onClick={function () {
+                        this.props.handleViewChange('manage');
+                        this.props.mainView === 'manage' &&
+                            eventProxy.trigger('closeEditor');
+                    }.bind(this)}
                 >
                     <img style={this.style().navButtonImg} src="../../src/pic/manageNav.svg"/>
                     <p style={this.style().navBottomText}>
@@ -67,7 +63,7 @@ export default class Nav extends React.Component {
                         this.props.mainView === 'options' ?
                             {backgroundColor: 'rgba(0, 0, 0, 0.3)'} :
                             {backgroundColor: 'rgba(0, 0, 0, 0.1)'})}
-                    onClick={this.handleViewChange.bind(null, 'options')}
+                    onClick={this.props.handleViewChange.bind(null, 'options')}
                 >
                     <img style={this.style().navButtonImg} src="../../src/pic/optionsNav.svg"/>
                     <p style={this.style().navBottomText}>
