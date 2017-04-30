@@ -73,11 +73,8 @@ function dataToArticle(rawData) {
     article = templateEngine.parse(templateData, article);
 
     const targetPath = path.join(target, `./articles/${rawData.key}.html`);
-    // !fs.existsSync(targetPath) && fs.mkdirSync(targetPath);
     fs.writeFileSync(targetPath, article, 'utf-8');
     updateStaticFiles();
-    console.log(article);
-    console.log(targetPath);
     return path.join(targetPath, `${rawData.key}.html`)
 }
 

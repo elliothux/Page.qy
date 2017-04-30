@@ -93,7 +93,6 @@ export default class Edit extends React.Component {
             eventProxy.trigger('updateArticleData', data);
         }
         eventProxy.trigger('changeManageView', 'article');
-        console.log(data);
         this.props.dataToHTML.dataToArticle(data);
         this.props.dataToHTML.dataToHome()
             .then(path => eventProxy.trigger('refreshPreview', path));
