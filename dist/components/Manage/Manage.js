@@ -97,7 +97,7 @@ export default class Manage extends React.Component {
                 height: '100%',
                 position: 'fixed',
                 top: '0', left: '200px',
-                transition: 'all ease 700ms',
+                transition: 'all ease 800ms',
                 backgroundColor: 'white',
                 transform: `translateY(${this.props.show ? 0 : '100%'})`,
             },

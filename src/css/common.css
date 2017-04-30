@@ -28,12 +28,6 @@ input, button, textarea, :focus {
 }
 
 
-.wangEditor-container, .wangEditor-menu-container {
-    border: none
-}
-
-
-
 /* Animation */
 .articleContainer .articleOperateButton {
     bottom: -20%;

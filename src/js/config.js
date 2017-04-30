@@ -33,6 +33,7 @@ function initConfig() {
         "editor": "default",
         "theme": "Default",
         "avatar": "",
-        "mail": ""
+        "mail": "",
+        "layoutColumn": 3
     })
 }
