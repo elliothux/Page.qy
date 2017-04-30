@@ -9,6 +9,7 @@ const formatContent = require('./src/js/contentProcess').formatContent;
 const github = require('./src/js/github');
 const config = require('./src/js/config');
 const theme = require('./src/js/theme');
+const user = require('./src/js/user');
 const {app, BrowserWindow} = electron;
 
 
@@ -117,9 +118,6 @@ const upload = {
     }
 };
 
-const user = {
-    isLogged: isLogged
-};
 
 
 // Functions for rendering process

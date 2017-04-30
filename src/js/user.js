@@ -1,11 +1,27 @@
-const config = require('./config').get();
-const setConfig = require('./config').set;
+const config = require('./config');
 const github = require('./github');
 const db = require('./db');
 
 
+module.exports.backupOnGitHub = backupOnGitHub;
+
+
+function backupOnGitHub() {
+    db.backup();
+    config.backup();
+    return new Promise((resolve, reject) => {
+        github.pushRepo(function (error) {
+            if (error) {
+                return reject(error);
+            }
+            resolve()
+        });
+    })
+}
+
+
 async function login(username, password) {
-    setConfig({
+    config.set({
         username: username,
         password: password
     });
@@ -15,9 +31,5 @@ async function login(username, password) {
 
 
 function logout(message) {
-    db.backup();
-    github.pushRepo(function (error) {
-        if (error) return message('error');
-        require('./config').initConfig();
-    });
+
 }

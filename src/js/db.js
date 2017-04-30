@@ -276,9 +276,10 @@ async function getArticle(key) {
 
 
 function backup() {
-    const target = path.join(__dirname, `../../user/${config.username}.github.io/backup`);
+    const target = path.join(__dirname, `../../user/${config.username}.github.io/backup/db`);
     !fs.existsSync(target) && fs.mkdirsSync(target);
-    fs.copySync(articlePath, path.join(target, './article'))
+    fs.copySync(path.join(articlePath, '../'), target);
+    return path.join(target);
 }
 
 function restore() {
@@ -290,11 +291,7 @@ function restore() {
 
 
 async function test() {
-    // key = '80o7kv';
-    // console.log(await isArticlePublished(key));
-    // console.log(await togglePublish(key));
-    // console.log(await isArticlePublished(key));
-    return await getArticle("egefkq");
+    return backup();
 }
 
-// test().then(a => console.log(a));
+// test()
