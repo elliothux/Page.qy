@@ -1,0 +1,36 @@
+
+#tags {
+    width: 70%;
+    margin-left: 15%;
+    margin-top: 20px;
+    font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+
+#tags h2 {
+    margin: 20px 0;
+    font-size: 2em;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-weight: bolder;
+    font-style: italic;
+    display: inline-block;
+    letter-spacing: 0.03em;
+}
+
+#tags h3 {
+    margin-top: 10px;
+    margin-bottom: 2px;
+    font-size: 1.5em;
+    font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-weight: bolder;
+    letter-spacing: 0.03em;
+    color: black;
+}
+
+#tags p {
+    margin-bottom: 25px;
+    font-family: cursive;
+    font-size: 1em;
+    color: rgba(0, 0, 0, 0.7);
+}
