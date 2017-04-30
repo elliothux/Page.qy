@@ -4,7 +4,7 @@ Function.prototype.toString = Object.prototype.toString;
 import React from 'react';
 import ReactDOM from 'react-dom';
 import reactCSS from 'reactcss';
-import { remote } from 'electron';
+import { remote, shell } from 'electron';
 
 
 const user = remote.require('./main.js').user;
@@ -52,9 +52,11 @@ class App extends React.Component {
         });
         this.props.user.backupOnGitHub()
             .then(function () {
-                this.props.app.restart();
+                this.props.app.relaunch();
+                this.props.app.exit(0)
             }.bind(this))
             .catch(function (error) {
+                console.error(error);
                 error && this.setState({
                     status: 'failed'
                 })
@@ -62,7 +64,23 @@ class App extends React.Component {
     }
 
     backupOnLocal() {
-
+        const chooser = document.createElement('input');
+        chooser.type = 'file';
+        chooser.webkitdirectory = true;
+        chooser.directory = true;
+        chooser.multiple = true;
+        chooser.addEventListener('change', function (e) {
+            const path = e.target.files[0].path;
+            this.setState({ status: 'backup' });
+            const target = this.props.user.backupOnLocal(path);
+            if (target) {
+                this.props.app.relaunch();
+                this.props.shell.showItemInFolder(target);
+                this.props.app.exit(0);
+            } else
+                this.setState({ status: 'failed' });
+        }.bind(this));
+        chooser.click();
     }
 
     skipBackUp() {
@@ -241,6 +259,7 @@ ReactDOM.render(
         language={config.language}
         user={user}
         app={app}
+        shell={shell}
     />,
     document.getElementById('root')
 );
