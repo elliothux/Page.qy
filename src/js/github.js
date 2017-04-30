@@ -10,6 +10,7 @@ const db = require('./db');
 
 
 module.exports.pushRepo = pushRepo;
+module.exports.getUserInfo = getUserInfo;
 
 
 if (platform === 'win32') {
@@ -55,7 +56,7 @@ async function pushRepo(message) {
 }
 
 
-async function _getUserInfo() {
+async function getUserInfo() {
     const info = (await gh.getUser().getProfile()).data;
     const [avatar, name, mail, username] = [
         info.avatar_url,

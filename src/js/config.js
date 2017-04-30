@@ -41,10 +41,9 @@ function initConfig() {
 }
 
 
-function backup() {
+function backup(target) {
     const configData =
         Object.assign(config, { password: '*' });
-    const target = path.join(__dirname, `../../user/${config.username}.github.io/backup/`);
     !fs.existsSync(target) && fs.mkdirsSync(target);
     fs.writeJSONFileSync(path.join(target, './config.json'), configData);
     return path.join(target, './config.json');

@@ -275,18 +275,14 @@ async function getArticle(key) {
 }
 
 
-function backup() {
-    const target = path.join(__dirname, `../../user/${config.username}.github.io/backup/db`);
+function backup(target) {
     !fs.existsSync(target) && fs.mkdirsSync(target);
     fs.copySync(path.join(articlePath, '../'), target);
     return path.join(target);
 }
 
-function restore() {
-    const from = path.join(__dirname, `../../user/${config.username}.github.io/backup/article`);
-    const to  = articlePath;
-    !fs.existsSync(from) &&
-        fs.copySync(articlePath, path.join(target, './article'));
+function restore(target) {
+    fs.copySync(target, path.join(articlePath, '../'));
 }
 
 
