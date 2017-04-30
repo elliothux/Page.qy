@@ -50,7 +50,7 @@ export default class Preview extends React.Component {
     style() {return reactCSS({
         default: {
             container: {
-                width: 'calc(100% - 220px)',
+                width: 'calc(100% - 200px)',
                 height: '100%',
                 position: 'fixed',
                 top: '0', left: '200px',

@@ -35,14 +35,12 @@ async function reGenerateAll() {
 }
 
 
-async function dataToArticle(key) {
-    const rawData = await db.getArticle(key);
+function dataToArticle(rawData) {
     const config = getConfig();
     let article = fs.readFileSync(
         path.join(theme(), './templates/article.html'),
         'utf-8'
     );
-    console.log(rawData);
 
     const templateData = {
         data: {
@@ -74,10 +72,12 @@ async function dataToArticle(key) {
     };
     article = templateEngine.parse(templateData, article);
 
-    const targetPath = path.join(target, `./articles/`);
-    !fs.existsSync(targetPath) && fs.mkdirSync(targetPath);
-    fs.writeFileSync(path.join(targetPath, `${rawData.key}.html`), article, 'utf-8');
+    const targetPath = path.join(target, `./articles/${rawData.key}.html`);
+    // !fs.existsSync(targetPath) && fs.mkdirSync(targetPath);
+    fs.writeFileSync(targetPath, article, 'utf-8');
     updateStaticFiles();
+    console.log(article);
+    console.log(targetPath);
     return path.join(targetPath, `${rawData.key}.html`)
 }
 
@@ -279,13 +279,13 @@ async function getArchiveData() {
 
 
 async function checkPath() {
-    const articles = await db.getPublishedArticleList();
-    const keys = [];
-    for (article of articles)
-        keys.push(article.key)
-    for (file of fs.readdirSync(path.join(target, './articles')))
-        if (!keys.includes(file.split('.')[0]))
-            fs.removeSync(path.join(target, `./articles/${file}`));
+    // const articles = await db.getPublishedArticleList();
+    // const keys = [];
+    // for (article of articles)
+    //     keys.push(article.key)
+    // for (file of fs.readdirSync(path.join(target, './articles')))
+    //     if (!keys.includes(file.split('.')[0]))
+    //         fs.removeSync(path.join(target, `./articles/${file}`));
 }
 
 

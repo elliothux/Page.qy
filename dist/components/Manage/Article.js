@@ -47,7 +47,8 @@ export default class Article extends React.Component {
     async handleDelete() {
         await this.props.db.deleteArticle(this.state.key);
         const path =  await this.props.dataToHTML.dataToHome();
-        this.props.dataToHTML.dataToArticle(this.state);
+        // this.props.dataToHTML.dataToArticle(this.state);
+        this.props.dataToHTML.dataToHome();
         this.props.dataToHTML.dataToTags();
         this.props.dataToHTML.dataToArchives();
         eventProxy.trigger('refreshArticleList', null);
@@ -56,6 +57,7 @@ export default class Article extends React.Component {
 
     handlePreview() {
         const path = this.props.dataToHTML.getArticlePath(this.state.key);
+        console.log(path);
         this.props.openWindow(path, {
             width: 1000,
             height: 700
@@ -68,10 +70,9 @@ export default class Article extends React.Component {
         }));
         await this.props.db.togglePublish(this.state.key);
         const path =  await this.props.dataToHTML.dataToHome();
-        this.props.dataToHTML.dataToArticle(this.state);
+        eventProxy.trigger('refreshPreview', path);
         this.props.dataToHTML.dataToTags();
         this.props.dataToHTML.dataToArchives();
-        eventProxy.trigger('refreshPreview', path);
     }
 
     render() {return(
