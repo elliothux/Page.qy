@@ -26,7 +26,8 @@ function backupOnLocal(folderPath) {
     config.backup();
     const from = path.join(__dirname, `../../user/${config.get().username}.github.io/backup/`);
     const to = path.join(folderPath,
-        `./backup_on_${(new Date()).toISOString()}`);
+        `./backup_on_${(new Date()).toISOString().replace(/\:/g, '')}`);
+    console.log(to);
     fs.copySync(from, to);
     fs.removeSync(from);
     return to;
@@ -43,6 +44,17 @@ async function login(username, password) {
 }
 
 
-function logout(message) {
+function logout() {
+    fs.remove(path.join(__dirname,
+        `../../user/${config.get().username}.github.io/`));
+    fs.remove(path.join(__dirname,
+        `../../db`));
+    fs.remove(path.join(__dirname,
+        `../../user/temp`));
+    config.initConfig();
+}
+
+
+function restore() {
 
 }
