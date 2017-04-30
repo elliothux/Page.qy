@@ -54,8 +54,8 @@ class App extends React.Component {
             .then(function () {
                 this.props.app.restart();
             }.bind(this))
-            .catch(function () {
-                this.setState({
+            .catch(function (error) {
+                error && this.setState({
                     status: 'failed'
                 })
             }.bind(this));
