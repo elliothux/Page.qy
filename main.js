@@ -63,7 +63,7 @@ app.on('ready',
     openWindow.bind(null,
         isLogged ?
             path.join(__dirname, './src/html/index.html') :
-            path.join(__dirname, './src/html/user.html'),
+            path.join(__dirname, './src/html/login.html'),
         isLogged ? null :
             {
                 width: 600,
@@ -82,7 +82,7 @@ app.on('activate', () => {
         openWindow(
             isLogged ?
                 path.join(__dirname, './src/html/index.html') :
-                path.join(__dirname, './src/html/user.html'),
+                path.join(__dirname, './src/html/login.html'),
             isLogged ? null :
                 {
                     width: 600,

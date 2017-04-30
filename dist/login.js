@@ -1,18 +1,32 @@
+Function.prototype.toString = Object.prototype.toString;
+
+
 import React from 'react';
+import ReactDOM from 'react-dom';
 import reactCSS from 'reactcss';
+import { remote } from 'electron';
 
 
-export default class Login extends React.Component {
+const user = remote.require('./main.js').user;
+const config = remote.require('./main.js').config.get();
+const quit = remote.app.quit;
+
+
+export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.style = this.style.bind(this);
+
+        this.state = {
+            status: 'init'
+        }
     }
 
     render() {return (
         <div>
             <p style={this.style().title}>
                 {function () {
-                    switch (this.props.status) {
+                    switch (this.state.status) {
                         case 'init':
                             return this.props.language === 'zh' ?
                                 '登录' : 'LOGIN';
@@ -50,7 +64,7 @@ export default class Login extends React.Component {
             <div style={this.style().buttonArea}>
                 <button style={this.style().button}>
                     {function () {
-                        switch (this.props.status) {
+                        switch (this.state.status) {
                             case 'failed':
                                 return this.props.language === 'zh' ? '重试' : 'RETRY';
                             case 'init':
@@ -85,7 +99,7 @@ export default class Login extends React.Component {
             inputArea: {
                 width: '40%',
                 margin: '0 30%',
-                display: this.props.status === 'login' ?
+                display: this.state.status === 'login' ?
                     'none' : 'block'
             },
             input: {
@@ -109,7 +123,7 @@ export default class Login extends React.Component {
                 top: '100px',
                 marginLeft: '-260px',
                 overflow: 'visible',
-                display: this.props.status === 'login' ?
+                display: this.state.status === 'login' ?
                     'block' : 'none'
             },
             buttonArea: {
@@ -136,3 +150,13 @@ export default class Login extends React.Component {
         }
     }, this.state, this.props)}
 }
+
+
+ReactDOM.render(
+    <App
+        language={config.language}
+        quit={quit}
+        user={user}
+    />,
+    document.getElementById('root')
+);
