@@ -57,6 +57,43 @@ function openWindow(path, options, isMax) {
 }
 
 
+// App events
+const isLogged = !(config.get().username !== '' && config.get().password !== '');
+app.on('ready',
+    openWindow.bind(null,
+        isLogged ?
+            path.join(__dirname, './src/html/index.html') :
+            path.join(__dirname, './src/html/user.html'),
+        isLogged ? null :
+            {
+                width: 600,
+                height: 300,
+                frame: false
+            },
+        isLogged)
+);
+
+app.on('window-all-closed', () => {
+    platform !== 'darwin' && app.quit()
+});
+
+app.on('activate', () => {
+    win === null && (win =
+        openWindow(
+            isLogged ?
+                path.join(__dirname, './src/html/index.html') :
+                path.join(__dirname, './src/html/user.html'),
+            isLogged ? null :
+                {
+                    width: 600,
+                    height: 300,
+                    frame: false
+                },
+            isLogged));
+    win.show();
+});
+
+
 const upload = {
     win: null,
     openWindow: function () {
@@ -80,23 +117,9 @@ const upload = {
     }
 };
 
-// App events
-app.on('ready',
-    openWindow.bind(null,
-        path.join(__dirname, './src/html/index.html'),
-        null, true)
-);
-
-app.on('window-all-closed', () => {
-    platform !== 'darwin' && app.quit()
-});
-
-app.on('activate', () => {
-    win === null &&
-        openWindow(path.join(__dirname, './src/html/index.html'), null, true);
-    win.show();
-});
-
+const user = {
+    isLogged: isLogged
+};
 
 
 // Functions for rendering process
@@ -109,3 +132,4 @@ exports.dataToHTML = dataToHTML;
 exports.config = config;
 exports.theme = theme;
 exports.formatContent = formatContent;
+exports.user = user;
