@@ -9,7 +9,6 @@ import { remote } from 'electron';
 
 const user = remote.require('./main.js').user;
 const config = remote.require('./main.js').config.get();
-const quit = remote.app.quit;
 
 
 class App extends React.Component {
@@ -29,28 +28,31 @@ class App extends React.Component {
                     switch (this.state.status) {
                         case 'init':
                             return this.props.language === 'zh' ?
-                                '登录' : 'LOGIN';
-                        case 'login':
+                                '备份' : 'BACKUP';
+                        case 'backup':
                             return false;
                         case 'failed':
                             return this.props.language === 'zh' ?
-                                '登录失败!' : 'LOGIN FAILED!';
+                                '备份失败!' : 'BACKUP FAILED!';
                     }
                 }.bind(this)()}
             </p>
-            <div style={this.style().inputArea}>
-                <input
-                    type="text"
-                    style={this.style().input}
-                    placeholder={this.props.language === 'zh' ?
-                        '输入GitHub账号' : 'GITHUB ACCOUNT'}
-                />
-                <input
-                    type="password"
-                    style={this.style().input}
-                    placeholder={this.props.language === 'zh' ?
-                        '输入密码' : 'PASSWORD'}
-                />
+            <div style={this.style().selectArea}>
+                <div style={this.style().radioContainer}>
+                    <input type="radio" name="backup" value="github"/>
+                    {this.props.language === 'zh' ?
+                        '备份到GitHub' : 'BACKUP ON GITHUB'}
+                </div>
+                <div style={this.style().radioContainer}>
+                    <input type="radio" name="backup" value="github"/>
+                    {this.props.language === 'zh' ?
+                        '备份到本地' : 'BACKUP ON LOCAL'}
+                </div>
+                <div style={this.style().radioContainer}>
+                    <input type="radio" name="backup" value="github"/>
+                    {this.props.language === 'zh' ?
+                        '不备份' : 'SKIP'}
+                </div>
             </div>
             <div style={this.style().loading} id="load">
                 <div>G</div>
@@ -96,24 +98,23 @@ class App extends React.Component {
                 margin: '35px calc(30% + 8px)',
                 letterSpacing: '0.06em'
             },
-            inputArea: {
+            selectArea: {
                 width: '40%',
                 margin: '0 30%',
-                display: this.state.status === 'login' ?
-                    'none' : 'block'
+                display: this.state.status === 'backup' ?
+                    'none' : 'block',
+                color: 'white'
             },
-            input: {
-                width: 'calc(100% - 16px)',
-                height: '25px',
-                marginBottom: '20px',
-                padding: '3px 8px',
-                fontSize: '1em',
-                border: 'none',
-                borderBottom: '1px solid #63D9F4',
-                backgroundColor: 'rgba(0, 0, 0, 0)',
-                color: 'white',
-                fontWeight: 'lighter',
-                letterSpacing: '0.04em'
+            radioContainer: {
+                width: '100%',
+                height: '30px',
+                border: '1px solid white',
+            },
+            radio: {
+
+            },
+            radioText: {
+
             },
             loading: {
                 position: 'absolute',
@@ -123,7 +124,7 @@ class App extends React.Component {
                 top: '100px',
                 marginLeft: '-260px',
                 overflow: 'visible',
-                display: this.state.status === 'login' ?
+                display: this.state.status === 'backup' ?
                     'block' : 'none'
             },
             buttonArea: {
@@ -155,7 +156,6 @@ class App extends React.Component {
 ReactDOM.render(
     <App
         language={config.language}
-        quit={quit}
         user={user}
     />,
     document.getElementById('root')

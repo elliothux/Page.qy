@@ -3,6 +3,7 @@ module.exports = {
         index: require('path').join(__dirname, './dist/index.js'),
         uploading: require('path').join(__dirname, './dist/uploading.js'),
         login: require('path').join(__dirname, './dist/login.js'),
+        logout: require('path').join(__dirname, './dist/logout.js'),
     },
     output: {
         path: require('path').join(__dirname, './src/'),
