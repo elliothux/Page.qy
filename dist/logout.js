@@ -9,6 +9,7 @@ import { remote, shell } from 'electron';
 
 const user = remote.require('./main.js').user;
 const config = remote.require('./main.js').config.get();
+const quit = remote.require('./main.js').logout.end;
 const app = remote.app;
 
 
@@ -52,6 +53,7 @@ class App extends React.Component {
         });
         this.props.user.backupOnGitHub()
             .then(function () {
+                this.props.user.logout();
                 this.props.app.relaunch();
                 this.props.app.exit(0)
             }.bind(this))
@@ -74,8 +76,9 @@ class App extends React.Component {
             this.setState({ status: 'backup' });
             const target = this.props.user.backupOnLocal(path);
             if (target) {
-                this.props.app.relaunch();
+                this.porps.user.logout();
                 this.props.shell.showItemInFolder(target);
+                this.props.app.relaunch();
                 this.props.app.exit(0);
             } else
                 this.setState({ status: 'failed' });
@@ -84,7 +87,15 @@ class App extends React.Component {
     }
 
     skipBackUp() {
-
+        const confirm = window.confirm(this.props.language === 'zh' ?
+            '真的要跳过备份吗? 你将丢失所有的用户数据!' :
+            'Do you really want to logout without backup? You will lost all of data!');
+        if (confirm) {
+            this.porps.user.logout();
+            this.props.app.relaunch();
+            this.props.app.exit(0);
+        } else
+            this.setState({ status: 'failed' });
     }
 
     handleOperate() {
@@ -157,7 +168,7 @@ class App extends React.Component {
                             case 'failed':
                                 return this.props.language === 'zh' ? '重试' : 'RETRY';
                             case 'init':
-                                return this.props.language === 'zh' ? '备份' : 'BACKUP';
+                                return this.props.language === 'zh' ? '继续' : 'CONTINUE';
                             case 'backup':
                                 return this.props.language === 'zh' ? '取消' : 'CANCEL';
                         }
@@ -166,7 +177,7 @@ class App extends React.Component {
                 <button
                     style={this.style().button}
                     onClick={function () {
-                        this.props.app.quit();
+                        this.props.quit();
                     }.bind(this)}
                 >
                     {this.props.language === 'zh' ? '退出' : 'QUIT'}
@@ -181,8 +192,8 @@ class App extends React.Component {
                 fontSize: '1.3em',
                 textAlign: 'center',
                 color: 'white',
-                width: 'calc(40% - 16px)',
-                margin: '35px calc(30% + 8px)',
+                width: '100%',
+                margin: '35px 0',
                 letterSpacing: '0.06em'
             },
             operateArea: {
@@ -260,6 +271,7 @@ ReactDOM.render(
         user={user}
         app={app}
         shell={shell}
+        quit={quit}
     />,
     document.getElementById('root')
 );

@@ -35,7 +35,12 @@ export default class Options extends React.Component {
                         style={this.style().head}
                         src={this.props.config.get().avatar || "../../src/pic/head.png"}
                     />
-                    <div style={this.style().signButton}>
+                    <div
+                        style={this.style().signButton}
+                        onClick={function () {
+                            this.props.logout()
+                        }.bind(this)}
+                    >
                         {this.props.config.get().language === 'zh' ? '登出' : 'Sign Out'}
                     </div>
                 </div>

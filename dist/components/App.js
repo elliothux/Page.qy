@@ -58,6 +58,7 @@ export default class App extends React.Component {
                 config={this.props.config}
                 theme={this.props.theme}
                 show={this.state.viewState === 'options'}
+                logout={this.props.logout}
             />
             <Message/>
         </div>

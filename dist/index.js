@@ -21,6 +21,7 @@ ReactDOM.render(
             dataToHTML = {main.dataToHTML}
             config={main.config}
             theme={main.theme}
+            logout={main.logout.start}
             formatContent = {main.formatContent}
             openURL={shell.openExternal}
         />

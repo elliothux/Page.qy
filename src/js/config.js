@@ -9,6 +9,7 @@ module.exports.backup = backup;
 module.exports.restore = restore;
 
 
+
 const target = path.join(__dirname, '../../user/config.json');
 const config = JSON.parse(fs.readFileSync(target, 'utf-8'));
 
@@ -20,7 +21,7 @@ function getConfig() {
 
 function setConfig(newConfig) {
     newConfig = Object.assign(config, newConfig);
-    fs.writeFileSync(target, newConfig);
+    fs.writeFileSync(target, JSON.stringify(newConfig), 'utf-8');
     return newConfig;
 }
 
@@ -45,7 +46,7 @@ function backup(target) {
     const configData =
         Object.assign(config, { password: '*' });
     !fs.existsSync(target) && fs.mkdirsSync(target);
-    fs.writeJSONFileSync(path.join(target, './config.json'), configData);
+    fs.writeFileSync(path.join(target, './config.json'), configData, 'utf-8');
     return path.join(target, './config.json');
 }
 

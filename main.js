@@ -59,12 +59,12 @@ function openWindow(path, options, isMax) {
 
 
 // App events
-const isLogged = !(config.get().username !== '' && config.get().password !== '');
+const isLogged = config.get().username !== '' && config.get().password !== '';
 app.on('ready',
     openWindow.bind(null,
         isLogged ?
             path.join(__dirname, './src/html/index.html') :
-            path.join(__dirname, './src/html/logout.html'),
+            path.join(__dirname, './src/html/login.html'),
         isLogged ? null :
             {
                 width: 600,
@@ -104,8 +104,7 @@ const upload = {
                 width: 500,
                 height: 200,
                 frame: false
-            }
-        );
+            }, false);
         this.win.show();
     },
     start: function(message) {
@@ -118,6 +117,23 @@ const upload = {
     }
 };
 
+const logout = {
+    win: null,
+    start: function () {
+        this.win = openWindow(
+            path.join(__dirname, './src/html/logout.html'),
+            {
+                width: 600,
+                height: 300,
+                frame: false
+            }, false);
+        this.win.show();
+    },
+    end: function () {
+        this.win.close();
+        this.win = null
+    }
+};
 
 
 // Functions for rendering process
@@ -131,3 +147,4 @@ exports.config = config;
 exports.theme = theme;
 exports.formatContent = formatContent;
 exports.user = user;
+exports.logout = logout;
