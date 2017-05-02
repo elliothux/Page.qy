@@ -34,7 +34,9 @@ export default class Edit extends React.Component {
         data && this.setState(data);
         this.refs.editor.contentWindow.document
             .getElementById('editorContainer')
-            .innerHTML = data ? data.content : '';
+            .innerHTML = data ? data.content.replace(
+                /src\=\"\.\.\/statics\/pic/g,
+                'src="../../user/temp/statics/pic') : '';
         if (this.refs.editor.contentWindow.document
                 .getElementsByClassName('init').length > 0)
             return;
@@ -65,7 +67,9 @@ export default class Edit extends React.Component {
             this.refs.editor.contentWindow.document
                 .getElementById('editorContainer').innerHTML,
             this.state.key
-        );
+        ).replace(
+            /\.\.\/\.\.\/user\/temp\/statics\/pic/g,
+            '../statics/pic');
         let data = {
             title: this.state.title,
             tags: this.state.tags,

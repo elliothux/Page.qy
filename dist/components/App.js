@@ -17,7 +17,7 @@ export default class App extends React.Component {
         this.state = {
             viewState: this.props.config.get().initView,
             config: this.props.config.get(),
-            miniNav: !this.props.config.get().miniNav
+            miniNav: this.props.config.get().miniNav
         }
     }
 

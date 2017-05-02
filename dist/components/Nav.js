@@ -29,18 +29,24 @@ export default class Nav extends React.Component {
     }
 
     async handleRegenerate() {
+        this.setState({
+            showOperate: false
+        });
         eventProxy.trigger('message',
-            this.props.config.language === 'zh' ?
+            this.props.config.get().language === 'zh' ?
                 '正在重新生成所有页面...' : 'Regenerating...'
         );
         await this.props.dataToHTML.reGenerateAll();
         eventProxy.trigger('message',
-            this.props.config.language === 'zh' ?
+            this.props.config.get().language === 'zh' ?
                 '完成!' : 'Done!'
         );
     }
 
     handleBackup() {
+        this.setState({
+            showOperate: false
+        });
         const chooser = document.createElement('input');
         chooser.type = 'file';
         chooser.webkitdirectory = true;
@@ -59,6 +65,9 @@ export default class Nav extends React.Component {
     }
 
     handleRestore() {
+        this.setState({
+            showOperate: false
+        });
         const chooser = document.createElement('input');
         chooser.type = 'file';
         chooser.webkitdirectory = true;
@@ -90,7 +99,8 @@ export default class Nav extends React.Component {
                 />
                 <div style={this.style().userInfo}>
                     <p style={this.style().userName}>
-                        {this.props.config.get().name || this.props.config.get().username}
+                        {this.props.config.get().name ||
+                            this.props.config.get().username}
                     </p>
                     <p style={this.style().userURL}>
                         {`${this.props.config.get().username}.github.io`}
