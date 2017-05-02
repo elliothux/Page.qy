@@ -72,6 +72,8 @@ function dataToArticle(rawData) {
     };
     article = templateEngine.parse(templateData, article);
 
+    !fs.existsSync(path.join(target, `./articles/`)) &&
+        fs.mkdirpSync(path.join(target, `./articles/`));
     const targetPath = path.join(target, `./articles/${rawData.key}.html`);
     fs.writeFileSync(targetPath, article, 'utf-8');
     updateStaticFiles();

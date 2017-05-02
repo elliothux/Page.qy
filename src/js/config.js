@@ -37,14 +37,15 @@ function initConfig() {
         "theme": "Default",
         "avatar": "",
         "mail": "",
-        "layoutColumn": 3
+        "layoutColumn": 3,
+        "initView": "manage"
     })
 }
 
 
 function backup(target) {
-    const configData =
-        Object.assign(config, { password: '*' });
+    const configData = JSON.stringify(
+        Object.assign(config, { password: '*' }));
     !fs.existsSync(target) && fs.mkdirsSync(target);
     fs.writeFileSync(path.join(target, './config.json'), configData, 'utf-8');
     return path.join(target, './config.json');
@@ -54,7 +55,13 @@ function backup(target) {
 function restore(filePath) {
     const configData = Object.assign(
         JSON.parse(fs.readFileSync(filePath, 'utf-8')),
-        {password: config.password}
+        {
+            username: config.username,
+            password: config.password,
+            name: config.name,
+            mail: config.mail,
+            avatar: config.avatar
+        }
     );
     setConfig(configData);
 }

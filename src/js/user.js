@@ -30,9 +30,12 @@ function logout() {
         `../../db`);
     const tempPath = path.join(__dirname,
         `../../user/temp`);
+    const avatarPath = path.join(__dirname,
+        `../../user/avatar.jpg`);
     fs.existsSync(repoPath) && fs.removeSync(repoPath);
     fs.existsSync(dbPath) && fs.removeSync(dbPath);
     fs.existsSync(tempPath) && fs.removeSync(tempPath);
+    fs.existsSync(avatarPath) && fs.removeSync(avatarPath);
     config.initConfig();
     fs.mkdirsSync(tempPath);
 }

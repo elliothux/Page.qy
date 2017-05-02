@@ -8,7 +8,7 @@ import { remote } from 'electron';
 
 
 const user = remote.require('./main.js').user;
-const config = remote.require('./main.js').config.get();
+const config = remote.require('./main.js').config;
 const app = remote.app;
 
 
@@ -23,6 +23,7 @@ class App extends React.Component {
         this.skipRestore = this.handleRestore.bind(this);
         this.restoreOnGitHub = this.restoreOnGitHub.bind(this);
         this.restoreOnLocal = this.restoreOnLocal.bind(this);
+        this.handleQuit = this.handleQuit.bind(this);
 
         this.state = {
             status: 'init',
@@ -102,6 +103,11 @@ class App extends React.Component {
             case 'restoreFailed': return this.handleRestore();
             case 'restore': return this.setState({ status: 'select' })
         }
+    }
+
+    handleQuit() {
+        this.props.user.logout();
+        this.props.app.quit();
     }
 
     render() {return (
@@ -207,9 +213,7 @@ class App extends React.Component {
                 </button>
                 <button
                     style={this.style().button}
-                    onClick={function () {
-                        this.props.app.quit()
-                    }.bind(this)}
+                    onClick={this.handleQuit}
                 >
                     {this.props.language === 'zh' ? '退出' : 'QUIT'}
                 </button>
@@ -320,7 +324,7 @@ class App extends React.Component {
 
 ReactDOM.render(
     <App
-        language={config.language}
+        language={config.get().language}
         user={user}
         app={app}
     />,

@@ -33,7 +33,7 @@ export default class Options extends React.Component {
                     </div>
                     <img
                         style={this.style().head}
-                        src={this.props.config.get().avatar || "../../src/pic/head.png"}
+                        src={`${this.props.mainPath}/user/avatar.jpg`}
                     />
                     <div
                         style={this.style().signButton}

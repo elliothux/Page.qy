@@ -1,5 +1,6 @@
 const fs = require('node-fs-extra');
 const path = require('path');
+const request = require('request');
 const exec = require('child_process').execSync;
 const platform = require('os').platform();
 const GitHub = require('github-api');
@@ -60,10 +61,8 @@ async function pushRepo(message) {
 
 
 async function updateRepo() {
-    const name = config.get().username;
-    const repoPath = path.join(userPath, `/${name}.github.io`);
-    if (fs.existsSync(repoPath)) {
-        return Git(await _getRepoPath())
+    if (fs.existsSync(await _getRepoPath())) {
+        await Git(await _getRepoPath())
             .pull('origin', 'master')
     } else {
         console.log('Cloning repo ...');
@@ -89,6 +88,14 @@ async function getUserInfo() {
         name: name,
         mail: mail,
         username: username
+    });
+    await new Promise((resolve, reject) => {
+        request.head(avatar, function(){
+            request(avatar).pipe(fs.createWriteStream(
+                path.join(userPath, './avatar.jpg')
+            ))
+                .on('close', resolve)
+        });
     });
     console.log('Get user info success.');
     await _getRepoPath();
@@ -133,8 +140,6 @@ function _copyFile() {
     const name = config.get().username;
     const from = path.join(__dirname, '../../user/temp/');
     const to = `${userPath}${name}.github.io`;
-    console.log(from);
-    console.log(to);
     fs.existsSync(path.join(to, './articles')) &&
         fs.removeSync(path.join(to, './articles'));
     fs.existsSync(path.join(to, './statics')) &&
