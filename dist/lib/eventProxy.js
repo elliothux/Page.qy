@@ -25,7 +25,6 @@ const eventProxy = {
             return false;
         }
         key = arguments[0];
-        console.log(`Trigger: ${key}`);
         args = [].concat(Array.prototype.slice.call(arguments, 1));
 
         if(this.onObj[key] !== undefined
