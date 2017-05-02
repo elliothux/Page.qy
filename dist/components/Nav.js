@@ -7,6 +7,74 @@ export default class Nav extends React.Component {
     constructor(props) {
         super(props);
         this.style = this.style.bind(this);
+        this.handleToggleNav = this.handleToggleNav.bind(this);
+        this.handleBackup = this.handleBackup.bind(this);
+        this.handleRestore = this.handleRestore.bind(this);
+        this.handleRegenerate = this.handleRegenerate.bind(this);
+
+        this.state = {
+            showOperate: false
+        }
+    }
+
+    handleToggleNav() {
+        const preValue = this.props.miniNav;
+        this.props.config.set({
+            miniNav: !preValue
+        });
+        this.setState({
+            showOperate: false
+        });
+        eventProxy.trigger('miniNav', !preValue);
+    }
+
+    async handleRegenerate() {
+        eventProxy.trigger('message',
+            this.props.config.language === 'zh' ?
+                '正在重新生成所有页面...' : 'Regenerating...'
+        );
+        await this.props.dataToHTML.reGenerateAll();
+        eventProxy.trigger('message',
+            this.props.config.language === 'zh' ?
+                '完成!' : 'Done!'
+        );
+    }
+
+    handleBackup() {
+        const chooser = document.createElement('input');
+        chooser.type = 'file';
+        chooser.webkitdirectory = true;
+        chooser.directory = true;
+        chooser.multiple = true;
+        chooser.addEventListener('change', function (e) {
+            eventProxy.trigger('message',
+                this.props.config.get().language === 'zh' ?
+                    '正在备份...' : 'Backing up...'
+            );
+            const path = e.target.files[0].path;
+            const target = this.props.user.backupOnLocal(path);
+            target && this.props.shell.showItemInFolder(target);
+        }.bind(this));
+        chooser.click();
+    }
+
+    handleRestore() {
+        const chooser = document.createElement('input');
+        chooser.type = 'file';
+        chooser.webkitdirectory = true;
+        chooser.directory = true;
+        chooser.multiple = true;
+        chooser.addEventListener('change', function (e) {
+            const path = e.target.files[0].path;
+            if (!this.props.user.restore(path))
+                return eventProxy.trigger('message',
+                    this.props.config.get().language === 'zh' ?
+                        '恢复失败!' : 'Restore Failed!'
+                );
+            this.props.app.relaunch();
+            this.props.app.exit(0);
+        }.bind(this));
+        chooser.click();
     }
 
     render() {return(
@@ -71,14 +139,48 @@ export default class Nav extends React.Component {
                     </p>
                 </div>
             </div>
-            <img style={this.style().toggleButton} src="../../src/pic/toggleNav.svg"/>
+            <div style={this.style().operateContainer}>
+                <div style={this.style().operates}>
+                    <button
+                        style={this.style().operate}
+                        onClick={this.handleToggleNav}
+                    >
+                        {this.props.config.get().language === 'zh' ? '切换导航栏' : 'Toggle NavBar'}
+                    </button>
+                    <button
+                        style={this.style().operate}
+                        onClick={this.handleBackup}
+                    >
+                        {this.props.config.get().language === 'zh' ? '备份数据' : 'Backup'}
+                    </button>
+                    <button
+                        style={this.style().operate}
+                        onClick={this.handleRestore}
+                    >
+                        {this.props.config.get().language === 'zh' ? '恢复备份' : 'Restore Backup'}
+                    </button>
+                    <button
+                        style={this.style().operate}
+                        onClick={this.handleRegenerate}
+                    >
+                        {this.props.config.get().language === 'zh' ? '重新生成页面' : 'Regenerate Pages'}
+                    </button>
+                </div>
+                <img
+                    onClick={this.setState.bind(this,
+                        { showOperate: !this.state.showOperate }, () => {})}
+                    style={this.style().operateButton}
+                    src="../../src/pic/toggleNav.svg"
+                />
+            </div>
         </div>
     )}
 
     style() {return(reactCSS({
         default: {
             container: {
-                width: '200px',
+                width: this.props.miniNav ?
+                    '80px' : '200px',
                 height: '100%',
                 position: 'fixed',
                 top: 0, left: 0,
@@ -87,12 +189,16 @@ export default class Nav extends React.Component {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                letterSpacing: '0.15em'
+                letterSpacing: '0.15em',
+                transition: 'all ease 800ms',
+                zIndex: 3
             },
             userArea: {
                 width: '100%',
-                height: '200px',
-                cursor: 'pointer'
+                height: this.props.miniNav ?
+                    '100px' : '200px',
+                transition: 'all ease 300ms',
+                cursor: 'pointer',
             },
             navArea: {
                 width: '100%',
@@ -100,20 +206,21 @@ export default class Nav extends React.Component {
                 display: 'flex',
                 flexFlow: 'column wrap',
                 justifyContent: 'space-between',
-            },
-            toggleButton: {
-                width: '30px',
-                height: 'auto',
-                margin: '0 0 15px 20px',
-                cursor: 'pointer'
+                transition: 'all ease 800ms',
             },
             userHead: {
-                width: '80px',
-                height: '80px',
-                borderRadius: '10px',
-                margin: '25px 0 0 25px',
+                width: this.props.miniNav ?
+                    '60px' : '80px',
+                height: this.props.miniNav ?
+                    '60px' : '80px',
+                borderRadius: this.props.miniNav ?
+                    '5px' : '10px',
+                marginTop: '25px',
+                marginLeft: this.props.miniNav ?
+                    '9px' : '25px',
                 boxShadow: '0px 6px 32px 5px rgba(0,0,0,0.4)',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                transition: 'all ease 300ms',
             },
             userInfo: {
                 width: 'calc(90% - 15px)',
@@ -121,10 +228,11 @@ export default class Nav extends React.Component {
                 margin: '30px 0 0 5%',
                 borderLeft: 'solid 5px white',
                 paddingLeft: '15px',
-                display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                display: this.props.miniNav ?
+                    'none' : 'flex',
             },
             userName: {
                 fontSize: '1.3em',
@@ -148,15 +256,51 @@ export default class Nav extends React.Component {
             navButtonImg: {
                 width: 'auto',
                 height: '48%',
-                marginRight: '20px',
-                cursor: 'pointer'
+                marginRight: this.props.miniNav ?
+                    '0' : '20px',
+                cursor: 'pointer',
+                transition: 'all ease 300ms',
             },
             navBottomText: {
                 fontSize: '1.3em',
                 fontWeight: 'bold',
                 cursor: 'pointer',
                 color: 'white',
-                textDecoration: 'none'
+                textDecoration: 'none',
+                display: this.props.miniNav ?
+                    'none' : 'block'
+            },
+            operateContainer: {
+                margin: '0 0 40px 20px',
+                position: 'relative'
+            },
+            operateButton: {
+                width: '30px',
+                height: 'auto',
+                cursor: 'pointer',
+                position: 'absolute',
+                zIndex: 4
+            },
+            operates: {
+                position: 'absolute',
+                top: this.state.showOperate ? '-160px' : '40px',
+                left: 0,
+                transition: 'all ease 300ms',
+                opacity: this.state.showOperate ? 1 : 0,
+                zIndex: 3,
+                width: '150px',
+                boxShadow: '0px 3px 10px 1px rgba(0,0,0,0.21)',
+            },
+            operate: {
+                width: '160px',
+                height: '35px',
+                backgroundColor: 'white',
+                border: 'none',
+                borderLeft: '5px solid rgb(0, 103, 210)',
+                cursor: 'pinter',
+                fontSize: '0.8em',
+                fontWeight: 'bold',
+                letterSpacing: '0.02em'
             }
         }
     }, this.props, this.state))}

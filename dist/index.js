@@ -1,13 +1,5 @@
 Function.prototype.toString = Object.prototype.toString;
 
-Object.prototype.size = function() {
-    let size = 0;
-    for (let key in this) {
-        if (this.hasOwnProperty(key)) size++;
-    }
-    return size;
-};
-
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -31,6 +23,9 @@ ReactDOM.render(
             theme={main.theme}
             logout={main.logout.start}
             formatContent = {main.formatContent}
+            user={main.user}
+            app={remote.app}
+            shell={shell}
             openURL={shell.openExternal}
         />
     </div>,

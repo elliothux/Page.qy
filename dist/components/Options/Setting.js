@@ -115,7 +115,8 @@ export default class Setting extends React.Component {
                 padding: '15px 25px',
                 position: 'absolute',
                 top: 0,
-                left: 0
+                left: 0,
+                overflowY: 'auto'
             },
             title: {
                 fontSize: '2em',
@@ -126,7 +127,8 @@ export default class Setting extends React.Component {
                 width: '95%',
                 display: 'flex',
                 justifyContent: 'space-between',
-                flexWrap: 'wrap'
+                flexWrap: 'wrap',
+                marginBottom: '60px'
             },
             selectContainer: {
                 margin: '30px 0 60px 0',

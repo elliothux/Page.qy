@@ -108,12 +108,19 @@ const upload = {
         this.win.show();
     },
     start: function(message) {
-        github.pushRepo(message)
+        this.message = function (msg) {
+            try {
+                message(msg)
+            } catch(error) {
+                console.error(error)
+            }
+        };
+        github.pushRepo(this.message)
     },
     end: function () {
         this.win.close();
         this.win = null;
-        this.client = null;
+        this.message = () => {}
     }
 };
 

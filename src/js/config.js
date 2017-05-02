@@ -38,7 +38,8 @@ function initConfig() {
         "avatar": "",
         "mail": "",
         "layoutColumn": 3,
-        "initView": "manage"
+        "initView": "manage",
+        "miniNav": false
     })
 }
 

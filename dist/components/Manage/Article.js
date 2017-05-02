@@ -45,7 +45,6 @@ export default class Article extends React.Component {
     async handleDelete() {
         await this.props.db.deleteArticle(this.state.key);
         const path =  await this.props.dataToHTML.dataToHome();
-        // this.props.dataToHTML.dataToArticle(this.state);
         this.props.dataToHTML.dataToHome();
         this.props.dataToHTML.dataToTags();
         this.props.dataToHTML.dataToArchives();
@@ -55,7 +54,6 @@ export default class Article extends React.Component {
 
     handlePreview() {
         const path = this.props.dataToHTML.getArticlePath(this.state.key);
-        console.log(path);
         this.props.openWindow(path, {
             width: 1000,
             height: 700

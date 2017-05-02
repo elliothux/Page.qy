@@ -50,11 +50,14 @@ export default class Preview extends React.Component {
     style() {return reactCSS({
         default: {
             container: {
-                width: 'calc(100% - 200px)',
+                width: this.props.miniNav ?
+                    'calc(100% - 80px)' : 'calc(100% - 200px)',
                 height: '100%',
                 position: 'fixed',
-                top: '0', left: '200px',
-                transition: 'all ease 800ms',
+                top: '0',
+                left: this.props.miniNav ?
+                    '80px' : '200px',
+                transition: 'all ease 850ms',
                 backgroundColor: 'white',
                 transform: `translateY(${this.props.show ? 0 : '100%'})`,
             },

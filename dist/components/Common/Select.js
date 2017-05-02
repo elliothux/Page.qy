@@ -1,3 +1,12 @@
+Object.size = function(obj) {
+    let size = 0;
+    for (let key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+};
+
+
 import React from 'react';
 import reactCSS from 'reactcss';
 
@@ -59,7 +68,7 @@ export default class Select extends React.Component {
         default: {
             container: {
                 width: '100%',
-                height: this.state.spread ? `${40 * (this.props.selects.size() + 1)}px` : '40px',
+                height: this.state.spread ? `${40 * (Object.size(this.props.selects) + 1)}px` : '40px',
                 transition: 'all ease 200ms',
                 position: 'relative',
                 boxShadow: '0px 3px 10px 1px rgba(0,0,0,0.21)',
