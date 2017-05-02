@@ -1,12 +1,12 @@
 const fs = require('node-fs-extra');
 const path = require('path');
-const db = require('./db');
+const db = require('./db');const isWin = require('os').platform() === 'win32';
 
 
 module.exports.formatContent = formatContent;
 
 
-const picPath = path.join(__dirname, '../../db/pic/');
+const picPath = path.join(__dirname, '../../user/temp/statics/pic/');
 
 
 function formatContent(content, key) {
@@ -32,5 +32,5 @@ function formatContent(content, key) {
 function savePic(name, data) {
     const filePath = path.join(picPath, name);
     fs.writeFileSync(filePath, data, 'base64');
-    return filePath;
+    return `../statics/pic/${name}`;
 }

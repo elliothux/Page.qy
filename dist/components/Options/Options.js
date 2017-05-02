@@ -72,8 +72,6 @@ export default class Options extends React.Component {
                 transform: `translateY(${this.props.show ? 0 : '100%'})`,
             },
             userInfoContainer: {
-                background: `url('${this.props.mainPath}/src/pic/backgroundOptions.jpg')`,
-                backgroundSize: 'cover',
                 width: '100%',
                 height: '45%',
                 position: 'relative'

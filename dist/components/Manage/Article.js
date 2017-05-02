@@ -85,7 +85,7 @@ export default class Article extends React.Component {
                     container.innerHTML = this.state.content;
                     const imgs = container.getElementsByTagName('img');
                     if (imgs.length > 0)
-                        return <img style={this.style().cover} src={imgs[0].src}/>;
+                        return <img style={this.style().cover} src={imgs[0].src.replace('src', 'user/temp')}/>;
                     return false
                 }.bind(this)()}
                 <p style={this.style().title}>
