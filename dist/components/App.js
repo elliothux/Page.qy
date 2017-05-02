@@ -5,7 +5,7 @@ import Nav from './Nav';
 import Preview from './Preview';
 import Manage from './Manage/Manage';
 import Options from './Options/Options';
-import Message from "./Message";
+import Message from "./Common/Message";
 
 
 export default class App extends React.Component {
@@ -15,7 +15,7 @@ export default class App extends React.Component {
         this.handleViewChange = this.handleViewChange.bind(this)
 
         this.state = {
-            viewState: 'manage',
+            viewState: this.props.config.get().initView,
             config: this.props.config.get()
         }
     }

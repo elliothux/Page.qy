@@ -1,6 +1,7 @@
 import React from 'react';
 import reactCSS from 'reactcss';
 import eventProxy from '../../lib/eventProxy';
+import Select from '../Common/Select';
 
 
 export default class Setting extends React.Component {
@@ -10,7 +11,9 @@ export default class Setting extends React.Component {
         this.handleConfigChange = this.handleConfigChange.bind(this);
     }
 
-    handleConfigChange(config) {
+    handleConfigChange(name, value) {
+        const config = {};
+        config[name] = value;
         eventProxy.trigger('setConfig', this.props.config.set(config));
         eventProxy.trigger('message',
             this.props.config.get().language === 'zh' ?
@@ -22,20 +25,81 @@ export default class Setting extends React.Component {
             <h1 style={this.style().title}>
                 {this.props.config.get().language === 'zh' ? '设置' : 'SETTING'}
             </h1>
-            <div style={this.style().buttonsContainer}>
-                <div
-                    style={this.style().button}
-                    onClick={this.handleConfigChange.bind(null, {
-                        language: this.props.config.get().language === 'zh' ?
-                            'en' : 'zh'
-                    })}
-                >
-                    {this.props.config.get().language === 'zh' ? 'Use English' : '使用中文'}
+            <div style={this.style().selects}>
+                <div style={this.style().selectContainer}>
+                    <p style={this.style().selectText}>
+                        { this.props.config.get().language === 'zh' ?
+                            'LANGUAGE:' : '语言:' }
+                    </p>
+                    <div style={this.style().select}>
+                        <Select
+                            onSelect={this.handleConfigChange.bind(null, 'language')}
+                            selects={{
+                                'zh': '中文',
+                                'en': 'English'
+                            }}
+                            default={this.props.config.get().language}
+                        />
+                    </div>
                 </div>
-                <div
-                    style={this.style().button}
-                >
-                    {this.props.config.get().language === 'zh' ? '使用 Markdown' : 'Use Markdown'}
+                <div style={this.style().selectContainer}>
+                    <p style={this.style().selectText}>
+                        { this.props.config.get().language === 'zh' ?
+                            '布局列数:' : 'COLUMNS:' }
+                    </p>
+                    <div style={this.style().select}>
+                        <Select
+                            onSelect={this.handleConfigChange.bind(null, 'layoutColumn')}
+                            selects={{
+                                1: this.props.config.get().language === 'zh' ?
+                                    '一' : '1',
+                                2: this.props.config.get().language === 'zh' ?
+                                    '二' : '2',
+                                3: this.props.config.get().language === 'zh' ?
+                                    '三' : '3',
+                                4: this.props.config.get().language === 'zh' ?
+                                    '四' : '4',
+                            }}
+                            default={this.props.config.get().layoutColumn}
+                        />
+                    </div>
+                </div>
+                <div style={this.style().selectContainer}>
+                    <p style={this.style().selectText}>
+                        { this.props.config.get().language === 'zh' ?
+                            '编辑器:' : 'EDITOR:' }
+                    </p>
+                    <div style={this.style().select}>
+                        <Select
+                            onSelect={this.handleConfigChange.bind(null, 'editor')}
+                            selects={{
+                                'default': this.props.config.get().language === 'zh' ?
+                                    '默认' : 'Default',
+                                'markdown': 'Markdown'
+                            }}
+                            default={this.props.config.get().editor}
+                        />
+                    </div>
+                </div>
+                <div style={this.style().selectContainer}>
+                    <p style={this.style().selectText}>
+                        { this.props.config.get().language === 'zh' ?
+                            '默认视图:' : 'INIT VIEW:' }
+                    </p>
+                    <div style={this.style().select}>
+                        <Select
+                            onSelect={this.handleConfigChange.bind(null, 'initView')}
+                            selects={{
+                                'manage': this.props.config.get().language === 'zh' ?
+                                    '管理' : 'Manage',
+                                'preview': this.props.config.get().language === 'zh' ?
+                                    '预览' : 'Preview',
+                                'options': this.props.config.get().language === 'zh' ?
+                                    '选项' : 'Options',
+                            }}
+                            default={this.props.config.get().initView}
+                        />
+                    </div>
                 </div>
             </div>
         </div>
@@ -58,24 +122,31 @@ export default class Setting extends React.Component {
                 letterSpacing: '0.1em',
                 color: '#4A4A4A'
             },
-            buttonsContainer: {
-                marginTop: '50px',
+            selects: {
+                width: '95%',
+                display: 'flex',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap'
             },
-            button: {
-                height: '35px',
-                width: 'fit-content',
-                padding: '0 20px',
-                margin: '20px 0',
-                textAlign: 'center',
-                lineHeight: '35px',
-                borderRadius: '50px',
+            selectContainer: {
+                margin: '30px 0 60px 0',
+                height: '30px',
+                display: 'inline-block',
+                width: '44%',
+                position: 'relative'
+            },
+            selectText: {
+                fontSize: '1.1em',
+                fontWeight: 'Bold',
+                marginBottom: '8px',
+                letterSpacing: '0.05em',
                 display: 'block',
-                backgroundImage: 'linear-gradient(-225deg, rgba(85, 203, 242, 1) 0%, rgba(61, 144, 239, 1) 100%)',
-                color: 'white',
-                fontSize: '1.2em',
-                letterSpacing: '0.1em',
-                cursor: 'pointer',
-                boxShadow: '0px 4px 11px 1px rgba(0,0,0,0.21)'
+                height: '30px',
+            },
+            select: {
+                width: '100%',
+                height: '30px',
+                position: 'absolute'
             }
         }
     }, this.props, this.state)}

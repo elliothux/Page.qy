@@ -18,7 +18,7 @@ export default class Nav extends React.Component {
             >
                 <img
                     style={this.style().userHead}
-                    src={this.props.config.get().avatar || "../../src/pic/head.png"}
+                    src="../../user/avatar.jpg"
                 />
                 <div style={this.style().userInfo}>
                     <p style={this.style().userName}>

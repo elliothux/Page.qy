@@ -93,7 +93,7 @@ export default class Manage extends React.Component {
     style() {return(reactCSS({
         'default': {
             container: {
-                width: 'calc(100% - 230px)',
+                width: 'calc(100% - 200px)',
                 height: '100%',
                 position: 'fixed',
                 top: '0', left: '200px',

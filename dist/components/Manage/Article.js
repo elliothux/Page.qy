@@ -21,8 +21,6 @@ export default class Article extends React.Component {
             introduction: this.props.data.introduction,
             key: this.props.data.key,
             published: this.props.data.published,
-            translateY: 50,
-            translateX: `${5 * 100 / 28}%`
         }
     }
 
