@@ -33,6 +33,8 @@ export default class Edit extends React.Component {
     handleEditArticle(data) {
         data && this.setState(data);
         this.refs.editor.contentWindow.document
+            .getElementById('editorContainer').scrollTop = 0;
+        this.refs.editor.contentWindow.document
             .getElementById('editorContainer')
             .innerHTML = data ? data.content.replace(
                 /src\=\"\.\.\/statics\/pic/g,
@@ -138,7 +140,7 @@ export default class Edit extends React.Component {
     style() {return(reactCSS({
         default: {
             container: {
-                width: '100%'
+                width: '100%',
             },
             title: {
                 width: 'calc(100% - 30px)',

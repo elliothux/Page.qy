@@ -48,8 +48,10 @@ export default class Message extends React.Component {
     style() {return reactCSS({
         default: {
             container: {
-                width: 'calc(100% - 200px)',
-                marginLeft: '200px',
+                width: this.props.miniNav ?
+                    'calc(100% - 80px)' : 'calc(100% - 200px)',
+                marginLeft: this.props.miniNav ?
+                    '80px' : '200px',
                 position: 'fixed',
                 display: 'flex',
                 bottom: '0',
