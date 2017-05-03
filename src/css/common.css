@@ -29,6 +29,17 @@ input, button, textarea, :focus {
 
 
 /* Animation */
+#avatar {
+    box-shadow: 0 6px 32px 5px rgba(0,0,0,0.4);
+    transform: scale(1);
+    transition: all ease 300ms;
+}
+#avatar:hover {
+    transform: scale(1.05);
+    box-shadow: none;
+}
+
+
 .articleContainer .articleOperateButton {
     bottom: -20%;
     transform: scaleY(0);

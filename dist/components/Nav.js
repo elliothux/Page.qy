@@ -94,6 +94,7 @@ export default class Nav extends React.Component {
                     `https://${this.props.config.get().username}.github.io`)}
             >
                 <img
+                    id="avatar"
                     style={this.style().userHead}
                     src="../../user/avatar.jpg"
                 />
@@ -228,7 +229,6 @@ export default class Nav extends React.Component {
                 marginTop: '25px',
                 marginLeft: this.props.miniNav ?
                     '9px' : '25px',
-                boxShadow: '0px 6px 32px 5px rgba(0,0,0,0.4)',
                 cursor: 'pointer',
                 transition: 'all ease 300ms',
             },
