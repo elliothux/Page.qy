@@ -39,9 +39,8 @@ export default class Article extends React.Component {
     }
 
     handleHistory() {
-        eventProxy.trigger('viewHistory', Object.assign(
-            {}, this.props.data, this.state
-        ));
+        eventProxy.trigger('viewHistory',
+            this.props.data.historyContent);
     }
 
     handleConfirm(flag) {
@@ -338,7 +337,8 @@ export default class Article extends React.Component {
                 width: '40%'
             },
             confirmContainer: {
-                width: '100%',
+                width: '90%',
+                padding: '0 5%',
                 height: '100%',
                 position: 'absolute',
                 top: 0, left: 0,
@@ -350,7 +350,7 @@ export default class Article extends React.Component {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 justifyItems: 'center',
-                fontSize: 'normal'
+                fontSize: '0.9em',
             },
             confirmButton: {
                 width: '70px',

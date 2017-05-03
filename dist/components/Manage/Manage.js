@@ -3,7 +3,7 @@ import reactCSS from 'reactcss';
 import eventProxy from '../../lib/eventProxy';
 import Editor from './Editor';
 import Article from './Article';
-import History from './History';
+import History from './History/History';
 
 
 export default class Manage extends React.Component {
@@ -83,6 +83,7 @@ export default class Manage extends React.Component {
                 <History
                     db={this.props.db}
                     config={this.props.config}
+                    mainPath={this.props.mainPath}
                 />
             </div>
             <div
