@@ -15,7 +15,7 @@ export default class Message extends React.Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         eventProxy.on('message', function (message) {
             this.state.messages.push(message);
             this.showMessage();

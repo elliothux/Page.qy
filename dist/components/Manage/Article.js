@@ -12,6 +12,7 @@ export default class Article extends React.Component {
         this.handleDelete = this.handleDelete.bind(this);
         this.handlePreview = this.handlePreview.bind(this);
         this.handlePublish = this.handlePublish.bind(this);
+        this.handleHistory = this.handleHistory.bind(this);
 
         this.state = {
             date: this.props.data.createDate,
@@ -24,7 +25,7 @@ export default class Article extends React.Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         eventProxy.on('updateArticleData', function (data) {
             data.key === this.state.key &&
                 this.setState(data)
@@ -33,6 +34,12 @@ export default class Article extends React.Component {
 
     handleEditArticle() {
         eventProxy.trigger('editArticle', Object.assign(
+            {}, this.props.data, this.state
+        ));
+    }
+
+    handleHistory() {
+        eventProxy.trigger('viewHistory', Object.assign(
             {}, this.props.data, this.state
         ));
     }
@@ -85,7 +92,7 @@ export default class Article extends React.Component {
                     container.innerHTML = this.state.content;
                     const imgs = container.getElementsByTagName('img');
                     if (imgs.length > 0)
-                        return <img style={this.style().cover} src={imgs[0].src.replace('src', 'user/temp')}/>;
+                        return <img style={this.style().cover} src={imgs[0].src}/>;
                     return false
                 }.bind(this)()}
                 <p style={this.style().title}>
@@ -168,6 +175,7 @@ export default class Article extends React.Component {
                 <div
                     className="articleOperateButton"
                     style={this.style().operateButton}
+                    onClick={this.handleHistory}
                 >
                     <img
                         style={this.style().operateButtonImg}

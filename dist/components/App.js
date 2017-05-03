@@ -21,7 +21,7 @@ export default class App extends React.Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         eventProxy.on('setConfig', function (config) {
             this.setState({ config: config })
         }.bind(this));

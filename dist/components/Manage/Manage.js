@@ -3,6 +3,7 @@ import reactCSS from 'reactcss';
 import eventProxy from '../../lib/eventProxy';
 import Editor from './Editor';
 import Article from './Article';
+import History from './History';
 
 
 export default class Manage extends React.Component {
@@ -19,13 +20,14 @@ export default class Manage extends React.Component {
         }
     }
 
-    async componentWillMount() {
+    async componentDidMount() {
         this.setState({articleList: (await this.props.db.getArticleList()).sort((a, b) => (
             (new Date(b.createDate)).getTime() - (new Date(a.createDate)).getTime()
         ))});
         eventProxy.on('editArticle', this.handleViewChange.bind(null, 'edit'));
         eventProxy.on('createArticle', this.handleViewChange.bind(null, 'edit'));
         eventProxy.on('changeManageView', this.handleViewChange.bind(null, 'article'));
+        eventProxy.on('viewHistory', this.handleViewChange.bind(null, 'history'));
         eventProxy.on('refreshArticleList', this.refreshArticleList);
     }
 
@@ -75,6 +77,12 @@ export default class Manage extends React.Component {
                     dataToHTML = {this.props.dataToHTML}
                     config={this.props.config}
                     formatContent={this.props.formatContent}
+                />
+            </div>
+            <div style={this.style().historyContainer}>
+                <History
+                    db={this.props.db}
+                    config={this.props.config}
                 />
             </div>
             <div
@@ -132,6 +140,19 @@ export default class Manage extends React.Component {
                 backgroundColor: 'white',
                 transition: 'all 700ms ease',
                 top: this.state.viewState === 'edit' ?
+                    0 : '100%'
+            },
+            historyContainer: {
+                position: 'fixed',
+                overflow: 'hidden',
+                width: 'calc(100% - 80px)',
+                height: '100%',
+                left: 0,
+                padding: '0 40px',
+                zIndex: 4,
+                backgroundColor: 'white',
+                transition: 'all 700ms ease',
+                top: this.state.viewState === 'history' ?
                     0 : '100%'
             },
             addButton: {

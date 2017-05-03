@@ -11,7 +11,7 @@ export default class Preview extends React.Component {
         this.upload = this.upload.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         eventProxy.on('refreshPreview', this.refreshPreview.bind(this))
     }
 
