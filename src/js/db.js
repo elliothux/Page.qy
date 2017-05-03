@@ -132,7 +132,7 @@ async function createArticle(data) {
         key: await keyGenerator(),
         createDate: (new Date()).toString(),
         editDate: (new Date()).toString(),
-        historyContent: {},
+        historyContent: [],
         type: 'article',
         published: false
     };
@@ -156,15 +156,17 @@ async function editArticle(data) {
 
         const editDate = (new Date()).toString();
         let historyContent = prevArticle.historyContent;
-        historyContent[editDate] = (() => {
+        historyContent.push(function() {
             const newHistoryData = {
                 title: prevArticle.title,
                 content: prevArticle.content,
-                changed: changed
+                changed: changed,
+                date: editDate
             };
-            'tags' in prevArticle && (newHistoryData.tags =  prevArticle.tags);
+            'tags' in prevArticle &&
+                (newHistoryData.tags =  prevArticle.tags);
             return newHistoryData;
-        })();
+        }());
 
         const newArticle = Object.assign({}, prevArticle, data, {
             editDate: editDate,

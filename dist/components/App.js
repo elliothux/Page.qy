@@ -61,7 +61,6 @@ export default class App extends React.Component {
                 openWindow={this.props.openWindow}
                 dataToHTML = {this.props.dataToHTML}
                 config={this.props.config}
-                formatContent={this.props.formatContent}
                 show={this.state.viewState === 'manage'}
                 miniNav={this.state.miniNav}
             />

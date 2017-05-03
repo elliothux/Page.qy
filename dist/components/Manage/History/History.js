@@ -11,14 +11,19 @@ export default class History extends React.Component {
         this.handleViewHistory = this.handleViewHistory.bind(this);
 
         this.state = {
-            historyContent: {}
+            historyContent: []
         }
+
     }
 
     componentDidMount() {
         eventProxy.on('viewHistory', function (data) {
             this.handleViewHistory(data);
         }.bind(this))
+    }
+
+    componentWillReceiveProps() {
+        this.refs.container.scrollTop = 0;
     }
 
     handleViewHistory(data) {
@@ -28,20 +33,19 @@ export default class History extends React.Component {
     }
 
     render() {return(
-        <div style={this.style().container}>
-            <img style={this.style().icon}
-                 src={`${this.props.mainPath}/src/pic/timemachine.svg`}/>
-            <h1 style={this.style().title}>TIME<br/>MACHINE</h1>
-            {function () {
-                const res = [];
-                for (let history in this.props.historyContent)
-                    res.push(
-                        <HistoryItem
-                            data={this.props.historyContent[history]}
-                            key={history} date={history}
-                        />);
-                return res;
-            }.bind(this)()}
+        <div style={this.style().container} ref="container">
+            <div style={this.style().titleContainer}>
+                <img style={this.style().icon}
+                     src={`${this.props.mainPath}/src/pic/timemachine.svg`}/>
+                <h1 style={this.style().title}>TIME<br/>MACHINE</h1>
+            </div>
+            {this.state.historyContent.map(function (data, index) {
+                return <HistoryItem
+                    dataToHTML = {this.props.dataToHTML}
+                    data={data}
+                    key={index}
+                />
+            }.bind(this))}
         </div>
     )}
 
@@ -49,11 +53,18 @@ export default class History extends React.Component {
         default: {
             container: {
                 width: '100%',
+                height: '100%',
+                overflowY: 'auto',
+                position: 'relative'
+            },
+            titleContainer: {
+                width: '92%',
+                marginLeft: '4%'
             },
             icon: {
                 width: '85px',
                 height: 'auto',
-                marginTop: '30px'
+                margin: '30px  0 50px 0'
             },
             title: {
                 textAlign: 'right',

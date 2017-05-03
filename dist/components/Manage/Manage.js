@@ -27,7 +27,8 @@ export default class Manage extends React.Component {
         eventProxy.on('editArticle', this.handleViewChange.bind(null, 'edit'));
         eventProxy.on('createArticle', this.handleViewChange.bind(null, 'edit'));
         eventProxy.on('changeManageView', this.handleViewChange.bind(null, 'article'));
-        eventProxy.on('viewHistory', this.handleViewChange.bind(null, 'history'));
+        eventProxy.on('viewHistory', setTimeout.bind(null,
+            this.handleViewChange.bind(null, 'history'), 100));
         eventProxy.on('refreshArticleList', this.refreshArticleList);
     }
 
@@ -76,7 +77,6 @@ export default class Manage extends React.Component {
                     db={this.props.db}
                     dataToHTML = {this.props.dataToHTML}
                     config={this.props.config}
-                    formatContent={this.props.formatContent}
                 />
             </div>
             <div style={this.style().historyContainer}>
@@ -84,6 +84,7 @@ export default class Manage extends React.Component {
                     db={this.props.db}
                     config={this.props.config}
                     mainPath={this.props.mainPath}
+                    dataToHTML = {this.props.dataToHTML}
                 />
             </div>
             <div

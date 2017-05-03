@@ -22,7 +22,6 @@ ReactDOM.render(
             config={main.config}
             theme={main.theme}
             logout={main.logout.start}
-            // formatContent = {main.formatContent}
             user={main.user}
             app={remote.app}
             shell={shell}
