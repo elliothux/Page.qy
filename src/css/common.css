@@ -31,33 +31,39 @@ input, button, textarea, :focus {
 /* Animation */
 .articleContainer .articleOperateButton {
     bottom: -20%;
-    transform: scaleY(0) rotate(30deg);
-    transition: all 350ms ease;
+    transform: scaleY(0);
+    opacity: 0;
+    transition: all 300ms ease;
 }
 .articleContainer:hover .articleOperateButton:nth-child(1) {
-    transition-delay: 0ms;
+    transition-delay: 140ms;
     bottom: 80%;
-    transform: scaleY(1) rotate(0);
+    transform: scaleY(1);
+    opacity: 1;
 }
 .articleContainer:hover .articleOperateButton:nth-child(2) {
-    transition-delay: 40ms;
+    transition-delay: 90ms;
     bottom: 60%;
-    transform: scaleY(1) rotate(0);
+    transform: scaleY(1);
+    opacity: 1;
 }
 .articleContainer:hover .articleOperateButton:nth-child(3) {
-    transition-delay: 80ms;
+    transition-delay: 50ms;
      bottom: 40%;
-    transform: scaleY(1) rotate(0);
+    transform: scaleY(1);
+    opacity: 1;
 }
 .articleContainer:hover .articleOperateButton:nth-child(4) {
-    transition-delay: 120ms;
+    transition-delay: 20ms;
     bottom: 20%;
-    transform: scaleY(1) rotate(0);
+    transform: scaleY(1);
+    opacity: 1;
 }
 .articleContainer:hover .articleOperateButton:nth-child(5) {
-    transition-delay: 160ms;
+    transition-delay: 0ms;
     bottom: 0;
-    transform: scaleY(1) rotate(0);
+    transform: scaleY(1);
+    opacity: 1;
 }
 
 
@@ -82,11 +88,13 @@ input, button, textarea, :focus {
 
 
 .articleConfirm {
-    transform: scale(0);
+    top: 100%;
+    transform: scaleY(0);
     transition: all 400ms ease
 }
 .articleConfirm.activated {
-    transform: scale(1);
+    top: 0;
+    transform: scaleY(1);
 }
 
 
@@ -96,4 +104,5 @@ input, button, textarea, :focus {
 }
 .articleContainer.deleted {
     transform: scale(0);
+    opacity: 0;
 }
