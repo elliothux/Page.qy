@@ -9,6 +9,14 @@ export default class Options extends React.Component {
     constructor(props) {
         super(props);
         this.style = this.style.bind(this);
+        this.state = {
+            articleStatistic: 0,
+            tagStatistic: 0
+        }
+    }
+
+    async componentDidMount() {
+        this.setState(await this.props.db.statistic())
     }
 
     render() {return (
@@ -27,8 +35,12 @@ export default class Options extends React.Component {
                             </p>
                         </div>
                         <p style={this.style().articleCount}>
-                            Writed <span style={this.style().countNumber}>32</span> articles
-                            about <span style={this.style().countNumber}>8</span> topics
+                            Writed <span ref="articleStatistic"style={this.style().countNumber}>{
+                                this.state.articleStatistic
+                            }</span> articles
+                            about <span ref="tagStatistic" style={this.style().countNumber}>{
+                                this.state.tagStatistic
+                            }</span> topics
                         </p>
                     </div>
                     <img
@@ -151,7 +163,7 @@ export default class Options extends React.Component {
                 color: '#676667',
                 fontWeight: 'bold',
                 position: 'absolute',
-                left: '-55px',
+                left: '-35px',
                 top: '-10px'
             },
             articleCount: {

@@ -1,12 +1,7 @@
 const DataStore = require('nedb');
 const path = require('path');
+const config = require('./config');
 const fs = require('node-fs-extra');
-
-
-const config = JSON.parse(fs.readFileSync(
-    path.join(__dirname, '../../user/config.json'),
-    'utf-8'
-));
 
 
 // Define the database of articles
@@ -31,6 +26,7 @@ module.exports.getPublishedArticleList = getPublishedArticleList;
 module.exports.backup = backup;
 module.exports.restore = restore;
 module.exports.getArticle = getArticle;
+module.exports.statistic = statistic;
 
 
 // Generate an unique key
@@ -241,8 +237,8 @@ async function deleteArticle(key) {
 }
 
 
-// Pass an optional argument 'tags' to get articles
-async function getArticleList(tags) {
+// Get articles
+async function getArticleList() {
     return (await find({type: 'article'}, article));
 }
 
@@ -275,19 +271,26 @@ async function getArticle(key) {
 }
 
 
+async function statistic() {
+    const result = {};
+    const tags = [];
+    const articles = await getArticleList();
+    for (let article of articles)
+        for (let tag of article.tags)
+            !tags.includes(tag) && tags.push(tag)
+    result.articleStatistic = articles.length;
+    result.tagStatistic = tags.length;
+    return result;
+}
+
+
 function backup(target) {
     !fs.existsSync(target) && fs.mkdirsSync(target);
     fs.copySync(path.join(articlePath, '../'), target);
     return path.join(target);
 }
 
+
 function restore(target) {
     fs.copySync(target, path.join(articlePath, '../'));
 }
-
-
-async function test() {
-    return backup();
-}
-
-// test()

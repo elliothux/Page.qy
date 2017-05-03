@@ -66,6 +66,7 @@ export default class App extends React.Component {
                 miniNav={this.state.miniNav}
             />
             <Options
+                db={this.props.db}
                 mainPath={this.props.path}
                 config={this.props.config}
                 theme={this.props.theme}
