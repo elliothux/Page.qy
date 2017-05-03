@@ -11,7 +11,7 @@ export default class HistoryItem extends React.Component {
     render() {return (
         <div style={this.style().container}>
             <div>
-                {/*{this.props.dataToHTML.formatDate(this.props.data.)}*/}
+                {this.props.dataToHTML.formatDate(this.props.data.date).day}
             </div>
             <p>{this.props.data.content}</p>
         </div>
