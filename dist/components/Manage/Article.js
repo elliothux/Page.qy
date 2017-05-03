@@ -246,7 +246,8 @@ export default class Article extends React.Component {
                 boxShadow: '0px 14px 21px 0px rgba(0,0,0,0.10)',
                 letterSpacing: '0.1em',
                 fontFamily: '宋体',
-                color: '#565656'
+                color: '#565656',
+                wordBreak: 'break-all',
             },
             cover: {
                 width: '100%',
