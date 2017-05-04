@@ -6,6 +6,29 @@ export default class HistoryItem extends React.Component {
     constructor(props) {
         super(props);
         this.style = this.style.bind(this);
+        this.reLayout = this.reLayout.bind(this);
+    }
+
+    componentDidMount() {
+        // this.reLayout();
+        window.addEventListener('resize', this.reLayout);
+    }
+
+    componentDidUpdate() {
+        this.reLayout();
+    }
+
+    reLayout() {
+        if (this.refs.cover) {
+            // // const container = document.createElement('div');
+            // // container.innerHTML = this.props.content;
+            // // const imgs = container.getElementsByTagName('img');
+            // const height = this.refs.container.offsetHeight + 30;
+            const width = this.refs.cover.width;
+            // this.refs.cover.style.height = `${height}px`;
+            // this.refs.cover.style.width = `${width}px`;
+            this.refs.content.style.width = `calc(100% - ${width + 35}px)`
+        }
     }
 
     render() {return (
@@ -21,7 +44,7 @@ export default class HistoryItem extends React.Component {
                 </div>
             }.bind(this)()}
             <div style={this.style().contentArea}>
-                <div style={this.style().content}>
+                <div style={this.style().content} ref="content">
                     <ul style={this.style().tags}>
                         {this.props.tags && this.props.tags.map((tag, index) => (
                             <li style={this.style().tag} key={index}>
@@ -71,14 +94,16 @@ export default class HistoryItem extends React.Component {
                         </ul>
                     </div>
                 </div>
-                {function () {
-                    const container = document.createElement('div');
-                    container.innerHTML = this.props.content;
-                    const imgs = container.getElementsByTagName('img');
-                    if (imgs.length > 0)
-                        return <img style={this.style().cover} src={imgs[0].src}/>;
-                    return false
-                }.bind(this)()}
+                <div style={this.style().coverContainer}>
+                    {function () {
+                        const container = document.createElement('div');
+                        container.innerHTML = this.props.content;
+                        const imgs = container.getElementsByTagName('img');
+                        if (imgs.length > 0)
+                            return <img ref="cover" style={this.style().cover} src={imgs[0].src}/>;
+                        return false
+                    }.bind(this)()}
+                </div>
             </div>
         </div>
     )}
@@ -136,7 +161,7 @@ export default class HistoryItem extends React.Component {
                 fontSize: '15px'
             },
             contentArea: {
-                width: 'calc(95% - 120px)',
+                width: 'calc(100% - 155px)',
                 minHeight: '150px',
                 display: 'inline-flex',
                 flexDirection: 'row',
@@ -148,6 +173,21 @@ export default class HistoryItem extends React.Component {
                 fontFamily: '宋体',
                 color: 'rgba(0, 0, 0, 0.9)',
                 wordBreak: 'break-world',
+            },
+            coverContainer: {
+                height: '100%',
+                position: 'absolute',
+                top: 0, right: 0
+            },
+            cover: {
+                width: 'auto',
+                height: '100%',
+                position: 'absolute',
+                right: 0
+            },
+            content: {
+                paddingRight: '50px',
+                display: 'inline-block'
             },
             tags: {
                 margin: '15px 0px 8px',
@@ -165,9 +205,6 @@ export default class HistoryItem extends React.Component {
                 display: 'inline-block',
                 marginRight: '16px',
                 fontSize: '1em'
-            },
-            content: {
-                paddingRight: '50px'
             },
             title: {
                 fontSize: '2.2em',
@@ -209,10 +246,6 @@ export default class HistoryItem extends React.Component {
                 color: 'white',
                 marginRight: '8px',
                 boxShadow: '0px 3px 15px 0px rgba(0,0,0,0.25)'
-            },
-            cover: {
-                height: '100%',
-                width: 'auto'
             }
         }
     }, this.props, this.state)}
