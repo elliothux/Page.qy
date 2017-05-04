@@ -46,6 +46,7 @@ export default class History extends React.Component {
                     key={index}
                     mainPath={this.props.mainPath}
                     language={this.props.config.get().language}
+                    openWindow={this.props.openWindow}
                 />
             }.bind(this))}
         </div>

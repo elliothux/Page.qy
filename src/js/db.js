@@ -212,7 +212,6 @@ async function editArticle(data) {
     function compareChange(preData, newData) {
         const changed = [];
         preData.title !== newData.title && changed.push('title');
-        preData.introduction !== newData.introduction && changed.push('introduction');
         preData.content !== newData.content && changed.push('content');
         if (preData.tags.length !== newData.tags.length) {
             changed.push('tags');

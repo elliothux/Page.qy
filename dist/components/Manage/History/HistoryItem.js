@@ -5,7 +5,32 @@ import reactCSS from 'reactcss';
 export default class HistoryItem extends React.Component {
     constructor(props) {
         super(props);
-        this.style = this.style.bind(this);// this.reLayout = this.reLayout.bind(this);
+        this.style = this.style.bind(this);
+        this.handlePreview = this.handlePreview.bind(this);
+
+        this.state = {
+            status: 'init',
+            selected: []
+        }
+    }
+
+    async handlePreview() {
+        this.props.openWindow(
+            await this.props.dataToHTML.dataToArticle(this.props))
+    }
+
+    handleSelect(select) {
+        if (select === 'all') {
+            if (this.state.selected.includes('all'))
+                return this.setState({ selected: [] });
+            else return this.setState({ selected: ['all'] });
+        }
+        if (this.state.selected.includes(select))
+            this.state.selected.push(select);
+        else
+            this.state.selected.splice(
+                this.state.selected.indexOf(select),1);
+        this.setState(this.state);
     }
 
     render() {return (
@@ -18,6 +43,16 @@ export default class HistoryItem extends React.Component {
                     <span style={this.style().dateYear}>{date.year}</span>
                     <span style={this.style().dateTime}>{date.hours} : {date.minutes}</span>
                     <span style={this.style().dateDay}>{date.day}</span>
+                    <img
+                        style={this.style().restoreImage}
+                        src={`${this.props.mainPath}/src/pic/history.svg`}
+                        onClick={this.setState.bind(this, { status: 'restore' }, () => {})}
+                    />
+                    <img
+                        style={this.style().previewImage}
+                        src={`${this.props.mainPath}/src/pic/preview.svg`}
+                        onClick={this.handlePreview}
+                    />
                 </div>
             }.bind(this)()}
             <div style={this.style().contentArea}>
@@ -82,6 +117,62 @@ export default class HistoryItem extends React.Component {
                     return false
                 }.bind(this)()}
             </div>
+            <div style={this.style().operate}>
+                <p style={this.style().operateTitle}>
+                    {this.props.language === 'zh' ?
+                        '选择你要恢复的内容:' : 'Choose What You Want To Restore:' }
+                </p>
+                <div style={this.style().operateButtonContainer}>
+                    {function () {
+                        const operate = [];
+                        this.props.changed.includes('title') &&
+                            operate.push(<button
+                                key='title'
+                                style={this.state.selected.includes('title') ||
+                                this.state.selected.includes('all') ?
+                                    this.style().operateButton : this.style().operateButtonSelected}
+                                onClick={this.handleSelect.bind(this, 'title')}
+                            >
+                                {this.props.language === 'zh' ?
+                                    '标题' : 'TITLE'}
+                            </button>);
+                        this.props.changed.includes('tags') &&
+                            operate.push(<button
+                                key='tags'
+                                style={this.state.selected.includes('tags') ||
+                                this.state.selected.includes('all') ?
+                                    this.style().operateButton : this.style().operateButtonSelected}
+                                onClick={this.handleSelect.bind(this, 'tags')}
+                            >
+                                {this.props.language === 'zh' ?
+                                    '标签' : 'TAGS'}
+                            </button>);
+                        this.props.changed.includes('content') &&
+                            operate.push(<button
+                                key='content'
+                                style={this.state.selected.includes('content') ||
+                                this.state.selected.includes('all') ?
+                                    this.style().operateButton : this.style().operateButtonSelected}
+                                onClick={this.handleSelect.bind(this, 'content')}
+                            >
+                                {this.props.language === 'zh' ?
+                                    '内容' : 'CONTENT'}
+                            </button>);
+                        operate.length > 1 &&
+                            operate.unshift(<button
+                                key='all'
+                                style={this.state.selected.includes('all') ||
+                                    this.props.changed.length === this.state.selected.length ?
+                                    this.style().operateButton : this.style().operateButtonSelected}
+                                onClick={this.handleSelect.bind(this, 'all')}
+                            >
+                                {this.props.language === 'zh' ?
+                                    '全部' : 'ALL'}
+                            </button>);
+                        return operate;
+                    }.bind(this)()}
+                </div>
+            </div>
         </div>
     )}
 
@@ -96,7 +187,8 @@ export default class HistoryItem extends React.Component {
                 wordBreak: 'break-all',
                 display: 'flex',
                 justifyContent: 'space-between',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                position: 'relative'
             },
             dateArea: {
                 width: '180px',
@@ -105,6 +197,22 @@ export default class HistoryItem extends React.Component {
                 fontWeight: 'bold',
                 position: 'relative',
                 color: 'rgba(0, 0, 0, 0.9)',
+            },
+            restoreImage: {
+                position: 'absolute',
+                width: '20px',
+                height: 'auto',
+                top: '150px',
+                left: '19px',
+                cursor: 'pointer'
+            },
+            previewImage: {
+                position: 'absolute',
+                width: '20px',
+                height: 'auto',
+                top: '150px',
+                left: '50px',
+                cursor: 'pointer'
             },
             dateDate: {
                 position: 'absolute',
@@ -219,6 +327,70 @@ export default class HistoryItem extends React.Component {
                 color: 'white',
                 marginRight: '8px',
                 boxShadow: '0px 3px 15px 0px rgba(0,0,0,0.25)'
+            },
+            operate: {
+                width: '100%',
+                height: '100%',
+                backgroundImage: 'linear-gradient(90deg, rgba(85, 203, 242, 0.87) 0%, rgba(61, 144, 239, 0.92) 100%)',
+                position: 'absolute',
+                top: 0,
+                transition: 'all ease 300ms',
+                transform: `translateY(${
+                    this.state.status === 'restore' ?
+                        0 : '100%'
+                })`
+            },
+            operateTitle: {
+                textAlign: 'center',
+                color: 'white',
+                margin: '18px 0 12px 0',
+                fontSize: '1.2em',
+                fontWeight: 'bold'
+            },
+            operateButtonContainer: {
+                width: '80%',
+                margin: '0 10%',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'center'
+            },
+            operateButton: {
+                width: '20%',
+                minWidth: '40px',
+                maxWidth: '80px',
+                height: '30px',
+                border: 'none',
+                color: 'white',
+                backgroundColor: 'rgba(54, 122, 209, 0.3)',
+                cursor: 'pointer',
+                fontSize: '0.7em',
+                letterSpacing: '0.08em',
+                margin: '0 15px 10px 15px'
+            },
+            operateButtonSelected: {
+                width: '20%',
+                minWidth: '40px',
+                maxWidth: '80px',
+                height: '30px',
+                border: 'none',
+                color: 'white',
+                backgroundColor: 'rgba(54, 122, 209, 1)',
+                cursor: 'pointer',
+                fontSize: '0.7em',
+                letterSpacing: '0.08em',
+                margin: '0 15px 10px 15px'
+            },
+            button: {
+                width: '42%',
+                height: '30px',
+                borderRadius: '30px',
+                border: 'none',
+                color: 'white',
+                backgroundColor: 'rgba(54, 122, 209, 0.3)',
+                cursor: 'pointer',
+                fontSize: '0.7em',
+                letterSpacing: '0.08em',
+                transition: 'all ease 200ms'
             }
         }
     }, this.props, this.state)}

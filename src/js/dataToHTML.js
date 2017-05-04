@@ -74,10 +74,12 @@ function dataToArticle(rawData) {
 
     !fs.existsSync(path.join(target, `./articles/`)) &&
         fs.mkdirpSync(path.join(target, `./articles/`));
-    const targetPath = path.join(target, `./articles/${rawData.key}.html`);
+    const targetPath = rawData.key ?
+        path.join(target, `./articles/${rawData.key}.html`) :
+        path.join(target, `./articles/temp.html`);
     fs.writeFileSync(targetPath, article, 'utf-8');
     updateStaticFiles();
-    return path.join(targetPath, `${rawData.key}.html`)
+    return targetPath;
 }
 
 

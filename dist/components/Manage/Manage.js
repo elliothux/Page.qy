@@ -100,6 +100,7 @@ export default class Manage extends React.Component {
                     config={this.props.config}
                     mainPath={this.props.mainPath}
                     dataToHTML = {this.props.dataToHTML}
+                    openWindow={this.props.openWindow}
                 />
             </div>
             <div
