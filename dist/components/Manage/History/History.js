@@ -61,7 +61,8 @@ export default class History extends React.Component {
             },
             titleContainer: {
                 width: '92%',
-                marginLeft: '4%'
+                marginLeft: '2%',
+                marginBottom: '15px'
             },
             icon: {
                 width: '85px',

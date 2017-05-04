@@ -21,7 +21,7 @@ export default class HistoryItem extends React.Component {
                 </div>
             }.bind(this)()}
             <div style={this.style().contentArea}>
-                <div>
+                <div style={this.style().content}>
                     <ul style={this.style().tags}>
                         {this.props.tags && this.props.tags.map((tag, index) => (
                             <li style={this.style().tag} key={index}>
@@ -33,23 +33,52 @@ export default class HistoryItem extends React.Component {
                             </li>
                         ))}
                     </ul>
-                    <p>{this.props.title}</p>
-                    <p>{this.props.introduction}</p>
-                    <div>
-                        {this.props.language === 'zh' ? '更改项:' : 'Changed:'}
-                        <ul>{this.props.changed.map((changed, index) => <li key={index}>{changed}</li>)}</ul>
+                    <p style={this.style().title}>
+                        {this.props.title === '' ?
+                            (this.props.language === 'zh' ?
+                                '未命名文章' : 'Untitled Article') : this.props.title}
+                    </p>
+                    <p style={this.style().introduction}>{this.props.introduction}</p>
+                    <div style={this.style().changedContainer}>
+                        <img
+                            style={this.style().changedImage}
+                            src={`${this.props.mainPath}/src/pic/changed.svg`}
+                        />
+                        <span style={this.style().changedText}>
+                            {this.props.language === 'zh' ? '更改项:' : 'CHANGED:'}
+                        </span>
+                        <ul style={this.style().changed}>
+                            {this.props.changed.map((changed, index) => {
+                                switch (changed) {
+                                    case 'content': return <li
+                                        style={this.style().changedItem}
+                                        key={index}>
+                                        {this.props.language === 'zh' ? '内容' : 'CONTENT'}
+                                    </li>;
+                                    case 'tags': return <li
+                                        style={this.style().changedItem}
+                                        key={index}>
+                                        {this.props.language === 'zh' ? '标签' : 'TAGS'}
+                                    </li>;
+                                    case 'title': return <li
+                                        style={this.style().changedItem}
+                                        key={index}>
+                                        {this.props.language === 'zh' ? '标题' : 'TITLE'}
+                                    </li>;
+                                    default: return false;
+                                }
+                            })}
+                        </ul>
                     </div>
                 </div>
-                <div style={this.style().coverContainer}>
-                    {function () {
-                        const container = document.createElement('div');
-                        container.innerHTML = this.props.content;
-                        const imgs = container.getElementsByTagName('img');
-                        if (imgs.length > 0)
-                            return <img style={this.style().cover} src={imgs[0].src}/>;
-                        return false
-                    }.bind(this)()}
-                </div>
+                {function () {
+                    const container = document.createElement('div');
+                    container.innerHTML = this.props.content;
+                    const imgs = container.getElementsByTagName('img');
+                    if (imgs.length > 0)
+                        return <img style={this.style().cover} src={imgs[0].src}/>;
+                    return false
+                }.bind(this)()}
             </div>
         </div>
     )}
@@ -73,7 +102,8 @@ export default class HistoryItem extends React.Component {
                 display: 'inline-block',
                 fontFamily: 'DIN Condensed',
                 fontWeight: 'bold',
-                position: 'relative'
+                position: 'relative',
+                color: 'rgba(0, 0, 0, 0.9)',
             },
             dateDate: {
                 position: 'absolute',
@@ -112,30 +142,73 @@ export default class HistoryItem extends React.Component {
                 flexDirection: 'row',
                 flexWrap: 'nowrap',
                 justifyContent: 'space-between',
+                alignItems: 'center',
                 overflow: 'hidden',
                 position: 'relative',
+                fontFamily: '宋体',
+                color: 'rgba(0, 0, 0, 0.9)',
+                wordBreak: 'break-world',
             },
             tags: {
-                margin: '8px 0 6px 0',
-                listStyle: 'none'
+                margin: '15px 0px 8px',
+                listStyle: 'none',
+                fontSize: '1.1em'
             },
             tagImage: {
                 height: '13px',
                 width: 'auto',
-                marginRight: '6px',
+                marginRight: '5px',
                 position: 'relative',
                 top: '1px',
             },
             tag: {
                 display: 'inline-block',
-                marginRight: '10px',
+                marginRight: '16px',
                 fontSize: '1em'
             },
-            coverContainer: {
-                height: '100%',
-                maxWidth: '50%',
-                overflow: 'hidden',
-                textAlign: 'center',
+            content: {
+                paddingRight: '50px'
+            },
+            title: {
+                fontSize: '2.2em',
+                fontWeight: 'bold',
+                marginBottom: '8px'
+            },
+            introduction: {
+                fontSize: '1.1em',
+                marginBottom: '15px',
+                letterSpacing: '0.03em'
+            },
+            changedContainer: {
+                fontFamily: '-apple-system, system-ui, "Microsoft YaHei UI","Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+                marginBottom: '15px',
+                fontSize: '0.9em',
+                letterSpacing: '0.05em'
+            },
+            changedImage: {
+                height: '18px',
+                width: 'auto',
+                marginRight: '6px',
+                position: 'relative',
+                top: '2px'
+            },
+            changedText: {
+                marginRight: '18px',
+                letterSpacing: '0.05em',
+                fontWeight: 'bold'
+            },
+            changed: {
+                display: 'inline-block'
+            },
+            changedItem: {
+                listStyle: 'none',
+                backgroundImage: 'linear-gradient(90deg, rgba(85, 203, 242, 1) 0%, rgba(61, 144, 239, 1) 100%)',
+                display: 'inline-block',
+                padding: '5px 15px',
+                borderRadius: '25px',
+                color: 'white',
+                marginRight: '8px',
+                boxShadow: '0px 3px 15px 0px rgba(0,0,0,0.25)'
             },
             cover: {
                 height: '100%',
