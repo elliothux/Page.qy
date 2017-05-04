@@ -22,12 +22,13 @@ export default class Article extends React.Component {
             introduction: this.props.data.introduction,
             key: this.props.data.key,
             published: this.props.data.published,
+            historyContent: this.props.data.historyContent
         }
     }
 
     componentDidMount() {
         eventProxy.on('updateArticleData', function (data) {
-            data.key === this.state.key &&
+            if (data.key === this.state.key)
                 this.setState(data)
         }.bind(this));
     }
@@ -40,7 +41,7 @@ export default class Article extends React.Component {
 
     handleHistory() {
         eventProxy.trigger('viewHistory',
-            this.props.data.historyContent);
+            this.state.historyContent);
     }
 
     handleConfirm(flag) {

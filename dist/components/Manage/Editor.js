@@ -80,8 +80,7 @@ export default class Edit extends React.Component {
         if (this.state.key === '') {
             if (this.state.title === '' &&
                 (content === '' || content.replace(/\<(\s|.)*?\/?\>/g, '').trim() === '')) {
-                eventProxy.trigger('changeManageView', 'article');
-                return;
+                return eventProxy.trigger('changeManageView', 'article');
             }
             else {
                 data = await this.props.db.createArticle(data);
@@ -90,7 +89,8 @@ export default class Edit extends React.Component {
         }
         else {
             data.key = this.state.key;
-            await this.props.db.editArticle(data);
+            if (!await this.props.db.editArticle(data))
+                return eventProxy.trigger('changeManageView', 'article');
             eventProxy.trigger('updateArticleData', data);
         }
         eventProxy.trigger('changeManageView', 'article');

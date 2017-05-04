@@ -27,6 +27,7 @@ module.exports.backup = backup;
 module.exports.restore = restore;
 module.exports.getArticle = getArticle;
 module.exports.statistic = statistic;
+module.exports.find = find;
 
 
 // Generate an unique key
@@ -151,12 +152,12 @@ async function editArticle(data) {
         if (changed.length === 0) {
             const title = prevArticle.title === '' ? 'Untitled Article' : prevArticle.title;
             console.log(`Nothing changed of 'article ${title}'`);
-            return (await find({key: data.key}, article))[0];
+            return false;
         }
 
         const editDate = (new Date()).toString();
         let historyContent = prevArticle.historyContent;
-        historyContent.push(function() {
+        historyContent.unshift(function() {
             const newHistoryData = {
                 title: prevArticle.title,
                 content: prevArticle.content,

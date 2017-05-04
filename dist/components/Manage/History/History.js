@@ -44,6 +44,7 @@ export default class History extends React.Component {
                     dataToHTML = {this.props.dataToHTML}
                     data={data}
                     key={index}
+                    mainPath={this.props.mainPath}
                 />
             }.bind(this))}
         </div>
