@@ -10,7 +10,7 @@ export default class HistoryItem extends React.Component {
     }
 
     componentDidMount() {
-        // this.reLayout();
+        this.reLayout();
         window.addEventListener('resize', this.reLayout);
     }
 
@@ -20,13 +20,7 @@ export default class HistoryItem extends React.Component {
 
     reLayout() {
         if (this.refs.cover) {
-            // // const container = document.createElement('div');
-            // // container.innerHTML = this.props.content;
-            // // const imgs = container.getElementsByTagName('img');
-            // const height = this.refs.container.offsetHeight + 30;
             const width = this.refs.cover.width;
-            // this.refs.cover.style.height = `${height}px`;
-            // this.refs.cover.style.width = `${width}px`;
             this.refs.content.style.width = `calc(100% - ${width + 35}px)`
         }
     }
@@ -168,7 +162,6 @@ export default class HistoryItem extends React.Component {
                 flexWrap: 'nowrap',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                overflow: 'hidden',
                 position: 'relative',
                 fontFamily: '宋体',
                 color: 'rgba(0, 0, 0, 0.9)',
