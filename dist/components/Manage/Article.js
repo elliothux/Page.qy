@@ -38,7 +38,7 @@ export default class Article extends React.Component {
 
     handleHistory() {
         eventProxy.trigger('viewHistory',
-            this.state.historyContent);
+            this.props.data.historyContent);
     }
 
     handleConfirm(flag) {
