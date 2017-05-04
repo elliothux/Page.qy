@@ -165,6 +165,7 @@ async function editArticle(data) {
             const newHistoryData = {
                 title: prevArticle.title,
                 content: prevArticle.content,
+                introduction: prevArticle.introduction,
                 changed: changed,
                 editDate: editDate
             };
@@ -181,7 +182,7 @@ async function editArticle(data) {
             const title = newArticle.title === '' ?
                 'Untitled Article' : newArticle.title;
             console.log(`Update article '${title}' success at ${editDate}.`);
-            return (await find({key: data.key}, article))[0];
+            return newArticle;
         }
     }
     else

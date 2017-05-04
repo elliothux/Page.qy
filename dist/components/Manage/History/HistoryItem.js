@@ -33,13 +33,12 @@ export default class HistoryItem extends React.Component {
                             </li>
                         ))}
                     </ul>
-                    <p>
-                        {function () {
-                            let container = document.createElement('div');
-                            container.innerHTML = this.props.content;
-                            return container.innerText.slice(0, 150) + '......';
-                        }.bind(this)()}
-                    </p>
+                    <p>{this.props.title}</p>
+                    <p>{this.props.introduction}</p>
+                    <div>
+                        {this.props.language === 'zh' ? '更改项:' : 'Changed:'}
+                        <ul>{this.props.changed.map((changed, index) => <li key={index}>{changed}</li>)}</ul>
+                    </div>
                 </div>
                 <div style={this.style().coverContainer}>
                     {function () {

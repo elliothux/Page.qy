@@ -74,9 +74,9 @@ export default class Editor extends React.Component {
         let data = Object.assign({}, this.state, {
                 content: content,
                 introduction: function () {
-                let container = document.createElement('div');
-                container.innerHTML = content;
-                return container.innerText.slice(0, 150) + '......';
+                    let container = document.createElement('div');
+                    container.innerHTML = content;
+                    return container.innerText.slice(0, 150) + '......';
             }.bind(this)()});
         if (this.state.key === '') {
             if (this.state.title === '' &&
