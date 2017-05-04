@@ -99,10 +99,9 @@ export default class HistoryItem extends React.Component {
                 overflow: 'hidden'
             },
             dateArea: {
-                width: '120px',
-                height: '150px',
+                width: '180px',
+                height: '180px',
                 display: 'inline-block',
-                fontFamily: 'DIN Condensed',
                 fontWeight: 'bold',
                 position: 'relative',
                 color: 'rgba(0, 0, 0, 0.9)',
@@ -111,34 +110,37 @@ export default class HistoryItem extends React.Component {
                 position: 'absolute',
                 top: '15px',
                 left: '15px',
-                fontSize: '70px'
+                fontSize: '70px',
+                transform: 'scaleY(1.2)'
             },
             dateMonth: {
                 position: 'absolute',
-                top: '25px',
-                left: '75px',
-                fontSize: '30px'
+                top: '35px',
+                left: '108px',
+                fontSize: '26px',
+                transform: 'scaleY(1.2)'
             },
             dateYear: {
                 position: 'absolute',
-                top: '55px',
-                left: '75px',
-                fontSize: '20px'
+                top: '70px',
+                left: '110px',
+                fontSize: '18px',
+                transform: 'scaleY(1.2)'
             },
             dateTime: {
                 position: 'absolute',
-                top: '77px',
+                top: '97px',
                 left: '18px',
-                fontSize: '22px'
+                fontSize: '20px',
             },
             dateDay: {
                 position: 'absolute',
-                top: '98px',
+                top: '120px',
                 left: '19px',
-                fontSize: '15px'
+                fontSize: '15px',
             },
             contentArea: {
-                width: 'calc(100% - 155px)',
+                width: 'calc(100% - 210px)',
                 minHeight: '150px',
                 display: 'inline-flex',
                 flexDirection: 'row',
@@ -189,7 +191,6 @@ export default class HistoryItem extends React.Component {
                 letterSpacing: '0.03em'
             },
             changedContainer: {
-                fontFamily: '-apple-system, system-ui, "Microsoft YaHei UI","Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
                 marginBottom: '15px',
                 fontSize: '0.9em',
                 letterSpacing: '0.05em'
