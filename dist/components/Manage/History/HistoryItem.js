@@ -5,24 +5,7 @@ import reactCSS from 'reactcss';
 export default class HistoryItem extends React.Component {
     constructor(props) {
         super(props);
-        this.style = this.style.bind(this);
-        this.reLayout = this.reLayout.bind(this);
-    }
-
-    componentDidMount() {
-        this.reLayout();
-        window.addEventListener('resize', this.reLayout);
-    }
-
-    componentDidUpdate() {
-        this.reLayout();
-    }
-
-    reLayout() {
-        if (this.refs.cover) {
-            const width = this.refs.cover.width;
-            this.refs.content.style.width = `calc(100% - ${width + 35}px)`
-        }
+        this.style = this.style.bind(this);// this.reLayout = this.reLayout.bind(this);
     }
 
     render() {return (
@@ -38,7 +21,7 @@ export default class HistoryItem extends React.Component {
                 </div>
             }.bind(this)()}
             <div style={this.style().contentArea}>
-                <div style={this.style().content} ref="content">
+                <div style={this.style().content}>
                     <ul style={this.style().tags}>
                         {this.props.tags && this.props.tags.map((tag, index) => (
                             <li style={this.style().tag} key={index}>
@@ -88,16 +71,16 @@ export default class HistoryItem extends React.Component {
                         </ul>
                     </div>
                 </div>
-                <div style={this.style().coverContainer}>
-                    {function () {
-                        const container = document.createElement('div');
-                        container.innerHTML = this.props.content;
-                        const imgs = container.getElementsByTagName('img');
-                        if (imgs.length > 0)
-                            return <img ref="cover" style={this.style().cover} src={imgs[0].src}/>;
-                        return false
-                    }.bind(this)()}
-                </div>
+                {function () {
+                    const container = document.createElement('div');
+                    container.innerHTML = this.props.content;
+                    const imgs = container.getElementsByTagName('img');
+                    if (imgs.length > 0)
+                        return <div style={Object.assign({}, this.style().coverContainer, {
+                            backgroundImage: `url("${imgs[0].src}")`
+                        })} src={imgs[0].src}/>;
+                    return false
+                }.bind(this)()}
             </div>
         </div>
     )}
@@ -166,17 +149,13 @@ export default class HistoryItem extends React.Component {
                 fontFamily: '宋体',
                 color: 'rgba(0, 0, 0, 0.9)',
                 wordBreak: 'break-world',
+                minWidth: '50%'
             },
             coverContainer: {
                 height: '100%',
-                position: 'absolute',
-                top: 0, right: 0
-            },
-            cover: {
-                width: 'auto',
-                height: '100%',
-                position: 'absolute',
-                right: 0
+                width: '40%',
+                overflow: 'hidden',
+                backgroundSize: 'cover',
             },
             content: {
                 paddingRight: '50px',
