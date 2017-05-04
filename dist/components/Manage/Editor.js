@@ -71,16 +71,13 @@ export default class Editor extends React.Component {
     async saveArticle() {
         const content = this.refs.editor.contentWindow.document
             .getElementById('editorContainer').innerHTML;
-        let data = {
-            title: this.state.title,
-            tags: this.state.tags,
-            content: content,
-            introduction: function () {
+        let data = Object.assign({}, this.state, {
+                content: content,
+                introduction: function () {
                 let container = document.createElement('div');
                 container.innerHTML = content;
                 return container.innerText.slice(0, 150) + '......';
-            }.bind(this)()
-        };
+            }.bind(this)()});
         if (this.state.key === '') {
             if (this.state.title === '' &&
                 (content === '' || content.replace(/\<(\s|.)*?\/?\>/g, '').trim() === ''))
@@ -102,9 +99,9 @@ export default class Editor extends React.Component {
         this.refs.editor.contentWindow.document
             .getElementById('editorContainer')
             .innerHTML = '';
-        this.refs.editor.contentWindow.document
-            .getElementsByClassName('code-textarea')[0]
-            .value = '';
+        const codeArea = this.refs.editor.contentWindow.document
+            .getElementsByClassName('code-textarea');
+        codeArea.length > 0 && (codeArea[0].value = '');
         this.refs.editor.contentWindow.document
             .getElementById('editorContainer')
             .scrollTop = 0;

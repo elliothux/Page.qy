@@ -42,7 +42,7 @@ export default class History extends React.Component {
             {this.state.historyContent.map(function (data, index) {
                 return <HistoryItem
                     dataToHTML = {this.props.dataToHTML}
-                    data={data}
+                    {...data}
                     key={index}
                     mainPath={this.props.mainPath}
                 />

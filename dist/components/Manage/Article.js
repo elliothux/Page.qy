@@ -98,7 +98,8 @@ export default class Article extends React.Component {
                 }.bind(this)()}
                 <p style={this.style().title}>
                     {this.state.title === '' ?
-                        'Untitled Article' : this.state.title}
+                        (this.props.config.get().language === 'zh' ?
+                            '未命名文章' : 'Untitled Article') : this.state.title}
                 </p>
                 <p style={this.style().introduction}>{this.state.introduction}</p>
                 <ul style={this.style().tags}>

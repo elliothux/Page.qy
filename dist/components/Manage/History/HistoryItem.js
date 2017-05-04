@@ -11,7 +11,7 @@ export default class HistoryItem extends React.Component {
     render() {return (
         <div style={this.style().container}>
             {function () {
-                const date = this.props.dataToHTML.formatDate(this.props.data.date);
+                const date = this.props.dataToHTML.formatDate(this.props.editDate);
                 return <div style={this.style().dateArea}>
                     <span style={this.style().dateDate}>{date.date}</span>
                     <span style={this.style().dateMonth}>{date.month}</span>
@@ -23,7 +23,7 @@ export default class HistoryItem extends React.Component {
             <div style={this.style().contentArea}>
                 <div>
                     <ul style={this.style().tags}>
-                        {this.props.data.tags && this.props.data.tags.map((tag, index) => (
+                        {this.props.tags && this.props.tags.map((tag, index) => (
                             <li style={this.style().tag} key={index}>
                                 <img
                                     style={this.style().tagImage}
@@ -36,7 +36,7 @@ export default class HistoryItem extends React.Component {
                     <p>
                         {function () {
                             let container = document.createElement('div');
-                            container.innerHTML = this.props.data.content;
+                            container.innerHTML = this.props.content;
                             return container.innerText.slice(0, 150) + '......';
                         }.bind(this)()}
                     </p>
@@ -44,7 +44,7 @@ export default class HistoryItem extends React.Component {
                 <div style={this.style().coverContainer}>
                     {function () {
                         const container = document.createElement('div');
-                        container.innerHTML = this.props.data.content;
+                        container.innerHTML = this.props.content;
                         const imgs = container.getElementsByTagName('img');
                         if (imgs.length > 0)
                             return <img style={this.style().cover} src={imgs[0].src}/>;
@@ -137,8 +137,6 @@ export default class HistoryItem extends React.Component {
                 maxWidth: '50%',
                 overflow: 'hidden',
                 textAlign: 'center',
-                position: 'absolute',
-                right: 0
             },
             cover: {
                 height: '100%',
