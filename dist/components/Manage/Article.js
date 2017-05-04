@@ -15,14 +15,11 @@ export default class Article extends React.Component {
         this.handleHistory = this.handleHistory.bind(this);
 
         this.state = {
-            date: this.props.data.createDate,
             tags: this.props.data.tags,
             title: this.props.data.title,
             content: this.props.data.content,
             introduction: this.props.data.introduction,
             key: this.props.data.key,
-            published: this.props.data.published,
-            historyContent: this.props.data.historyContent
         }
     }
 
@@ -121,7 +118,8 @@ export default class Article extends React.Component {
                         src={`${this.props.mainPath}/src/pic/date.svg`}
                     />
                     {function () {
-                        const date = this.props.dataToHTML.formatDate(this.state.date);
+                        const date = this.props.dataToHTML.formatDate(
+                            this.props.data.createDate);
                         return <p style={this.style().dateText}>
                             {date.month}/{date.date}/{date.year}&nbsp;&nbsp;&nbsp;
                             {date.day}&nbsp;&nbsp;&nbsp;{date.hours}:{date.minutes}

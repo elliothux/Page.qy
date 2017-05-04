@@ -30,6 +30,11 @@ export default class Manage extends React.Component {
         eventProxy.on('viewHistory', setTimeout.bind(null,
             this.handleViewChange.bind(null, 'history'), 100));
         eventProxy.on('refreshArticleList', this.refreshArticleList);
+        eventProxy.on('backToArticle', function () {
+            this.state.viewState === 'edit' &&
+                eventProxy.trigger('closeEditor');
+            this.setState({ viewState: 'article'} );
+        }.bind(this))
     }
 
     async refreshArticleList() {
@@ -43,7 +48,17 @@ export default class Manage extends React.Component {
     }
 
     handleCreateArticle() {
-        eventProxy.trigger('createArticle', null);
+        eventProxy.trigger('createArticle', {
+            content: '',
+            createDate: '',
+            editDate: '',
+            historyContent: [],
+            introduction: '',
+            key: '',
+            published: false,
+            tags: [],
+            title: '',
+        });
     }
 
     render() {return(

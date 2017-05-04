@@ -129,7 +129,7 @@ export default class Nav extends React.Component {
                     onClick={function () {
                         this.props.handleViewChange('manage');
                         this.props.mainView === 'manage' &&
-                            eventProxy.trigger('closeEditor');
+                            eventProxy.trigger('backToArticle');
                     }.bind(this)}
                 >
                     <img style={this.style().navButtonImg} src="../../src/pic/manageNav.svg"/>

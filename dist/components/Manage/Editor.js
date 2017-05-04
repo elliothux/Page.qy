@@ -3,7 +3,7 @@ import reactCSS from 'reactcss';
 import eventProxy from '../../lib/eventProxy';
 
 
-export default class Edit extends React.Component {
+export default class Editor extends React.Component {
     constructor(props) {
         super(props);
         this.style = this.style.bind(this);
@@ -11,12 +11,18 @@ export default class Edit extends React.Component {
         this.handleTagsChange = this.handleTagsChange.bind(this);
         this.handleEditArticle = this.handleEditArticle.bind(this);
         this.saveArticle = this.saveArticle.bind(this);
+        this.regenerateHTML = this.regenerateHTML.bind(this);
 
         this.state = {
-            title: '',
-            tags: [],
+            content: '',
+            createDate: '',
+            editDate: '',
+            historyContent: [],
             introduction: '',
-            key: ''
+            key: '',
+            published: false,
+            tags: [],
+            title: '',
         }
     }
 
@@ -25,20 +31,16 @@ export default class Edit extends React.Component {
             this.handleEditArticle(data);
         }.bind(this));
         eventProxy.on('createArticle', this.handleEditArticle);
-        eventProxy.on('closeEditor', function () {
-            this.saveArticle();
-        }.bind(this));
+        eventProxy.on('closeEditor', this.saveArticle);
     }
 
     handleEditArticle(data) {
-        data && this.setState(data);
+        this.setState(data);
         this.refs.editor.contentWindow.document
             .getElementById('editorContainer').scrollTop = 0;
         this.refs.editor.contentWindow.document
             .getElementById('editorContainer')
-            .innerHTML = data ? data.content.replace(
-                /src\=\"\.\.\/statics\/pic/g,
-                'src="../../user/temp/statics/pic') : '';
+            .innerHTML = data.content;
         if (this.refs.editor.contentWindow.document
                 .getElementsByClassName('init').length > 0)
             return;
@@ -79,33 +81,40 @@ export default class Edit extends React.Component {
         };
         if (this.state.key === '') {
             if (this.state.title === '' &&
-                (content === '' || content.replace(/\<(\s|.)*?\/?\>/g, '').trim() === '')) {
-                return eventProxy.trigger('changeManageView', 'article');
-            }
-            else {
-                data = await this.props.db.createArticle(data);
-                eventProxy.trigger('refreshArticleList', null);
-            }
+                (content === '' || content.replace(/\<(\s|.)*?\/?\>/g, '').trim() === ''))
+                return;
+            data = await this.props.db.createArticle(data);
+            eventProxy.trigger('refreshArticleList');
         }
         else {
             data.key = this.state.key;
-            if (!await this.props.db.editArticle(data))
-                return eventProxy.trigger('changeManageView', 'article');
+            data = await this.props.db.editArticle(data);
+            if (!data) return;
             eventProxy.trigger('updateArticleData', data);
         }
-        eventProxy.trigger('changeManageView', 'article');
-        this.props.dataToHTML.dataToArticle(data);
-        this.props.dataToHTML.dataToHome()
-            .then(path => eventProxy.trigger('refreshPreview', path));
-        this.props.dataToHTML.dataToTags();
-        this.props.dataToHTML.dataToArchives();
+        this.regenerateHTML(data);
 
         this.setState(() => ({
-            title: '',
-            tags: [],
+            content: '',
+            createDate: '',
+            editDate: '',
+            historyContent: [],
+            introduction: '',
             key: '',
-            introduction: ''
+            published: false,
+            tags: [],
+            title: '',
         }));
+    }
+
+    regenerateHTML(data) {
+        this.props.dataToHTML.dataToArticle(data);
+        if (data.published) {
+            this.props.dataToHTML.dataToHome()
+                .then(path => eventProxy.trigger('refreshPreview', path));
+            this.props.dataToHTML.dataToTags();
+            this.props.dataToHTML.dataToArchives();
+        }
     }
 
     render() {return(

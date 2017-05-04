@@ -135,7 +135,7 @@ async function createArticle(data) {
         editDate: (new Date()).toString(),
         historyContent: [],
         type: 'article',
-        published: false
+        published: false,
     };
     const newArticle = await insert(Object.assign(data, options), article);
     const title = newArticle.title === '' ? 'Untitled Article' : newArticle.title;
@@ -169,10 +169,18 @@ async function editArticle(data) {
             return newHistoryData;
         }());
 
-        const newArticle = Object.assign({}, prevArticle, data, {
+        const newArticle = {
+            content: data.content,
+            createDate: data.createdDate,
             editDate: editDate,
-            historyContent: historyContent
-        });
+            historyContent: historyContent,
+            introduction: data.introduction,
+            key: data.key,
+            published: data.published,
+            tags: data.tags,
+            title: data.title,
+            type: 'article'
+        };
         if (await update(newArticle, article)) {
             const title = newArticle.title === '' ?
                 'Untitled Article' : newArticle.title;

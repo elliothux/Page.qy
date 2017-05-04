@@ -20,7 +20,7 @@ const eventProxy = {
         this.oneObj[key] = [];
     },
     trigger: function() {
-        console.log(arguments);
+        // console.log(arguments);
         let key, args;
         if(arguments.length === 0) {
             return false;
