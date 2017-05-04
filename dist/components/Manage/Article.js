@@ -246,7 +246,7 @@ export default class Article extends React.Component {
                 letterSpacing: '0.1em',
                 fontFamily: '宋体',
                 color: '#565656',
-                wordBreak: 'break-all',
+                wordBreak: 'break-word',
             },
             cover: {
                 width: '100%',

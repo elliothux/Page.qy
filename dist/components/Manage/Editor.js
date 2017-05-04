@@ -12,6 +12,7 @@ export default class Editor extends React.Component {
         this.handleEditArticle = this.handleEditArticle.bind(this);
         this.saveArticle = this.saveArticle.bind(this);
         this.regenerateHTML = this.regenerateHTML.bind(this);
+        this.clearEditor = this.clearEditor.bind(this);
 
         this.state = {
             content: '',
@@ -37,10 +38,11 @@ export default class Editor extends React.Component {
     handleEditArticle(data) {
         this.setState(data);
         this.refs.editor.contentWindow.document
-            .getElementById('editorContainer').scrollTop = 0;
-        this.refs.editor.contentWindow.document
             .getElementById('editorContainer')
             .innerHTML = data.content;
+        const codeArea = this.refs.editor.contentWindow.document
+            .getElementsByClassName('code-textarea');
+        codeArea.length > 0 && (codeArea[0].value = data.content);
         if (this.refs.editor.contentWindow.document
                 .getElementsByClassName('init').length > 0)
             return;
@@ -93,7 +95,19 @@ export default class Editor extends React.Component {
             eventProxy.trigger('updateArticleData', data);
         }
         this.regenerateHTML(data);
+        this.clearEditor();
+    }
 
+    clearEditor() {
+        this.refs.editor.contentWindow.document
+            .getElementById('editorContainer')
+            .innerHTML = '';
+        this.refs.editor.contentWindow.document
+            .getElementsByClassName('code-textarea')[0]
+            .value = '';
+        this.refs.editor.contentWindow.document
+            .getElementById('editorContainer')
+            .scrollTop = 0;
         this.setState(() => ({
             content: '',
             createDate: '',
