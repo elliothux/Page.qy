@@ -20,15 +20,26 @@ class App extends React.Component {
         this.handleLogin = this.handleLogin.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
         this.handleRestore = this.handleRestore.bind(this);
-        this.skipRestore = this.handleRestore.bind(this);
+        this.skipRestore = this.skipRestore.bind(this);
         this.restoreOnGitHub = this.restoreOnGitHub.bind(this);
         this.restoreOnLocal = this.restoreOnLocal.bind(this);
         this.handleQuit = this.handleQuit.bind(this);
+        this.handleSetLanguage = this.handleSetLanguage.bind(this);
+        this.handelSetIntroduction = this.handelSetIntroduction.bind(this);
 
         this.state = {
-            status: 'init',
-            selected: 'github'
+            status: 'language',
+            selected: 'github',
+            language: this.props.config.get().language
         }
+    }
+
+    componentDidMount() {
+        window.addEventListener('keydown', function () {
+            if(event.keyCode !== 13) return;
+            if (this.state.status === 'init')
+                this.handleOperate();
+        }.bind(this))
     }
 
     async handleLogin() {
@@ -46,9 +57,18 @@ class App extends React.Component {
         this.setState({ status: 'select' })
     }
 
+    handleSetLanguage() {
+        config.set({
+            language: this.state.language
+        });
+        this.setState({
+            status: 'init'
+        })
+    }
+
     handleSelect(select) {
         this.setState({
-            selected: select
+            selected: select,
         })
     }
 
@@ -63,8 +83,10 @@ class App extends React.Component {
             this.setState({ status: 'restore' });
             if (!this.props.user.restore(path))
                 return this.setState({ status: 'restoreFailed' });
-            this.props.app.relaunch();
-            this.props.app.exit(0);
+            this.setState({
+                status: 'introduction'
+            });
+            this.refs.introduction.focus();
         }.bind(this));
         chooser.click();
     }
@@ -72,36 +94,54 @@ class App extends React.Component {
     restoreOnGitHub() {
         if (!this.props.user.restore())
             return this.setState({ status: 'restoreFailed' });
+        this.setState({
+            status: 'introduction'
+        });
+        this.refs.introduction.focus();
+    }
+
+    skipRestore() {
+        const confirm = window.confirm(this.state.language === 'zh' ?
+            '真的要跳过恢复吗?\n如果你是第一次使用Page.qy则可以直接跳过.' :
+            "Do you really want to skip to restore?\nIf it's your first using Page.qy you can just skip.");
+        if (confirm) {
+            this.setState({
+                status: 'introduction'
+            });
+            this.refs.introduction.focus();
+        } else
+            this.setState({ status: 'select' });
+    }
+
+    handleRestore() {
+        if (this.state.selected === 'github')
+            return this.restoreOnGitHub();
+        if (this.state.selected === 'local')
+            return this.restoreOnLocal();
+        if (this.state.selected === 'skip')
+            return this.skipRestore();
+    }
+
+    handelSetIntroduction() {
+        const value = this.refs.introduction.value.trim();
+        if (!value) return;
+        this.props.config.set({
+            selfIntroduction: value
+        });
         this.props.app.relaunch();
         this.props.app.exit(0);
     }
 
-    handleRestore() {
-        this.state.selected === 'github' &&
-            this.restoreOnGitHub();
-        this.state.selected === 'local' &&
-            this.restoreOnLocal();
-    }
-
-    skipRestore() {
-        const confirm = window.confirm(this.props.language === 'zh' ?
-            '真的要跳过恢复吗?' :
-            'Do you really want to skip restore?');
-        if (confirm) {
-            this.props.app.relaunch();
-            this.props.app.exit(0);
-        } else
-            this.setState({ status: 'restoreFailed' });
-    }
-
     handleOperate() {
         switch (this.state.status) {
+            case 'language': return this.handleSetLanguage();
             case 'init': return this.handleLogin();
-            case 'failed': return this.handleLogin();
             case 'login': return this.setState({ status: 'init' });
+            case 'failed': return this.handleLogin();
             case 'select': return this.handleRestore();
+            case 'restore': return this.setState({ status: 'select' });
             case 'restoreFailed': return this.handleRestore();
-            case 'restore': return this.setState({ status: 'select' })
+            case 'introduction': return this.handelSetIntroduction();
         }
     }
 
@@ -115,37 +155,58 @@ class App extends React.Component {
             <p style={this.style().title}>
                 {function () {
                     switch (this.state.status) {
+                        case 'language':
+                            return this.state.language === 'zh' ?
+                                '选择语言' : 'CHOOSE LANGUAGE';
                         case 'init':
-                            return this.props.language === 'zh' ?
+                            return this.state.language === 'zh' ?
                                 '登录' : 'LOGIN';
                         case 'login':
                             return false;
                         case 'failed':
-                            return this.props.language === 'zh' ?
+                            return this.state.language === 'zh' ?
                                 '登录失败!' : 'LOGIN FAILED!';
                         case 'select':
-                            return this.props.language === 'zh' ?
+                            return this.state.language === 'zh' ?
                                 '恢复数据' : 'RESTORE DATA';
                         case 'restore': return false;
                         case 'restoreFailed':
-                            return this.props.language === 'zh' ?
+                            return this.state.language === 'zh' ?
                                 '恢复失败!' : 'RESTORE FAILED!';
+                        case 'introduction':
+                            return this.state.language === 'zh' ?
+                                '介绍一下你自己呗, 将会显示在你的网站(依据主题而定)' :
+                                'Write Something About Yourself. I Will Show On Your Website (Depends On Your Theme)';
                     }
                 }.bind(this)()}
             </p>
+            <div style={this.style().languageArea}>
+                <button
+                    onClick={this.setState.bind(this, { language: 'zh' }, () => {})}
+                    style={this.state.language === 'zh' ?
+                        this.style().operateButtonSelected :
+                        this.style().operateButton}
+                >中文</button>
+                <button
+                    onClick={this.setState.bind(this, { language: 'en' }, () => {})}
+                    style={this.state.language === 'en' ?
+                        this.style().operateButtonSelected :
+                        this.style().operateButton}
+                >ENGLISH</button>
+            </div>
             <div style={this.style().inputArea}>
                 <input
                     ref="username"
                     type="text"
                     style={this.style().input}
-                    placeholder={this.props.language === 'zh' ?
+                    placeholder={this.state.language === 'zh' ?
                         '输入GitHub用户名' : 'GITHUB USERNAME'}
                 />
                 <input
                     ref="password"
                     type="password"
                     style={this.style().input}
-                    placeholder={this.props.language === 'zh' ?
+                    placeholder={this.state.language === 'zh' ?
                         '输入密码' : 'PASSWORD'}
                 />
             </div>
@@ -156,7 +217,7 @@ class App extends React.Component {
                         this.style().operateButtonSelected :
                         this.style().operateButton}
                 >
-                    {this.props.language === 'zh' ?
+                    {this.state.language === 'zh' ?
                         '使用GitHub恢复备份' : 'RESTORE DATA ON GITHUB'}
                 </button>
                 <button
@@ -165,7 +226,7 @@ class App extends React.Component {
                         this.style().operateButtonSelected :
                         this.style().operateButton}
                 >
-                    {this.props.language === 'zh' ?
+                    {this.state.language === 'zh' ?
                         '恢复本地备份' : 'RESTORE DATA ON LOCAL'}
                 </button>
                 <button
@@ -174,7 +235,7 @@ class App extends React.Component {
                         this.style().operateButtonSelected :
                         this.style().operateButton}
                 >
-                    {this.props.language === 'zh' ?
+                    {this.state.language === 'zh' ?
                         '跳过恢复' : 'SKIP'}
                 </button>
             </div>
@@ -187,26 +248,49 @@ class App extends React.Component {
                 <div>O</div>
                 <div>W</div>
             </div>
-            <div
-                onClick={this.handleOperate}
-                style={this.style().buttonArea}
-            >
-                <button style={this.style().button}>
+            {function () {
+                switch (this.state.status) {
+                    case 'login':
+                        return <p
+                            style={this.style().messageText}
+                            dangerouslySetInnerHTML={{ __html: this.state.language === 'zh' ?
+                                `正在登陆并克隆${this.props.config.get().username}.github.io仓库<br/>请稍等...` :
+                                `Logging in and cloning ${this.props.config.get().username}.github.io repositorie<br/>Waiting...`}}
+                        />;
+                    case 'restore':
+                        return <p
+                            style={this.style().messageText}
+                            dangerouslySetInnerHTML={{ __html: this.state.language === 'zh' ?
+                                `正在恢复备份, 请稍等...` :
+                                `Restoring data. Please wait for a while...`}}
+                        />;
+                    default: return false
+                }
+            }.bind(this)()}
+            <div style={this.style().buttonArea}>
+                <button
+                    style={this.style().button}
+                    onClick={this.handleOperate}
+                >
                     {function () {
                         switch (this.state.status) {
-                            case 'failed':
-                                return this.props.language === 'zh' ? '重试' : 'RETRY';
-                            case 'restoreFailed':
-                                return this.props.language === 'zh' ? '重试' : 'RETRY';
+                            case 'language':
+                                return this.state.language === 'zh' ? '继续' : 'CONTINUE';
                             case 'init':
-                                return this.props.language === 'zh' ? '登录' : 'LOGIN';
+                                return this.state.language === 'zh' ? '登录' : 'LOGIN';
                             case 'login':
-                                return this.props.language === 'zh' ? '取消' : 'CANCEL';
+                                return this.state.language === 'zh' ? '取消' : 'CANCEL';
                             case 'restore':
-                                return this.props.language === 'zh' ? '取消' : 'CANCEL';
+                                return this.state.language === 'zh' ? '取消' : 'CANCEL';
                             case 'select':
-                                return this.props.language === 'zh' ?
+                                return this.state.language === 'zh' ?
                                     '继续' : 'CONTINUE';
+                            case 'failed':
+                                return this.state.language === 'zh' ? '重试' : 'RETRY';
+                            case 'restoreFailed':
+                                return this.state.language === 'zh' ? '重试' : 'RETRY';
+                            case 'introduction':
+                                return this.state.language === 'zh' ? '确认' : 'CONTINUE'
 
                         }
                     }.bind(this)()}
@@ -215,28 +299,44 @@ class App extends React.Component {
                     style={this.style().button}
                     onClick={this.handleQuit}
                 >
-                    {this.props.language === 'zh' ? '退出' : 'QUIT'}
+                    {this.state.language === 'zh' ? '退出' : 'QUIT'}
                 </button>
             </div>
+            <textarea ref="introduction" type="text" style={this.style().introduction}/>
         </div>
     )}
 
     style() {return reactCSS({
         default: {
             title: {
-                fontSize: '1.3em',
+                fontSize: this.state.status === 'introduction' ?
+                    (this.state.language === 'zh' ? '1em' : '0.9em') : '1.3em',
                 textAlign: 'center',
                 color: 'white',
-                width: '100%',
-                margin: '35px 0',
+                width: '80%',
+                margin: '35px 10%',
                 letterSpacing: '0.06em'
+            },
+            messageText: {
+                width: '80%',
+                margin: '0 10%',
+                textAlign: 'center',
+                color: 'white',
+                position: 'absolute',
+                fontSize: '0.9em',
+                top: '145px',
+                letterSpacing: '0.05em',
+                display: this.state.status === 'login' ||
+                    this.state.status === 'restore' ?
+                        'block' : 'none'
             },
             inputArea: {
                 width: '40%',
                 margin: '0 30%',
                 display: this.state.status === 'init'  ||
                     this.state.status === 'failed' ?
-                        'block' : 'none'
+                        'block' : 'none',
+                position: 'absolute',
             },
             input: {
                 width: 'calc(100% - 16px)',
@@ -252,16 +352,31 @@ class App extends React.Component {
                 letterSpacing: '0.04em',
                 textAlign: 'center'
             },
+            languageArea: {
+                width: '40%',
+                display: this.state.status === 'language' ||
+                this.state.status === 'restoreFailed' ?
+                    'flex' : 'none',
+                color: 'white',
+                flexDirection: 'column',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+                position: 'absolute',
+                top: '110px',
+                left: '30%'
+            },
             operateArea: {
                 width: '40%',
-                margin: '0 30%',
                 display: this.state.status === 'select' ||
                     this.state.status === 'restoreFailed' ?
                         'flex' : 'none',
                 color: 'white',
                 flexDirection: 'column',
                 alignItems: 'center',
-                flexWrap: 'wrap'
+                flexWrap: 'wrap',
+                position: 'absolute',
+                top: '90px',
+                left: '30%'
             },
             operateButton: {
                 width: '92%',
@@ -290,7 +405,7 @@ class App extends React.Component {
                 width: '100%',
                 height: '80px',
                 left: '40%',
-                top: '100px',
+                top: '60px',
                 marginLeft: '-260px',
                 overflow: 'visible',
                 display: this.state.status === 'login' ?
@@ -317,6 +432,21 @@ class App extends React.Component {
                 letterSpacing: '0.08em',
                 transition: 'all ease 200ms'
             },
+            introduction: {
+                width: '80%',
+                position: 'absolute',
+                left: 'calc(10% - 15px)',
+                top: '85px',
+                height: '80px',
+                padding: '15px',
+                border: 'none',
+                color: 'white',
+                fontSize: '1.2em',
+                textAlign: 'center',
+                backgroundColor: 'rgba(54, 122, 209, 0.298039)',
+                display: this.state.status === 'introduction' ?
+                    'block' : 'none'
+            }
         }
     }, this.state, this.props)}
 }
@@ -324,7 +454,7 @@ class App extends React.Component {
 
 ReactDOM.render(
     <App
-        language={config.get().language}
+        config={config}
         user={user}
         app={app}
     />,

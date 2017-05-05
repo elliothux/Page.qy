@@ -61,7 +61,7 @@ function restore(filePath) {
             password: config.password,
             name: config.name,
             mail: config.mail,
-            avatar: config.avatar
+            avatar: config.avatar,
         }
     );
     setConfig(configData);

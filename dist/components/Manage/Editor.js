@@ -134,7 +134,8 @@ export default class Editor extends React.Component {
                 value={this.state.title}
                 onChange={this.handleTitleChange}
                 type="text" style={this.style().title}
-                placeholder="TYPE TITLE HERE..."
+                placeholder={this.props.config.get().language === 'zh' ?
+                    '在这里输入你的标题...' : 'TYPE TITLE HERE...'}
             />
             <input
                 ref="tags"
@@ -142,7 +143,8 @@ export default class Editor extends React.Component {
                     '#' + this.state.tags.join('    #') : ''}
                 onChange={this.handleTagsChange}
                 type="text" style={this.style().tags}
-                placeholder="ADD TAGS BY '#'"
+                placeholder={this.props.config.get().language === 'zh' ?
+                    '使用"#"添加标签' : 'ADD TAGS BY "#"'}
             />
             <iframe
                 style={this.style().editor}
