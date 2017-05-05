@@ -12,18 +12,12 @@ export default class HistoryItem extends React.Component {
 
         this.state = {
             status: 'init',
-            selected: []
         }
     }
 
     componentDidMount() {
         eventProxy.on('backToArticle', function () {
-            setTimeout(function () {
-                this.setState({
-                    status: 'init',
-                    selected: []
-                })
-            }.bind(this), 900)
+            this.setState({ status: 'init' })
         }.bind(this))
     }
 
@@ -32,48 +26,25 @@ export default class HistoryItem extends React.Component {
             await this.props.dataToHTML.dataToArticle(this.props))
     }
 
-    handleSelect(select) {
-        let selected = this.state.selected;
-        if (select === 'all') {
-            if (selected.length === this.props.changed.length)
-                selected = [];
-            else selected = this.props.changed;
-        } else {
-            if (!this.state.selected.includes(select))
-                selected.push(select);
-            else
-                selected.splice(selected.indexOf(select), 1);
-        }
-        this.setState({ selected: selected });
-    }
-
     async handleRestore() {
-        if (this.state.selected.length === 0)
-            return eventProxy.trigger('message', this.props.language === 'zh' ?
-                '未选择任何恢复项!' : 'No Restore Content Selected!');
-        const selected = this.state.selected.map(value => {
-            switch (value) {
-                case 'title': return this.props.language === 'zh' ?
-                    '标题' : 'Title';
-                case 'tags': return this.props.language === 'zh' ?
-                    '标签' : 'Tags';
-                case 'content': return this.props.language === 'zh' ?
-                    '内容' : 'Content';
-            }
-        });
-        const confirm = window.confirm(this.props.language === 'zh' ?
-            `将<${this.props.title}>的${selected.join('、')}恢复到${(new Date(this.props.editDate)).toLocaleString({}, { hour12: false })}吗?` :
-            `Do You Want To Restore ${selected.join('、')} Of <${this.props.title}> To ${(new Date(this.props.editDate)).toLocaleString({}, { hour12: false })}?`
-        );
-        if (!confirm) return;
-        data = await this.props.db.editArticle(data);
-        if (!data) return;
-        eventProxy.trigger('updateArticleData', data);
+        eventProxy.trigger('message', this.props.language === 'zh' ?
+            '正在恢复到历史...' : 'Restoring To History...');
+        let data = {
+            key: this.props.articleKey,
+            title: this.props.title,
+            tags: this.props.tags,
+            content: this.props.content,
+            introduction: this.props.introduction
+        };
 
-        this.setState({
-            status: 'init',
-            selected: []
-        })
+        data = await this.props.db.editArticle(data);
+        if (!data)
+            return eventProxy.trigger('message', this.props.language === 'zh' ?
+                '恢复失败!' : 'Restore Failed!');
+        eventProxy.trigger('backToArticle');
+        eventProxy.trigger('updateArticleData', data);
+        eventProxy.trigger('message', this.props.language === 'zh' ?
+            '恢复完成!' : 'Restore Done!');
     }
 
     render() {return (
@@ -163,71 +134,16 @@ export default class HistoryItem extends React.Component {
             <div style={this.style().operate}>
                 <p style={this.style().operateTitle}>
                     {this.props.language === 'zh' ?
-                        '选择你要恢复的内容:' : 'Choose What You Want To Restore:' }
+                        `将<${this.props.title}>恢复到${(new Date(this.props.editDate)).toLocaleString({}, { hour12: false })}吗?` :
+                        `Do You Really Want To Restore <${this.props.title}> To ${(new Date(this.props.editDate)).toLocaleString({}, { hour12: false })}?`
+                    }
                 </p>
-                <div style={this.style().operateButtonContainer}>
-                    {function () {
-                        const operate = [];
-                        this.props.changed.length > 1 &&
-                        operate.push(<button
-                            key='all'
-                            style={Object.assign(this.style().operateButton, {
-                                backgroundColor: this.state.selected.length === this.props.changed.length ?
-                                    'rgba(54, 122, 209, 1)' : 'rgba(54, 122, 209, 0.3)'
-                            })}
-                            onClick={this.handleSelect.bind(this, 'all')}
-                        >
-                            {this.props.language === 'zh' ?
-                                '全部' : 'ALL'}
-                        </button>);
-                        this.props.changed.includes('title') &&
-                        operate.push(<button
-                            key='title'
-                            style={Object.assign(this.style().operateButton, {
-                                backgroundColor: (this.state.selected.includes('title') ||
-                                this.state.selected.includes('all')) ?
-                                    'rgba(54, 122, 209, 1)' : 'rgba(54, 122, 209, 0.3)'
-                            })}
-                            onClick={this.handleSelect.bind(this, 'title')}
-                        >
-                            {this.props.language === 'zh' ?
-                                '标题' : 'TITLE'}
-                        </button>);
-                        this.props.changed.includes('tags') &&
-                        operate.push(<button
-                            key='tags'
-                            style={Object.assign(this.style().operateButton, {
-                                backgroundColor: (this.state.selected.includes('tags') ||
-                                this.state.selected.includes('all')) ?
-                                    'rgba(54, 122, 209, 1)' : 'rgba(54, 122, 209, 0.3)'
-                            })}
-                            onClick={this.handleSelect.bind(this, 'tags')}
-                        >
-                            {this.props.language === 'zh' ?
-                                '标签' : 'TAGS'}
-                        </button>);
-                        this.props.changed.includes('content') &&
-                        operate.push(<button
-                            key='content'
-                            style={Object.assign(this.style().operateButton, {
-                                backgroundColor: (this.state.selected.includes('content') ||
-                                this.state.selected.includes('all')) ?
-                                    'rgba(54, 122, 209, 1)' : 'rgba(54, 122, 209, 0.3)'
-                            })}
-                            onClick={this.handleSelect.bind(this, 'content')}
-                        >
-                            {this.props.language === 'zh' ?
-                                '内容' : 'CONTENT'}
-                        </button>);
-                        return operate;
-                    }.bind(this)()}
-                </div>
                 <div style={this.style().buttonArea}>
                     <button
                         style={this.style().button}
                         onClick={this.handleRestore}
                     >
-                        {this.props.language === 'zh' ? '继续' : 'CONTINUE'}
+                        {this.props.language === 'zh' ? '确认' : 'CONTINUE'}
                     </button>
                     <button
                         style={this.style().button}
