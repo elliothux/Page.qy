@@ -9,6 +9,7 @@ export default class HistoryItem extends React.Component {
         this.style = this.style.bind(this);
         this.handlePreview = this.handlePreview.bind(this);
         this.handleRestore = this.handleRestore.bind(this);
+        this.initState = this.initState.bind(this);
 
         this.state = {
             status: 'init',
@@ -16,9 +17,15 @@ export default class HistoryItem extends React.Component {
     }
 
     componentDidMount() {
-        eventProxy.on('backToArticle', function () {
-            this.setState({ status: 'init' })
-        }.bind(this))
+        eventProxy.on('backToArticle', this.initState)
+    }
+
+    componentWillUnmount() {
+        eventProxy.off('backToArticle', this.initState)
+    }
+
+    initState() {
+        this.setState({ status: 'init' })
     }
 
     async handlePreview() {
@@ -120,23 +127,24 @@ export default class HistoryItem extends React.Component {
                         </ul>
                     </div>
                 </div>
-                {function () {
-                    const container = document.createElement('div');
-                    container.innerHTML = this.props.content;
-                    const imgs = container.getElementsByTagName('img');
-                    if (imgs.length > 0)
-                        return <div style={Object.assign({}, this.style().coverContainer, {
-                            backgroundImage: `url("${imgs[0].src}")`
-                        })} src={imgs[0].src}/>;
-                    return false
-                }.bind(this)()}
             </div>
+            {function () {
+                const container = document.createElement('div');
+                container.innerHTML = this.props.content;
+                const imgs = container.getElementsByTagName('img');
+                if (imgs.length > 0)
+                    return <div style={Object.assign({}, this.style().cover, {
+                        backgroundImage: `url("${imgs[0].src}")`})} />;
+                return false
+            }.bind(this)()}
             <div style={this.style().operate}>
                 <p style={this.style().operateTitle}>
-                    {this.props.language === 'zh' ?
-                        `将<${this.props.title}>恢复到${(new Date(this.props.editDate)).toLocaleString({}, { hour12: false })}吗?` :
-                        `Do You Really Want To Restore <${this.props.title}> To ${(new Date(this.props.editDate)).toLocaleString({}, { hour12: false })}?`
-                    }
+                    {function () {
+                        const date = this.props.dataToHTML.formatDate(this.props.editDate);
+                        return this.props.language === 'zh' ?
+                            `将 <${this.props.title}> 恢复到 ${date.year}年${date.month}月${date.date}日 ${date.day} ${date.hours}:${date.minutes} 吗?` :
+                            `Do you really want to restore <${this.props.title}> to ${date.year}/${date.month}/${date.date} ${date.day} ${date.hours}:${date.minutes}?`
+                    }.bind(this)()}
                 </p>
                 <div style={this.style().buttonArea}>
                     <button
@@ -161,28 +169,63 @@ export default class HistoryItem extends React.Component {
             container: {
                 width: '94%',
                 height: 'auto',
+                minHeight: '180px',
                 margin: '0 3% 50px 3%',
                 backgroundColor: 'white',
                 boxShadow: '0px 5px 21px 0px rgba(0,0,0,0.31)',
-                wordBreak: 'break-all',
+                wordBreak: 'break-word',
                 display: 'flex',
-                justifyContent: 'space-between',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
                 overflow: 'hidden',
                 position: 'relative'
             },
             dateArea: {
-                width: '180px',
-                height: '180px',
+                width: '200px',
+                height: '162px',
                 display: 'inline-block',
                 fontWeight: 'bold',
                 position: 'relative',
                 color: 'rgba(0, 0, 0, 0.9)',
             },
+            dateDate: {
+                position: 'absolute',
+                top: '0',
+                left: '15px',
+                fontSize: '70px',
+                transform: 'scaleY(1.2)'
+            },
+            dateMonth: {
+                position: 'absolute',
+                top: '20px',
+                left: '108px',
+                fontSize: '26px',
+                transform: 'scaleY(1.2)'
+            },
+            dateYear: {
+                position: 'absolute',
+                top: '55px',
+                left: '110px',
+                fontSize: '18px',
+                transform: 'scaleY(1.2)'
+            },
+            dateTime: {
+                position: 'absolute',
+                top: '82px',
+                left: '18px',
+                fontSize: '20px',
+            },
+            dateDay: {
+                position: 'absolute',
+                top: '105px',
+                left: '19px',
+                fontSize: '15px',
+            },
             restoreImage: {
                 position: 'absolute',
                 width: '20px',
                 height: 'auto',
-                top: '150px',
+                top: '135px',
                 left: '19px',
                 cursor: 'pointer'
             },
@@ -190,46 +233,12 @@ export default class HistoryItem extends React.Component {
                 position: 'absolute',
                 width: '20px',
                 height: 'auto',
-                top: '150px',
+                top: '135px',
                 left: '50px',
                 cursor: 'pointer'
             },
-            dateDate: {
-                position: 'absolute',
-                top: '15px',
-                left: '15px',
-                fontSize: '70px',
-                transform: 'scaleY(1.2)'
-            },
-            dateMonth: {
-                position: 'absolute',
-                top: '35px',
-                left: '108px',
-                fontSize: '26px',
-                transform: 'scaleY(1.2)'
-            },
-            dateYear: {
-                position: 'absolute',
-                top: '70px',
-                left: '110px',
-                fontSize: '18px',
-                transform: 'scaleY(1.2)'
-            },
-            dateTime: {
-                position: 'absolute',
-                top: '97px',
-                left: '18px',
-                fontSize: '20px',
-            },
-            dateDay: {
-                position: 'absolute',
-                top: '120px',
-                left: '19px',
-                fontSize: '15px',
-            },
             contentArea: {
-                width: 'calc(100% - 210px)',
-                minHeight: '150px',
+                width: 'calc(65% - 170px)',
                 display: 'inline-flex',
                 flexDirection: 'row',
                 flexWrap: 'nowrap',
@@ -238,18 +247,18 @@ export default class HistoryItem extends React.Component {
                 position: 'relative',
                 fontFamily: '宋体',
                 color: 'rgba(0, 0, 0, 0.9)',
-                wordBreak: 'break-world',
-                minWidth: '50%'
             },
-            coverContainer: {
+            cover: {
                 height: '100%',
-                maxWidth: '55%',
-                minWidth: '25%',
+                width: 'calc(35% - 57px)',
                 overflow: 'hidden',
+                position: 'absolute',
+                right: 0,
                 backgroundSize: 'cover',
+                boxShadow: 'rgba(0, 0, 0, 0.15) -3px 0 30px 0px'
             },
             content: {
-                paddingRight: '50px',
+                width: '100%',
                 display: 'inline-block'
             },
             tags: {
@@ -282,14 +291,15 @@ export default class HistoryItem extends React.Component {
             changedContainer: {
                 marginBottom: '15px',
                 fontSize: '0.9em',
-                letterSpacing: '0.05em'
+                letterSpacing: '0.05em',
+                fontFamily: '-apple-system, system-ui, "Microsoft YaHei UI","Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
             },
             changedImage: {
                 height: '18px',
                 width: 'auto',
                 marginRight: '6px',
                 position: 'relative',
-                top: '2px'
+                top: '3px'
             },
             changedText: {
                 marginRight: '18px',
@@ -297,7 +307,7 @@ export default class HistoryItem extends React.Component {
                 fontWeight: 'bold'
             },
             changed: {
-                display: 'inline-block'
+                display: 'inline-block',
             },
             changedItem: {
                 listStyle: 'none',
@@ -306,13 +316,13 @@ export default class HistoryItem extends React.Component {
                 padding: '5px 15px',
                 borderRadius: '25px',
                 color: 'white',
-                marginRight: '8px',
+                marginRight: '12px',
                 boxShadow: '0px 3px 15px 0px rgba(0,0,0,0.25)'
             },
             operate: {
                 width: '100%',
                 height: '100%',
-                backgroundImage: 'linear-gradient(90deg, rgba(85, 203, 242, 0.87) 0%, rgba(61, 144, 239, 0.92) 100%)',
+                backgroundImage: 'linear-gradient(90deg, rgba(85, 203, 242, 0.95) 0%, rgba(61, 144, 239, 0.98) 100%)',
                 position: 'absolute',
                 top: 0, left: 0,
                 transition: 'all ease 300ms',
@@ -322,58 +332,36 @@ export default class HistoryItem extends React.Component {
                 })`,
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between'
+                justifyContent: 'center'
             },
             operateTitle: {
                 textAlign: 'center',
                 color: 'white',
-                fontSize: '1.3em',
+                fontSize: '1.1em',
                 fontWeight: 'bold',
-                marginTop: '25px',
-                letterSpacing: '0.03em'
-            },
-            operateButtonContainer: {
-                width: '80%',
-                margin: '0 10%',
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'center'
-            },
-            operateButton: {
-                width: '20%',
-                minWidth: '40px',
-                maxWidth: '80px',
-                height: '30px',
-                border: 'none',
-                color: 'white',
-                cursor: 'pointer',
-                fontSize: '0.7em',
-                letterSpacing: '0.08em',
-                margin: '0 15px',
-                boxShadow: '0px 3px 15px 0px rgba(0,0,0,0.25)'
+                letterSpacing: '0.03em',
+                marginBottom: '15px'
             },
             buttonArea: {
                 width: '80%',
-                margin: '0 10% 30px 10%',
+                margin: '15px 10% 0 10%',
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'center',
             },
             button: {
-                width: '20%',
-                minWidth: '40px',
-                maxWidth: '80px',
-                height: '30px',
-                borderRadius: '30px',
-                border: 'none',
-                color: 'white',
-                backgroundColor: 'rgba(54, 122, 209, 0.3)',
+                width: '70px',
+                display: 'inline-block',
+                padding: '8px 10px',
+                margin: '0 15px',
+                backgroundColor: 'rgba(255, 255, 255, 0.15)',
                 cursor: 'pointer',
-                fontSize: '0.7em',
-                letterSpacing: '0.08em',
-                transition: 'all ease 200ms',
-                boxShadow: 'rgba(0, 0, 0, 0.22) 0px 5px 15px 0px',
-                margin: '0 25px'
+                fontSize: '0.9em',
+                fontWeight: 'bold',
+                letterSpacing: '0.3em',
+                boxShadow: '0px 3px 15px 0px rgba(0,0,0,0.1)',
+                border: 'none',
+                color: 'white'
             },
         }
     }, this.props, this.state)}

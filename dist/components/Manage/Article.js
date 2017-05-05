@@ -216,7 +216,7 @@ export default class Article extends React.Component {
                 ref="confirm"
                 style={this.style().confirmContainer}
             >
-                <h3 dangerouslySetInnerHTML={{__html:
+                <h3 style={this.style().confirmText} dangerouslySetInnerHTML={{__html:
                     this.props.config.get().language === 'zh' ?
                     '😱<br/>你真的确定要删除这篇文章吗？' :
                     '😱<br/>Do You REALLY Want to Delete This Article?'
@@ -344,7 +344,7 @@ export default class Article extends React.Component {
                 textAlign: 'center',
                 cursor: 'pointer',
                 letterSpacing: '0.05em',
-                width: '40%'
+                width: '40%',
             },
             confirmContainer: {
                 width: '90%',
@@ -362,12 +362,14 @@ export default class Article extends React.Component {
                 justifyItems: 'center',
                 fontSize: '0.9em',
             },
+            confirmText: {
+                marginBottom: '10%'
+            },
             confirmButton: {
                 width: '70px',
                 display: 'inline-block',
                 padding: '8px 10px',
                 margin: '0 15px',
-                marginTop: `${this.state.introduction.length / 5}px`,
                 backgroundColor: 'rgba(255, 255, 255, 0.15)',
                 cursor: 'pointer',
                 fontWeight: 'bold',

@@ -31,9 +31,9 @@ export default class Manage extends React.Component {
             this.handleViewChange.bind(null, 'history'), 100));
         eventProxy.on('refreshArticleList', this.refreshArticleList);
         eventProxy.on('backToArticle', function () {
+            this.setState({ viewState: 'article'} );
             this.state.viewState === 'edit' &&
                 eventProxy.trigger('closeEditor');
-            this.setState({ viewState: 'article'} );
         }.bind(this))
     }
 
