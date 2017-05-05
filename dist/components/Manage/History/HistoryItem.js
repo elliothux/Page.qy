@@ -48,11 +48,11 @@ export default class HistoryItem extends React.Component {
                         src={`${this.props.mainPath}/src/pic/history.svg`}
                         onClick={this.setState.bind(this, { status: 'restore' }, () => {})}
                     />
-                    <img
-                        style={this.style().previewImage}
-                        src={`${this.props.mainPath}/src/pic/preview.svg`}
-                        onClick={this.handlePreview}
-                    />
+                    {/*<img*/}
+                        {/*style={this.style().previewImage}*/}
+                        {/*src={`${this.props.mainPath}/src/pic/preview.svg`}*/}
+                        {/*onClick={this.handlePreview}*/}
+                    {/*/>*/}
                 </div>
             }.bind(this)()}
             <div style={this.style().contentArea}>
