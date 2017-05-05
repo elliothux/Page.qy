@@ -88,14 +88,14 @@ class App extends React.Component {
 
     skipBackUp() {
         const confirm = window.confirm(this.props.language === 'zh' ?
-            '真的要跳过备份吗? 你将丢失所有的用户数据!' :
+            '真的要跳过备份吗?\n你将丢失所有的用户数据!' :
             'Do you really want to logout without backup? You will lost all of data!');
         if (confirm) {
             this.props.user.logout();
             this.props.app.relaunch();
             this.props.app.exit(0);
         } else
-            this.setState({ status: 'failed' });
+            this.setState({ status: 'init' });
     }
 
     handleOperate() {
@@ -158,6 +158,14 @@ class App extends React.Component {
                 <div>O</div>
                 <div>W</div>
             </div>
+            {this.state.status === 'backup' ?
+                <p
+                    style={this.style().messageText}
+                    dangerouslySetInnerHTML={{ __html: this.props.language === 'zh' ?
+                        `正在将备份上传到${this.props.config.username}.github.io仓库<br/>请稍等...` :
+                        `Uploading backup data to ${this.props.config.username}.github.io repositorie<br/>Waiting...`}}
+                /> : false
+            }
             <div style={this.style().buttonArea}>
                 <button
                     style={this.style().button}
@@ -180,7 +188,7 @@ class App extends React.Component {
                         this.props.quit();
                     }.bind(this)}
                 >
-                    {this.props.language === 'zh' ? '退出' : 'QUIT'}
+                    {this.props.language === 'zh' ? '取消' : 'CANCEL'}
                 </button>
             </div>
         </div>
@@ -195,6 +203,18 @@ class App extends React.Component {
                 width: '100%',
                 margin: '35px 0',
                 letterSpacing: '0.06em'
+            },
+            messageText: {
+                width: '80%',
+                margin: '0 10%',
+                textAlign: 'center',
+                color: 'white',
+                position: 'absolute',
+                fontSize: '0.9em',
+                top: '145px',
+                letterSpacing: '0.05em',
+                display: this.state.status === 'backup' ?
+                    'block' : 'none'
             },
             operateArea: {
                 width: '40%',
@@ -233,7 +253,7 @@ class App extends React.Component {
                 width: '100%',
                 height: '80px',
                 left: '40%',
-                top: '100px',
+                top: '70px',
                 marginLeft: '-260px',
                 overflow: 'visible',
                 display: this.state.status === 'backup' ?
@@ -272,6 +292,7 @@ ReactDOM.render(
         app={app}
         shell={shell}
         quit={quit}
+        config={config}
     />,
     document.getElementById('root')
 );

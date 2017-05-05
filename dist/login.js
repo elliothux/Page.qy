@@ -26,6 +26,7 @@ class App extends React.Component {
         this.handleQuit = this.handleQuit.bind(this);
         this.handleSetLanguage = this.handleSetLanguage.bind(this);
         this.handelSetIntroduction = this.handelSetIntroduction.bind(this);
+        this.initIntroduction  = this.initIntroduction.bind(this);
 
         this.state = {
             status: 'language',
@@ -83,10 +84,7 @@ class App extends React.Component {
             this.setState({ status: 'restore' });
             if (!this.props.user.restore(path))
                 return this.setState({ status: 'restoreFailed' });
-            this.setState({
-                status: 'introduction'
-            });
-            this.refs.introduction.focus();
+            this.initIntroduction();
         }.bind(this));
         chooser.click();
     }
@@ -94,22 +92,16 @@ class App extends React.Component {
     restoreOnGitHub() {
         if (!this.props.user.restore())
             return this.setState({ status: 'restoreFailed' });
-        this.setState({
-            status: 'introduction'
-        });
-        this.refs.introduction.focus();
+        this.initIntroduction();
     }
 
     skipRestore() {
         const confirm = window.confirm(this.state.language === 'zh' ?
             '真的要跳过恢复吗?\n如果你是第一次使用Page.qy则可以直接跳过.' :
             "Do you really want to skip to restore?\nIf it's your first using Page.qy you can just skip.");
-        if (confirm) {
-            this.setState({
-                status: 'introduction'
-            });
-            this.refs.introduction.focus();
-        } else
+        if (confirm)
+            this.initIntroduction();
+        else
             this.setState({ status: 'select' });
     }
 
@@ -120,6 +112,14 @@ class App extends React.Component {
             return this.restoreOnLocal();
         if (this.state.selected === 'skip')
             return this.skipRestore();
+    }
+
+    initIntroduction() {
+        this.setState({
+            status: 'introduction'
+        });
+        this.refs.introduction.focus();
+        this.refs.introduction.value = this.props.config.get().selfIntroduction;
     }
 
     handelSetIntroduction() {
