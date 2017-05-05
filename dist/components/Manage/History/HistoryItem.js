@@ -12,7 +12,7 @@ export default class HistoryItem extends React.Component {
         this.initState = this.initState.bind(this);
 
         this.state = {
-            status: 'init',
+            status: 'init'
         }
     }
 
@@ -20,12 +20,10 @@ export default class HistoryItem extends React.Component {
         eventProxy.on('backToArticle', this.initState)
     }
 
-    componentWillUnmount() {
-        eventProxy.off('backToArticle', this.initState)
-    }
-
     initState() {
-        this.setState({ status: 'init' })
+        if (this.state.unmounted) return;
+        this._reactInternalInstance &&
+            this.setState({ status: 'init' });
     }
 
     async handlePreview() {
@@ -350,15 +348,15 @@ export default class HistoryItem extends React.Component {
                 justifyContent: 'center',
             },
             button: {
-                width: '70px',
+                width: '100px',
                 display: 'inline-block',
                 padding: '8px 10px',
                 margin: '0 15px',
                 backgroundColor: 'rgba(255, 255, 255, 0.15)',
                 cursor: 'pointer',
-                fontSize: '0.9em',
+                fontSize: '0.8em',
                 fontWeight: 'bold',
-                letterSpacing: '0.3em',
+                letterSpacing: '0.03em',
                 boxShadow: '0px 3px 15px 0px rgba(0,0,0,0.1)',
                 border: 'none',
                 color: 'white'
