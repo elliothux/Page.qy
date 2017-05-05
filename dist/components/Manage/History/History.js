@@ -11,14 +11,16 @@ export default class History extends React.Component {
         this.handleViewHistory = this.handleViewHistory.bind(this);
 
         this.state = {
-            historyContent: []
+            historyContent: [],
+            key: ''
         }
 
     }
 
     componentDidMount() {
         eventProxy.on('viewHistory', function (data) {
-            this.handleViewHistory(data);
+            this.handleViewHistory(data.historyContent);
+            this.setState({ key: data.key })
         }.bind(this))
     }
 
@@ -47,6 +49,7 @@ export default class History extends React.Component {
                     mainPath={this.props.mainPath}
                     language={this.props.config.get().language}
                     openWindow={this.props.openWindow}
+                    articleKey={this.state.key}
                 />
             }.bind(this))}
         </div>

@@ -47,7 +47,7 @@ export default class HistoryItem extends React.Component {
         this.setState({ selected: selected });
     }
 
-    handleRestore() {
+    async handleRestore() {
         if (this.state.selected.length === 0)
             return eventProxy.trigger('message', this.props.language === 'zh' ?
                 '未选择任何恢复项!' : 'No Restore Content Selected!');
@@ -66,6 +66,9 @@ export default class HistoryItem extends React.Component {
             `Do You Want To Restore ${selected.join('、')} Of <${this.props.title}> To ${(new Date(this.props.editDate)).toLocaleString({}, { hour12: false })}?`
         );
         if (!confirm) return;
+        data = await this.props.db.editArticle(data);
+        if (!data) return;
+        eventProxy.trigger('updateArticleData', data);
 
         this.setState({
             status: 'init',

@@ -173,11 +173,18 @@ async function editArticle(data) {
                 (newHistoryData.tags =  prevArticle.tags);
             return newHistoryData;
         }());
-        const newArticle = Object.assign(data, {
+        const newArticle = {
             editDate: editDate,
             historyContent: historyContent,
-            type: 'article'
-        });
+            type: 'article',
+            key: data.key,
+            createDate: data.createDate || prevArticle.createDate,
+            published: data.published || prevArticle.published,
+            content: data.content,
+            introduction: data.introduction,
+            tags: data.tags,
+            title: data.title,
+        };
         if (await update(newArticle, article)) {
             const title = newArticle.title === '' ?
                 'Untitled Article' : newArticle.title;
