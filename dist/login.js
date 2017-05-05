@@ -176,7 +176,7 @@ class App extends React.Component {
                         case 'introduction':
                             return this.state.language === 'zh' ?
                                 '介绍一下你自己呗, 将会显示在你的网站(依据主题而定)' :
-                                'Write Something About Yourself. I Will Show On Your Website (Depends On Your Theme)';
+                                'Write Something About Yourself. It Will Show On Your Website (Depends On Your Theme)';
                     }
                 }.bind(this)()}
             </p>
