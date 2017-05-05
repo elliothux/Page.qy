@@ -4,7 +4,7 @@ Function.prototype.toString = Object.prototype.toString;
 import React from 'react';
 import ReactDOM from 'react-dom';
 import reactCSS from 'reactcss';
-import { remote } from 'electron';
+import { remote, shell } from 'electron';
 
 
 const user = remote.require('./main.js').user;
@@ -303,6 +303,16 @@ class App extends React.Component {
                 </button>
             </div>
             <textarea ref="introduction" type="text" style={this.style().introduction}/>
+            <a
+                id="signUp"
+                style={this.style().signUp}
+                onClick={function () {
+                    this.props.openURL('https://github.com/join?source=header-home')
+                }.bind(this)}
+            >{this.state.language === 'zh' ?
+                '没有GitHub账号?点击这里注册' :
+                'Have no GitHub Account? Click here to sign up'}
+            </a>
         </div>
     )}
 
@@ -446,6 +456,19 @@ class App extends React.Component {
                 backgroundColor: 'rgba(54, 122, 209, 0.298039)',
                 display: this.state.status === 'introduction' ?
                     'block' : 'none'
+            },
+            signUp: {
+                color: 'white',
+                fontSize: '0.8em',
+                position: 'absolute',
+                bottom: '10px',
+                textAlign: 'center',
+                textDecoration: 'underline',
+                display: this.state.status === 'init' ?
+                    'block' : 'none',
+                left: '10%',
+                width: '80%',
+                cursor: 'pointer'
             }
         }
     }, this.state, this.props)}
@@ -457,6 +480,7 @@ ReactDOM.render(
         config={config}
         user={user}
         app={app}
+        openURL={shell.openExternal}
     />,
     document.getElementById('root')
 );
