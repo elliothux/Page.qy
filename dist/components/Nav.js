@@ -11,6 +11,7 @@ export default class Nav extends React.Component {
         this.handleBackup = this.handleBackup.bind(this);
         this.handleRestore = this.handleRestore.bind(this);
         this.handleRegenerate = this.handleRegenerate.bind(this);
+        this.handleExport = this.handleExport.bind(this);
 
         this.state = {
             showOperate: false
@@ -83,6 +84,23 @@ export default class Nav extends React.Component {
                 );
             this.props.app.relaunch();
             this.props.app.exit(0);
+        }.bind(this));
+        chooser.click();
+    }
+
+    handleExport() {
+        this.setState({
+            showOperate: false
+        });
+        const chooser = document.createElement('input');
+        chooser.type = 'file';
+        chooser.webkitdirectory = true;
+        chooser.directory = true;
+        chooser.multiple = true;
+        chooser.addEventListener('change', function (e) {
+            const path = e.target.files[0].path;
+            const target = this.props.user.exportAll(path);
+            target && this.props.shell.showItemInFolder(target);
         }.bind(this));
         chooser.click();
     }
@@ -170,6 +188,12 @@ export default class Nav extends React.Component {
                         onClick={this.handleRestore}
                     >
                         {this.props.config.get().language === 'zh' ? '恢复备份' : 'Restore Backup'}
+                    </button>
+                    <button
+                        style={this.style().operate}
+                        onClick={this.handleExport}
+                    >
+                        {this.props.config.get().language === 'zh' ? '导出页面' : 'Export Pages'}
                     </button>
                     <button
                         style={this.style().operate}
@@ -294,7 +318,7 @@ export default class Nav extends React.Component {
             },
             operates: {
                 position: 'absolute',
-                top: this.state.showOperate ? '-160px' : '40px',
+                top: this.state.showOperate ? '-195px' : '40px',
                 left: 0,
                 transition: 'all ease 300ms',
                 opacity: this.state.showOperate ? 1 : 0,

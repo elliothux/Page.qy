@@ -258,6 +258,12 @@ async function getArticleList() {
     return (await find({type: 'article'}, article));
 }
 
+async function getArticle(options) {
+    const result = await find(
+        Object.assign(options, { type: 'article' }), article);
+    if (result.length === 1) return result[0];
+    return result;
+}
 
 
 async function togglePublish(key) {
@@ -279,11 +285,6 @@ async function isArticlePublished(key) {
 
 async function getPublishedArticleList() {
     return (await find({type: 'article', published: true}, article));
-}
-
-
-async function getArticle(key) {
-    return (await find({key: key}, article))[0]
 }
 
 

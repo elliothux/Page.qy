@@ -66,12 +66,9 @@ export default class Article extends React.Component {
         this.refs.container.className = 'articleContainer deleted';
         setTimeout(async function () {
             await this.props.db.deleteArticle(this.state.key);
-            const path =  await this.props.dataToHTML.dataToHome();
-            this.props.dataToHTML.dataToHome();
-            this.props.dataToHTML.dataToTags();
-            this.props.dataToHTML.dataToArchives();
+            await this.props.dataToHTML.reGenerateAll(false);
             eventProxy.trigger('refreshArticleList', null);
-            eventProxy.trigger('refreshPreview', path);
+            eventProxy.trigger('refreshPreview');
         }.bind(this), 260)
     }
 
@@ -88,10 +85,8 @@ export default class Article extends React.Component {
             published: !prevState.published
         }));
         await this.props.db.togglePublish(this.state.key);
-        const path =  await this.props.dataToHTML.dataToHome();
-        eventProxy.trigger('refreshPreview', path);
-        this.props.dataToHTML.dataToTags();
-        this.props.dataToHTML.dataToArchives();
+        await this.props.dataToHTML.reGenerateAll(false);
+        eventProxy.trigger('refreshPreview');
     }
 
     render() {return(

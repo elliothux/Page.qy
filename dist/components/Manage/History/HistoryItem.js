@@ -32,6 +32,7 @@ export default class HistoryItem extends React.Component {
     }
 
     async handleRestore() {
+        eventProxy.trigger('backToArticle');
         eventProxy.trigger('message', this.props.language === 'zh' ?
             '⚡ 正在恢复到历史...' : '⚡ Restoring To History...');
         let data = {
@@ -46,10 +47,11 @@ export default class HistoryItem extends React.Component {
         if (!data)
             return eventProxy.trigger('message', this.props.language === 'zh' ?
                 '😢 恢复失败!' : '😢 Restore Failed!');
-        eventProxy.trigger('backToArticle');
         eventProxy.trigger('updateArticleData', data);
         eventProxy.trigger('message', this.props.language === 'zh' ?
             '✨ 恢复完成!' : '✨ Restore Done!');
+        await this.props.dataToHTML.dataToArticle(this.props.articleKey);
+        eventProxy.trigger('refreshPreview');
     }
 
     render() {return (

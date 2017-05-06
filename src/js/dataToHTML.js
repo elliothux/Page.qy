@@ -5,11 +5,9 @@ const db = require('./db');
 const getConfig = require('./config').get;
 
 
-module.exports.dataToArticle = dataToArticle;
-module.exports.dataToHome = dataToHome;
-module.exports.dataToArchives = dataToArchives;
-module.exports.dataToTags = dataToTags;
+module.exports.getPath = getPath;
 module.exports.getArticlePath = getArticlePath;
+module.exports.dataToArticle = dataToArticle;
 module.exports.reGenerateAll = reGenerateAll;
 module.exports.formatDate = formatDate;
 
@@ -20,17 +18,32 @@ const target = path.join(__dirname, '../../user/temp/');
 
 
 function getArticlePath(key) {
-    const target = path.join(__dirname, '../../user/temp/articles');
-    return path.join(target, `${key}.html`)
+    const target = path.join(__dirname, `../../user/temp/articles/${key}.html`);
+    !fs.existsSync(target) &&
+        dataToArticle(key);
+    return target;
+}
+
+function getPath(type) {
+    const path = {
+        home: path.join(target, './index.html'),
+        tags: path.join(target, './tags.html'),
+        archives: path.join(target, './archives.html')
+    };
+    if (type) return path[type];
+    return path;
 }
 
 
-async function reGenerateAll() {
-    fs.existsSync(target) && fs.removeSync(target);
-    fs.mkdirpSync(target);
-    const articles = await db.getPublishedArticleList();
-    for (article of articles)
-        dataToArticle(article);
+async function reGenerateAll(reGenerateArticle=true) {
+    if (reGenerateArticle) {
+        fs.existsSync(target) && fs.removeSync(target);
+        fs.mkdirpSync(target);
+        updateStaticFiles();
+        const articles = await db.getPublishedArticleList();
+        for (article of articles)
+            dataToArticle(article);
+    }
     await dataToTags();
     await dataToArchives();
     await dataToHome();
@@ -38,7 +51,10 @@ async function reGenerateAll() {
 }
 
 
-function dataToArticle(rawData) {
+dataToArticle("x87hy8").then(a => console.log(a)).catch(e => console.error(e))
+async function dataToArticle(rawData) {
+    typeof rawData !== 'object' &&
+        (rawData = await db.getArticle({ key: rawData }));
     const config = getConfig();
     let article = fs.readFileSync(
         path.join(theme(), './templates/article.html'),
@@ -77,11 +93,14 @@ function dataToArticle(rawData) {
 
     !fs.existsSync(path.join(target, `./articles/`)) &&
         fs.mkdirpSync(path.join(target, `./articles/`));
-    const targetPath = rawData.key ?
-        path.join(target, `./articles/${rawData.key}.html`) :
-        path.join(target, `./articles/temp.html`);
+    const targetPath = path.join(target, `./articles/${rawData.key}.html`);
     fs.writeFileSync(targetPath, article, 'utf-8');
     updateStaticFiles();
+    if (await db.isArticlePublished(rawData.key)) {
+        await dataToHome();
+        await dataToArchives();
+        await dataToTags();
+    }
     return targetPath;
 }
 
@@ -123,7 +142,6 @@ async function dataToHome() {
 
     const targetPath = target;
     fs.writeFileSync(path.join(targetPath, 'index.html'), home, 'utf-8');
-    updateStaticFiles();
     return path.join(targetPath, 'index.html')
 }
 
@@ -158,7 +176,6 @@ async function dataToTags() {
 
     const targetPath = target;
     fs.writeFileSync(path.join(targetPath, 'tags.html'), tags, 'utf-8');
-    updateStaticFiles();
     return path.join(targetPath, 'tags.html')
 }
 
@@ -234,7 +251,6 @@ async function dataToArchives() {
 
     const targetPath = target;
     fs.writeFileSync(path.join(targetPath, 'archives.html'), archives, 'utf-8');
-    updateStaticFiles();
     return path.join(targetPath, 'archives.html')
 }
 
@@ -282,16 +298,6 @@ async function getArchiveData() {
 }
 
 
-async function checkPath() {
-    // const articles = await db.getPublishedArticleList();
-    // const keys = [];
-    // for (article of articles)
-    //     keys.push(article.key)
-    // for (file of fs.readdirSync(path.join(target, './articles')))
-    //     if (!keys.includes(file.split('.')[0]))
-    //         fs.removeSync(path.join(target, `./articles/${file}`));
-}
-
 
 function updateStaticFiles() {
     fs.copySync(
@@ -306,7 +312,6 @@ function updateStaticFiles() {
         path.join(theme(), './statics/'),
         path.join(target, './statics/statics/')
     );
-    checkPath();
 }
 
 

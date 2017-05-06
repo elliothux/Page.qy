@@ -11,7 +11,6 @@ export default class Editor extends React.Component {
         this.handleTagsChange = this.handleTagsChange.bind(this);
         this.handleEditArticle = this.handleEditArticle.bind(this);
         this.saveArticle = this.saveArticle.bind(this);
-        this.regenerateHTML = this.regenerateHTML.bind(this);
         this.clearEditor = this.clearEditor.bind(this);
 
         this.state = {
@@ -91,7 +90,7 @@ export default class Editor extends React.Component {
             if (!data) return;
             eventProxy.trigger('updateArticleData', data);
         }
-        this.regenerateHTML(data);
+        this.props.dataToHTML.dataToArticle(data);
         this.clearEditor();
     }
 
@@ -116,16 +115,6 @@ export default class Editor extends React.Component {
             tags: [],
             title: '',
         }));
-    }
-
-    regenerateHTML(data) {
-        this.props.dataToHTML.dataToArticle(data);
-        if (data.published) {
-            this.props.dataToHTML.dataToHome()
-                .then(path => eventProxy.trigger('refreshPreview', path));
-            this.props.dataToHTML.dataToTags();
-            this.props.dataToHTML.dataToArchives();
-        }
     }
 
     render() {return(
