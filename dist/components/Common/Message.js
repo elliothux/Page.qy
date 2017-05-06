@@ -34,7 +34,7 @@ export default class Message extends React.Component {
             }));
             this.state.messages.shift();
             setTimeout(this.showMessage, 300);
-        }.bind(this), 2000)
+        }.bind(this), 3000)
     }
 
     render() {return (
@@ -68,13 +68,13 @@ export default class Message extends React.Component {
                 bottom: '200px',
                 height: '35px',
                 width: 'fit-content',
-                maxWidth: '20%',
+                maxWidth: '100%',
                 padding: '0 20px',
                 textAlign: 'center',
                 lineHeight: '35px',
                 borderRadius: '50px',
                 color: 'white',
-                backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                backgroundColor: 'rgba(0, 0, 0, 0.7)',
                 fontSize: '0.9em',
                 letterSpacing: '0.1em',
                 cursor: 'pointer',

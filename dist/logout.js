@@ -88,8 +88,8 @@ class App extends React.Component {
 
     skipBackUp() {
         const confirm = window.confirm(this.props.language === 'zh' ?
-            '真的要跳过备份吗?\n你将丢失所有的用户数据!' :
-            'Do you really want to logout without backup? You will lost all of data!');
+            '😱真的要跳过备份吗?\n你将丢失所有的用户数据!' :
+            '😱Do you really want to logout without backup? You will lost all of data!');
         if (confirm) {
             this.props.user.logout();
             this.props.app.relaunch();
@@ -111,12 +111,12 @@ class App extends React.Component {
                     switch (this.state.status) {
                         case 'init':
                             return this.props.language === 'zh' ?
-                                '备份' : 'BACKUP';
+                                '📦备份' : '📦BACKUP';
                         case 'backup':
                             return false;
                         case 'failed':
                             return this.props.language === 'zh' ?
-                                '备份失败!' : 'BACKUP FAILED!';
+                                '😢备份失败!' : '😢BACKUP FAILED!';
                     }
                 }.bind(this)()}
             </p>
@@ -162,8 +162,8 @@ class App extends React.Component {
                 <p
                     style={this.style().messageText}
                     dangerouslySetInnerHTML={{ __html: this.props.language === 'zh' ?
-                        `正在将备份上传到${this.props.config.username}.github.io仓库<br/>请稍等...` :
-                        `Uploading backup data to ${this.props.config.username}.github.io repositorie<br/>Waiting...`}}
+                        `🏃正在将备份上传到${this.props.config.username}.github.io仓库<br/>请稍等...` :
+                        `🏃Uploading backup data to ${this.props.config.username}.github.io repositorie<br/>Waiting...`}}
                 /> : false
             }
             <div style={this.style().buttonArea}>

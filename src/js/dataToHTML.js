@@ -26,12 +26,15 @@ function getArticlePath(key) {
 
 
 async function reGenerateAll() {
+    fs.existsSync(target) && fs.removeSync(target);
+    fs.mkdirpSync(target);
     const articles = await db.getPublishedArticleList();
     for (article of articles)
         dataToArticle(article);
     await dataToTags();
     await dataToArchives();
     await dataToHome();
+    return target;
 }
 
 

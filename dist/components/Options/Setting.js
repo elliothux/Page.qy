@@ -12,12 +12,16 @@ export default class Setting extends React.Component {
     }
 
     handleConfigChange(name, value) {
+        if (name === 'editor' && value === 'markdown')
+            return eventProxy.trigger('message',
+                this.props.config.get().language === 'zh' ?
+                    'Σ(oﾟдﾟoﾉ) 施工中...' : 'Σ(oﾟдﾟoﾉ) Working On Supporting Markdown...');
         const config = {};
         config[name] = value;
         eventProxy.trigger('setConfig', this.props.config.set(config));
         eventProxy.trigger('message',
             this.props.config.get().language === 'zh' ?
-                '设置已保存!' : 'Apply setting success!')
+                '✨ 设置已保存!' : '✨ Apply Setting Success!')
     }
 
     render() {return (
@@ -51,14 +55,14 @@ export default class Setting extends React.Component {
                         <Select
                             onSelect={this.handleConfigChange.bind(null, 'layoutColumn')}
                             selects={{
-                                1: this.props.config.get().language === 'zh' ?
-                                    '一' : '1',
                                 2: this.props.config.get().language === 'zh' ?
                                     '二' : '2',
                                 3: this.props.config.get().language === 'zh' ?
                                     '三' : '3',
                                 4: this.props.config.get().language === 'zh' ?
                                     '四' : '4',
+                                5: this.props.config.get().language === 'zh' ?
+                                    '五' : '5',
                             }}
                             default={this.props.config.get().layoutColumn}
                         />

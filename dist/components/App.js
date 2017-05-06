@@ -72,6 +72,7 @@ export default class App extends React.Component {
                 show={this.state.viewState === 'options'}
                 logout={this.props.logout}
                 miniNav={this.state.miniNav}
+                reGenerateAll={this.props.dataToHTML.reGenerateAll}
             />
             <Message miniNav={this.state.miniNav}/>
         </div>

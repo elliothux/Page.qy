@@ -33,7 +33,7 @@ export default class HistoryItem extends React.Component {
 
     async handleRestore() {
         eventProxy.trigger('message', this.props.language === 'zh' ?
-            '正在恢复到历史...' : 'Restoring To History...');
+            '⚡ 正在恢复到历史...' : '⚡ Restoring To History...');
         let data = {
             key: this.props.articleKey,
             title: this.props.title,
@@ -45,11 +45,11 @@ export default class HistoryItem extends React.Component {
         data = await this.props.db.editArticle(data);
         if (!data)
             return eventProxy.trigger('message', this.props.language === 'zh' ?
-                '恢复失败!' : 'Restore Failed!');
+                '😢 恢复失败!' : '😢 Restore Failed!');
         eventProxy.trigger('backToArticle');
         eventProxy.trigger('updateArticleData', data);
         eventProxy.trigger('message', this.props.language === 'zh' ?
-            '恢复完成!' : 'Restore Done!');
+            '✨ 恢复完成!' : '✨ Restore Done!');
     }
 
     render() {return (
@@ -140,8 +140,8 @@ export default class HistoryItem extends React.Component {
                     {function () {
                         const date = this.props.dataToHTML.formatDate(this.props.editDate);
                         return this.props.language === 'zh' ?
-                            `将 <${this.props.title}> 恢复到 ${date.year}年${date.month}月${date.date}日 ${date.day} ${date.hours}:${date.minutes} 吗?` :
-                            `Do you really want to restore <${this.props.title}> to ${date.year}/${date.month}/${date.date} ${date.day} ${date.hours}:${date.minutes}?`
+                            `📅 将该文章恢复到 ${date.year}年${date.month}月${date.date}日 ${date.day} ${date.hours}:${date.minutes} 吗?` :
+                            `📅 Do you really want to restore this article to ${date.year}/${date.month}/${date.date} ${date.day} ${date.hours}:${date.minutes}?`
                     }.bind(this)()}
                 </p>
                 <div style={this.style().buttonArea}>

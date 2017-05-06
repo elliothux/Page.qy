@@ -19,14 +19,14 @@ export default class Theme extends React.Component {
     setTheme(theme) {
         eventProxy.trigger('message',
             this.props.config.get().language === 'zh' ?
-                '正在应用主题...' : 'Applying theme...');
+                '⚡ 正在应用主题...' : '⚡ Applying Theme...');
         this.props.theme.set(theme).then(function () {
             this.setState(() => ({
                 themes: this.props.theme.getThemesList()
             }));
             eventProxy.trigger('message',
                 this.props.config.get().language === 'zh' ?
-                    '主题应用成功!' : 'Apply theme success!');
+                    '✨ 主题应用成功!' : '✨ Apply Theme Success!');
             eventProxy.trigger('refreshPreview', null);
         }.bind(this));
     }
@@ -46,20 +46,20 @@ export default class Theme extends React.Component {
         if (message === 'error')
             return eventProxy.trigger('message',
                 this.props.config.get().language === 'zh' ?
-                    '无效的主题包!' : 'Invalid theme package!'
+                    '😂 无效的主题包!' : '😂 Invalid Theme Package!'
             );
         if (message === 'done')
             return eventProxy.trigger('message',
                 this.props.config.get().language === 'zh' ?
-                    '安装完成!' : 'Install theme success!'
+                    '🎉 主题安装完成!' : 'Install Theme Success!'
             );
         if (message === 'confirm') {
             let confirm;
             if (data.newVersion === data.preVersion) {
                 confirm = window.confirm(
                     this.props.config.get().language === 'zh' ?
-                        `主题 "${data.name}" 已安装, 要重新安装吗?`:
-                        `Theme "${data.name}" is already exists, reinstall?`
+                        `主题 "${data.name}" 已安装\n要重新安装吗?`:
+                        `Theme "${data.name}" is already exists\nReinstall?`
                 );
             }
             else if (data.newVersion > data.preVersion)
@@ -71,21 +71,21 @@ export default class Theme extends React.Component {
             else
                 confirm = window.confirm(
                     this.props.config.get().language === 'zh' ?
-                        `主题 "${data.name}" 的更高版本已安装, 要替换为更低的版本吗?`:
-                        `The higher version of theme "${data.name}" has already installed, downgrade??`
+                        `主题 "${data.name}" 的更高版本已安装\n要替换为更低的版本吗?`:
+                        `The higher version of theme "${data.name}" has already installed\nDowngrade?`
                 );
             confirm && this.props.theme.install(data.name)
                 .then(function () {
                     eventProxy.trigger('message',
                         this.props.config.get().language === 'zh' ?
-                            '安装完成!' : 'Install theme success!'
+                            '🎉 安装完成!' : '🎉 Install Theme Success!'
                     )
                 }.bind(this))
                 .catch(function (error) {
                     console.log(error);
                     eventProxy.trigger('message',
                         this.props.config.get().language === 'zh' ?
-                            '安装失败!' : 'Install theme failed!'
+                            '😢 安装失败!' : '😢 Install theme failed!'
                     )
                 }.bind(this))
         }

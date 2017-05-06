@@ -3,20 +3,49 @@ import reactCSS from 'reactcss';
 import Setting from './Setting';
 import Theme from './Theme';
 import About from './About';
+import eventProxy from '../../lib/eventProxy';
 
 
 export default class Options extends React.Component {
     constructor(props) {
         super(props);
         this.style = this.style.bind(this);
+        this.handleEditSelfIntroduction = this.handleEditSelfIntroduction.bind(this);
+
         this.state = {
             articleStatistic: 0,
-            tagStatistic: 0
+            tagStatistic: 0,
+            editIntroduction: false
         }
     }
 
     async componentDidMount() {
         this.setState(await this.props.db.statistic())
+    }
+
+    handleEditSelfIntroduction() {
+        this.setState(() => ({ editIntroduction: true }));
+        setTimeout(function () {
+            this.refs.editIntroduction.focus();
+            this.refs.editIntroduction.addEventListener('keydown', async function () {
+                if(event.keyCode !== 13) return;
+                if (this.state.editIntroduction) {
+                    this.props.config.set({
+                        selfIntroduction: this.refs.editIntroduction.value
+                    });
+                    this.setState({
+                        editIntroduction: false
+                    });
+                    eventProxy.trigger('message',
+                        this.props.config.get().language === 'zh' ?
+                        '✨ 保存成功!' : '✨ Saved!'
+                    );
+                    await this.props.reGenerateAll();
+                    eventProxy.trigger('refreshPreview');
+                }
+            }.bind(this))
+        }.bind(this), 50);
+
     }
 
     render() {return (
@@ -28,11 +57,31 @@ export default class Options extends React.Component {
                         <h1 style={this.style().userName}>
                             {this.props.config.get().name || this.props.config.username}
                         </h1>
-                        <div style={this.style().selfIntroduction}>
-                            <span style={this.style().selfIntroductionSymbol}>“</span>
-                            <p style={this.style().selfIntroductionText}>
-                                {this.props.config.get().selfIntroduction}
-                            </p>
+                        <div
+                            style={this.style().selfIntroduction}
+                            id="selfIntroduction"
+                        >
+                            <span
+                                style={this.style().selfIntroductionSymbol}
+                                id="selfIntroductionSymbol"
+                            >“</span>
+                            {!this.state.editIntroduction ?
+                                <p style={this.style().selfIntroductionText}>
+                                    {this.props.config.get().selfIntroduction}
+                                </p>:
+                                <input
+                                    type="text"
+                                    ref="editIntroduction"
+                                    defaultValue={this.props.config.get().selfIntroduction}
+                                    style={this.style().selfIntroductionText}
+                                />
+                            }
+                            <img
+                                onClick={this.handleEditSelfIntroduction}
+                                id="editSelfIntroduction"
+                                src={`${this.props.mainPath}/src/pic/edit.svg`}
+                                style={this.style().editIntroduction}
+                            />
                         </div>
                         <p style={this.style().articleCount}>
                             Writed <span ref="articleStatistic"style={this.style().countNumber}>{
@@ -110,13 +159,13 @@ export default class Options extends React.Component {
             },
             info: {
                 width: '70%',
-                height: '80%',
+                height: '90%',
                 position: 'absolute',
-                top: '10%',
+                top: '5%',
                 left: '5%',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-around',
+                justifyContent: 'space-between',
             },
             head: {
                 width: '100px',
@@ -144,19 +193,34 @@ export default class Options extends React.Component {
                 letterSpacing: '0.1em'
             },
             userName: {
-                fontSize: '2.8em',
+                fontSize: '2.5em',
                 color: '#4A4A4A',
                 letterSpacing: '0.1em'
             },
             selfIntroduction: {
-                position: 'relative'
+                position: 'relative',
+                width: '100%',
+                cursor: 'pointer'
+            },
+            editIntroduction: {
+                width: '20px',
+                height: 'auto',
+                position: 'absolute',
+                left: '-25px',
+                top: '2px',
+                cursor: 'pointer'
             },
             selfIntroductionText: {
-                fontSize: '1.8em',
+                fontSize: '1.5em',
                 color: '#676667',
                 letterSpacing: '0.1em',
                 fontWeight: 'bold',
-                display: 'inline-block'
+                display: 'inline-block',
+                width: '100%',
+                maxHeight: '85px',
+                overflow: 'hidden',
+                cursor: 'pointer',
+                wordBreak: 'break-word'
             },
             selfIntroductionSymbol: {
                 fontSize: '3.5em',
@@ -164,13 +228,16 @@ export default class Options extends React.Component {
                 fontWeight: 'bold',
                 position: 'absolute',
                 left: '-35px',
-                top: '-10px'
+                top: '-10px',
+                cursor: 'pointer'
             },
             articleCount: {
                 fontSize: '1em',
                 color: 'gray',
                 fontWeight: 'bold',
-                letterSpacing: '0.1em'
+                letterSpacing: '0.1em',
+                position: 'relative',
+                left: '5px'
             },
             countNumber: {
                 fontSize: '1.05em',

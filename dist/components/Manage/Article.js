@@ -21,6 +21,7 @@ export default class Article extends React.Component {
             introduction: this.props.data.introduction,
             historyContent: this.props.data.historyContent,
             key: this.props.data.key,
+            published: this.props.data.published
         }
     }
 
@@ -44,6 +45,12 @@ export default class Article extends React.Component {
     }
 
     handleHistory() {
+        if (this.state.historyContent.length === 0)
+            return eventProxy.trigger('message',
+                this.props.config.get().language === 'zh' ?
+                    '😂 并不存在什么历史!' :
+                    '😂 No History!'
+            );
         eventProxy.trigger('viewHistory', {
             historyContent: this.state.historyContent,
             key: this.props.data.key
@@ -218,7 +225,7 @@ export default class Article extends React.Component {
             >
                 <h3 style={this.style().confirmText} dangerouslySetInnerHTML={{__html:
                     this.props.config.get().language === 'zh' ?
-                    '😱<br/>你真的确定要删除这篇文章吗？' :
+                    '😱<br/>你确定要删除这篇文章吗？' :
                     '😱<br/>Do You REALLY Want to Delete This Article?'
                 }}/>
                 <div>

@@ -9,6 +9,10 @@
     font-family: -apple-system, system-ui, "Microsoft YaHei UI","Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";;
 }
 
+body {
+    margin-top: 32px;
+}
+
 .wangEditor-container {
     position: absolute;
     top: 0;  left: 0;
@@ -16,8 +20,22 @@
     height: 100%;
     border: none;
 }
+.wangEditor-menu-container,
+.wangEditor-menu-container.wangEditor-menu-shadow {
+    position: static;
+    top: 80px;
+}
 
+.wangEditor-menu-container .menu-group {
+    background-color: white;
+}
 
+.wangEditor-drop-panel textarea {
+    font-size: 1em;
+}
+.wangEditor-drop-panel select {
+    font-size: 1.5em;
+}
 
 .wangEditor-txt#editorContainer a {
     font-size: 1em;
@@ -62,7 +80,8 @@
 .wangEditor-txt#editorContainer ul,
 .wangEditor-txt#editorContainer pre,
 .wangEditor-txt#editorContainer code {
-    margin: 7px 0;
+    margin: 0;
+    padding: 0;
     font-size: 1.05em;
     line-height: 1.8em;
 }
@@ -83,12 +102,14 @@
 
 .wangEditor-txt#editorContainer pre {
     color: #898989;
-    padding: 10px 15px;
-    border: 1px solid #dbdbdb;
-    border-radius: 8px;
-    font-size: 0.9em;
+    padding: 15px 18px;
+    margin: 25px 0;
+    font-size: 13px;
     line-height: 1.5em;
     background-color: rgba(0,0,0, 0.02);
+    border-radius: 0;
+    border: none;
+    box-shadow: 0 3px 20px 0 rgba(0,0,0,0.2);
 }
 
 .wangEditor-txt#editorContainer table {
@@ -107,8 +128,9 @@
 
 .wangEditor-txt#editorContainer img {
     display: block;
-    margin: 20px auto;
-    border-radius: 8px;
+    margin: 25px auto;
+    border-radius: 0;
+    box-shadow: 0 3px 15px 1px rgba(0,0,0,0.2);
 }
 
 .wangEditor-txt#editorContainer table {

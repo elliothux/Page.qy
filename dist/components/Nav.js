@@ -32,14 +32,15 @@ export default class Nav extends React.Component {
         this.setState({
             showOperate: false
         });
-        eventProxy.trigger('message',
-            this.props.config.get().language === 'zh' ?
-                '正在重新生成所有页面...' : 'Regenerating...'
-        );
         await this.props.dataToHTML.reGenerateAll();
         eventProxy.trigger('message',
             this.props.config.get().language === 'zh' ?
-                '完成!' : 'Done!'
+                '⚡ 正在重新生成所有页面...' : '⚡ Regenerating...'
+        );
+        eventProxy.trigger('refreshPreview');
+        eventProxy.trigger('message',
+            this.props.config.get().language === 'zh' ?
+                '🎉 完成!' : '🎉 Done!'
         );
     }
 
@@ -55,7 +56,7 @@ export default class Nav extends React.Component {
         chooser.addEventListener('change', function (e) {
             eventProxy.trigger('message',
                 this.props.config.get().language === 'zh' ?
-                    '正在备份...' : 'Backing up...'
+                    '⚡ 正在备份...' : '⚡ Backing up...'
             );
             const path = e.target.files[0].path;
             const target = this.props.user.backupOnLocal(path);
@@ -78,7 +79,7 @@ export default class Nav extends React.Component {
             if (!this.props.user.restore(path))
                 return eventProxy.trigger('message',
                     this.props.config.get().language === 'zh' ?
-                        '恢复失败!' : 'Restore Failed!'
+                        '😢 恢复失败!' : '😢 Restore Failed!'
                 );
             this.props.app.relaunch();
             this.props.app.exit(0);
@@ -307,10 +308,10 @@ export default class Nav extends React.Component {
                 backgroundColor: 'white',
                 border: 'none',
                 borderLeft: '5px solid rgb(0, 103, 210)',
-                cursor: 'pinter',
                 fontSize: '0.8em',
                 fontWeight: 'bold',
-                letterSpacing: '0.02em'
+                letterSpacing: '0.02em',
+                cursor: 'pointer'
             }
         }
     }, this.props, this.state))}

@@ -9,6 +9,7 @@ import { remote, shell } from 'electron';
 
 const user = remote.require('./main.js').user;
 const config = remote.require('./main.js').config;
+const reGenerateAll = remote.require('./main.js').dataToHTML.reGenerateAll;
 const app = remote.app;
 
 
@@ -79,18 +80,18 @@ class App extends React.Component {
         chooser.webkitdirectory = true;
         chooser.directory = true;
         chooser.multiple = true;
-        chooser.addEventListener('change', function (e) {
+        chooser.addEventListener('change', async function (e) {
             const path = e.target.files[0].path;
             this.setState({ status: 'restore' });
-            if (!this.props.user.restore(path))
+            if (!await this.props.user.restore(path))
                 return this.setState({ status: 'restoreFailed' });
             this.initIntroduction();
         }.bind(this));
         chooser.click();
     }
 
-    restoreOnGitHub() {
-        if (!this.props.user.restore())
+    async restoreOnGitHub() {
+        if (!await this.props.user.restore())
             return this.setState({ status: 'restoreFailed' });
         this.initIntroduction();
     }
@@ -122,12 +123,13 @@ class App extends React.Component {
         this.refs.introduction.value = this.props.config.get().selfIntroduction;
     }
 
-    handelSetIntroduction() {
+    async handelSetIntroduction() {
         const value = this.refs.introduction.value.trim();
         if (!value) return;
         this.props.config.set({
             selfIntroduction: value
         });
+        await this.props.reGenerateAll();
         this.props.app.relaunch();
         this.props.app.exit(0);
     }
@@ -157,26 +159,26 @@ class App extends React.Component {
                     switch (this.state.status) {
                         case 'language':
                             return this.state.language === 'zh' ?
-                                '选择语言' : 'CHOOSE LANGUAGE';
+                                '🇨🇳 选择语言' : '🌎 LANGUAGE';
                         case 'init':
                             return this.state.language === 'zh' ?
-                                '登录' : 'LOGIN';
+                                '🚀 登录' : '🚀 LOGIN';
                         case 'login':
                             return false;
                         case 'failed':
                             return this.state.language === 'zh' ?
-                                '登录失败!' : 'LOGIN FAILED!';
+                               '😢 登录失败!' : '😢 LOGIN FAILED!';
                         case 'select':
                             return this.state.language === 'zh' ?
-                                '恢复数据' : 'RESTORE DATA';
+                                '📦 恢复数据' : '📦 RESTORE DATA';
                         case 'restore': return false;
                         case 'restoreFailed':
                             return this.state.language === 'zh' ?
-                                '恢复失败!' : 'RESTORE FAILED!';
+                                '😢 恢复失败!' : '😢 RESTORE FAILED!';
                         case 'introduction':
                             return this.state.language === 'zh' ?
-                                '介绍一下你自己呗, 将会显示在你的网站(依据主题而定)' :
-                                'Write Something About Yourself. It Will Show On Your Website (Depends On Your Theme)';
+                                '🖋 介绍一下你自己呗, 将会显示在你的网站(依据主题而定)' :
+                                '🖋 Write Something About Yourself. It Will Show On Your Website (Depends On Your Theme)';
                     }
                 }.bind(this)()}
             </p>
@@ -254,15 +256,15 @@ class App extends React.Component {
                         return <p
                             style={this.style().messageText}
                             dangerouslySetInnerHTML={{ __html: this.state.language === 'zh' ?
-                                `正在登陆并克隆${this.props.config.get().username}.github.io仓库<br/>请稍等...` :
-                                `Logging in and cloning ${this.props.config.get().username}.github.io repositorie<br/>Waiting...`}}
+                                `🏃 正在登陆并克隆你的GitHub.io仓库<br/>请稍等...` :
+                                `🏃 Logging in and cloning your GitHub.io repository<br/>Waiting...`}}
                         />;
                     case 'restore':
                         return <p
                             style={this.style().messageText}
                             dangerouslySetInnerHTML={{ __html: this.state.language === 'zh' ?
-                                `正在恢复备份, 请稍等...` :
-                                `Restoring data. Please wait for a while...`}}
+                                `🏃 正在恢复备份, 请稍等...` :
+                                `🏃 Restoring data. Please wait for a while...`}}
                         />;
                     default: return false
                 }
@@ -310,8 +312,8 @@ class App extends React.Component {
                     this.props.openURL('https://github.com/join?source=header-home')
                 }.bind(this)}
             >{this.state.language === 'zh' ?
-                '没有GitHub账号?点击这里注册' :
-                'Have no GitHub Account? Click here to sign up'}
+                '没有GitHub账号?点击这里注册 👈' :
+                'Have no GitHub Account? Click here to sign up 👈'}
             </a>
         </div>
     )}
@@ -364,8 +366,7 @@ class App extends React.Component {
             },
             languageArea: {
                 width: '40%',
-                display: this.state.status === 'language' ||
-                this.state.status === 'restoreFailed' ?
+                display: this.state.status === 'language' ?
                     'flex' : 'none',
                 color: 'white',
                 flexDirection: 'column',
@@ -418,8 +419,9 @@ class App extends React.Component {
                 top: '60px',
                 marginLeft: '-260px',
                 overflow: 'visible',
-                display: this.state.status === 'login' ?
-                    'block' : 'none'
+                display: (this.state.status === 'login' ||
+                    this.state.status === 'restore') ?
+                        'block' : 'none'
             },
             buttonArea: {
                 width: '36%',
@@ -459,16 +461,17 @@ class App extends React.Component {
             },
             signUp: {
                 color: 'white',
-                fontSize: '0.8em',
+                fontSize: '0.7em',
                 position: 'absolute',
                 bottom: '10px',
                 textAlign: 'center',
                 textDecoration: 'underline',
                 display: this.state.status === 'init' ?
                     'block' : 'none',
-                left: '10%',
-                width: '80%',
-                cursor: 'pointer'
+                width: '100%',
+                cursor: 'pointer',
+                fontWeight: 'lighter',
+                letterSpacing: '0.05em'
             }
         }
     }, this.state, this.props)}
@@ -481,6 +484,7 @@ ReactDOM.render(
         user={user}
         app={app}
         openURL={shell.openExternal}
+        reGenerateAll={reGenerateAll}
     />,
     document.getElementById('root')
 );

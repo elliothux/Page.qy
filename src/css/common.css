@@ -39,6 +39,15 @@ input, button, textarea, :focus {
     box-shadow: none;
 }
 
+#selfIntroduction #editSelfIntroduction {
+    display: none;
+}
+#selfIntroduction:hover #editSelfIntroduction {
+    display: inline-block;
+}
+#selfIntroduction:hover #selfIntroductionSymbol {
+    display: none;
+}
 
 .articleContainer .articleOperateButton {
     bottom: -20%;

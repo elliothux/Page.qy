@@ -135,7 +135,7 @@ export default class Editor extends React.Component {
                 onChange={this.handleTitleChange}
                 type="text" style={this.style().title}
                 placeholder={this.props.config.get().language === 'zh' ?
-                    '在这里输入你的标题...' : 'TYPE TITLE HERE...'}
+                    '(￣︶￣)↗ 在这里输入你的标题...' : '(￣︶￣)↗ TYPE TITLE HERE...'}
             />
             <input
                 ref="tags"
@@ -144,7 +144,7 @@ export default class Editor extends React.Component {
                 onChange={this.handleTagsChange}
                 type="text" style={this.style().tags}
                 placeholder={this.props.config.get().language === 'zh' ?
-                    '使用"#"添加标签' : 'ADD TAGS BY "#"'}
+                    '(￣▽￣)~# 使用"#"添加标签' : '(￣▽￣)~# ADD TAGS BY "#"'}
             />
             <iframe
                 style={this.style().editor}
