@@ -90,8 +90,9 @@ export default class Editor extends React.Component {
             if (!data) return;
             eventProxy.trigger('updateArticleData', data);
         }
-        this.props.dataToHTML.dataToArticle(data);
         this.clearEditor();
+        await this.props.dataToHTML.dataToArticle(data);
+        eventProxy.trigger('refreshPreview');
     }
 
     clearEditor() {

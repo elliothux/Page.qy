@@ -24,6 +24,7 @@ function getArticlePath(key) {
     return target;
 }
 
+
 function getPath(type) {
     const path = {
         home: path.join(target, './index.html'),
@@ -39,19 +40,18 @@ async function reGenerateAll(reGenerateArticle=true) {
     if (reGenerateArticle) {
         fs.existsSync(target) && fs.removeSync(target);
         fs.mkdirpSync(target);
-        updateStaticFiles();
+        _updateStaticFiles();
         const articles = await db.getPublishedArticleList();
         for (article of articles)
             dataToArticle(article);
     }
-    await dataToTags();
-    await dataToArchives();
-    await dataToHome();
+    await _dataToTags();
+    await _dataToArchives();
+    await _dataToHome();
     return target;
 }
 
 
-dataToArticle("x87hy8").then(a => console.log(a)).catch(e => console.error(e))
 async function dataToArticle(rawData) {
     typeof rawData !== 'object' &&
         (rawData = await db.getArticle({ key: rawData }));
@@ -66,6 +66,7 @@ async function dataToArticle(rawData) {
             date: formatDate(rawData.createDate),
             content: rawData.content,
             tags: rawData.tags,
+            introduction: rawData.introduction,
             archives: rawData.archives,
             avatar: config.avatar,
             name: config.name,
@@ -95,18 +96,18 @@ async function dataToArticle(rawData) {
         fs.mkdirpSync(path.join(target, `./articles/`));
     const targetPath = path.join(target, `./articles/${rawData.key}.html`);
     fs.writeFileSync(targetPath, article, 'utf-8');
-    updateStaticFiles();
+    _updateStaticFiles();
     if (await db.isArticlePublished(rawData.key)) {
-        await dataToHome();
-        await dataToArchives();
-        await dataToTags();
+        await _dataToHome();
+        await _dataToArchives();
+        await _dataToTags();
     }
     return targetPath;
 }
 
 
 
-async function dataToHome() {
+async function _dataToHome() {
     const config = getConfig();
     let home = fs.readFileSync(
         path.join(theme(), './templates/index.html'),
@@ -146,7 +147,7 @@ async function dataToHome() {
 }
 
 
-async function dataToTags() {
+async function _dataToTags() {
     const config = getConfig();
     let tags = fs.readFileSync(
         path.join(theme(), './templates/tags.html'),
@@ -154,7 +155,7 @@ async function dataToTags() {
     );
 
     const templateData = {
-        data: await getTagsData(),
+        data: await _getTagsData(),
         link: {
             home: './index.html',
             tags: './tags.html',
@@ -179,7 +180,7 @@ async function dataToTags() {
     return path.join(targetPath, 'tags.html')
 }
 
-async function getTagsData() {
+async function _getTagsData() {
     const articles = (await db.getPublishedArticleList())
         .sort((a, b) => (
             (new Date(b.createDate)).getTime() - (new Date(a.createDate)).getTime()
@@ -220,7 +221,7 @@ async function getTagsData() {
 }
 
 
-async function dataToArchives() {
+async function _dataToArchives() {
     const config = getConfig();
     let archives = fs.readFileSync(
         path.join(theme(), './templates/archives.html'),
@@ -228,7 +229,7 @@ async function dataToArchives() {
     );
 
     const templateData = {
-        data: await getArchiveData(),
+        data: await _getArchiveData(),
         link: {
             home: './index.html',
             tags: './tags.html',
@@ -255,7 +256,7 @@ async function dataToArchives() {
 }
 
 
-async function getArchiveData() {
+async function _getArchiveData() {
     const articles = (await db.getPublishedArticleList())
         .sort((a, b) => (
                 (new Date(b.createDate)).getTime() - (new Date(a.createDate)).getTime()
@@ -299,7 +300,7 @@ async function getArchiveData() {
 
 
 
-function updateStaticFiles() {
+function _updateStaticFiles() {
     fs.copySync(
         path.join(theme(), './style/'),
         path.join(target, './statics/style/')
