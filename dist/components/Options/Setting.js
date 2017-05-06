@@ -88,6 +88,28 @@ export default class Setting extends React.Component {
                 <div style={this.style().selectContainer}>
                     <p style={this.style().selectText}>
                         { this.props.config.get().language === 'zh' ?
+                            '最长历史记录:' : 'MAX HISTORY:' }
+                    </p>
+                    <div style={this.style().select}>
+                        <Select
+                            onSelect={this.handleConfigChange.bind(null, 'maxHistory')}
+                            selects={{
+                                25: this.props.config.get().language === 'zh' ?
+                                    '25次' : '25 TIMES',
+                                50: this.props.config.get().language === 'zh' ?
+                                    '50次' : '50 TIMES',
+                                100: this.props.config.get().language === 'zh' ?
+                                    '100次' : '100 TIMES',
+                                200: this.props.config.get().language === 'zh' ?
+                                    '200次' : '200 TIMES',
+                            }}
+                            default={this.props.config.get().maxHistory}
+                        />
+                    </div>
+                </div>
+                <div style={this.style().selectContainer}>
+                    <p style={this.style().selectText}>
+                        { this.props.config.get().language === 'zh' ?
                             '默认视图:' : 'INIT VIEW:' }
                     </p>
                     <div style={this.style().select}>

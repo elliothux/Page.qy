@@ -27,7 +27,7 @@ module.exports.backup = backup;
 module.exports.restore = restore;
 module.exports.getArticle = getArticle;
 module.exports.statistic = statistic;
-module.exports.find = find;
+
 
 
 // Generate an unique key
@@ -173,6 +173,9 @@ async function editArticle(data) {
                 (newHistoryData.tags =  prevArticle.tags);
             return newHistoryData;
         }());
+        const maxHistory = parseInt(config.get().maxHistory);
+        historyContent.length > maxHistory &&
+            (historyContent = historyContent.slice(0, maxHistory));
         const newArticle = {
             editDate: editDate,
             historyContent: historyContent,

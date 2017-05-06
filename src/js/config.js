@@ -39,7 +39,8 @@ function initConfig() {
         "mail": "",
         "layoutColumn": 3,
         "initView": "manage",
-        "miniNav": false
+        "miniNav": false,
+        "maxHistory": 50
     })
 }
 
