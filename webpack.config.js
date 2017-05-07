@@ -20,8 +20,8 @@ module.exports = {
                 }
             },
             {
-                test: /\.css$/, // Only .css files
-                loader: 'style-loader!css-loader' // Run both loaders
+                test: /\.css$/,
+                loader: 'style-loader!css-loader'
             },
             {
                 test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,

@@ -63,26 +63,31 @@
 /******/ 	__webpack_require__.p = "/assets/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 358);
+/******/ 	return __webpack_require__(__webpack_require__.s = 361);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 358:
+/***/ 361:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _electron = __webpack_require__(82);
+var _electron = __webpack_require__(83);
 
 var upload = _electron.remote.require('./main.js').upload;
+var language = _electron.remote.require('./main.js').config.get().language;
 
 var cancelButton = document.getElementById('cancel');
 var retryButton = document.getElementById('retry');
 var load = document.getElementById('load');
 var message = document.getElementById('message');
 var operateArea = document.getElementById('operateArea');
+
+cancelButton.innerHTML = language === 'zh' ? '取消' : 'CANCEL';
+retryButton.innerHTML = language === 'zh' ? '重试' : 'RETRY';
+message.innerHTML = language === 'zh' ? '\uD83C\uDFC3\u6B63\u5728\u52AA\u529B\u4E0A\u4F20...' : '\uD83C\uDFC3Working Hard On Uploading...';
 
 cancelButton.addEventListener('click', function () {
     upload.end();
@@ -102,31 +107,31 @@ function messageClient(message) {
 
 function success() {
     load.style.display = 'none';
-    message.innerHTML = '✨Upload success!';
-    cancelButton.innerHTML = 'Done';
+    message.innerHTML = language === 'zh' ? '✨上传成功!' : '✨Upload Success!';
+    cancelButton.innerHTML = language === 'zh' ? '完成' : 'DONE';
     operateArea.className = 'center';
 }
 
 function failed() {
     load.style.display = 'none';
     retryButton.style.display = 'inline-block';
-    message.innerHTML = '😢Upload failed!';
-    cancelButton.innerHTML = 'Done';
+    message.innerHTML = language === 'zh' ? '😢上传失败!' : '😢Upload Failed!';
+    cancelButton.innerHTML = language === 'zh' ? '完成' : 'DONE';
     operateArea.className = 'center';
 }
 
 function retry() {
     load.style.display = 'block';
     retryButton.style.display = 'none';
-    message.innerHTML = '🏃Working hard on uploading...';
-    cancelButton.innerHTML = 'Cancel';
+    message.innerHTML = language === 'zh' ? '\uD83C\uDFC3\u6B63\u5728\u52AA\u529B\u4E0A\u4F20...' : '🏃Working Hard On Uploading...';
+    cancelButton.innerHTML = language === 'zh' ? '取消' : 'CANCEL';
     upload.start(messageClient);
     operateArea.className = '';
 }
 
 /***/ }),
 
-/***/ 82:
+/***/ 83:
 /***/ (function(module, exports) {
 
 module.exports = require("electron");
