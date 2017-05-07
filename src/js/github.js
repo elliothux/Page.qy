@@ -19,6 +19,7 @@ if (platform === 'win32') {
     exec('set GIT_CURL_VERBOSE=1');
     exec('set GIT_TRACK_PACKET=2');
 }
+exec('git config http.sslVerify "false"');
 
 
 const userPath = path.join(__dirname, '../../user/');
