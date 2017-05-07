@@ -52,3 +52,7 @@ fabric.properties
 /Page.qy-linux-ia32/
 /Page.qy-darwin-x64/
 /Page.qy-win32-ia32/
+/Page.qy-linux-x64/
+/Page.qy-mas-x64/
+/Page.qy-win32-x64/
+/Page.qy-linux-armv7l/

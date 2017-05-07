@@ -31168,6 +31168,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 Function.prototype.toString = Object.prototype.toString;
 
 var main = _electron.remote.require('./main.js');
+_electron.webFrame.setVisualZoomLevelLimits(1, 1);
 
 _reactDom2.default.render(_react2.default.createElement(
     'div',

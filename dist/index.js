@@ -3,11 +3,12 @@ Function.prototype.toString = Object.prototype.toString;
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { remote, shell } from 'electron';
+import { remote, shell, webFrame } from 'electron';
 import App from './components/App';
 
 
 const main = remote.require('./main.js');
+webFrame.setVisualZoomLevelLimits(1, 1);
 
 
 ReactDOM.render(
