@@ -247,7 +247,7 @@ export default class HistoryItem extends React.Component {
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 position: 'relative',
-                fontFamily: '宋体',
+                fontFamily: 'Merriweather',
                 color: 'rgba(0, 0, 0, 0.9)',
             },
             cover: {

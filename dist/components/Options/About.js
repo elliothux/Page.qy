@@ -76,7 +76,8 @@ export default class About extends React.Component {
                 fontSize: '0.9em',
                 margin: '0 15px 25px 15px',
                 letterSpacing: '0.05em',
-                lineHeight: '20px'
+                lineHeight: '20px',
+                fontFamily: 'Merriweather'
             },
             link: {
                 color: 'rgb(61, 144, 239)',
