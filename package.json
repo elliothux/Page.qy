@@ -1,7 +1,7 @@
 {
-  "name": "Site.qy",
+  "name": "Page.qy",
   "version": "0.0.1",
-  "description": "Site.qy",
+  "description": "A simple way to build static website for everyone.",
   "main": "main.js",
   "dependencies": {
     "cheerio": "^0.22.0",
@@ -40,8 +40,8 @@
     "dev": "webpack-dev-server --content-base",
     "build-all": "electron-packager . Page.qy --all --ignore=node_modules/electron-* --overwrite --rebuild",
     "build-mac": "electron-packager . Page.qy --platform=darwin --arch=x64 --icon=src/pic/page.qy.icns --ignore=node_modules/electron-* --overwrite --rebuild",
-    "build-win": "electron-packager . Page.qy --platform=win32 --arch=x64 --icon=static/pic/page.qy.ico --ignore=node_modules/electron-* --overwrite --rebuild",
-    "build-linux": "electron-packager . Page.qy --platform=linux --arch=x64 --icon=static/pic/page.qy.ico --ignore=node_modules/electron-* --overwrite --rebuild"
+    "build-win": "electron-packager . Page.qy --platform=win32 --arch=x64 --icon=src/pic/page.qy.ico --ignore=node_modules/electron-* --overwrite --rebuild",
+    "build-linux": "electron-packager . Page.qy --platform=linux --arch=x64 --icon=src/pic/page.qy.ico --ignore=node_modules/electron-* --overwrite --rebuild"
   },
   "keywords": [
     "page",

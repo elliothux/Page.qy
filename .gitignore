@@ -49,3 +49,6 @@ fabric.properties
 /node_modules/
 /npm-debug.log
 /yarn-error.log
+/Page.qy-linux-ia32/
+/Page.qy-darwin-x64/
+/Page.qy-win32-ia32/
