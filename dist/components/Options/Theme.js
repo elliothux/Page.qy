@@ -207,6 +207,7 @@ export default class Theme extends React.Component {
                 marginBottom: '5px',
                 cursor: 'pointer',
                 color: 'gray',
+                fontFamily: "Merriweather"
             },
             operate: {
                 width: '100%',

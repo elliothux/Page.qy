@@ -23,34 +23,3 @@
     font-weight: 900;
     src: local('Merriweather Heavy Italic'), local('Merriweather-HeavyItalic'), url(../fonts/Merriweather-HeavyItalic.ttf);
 }
-
-@font-face {
-    font-family: 'Lato';
-    font-style: normal;
-    font-weight: 300;
-    src: local('Lato Light'), local('Lato-Light'), url(../fonts/Lato-Light.ttf);
-}
-@font-face {
-    font-family: 'Lato';
-    font-style: normal;
-    font-weight: 900;
-    src: local('Lato Black'), local('Lato-Blcak'), url(../fonts/Lato-Black.ttf);
-}
-@font-face {
-    font-family: 'Lato';
-    font-style: normal;
-    font-weight: bold;
-    src: local('Lato Black'), local('Lato-Blcak'), url(../fonts/Lato-Black.ttf);
-}
-@font-face {
-    font-family: 'Lato';
-    font-style: italic;
-    font-weight: 900;
-    src: local('Lato BlackItalic'), local('Lato-BlackItalic'), url(../fonts/Lato-BlackItalic.ttf);
-}
-@font-face {
-    font-family: 'Lato';
-    font-style: italic;
-    font-weight: bold;
-    src: local('Lato BlackItalic'), local('Lato-BlackItalic'), url(../fonts/Lato-BlackItalic.ttf);
-}

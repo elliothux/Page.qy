@@ -262,7 +262,7 @@ class App extends React.Component {
             buttonArea: {
                 width: '36%',
                 position: 'absolute',
-                left: '32%',
+                margin: '0 32%',
                 bottom: '45px',
                 display: 'flex',
                 flexDirection: 'row',

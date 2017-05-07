@@ -155,7 +155,9 @@ export default class Editor extends React.Component {
                 fontSize: '1.5em',
                 border: 'none',
                 marginTop: '20px',
-                padding: '0 15px'
+                padding: '0 15px',
+                fontFamily: "Merriweather",
+                fontWeight: 'bolder'
             },
             tags: {
                 width: 'calc(100% - 36px)',
@@ -164,6 +166,8 @@ export default class Editor extends React.Component {
                 padding: '0 18px',
                 border: 'none',
                 fontSize: '1em',
+                fontFamily: "Merriweather",
+                fontWeight: 'bolder'
             },
             editor: {
                 width: 'calc(100% - 80px)',
@@ -171,7 +175,7 @@ export default class Editor extends React.Component {
                 position: 'absolute',
                 top: '125px',
                 left: '40px',
-                border: 'none'
+                border: 'none',
             }
         }
     }, this.props, this.state))}
