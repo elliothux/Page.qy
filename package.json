@@ -5,22 +5,20 @@
   "main": "main.js",
   "dependencies": {
     "cheerio": "^0.22.0",
-    "electron": "^1.6.2",
-    "electron-prebuilt": "^1.4.13",
+    "extract-zip": "^1.6.5",
     "github-api": "^3.0.0",
-    "jquery": "^3.2.1",
     "nedb": "^1.8.0",
     "node-fs-extra": "^0.8.1",
-    "react": "^15.4.2",
-    "react-addons-pure-render-mixin": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "react-rte": "^0.11.0",
-    "reactcss": "^1.1.1",
     "request": "^2.81.0",
     "simple-git": "^1.69.0",
     "wangeditor": "^2.1.23"
   },
   "devDependencies": {
+    "react": "^15.4.2",
+    "react-addons-pure-render-mixin": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-rte": "^0.11.0",
+    "reactcss": "^1.1.1",
     "babel-core": "^6.23.1",
     "babel-loader": "^6.2.10",
     "babel-plugin-lodash": "^3.2.11",
@@ -28,7 +26,10 @@
     "babel-preset-react": "^6.22.0",
     "babel-preset-stage-0": "^6.22.0",
     "css-loader": "^0.27.3",
+    "electron": "^1.6.2",
+    "electron-builder": "^17.3.1",
     "electron-devtools-installer": "^2.1.0",
+    "electron-prebuilt": "^1.4.13",
     "electron-rebuild": "^1.5.7",
     "style-loader": "^0.16.1",
     "url-loader": "^0.5.8",
@@ -38,10 +39,8 @@
   "scripts": {
     "start": "electron-rebuild && electron --js-flags=\"--harmony-async-await\" main.js",
     "dev": "webpack-dev-server --content-base",
-    "build-all": "electron-packager . Page.qy --all --ignore=node_modules --overwrite --rebuild",
-    "build-mac": "electron-packager . Page.qy --platform=darwin --arch=x64 --icon=src/pic/page.qy.icns --ignore=node_modules --overwrite --rebuild",
-    "build-win": "electron-packager . Page.qy --platform=win32 --arch=x64 --icon=src/pic/page.qy.ico --ignore=node_modules --overwrite --rebuild",
-    "build-linux": "electron-packager . Page.qy --platform=linux --arch=x64 --icon=src/pic/page.qy.ico --ignore=node_modules --overwrite --rebuild"
+    "pack": "build --dir",
+    "dist": "build"
   },
   "keywords": [
     "page",
@@ -52,5 +51,33 @@
   "license": "ISC",
   "ecmaFeatures": {
     "modules": true
+  },
+  "build": {
+    "dmg": {
+      "contents": [
+        {
+          "x": 300,
+          "y": 150
+        },
+        {
+          "x": 600,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ],
+      "icon": "build/icon.icns"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "build/icon.icns"
+    },
+    "win": {
+      "target": "NSIS",
+      "icon": "build/icon.ico"
+    }
   }
 }

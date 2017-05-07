@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/Cellar/node/7.4.0/bin/node /Users/huqingyang/.yarn/bin/yarn.js install
+  /usr/local/Cellar/node/7.4.0/bin/node /Users/huqingyang/.yarn/bin/yarn.js add extract-zip
 
 PATH: 
   /Users/huqingyang/.yarn/bin:/Users/huqingyang/.cargo/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/aria2/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands
@@ -15,25 +15,27 @@ Platform:
 
 npm manifest: 
   {
-    "name": "Site.qy",
+    "name": "Page.qy",
     "version": "0.0.1",
-    "description": "Site.qy",
+    "description": "A simple way to build static website for everyone.",
     "main": "main.js",
     "dependencies": {
       "cheerio": "^0.22.0",
-      "electron": "^1.6.2",
-      "electron-prebuilt": "^1.4.13",
       "github-api": "^3.0.0",
-      "jquery": "^3.2.1",
       "nedb": "^1.8.0",
       "node-fs-extra": "^0.8.1",
+      "request": "^2.81.0",
+      "simple-git": "^1.69.0",
+  
+      "wangeditor": "^2.1.23",
+      "electron": "^1.6.2",
+      "electron-prebuilt": "^1.4.13",
+      "jquery": "^3.2.1",
       "react": "^15.4.2",
       "react-addons-pure-render-mixin": "^15.4.2",
       "react-dom": "^15.4.2",
       "react-rte": "^0.11.0",
-      "reactcss": "^1.1.1",
-      "simple-git": "^1.69.0",
-      "wangeditor": "^2.1.23"
+      "reactcss": "^1.1.1"
     },
     "devDependencies": {
       "babel-core": "^6.23.1",
@@ -52,10 +54,16 @@ npm manifest:
     },
     "scripts": {
       "start": "electron-rebuild && electron --js-flags=\"--harmony-async-await\" main.js",
-      "dev": "webpack-dev-server --content-base"
+      "dev": "webpack-dev-server --content-base",
+      "build-all": "electron-packager . Page.qy --all --ignore=node_modules --overwrite --rebuild",
+      "build-mac": "electron-packager . Page.qy --platform=darwin --arch=x64 --icon=src/pic/page.qy.icns --ignore=node_modules --overwrite --rebuild",
+      "build-win": "electron-packager . Page.qy --platform=win32 --arch=x64 --icon=src/pic/page.qy.ico --ignore=node_modules --overwrite --rebuild",
+      "build-linux": "electron-packager . Page.qy --platform=linux --arch=x64 --icon=src/pic/page.qy.ico --ignore=node_modules --overwrite --rebuild"
     },
     "keywords": [
-      "page"
+      "page",
+      "website",
+      "blog"
     ],
     "author": "https://github.com/HuQingyang",
     "license": "ISC",
@@ -4779,4 +4787,5 @@ Lockfile:
       fd-slicer "~1.0.1"
 
 Trace: 
-  Error: EEXIST: file already exists, mkdir '/Users/huqingyang/OneDrive/Development/WebstormProjects/Page.qy/node_modules/electron-prebuilt'
+  Error: https://registry.yarnpkg.com/domelementtype/-/domelementtype-1.1.3.tgz: unexpected end of file
+      at Zlib._handle.onerror (zlib.js:355:17)
