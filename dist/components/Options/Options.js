@@ -113,7 +113,12 @@ export default class Options extends React.Component {
                     theme={this.props.theme}
                     mainPath={this.props.mainPath}
                 />
-                <About config={this.props.config}/>
+                <About
+                    language={this.props.config.get().language}
+                    mainPath={this.props.mainPath}
+                    openURL={this.props.openURL}
+                    platform={this.props.platform}
+                />
             </div>
         </div>
     )}

@@ -150,7 +150,7 @@ export default class Setting extends React.Component {
                 color: '#4A4A4A'
             },
             selects: {
-                width: '95%',
+                width: '100%',
                 display: 'flex',
                 justifyContent: 'space-between',
                 flexWrap: 'wrap',
@@ -161,7 +161,8 @@ export default class Setting extends React.Component {
                 height: '30px',
                 display: 'inline-block',
                 width: '44%',
-                position: 'relative'
+                position: 'relative',
+                minWidth: '140px'
             },
             selectText: {
                 fontSize: '1.1em',
@@ -169,7 +170,7 @@ export default class Setting extends React.Component {
                 marginBottom: '8px',
                 letterSpacing: '0.05em',
                 display: 'block',
-                height: '30px',
+                lineHeight: '20px'
             },
             select: {
                 width: '100%',
