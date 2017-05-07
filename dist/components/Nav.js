@@ -335,7 +335,8 @@ export default class Nav extends React.Component {
                 fontSize: '0.8em',
                 fontWeight: 'bold',
                 letterSpacing: '0.02em',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                fontFamily: '-apple-system, system-ui, "Microsoft YaHei UI", "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
             }
         }
     }, this.props, this.state))}
