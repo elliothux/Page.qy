@@ -13,8 +13,24 @@
             background-image: linear-gradient(60deg, rgba(85, 203, 242, 1) 0%, rgba(61, 144, 239, 1) 100%);
             color: white;
         }
-        ::-webkit-scrollbar {
+
+        *::-webkit-scrollbar {
             display: none;
+        }
+
+        a:link, a:visited {
+            text-decoration: none;
+        }
+
+        :not(input):not(textarea),
+        :not(input):not(textarea)::after,
+        :not(input):not(textarea)::before {
+            -webkit-user-select: none;
+            user-select: none;
+            cursor: default;
+        }
+        input, button, textarea, :focus {
+            outline: none;
         }
 
 
@@ -149,6 +165,6 @@
     </div>
 </div>
 
-<script type="text/javascript" src="http://localhost:8080/assets/uploading.build.js"></script>
+<script type="text/javascript" src="../uploading.build.js"></script>
 </body>
 </html>

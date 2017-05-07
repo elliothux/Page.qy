@@ -30113,7 +30113,8 @@ var About = function (_React$Component) {
                         letterSpacing: '0.1em',
                         cursor: 'pointer',
                         boxShadow: '0px 4px 11px 1px rgba(0,0,0,0.21)',
-                        border: 'none'
+                        border: 'none',
+                        fontFamily: '-apple-system, system-ui, "Microsoft YaHei UI", "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
                     }
                 }
             }, this.props, this.state);

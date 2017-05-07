@@ -11,9 +11,6 @@
         input::-webkit-input-placeholder {
             color: rgba(255, 255, 255, 0.4);
         }
-        ::-webkit-scrollbar {
-            display: none;
-        }
         body {
             background-image: linear-gradient(60deg, rgba(85, 203, 242, 1) 0%, rgba(61, 144, 239, 1) 100%);
             font-family: "Microsoft YaHei UI","Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -21,6 +18,26 @@
             height: 300px;
             overflow: hidden;
         }
+
+        *::-webkit-scrollbar {
+            display: none;
+        }
+
+        a:link, a:visited {
+            text-decoration: none;
+        }
+
+        :not(input):not(textarea),
+        :not(input):not(textarea)::after,
+        :not(input):not(textarea)::before {
+            -webkit-user-select: none;
+            user-select: none;
+            cursor: default;
+        }
+        input, button, textarea, :focus {
+            outline: none;
+        }
+
 
         #signUp {
             opacity: 0.5;
@@ -93,6 +110,6 @@
 <body>
 <div id="root"></div>
 
-<script type="text/javascript" src="http://localhost:8080/assets/login.build.js"></script>
+<script type="text/javascript" src="../login.build.js"></script>
 </body>
 </html>
