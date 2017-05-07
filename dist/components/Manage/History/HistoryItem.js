@@ -53,7 +53,7 @@ export default class HistoryItem extends React.Component {
                 '✨ 恢复完成!' : '✨ Restore Done!');
             await this.props.dataToHTML.dataToArticle(this.props.articleKey);
             eventProxy.trigger('refreshPreview');
-        }.bind(this), 850);
+        }.bind(this), 1000);
     }
 
     render() {return (

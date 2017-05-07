@@ -12,6 +12,10 @@ body {
     display: none;
 }
 
+*::-webkit-scrollbar {
+    display: none;
+}
+
 a:link, a:visited {
     text-decoration: none;
 }

@@ -156,7 +156,7 @@ export default class Manage extends React.Component {
                 padding: '0 40px',
                 zIndex: 4,
                 backgroundColor: 'white',
-                transition: 'all 700ms ease',
+                transition: 'all 850ms ease',
                 top: this.state.viewState === 'edit' ?
                     0 : '100%'
             },
@@ -169,7 +169,7 @@ export default class Manage extends React.Component {
                 padding: '0 40px',
                 zIndex: 4,
                 backgroundColor: 'white',
-                transition: 'all 700ms ease',
+                transition: 'all 850ms ease',
                 top: this.state.viewState === 'history' ?
                     0 : '100%'
             },
