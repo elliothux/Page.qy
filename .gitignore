@@ -57,3 +57,6 @@ fabric.properties
 /Page.qy-win32-x64/
 /Page.qy-linux-armv7l/
 /require.txt
+/dist/mac/
+/dist/Page.qy-0.0.1-mac.zip
+/dist/Page.qy-0.0.1.dmg
