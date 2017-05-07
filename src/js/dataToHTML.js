@@ -5,11 +5,9 @@ const db = require('./db');
 const getConfig = require('./config').get;
 
 
-module.exports.dataToArticle = dataToArticle;
-module.exports.dataToHome = dataToHome;
-module.exports.dataToArchives = dataToArchives;
-module.exports.dataToTags = dataToTags;
+module.exports.getPath = getPath;
 module.exports.getArticlePath = getArticlePath;
+module.exports.dataToArticle = dataToArticle;
 module.exports.reGenerateAll = reGenerateAll;
 module.exports.formatDate = formatDate;
 
@@ -20,25 +18,43 @@ const target = path.join(__dirname, '../../user/temp/');
 
 
 function getArticlePath(key) {
-    const target = path.join(__dirname, '../../user/temp/articles');
-    return path.join(target, `${key}.html`)
-}
-
-
-async function reGenerateAll() {
-    fs.existsSync(target) && fs.removeSync(target);
-    fs.mkdirpSync(target);
-    const articles = await db.getPublishedArticleList();
-    for (article of articles)
-        dataToArticle(article);
-    await dataToTags();
-    await dataToArchives();
-    await dataToHome();
+    const target = path.join(__dirname, `../../user/temp/articles/${key}.html`);
+    !fs.existsSync(target) &&
+        dataToArticle(key);
     return target;
 }
 
 
-function dataToArticle(rawData) {
+function getPath(type) {
+    const path = {
+        home: path.join(target, './index.html'),
+        tags: path.join(target, './tags.html'),
+        archives: path.join(target, './archives.html')
+    };
+    if (type) return path[type];
+    return path;
+}
+
+
+async function reGenerateAll(reGenerateArticle=true) {
+    if (reGenerateArticle) {
+        fs.existsSync(target) && fs.removeSync(target);
+        fs.mkdirpSync(target);
+        _updateStaticFiles();
+        const articles = await db.getPublishedArticleList();
+        for (article of articles)
+            dataToArticle(article);
+    }
+    await _dataToTags();
+    await _dataToArchives();
+    await _dataToHome();
+    return target;
+}
+
+
+async function dataToArticle(rawData) {
+    typeof rawData !== 'object' &&
+        (rawData = await db.getArticle({ key: rawData }));
     const config = getConfig();
     let article = fs.readFileSync(
         path.join(theme(), './templates/article.html'),
@@ -50,6 +66,7 @@ function dataToArticle(rawData) {
             date: formatDate(rawData.createDate),
             content: rawData.content,
             tags: rawData.tags,
+            introduction: rawData.introduction,
             archives: rawData.archives,
             avatar: config.avatar,
             name: config.name,
@@ -77,17 +94,20 @@ function dataToArticle(rawData) {
 
     !fs.existsSync(path.join(target, `./articles/`)) &&
         fs.mkdirpSync(path.join(target, `./articles/`));
-    const targetPath = rawData.key ?
-        path.join(target, `./articles/${rawData.key}.html`) :
-        path.join(target, `./articles/temp.html`);
+    const targetPath = path.join(target, `./articles/${rawData.key}.html`);
     fs.writeFileSync(targetPath, article, 'utf-8');
-    updateStaticFiles();
+    _updateStaticFiles();
+    if (await db.isArticlePublished(rawData.key)) {
+        await _dataToHome();
+        await _dataToArchives();
+        await _dataToTags();
+    }
     return targetPath;
 }
 
 
 
-async function dataToHome() {
+async function _dataToHome() {
     const config = getConfig();
     let home = fs.readFileSync(
         path.join(theme(), './templates/index.html'),
@@ -123,12 +143,11 @@ async function dataToHome() {
 
     const targetPath = target;
     fs.writeFileSync(path.join(targetPath, 'index.html'), home, 'utf-8');
-    updateStaticFiles();
     return path.join(targetPath, 'index.html')
 }
 
 
-async function dataToTags() {
+async function _dataToTags() {
     const config = getConfig();
     let tags = fs.readFileSync(
         path.join(theme(), './templates/tags.html'),
@@ -136,7 +155,7 @@ async function dataToTags() {
     );
 
     const templateData = {
-        data: await getTagsData(),
+        data: await _getTagsData(),
         link: {
             home: './index.html',
             tags: './tags.html',
@@ -158,11 +177,10 @@ async function dataToTags() {
 
     const targetPath = target;
     fs.writeFileSync(path.join(targetPath, 'tags.html'), tags, 'utf-8');
-    updateStaticFiles();
     return path.join(targetPath, 'tags.html')
 }
 
-async function getTagsData() {
+async function _getTagsData() {
     const articles = (await db.getPublishedArticleList())
         .sort((a, b) => (
             (new Date(b.createDate)).getTime() - (new Date(a.createDate)).getTime()
@@ -203,7 +221,7 @@ async function getTagsData() {
 }
 
 
-async function dataToArchives() {
+async function _dataToArchives() {
     const config = getConfig();
     let archives = fs.readFileSync(
         path.join(theme(), './templates/archives.html'),
@@ -211,7 +229,7 @@ async function dataToArchives() {
     );
 
     const templateData = {
-        data: await getArchiveData(),
+        data: await _getArchiveData(),
         link: {
             home: './index.html',
             tags: './tags.html',
@@ -234,12 +252,11 @@ async function dataToArchives() {
 
     const targetPath = target;
     fs.writeFileSync(path.join(targetPath, 'archives.html'), archives, 'utf-8');
-    updateStaticFiles();
     return path.join(targetPath, 'archives.html')
 }
 
 
-async function getArchiveData() {
+async function _getArchiveData() {
     const articles = (await db.getPublishedArticleList())
         .sort((a, b) => (
                 (new Date(b.createDate)).getTime() - (new Date(a.createDate)).getTime()
@@ -282,18 +299,8 @@ async function getArchiveData() {
 }
 
 
-async function checkPath() {
-    // const articles = await db.getPublishedArticleList();
-    // const keys = [];
-    // for (article of articles)
-    //     keys.push(article.key)
-    // for (file of fs.readdirSync(path.join(target, './articles')))
-    //     if (!keys.includes(file.split('.')[0]))
-    //         fs.removeSync(path.join(target, `./articles/${file}`));
-}
 
-
-function updateStaticFiles() {
+function _updateStaticFiles() {
     fs.copySync(
         path.join(theme(), './style/'),
         path.join(target, './statics/style/')
@@ -306,7 +313,6 @@ function updateStaticFiles() {
         path.join(theme(), './statics/'),
         path.join(target, './statics/statics/')
     );
-    checkPath();
 }
 
 

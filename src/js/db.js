@@ -27,7 +27,7 @@ module.exports.backup = backup;
 module.exports.restore = restore;
 module.exports.getArticle = getArticle;
 module.exports.statistic = statistic;
-module.exports.find = find;
+
 
 
 // Generate an unique key
@@ -173,6 +173,9 @@ async function editArticle(data) {
                 (newHistoryData.tags =  prevArticle.tags);
             return newHistoryData;
         }());
+        const maxHistory = parseInt(config.get().maxHistory);
+        historyContent.length > maxHistory &&
+            (historyContent = historyContent.slice(0, maxHistory));
         const newArticle = {
             editDate: editDate,
             historyContent: historyContent,
@@ -258,6 +261,12 @@ async function getArticleList() {
     return (await find({type: 'article'}, article));
 }
 
+async function getArticle(options) {
+    const result = await find(
+        Object.assign(options, { type: 'article' }), article);
+    if (result.length === 1) return result[0];
+    return result;
+}
 
 
 async function togglePublish(key) {
@@ -279,11 +288,6 @@ async function isArticlePublished(key) {
 
 async function getPublishedArticleList() {
     return (await find({type: 'article', published: true}, article));
-}
-
-
-async function getArticle(key) {
-    return (await find({key: key}, article))[0]
 }
 
 

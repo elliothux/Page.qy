@@ -31,25 +31,29 @@ export default class HistoryItem extends React.Component {
             await this.props.dataToHTML.dataToArticle(this.props))
     }
 
-    async handleRestore() {
-        eventProxy.trigger('message', this.props.language === 'zh' ?
-            '⚡ 正在恢复到历史...' : '⚡ Restoring To History...');
-        let data = {
-            key: this.props.articleKey,
-            title: this.props.title,
-            tags: this.props.tags,
-            content: this.props.content,
-            introduction: this.props.introduction
-        };
-
-        data = await this.props.db.editArticle(data);
-        if (!data)
-            return eventProxy.trigger('message', this.props.language === 'zh' ?
-                '😢 恢复失败!' : '😢 Restore Failed!');
+    handleRestore() {
         eventProxy.trigger('backToArticle');
-        eventProxy.trigger('updateArticleData', data);
-        eventProxy.trigger('message', this.props.language === 'zh' ?
-            '✨ 恢复完成!' : '✨ Restore Done!');
+        setTimeout(async function () {
+            eventProxy.trigger('message', this.props.language === 'zh' ?
+                '⚡ 正在恢复到历史...' : '⚡ Restoring To History...');
+            let data = {
+                key: this.props.articleKey,
+                title: this.props.title,
+                tags: this.props.tags,
+                content: this.props.content,
+                introduction: this.props.introduction
+            };
+
+            data = await this.props.db.editArticle(data);
+            if (!data)
+                return eventProxy.trigger('message', this.props.language === 'zh' ?
+                    '😢 恢复失败!' : '😢 Restore Failed!');
+            eventProxy.trigger('updateArticleData', data);
+            eventProxy.trigger('message', this.props.language === 'zh' ?
+                '✨ 恢复完成!' : '✨ Restore Done!');
+            await this.props.dataToHTML.dataToArticle(this.props.articleKey);
+            eventProxy.trigger('refreshPreview');
+        }.bind(this), 850);
     }
 
     render() {return (

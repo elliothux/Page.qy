@@ -11,6 +11,7 @@ module.exports.backupOnLocal = backupOnLocal;
 module.exports.restore = restore;
 module.exports.login = login;
 module.exports.logout = logout;
+module.exports.exportAll = exportAll;
 
 
 
@@ -87,4 +88,18 @@ async function restore(folderPath) {
     }
     dataToHTML.reGenerateAll();
     return true;
+}
+
+
+function exportAll(to) {
+    to = path.join(to,
+        `./Export_on_${(new Date()).toISOString().replace(/\:/g, '')}`);
+    const from = path.join(__dirname,
+        `../../user/temp`);
+    const backup = path.join(to, './backup');
+    const temp = path.join(to, './articles/temp.html');
+    fs.copySync(from, to);
+    fs.existsSync(backup) && fs.removeSync(backup);
+    fs.existsSync(temp) && fs.removeSync(temp);
+    return to;
 }
