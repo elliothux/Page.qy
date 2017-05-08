@@ -19,7 +19,6 @@ if (platform === 'win32') {
     exec('set GIT_CURL_VERBOSE=1');
     exec('set GIT_TRACK_PACKET=2');
 }
-exec('git config http.sslVerify "false"');
 
 
 const userPath = path.join(__dirname, '../../user/');
@@ -34,12 +33,22 @@ const gh = () => (
 async function pushRepo(message) {
     const path = await _getRepoPath();
     return Git(path)
-        .pull('origin', 'master', (error) => {
+        .pull('origin', `${config.get().username}.github.io`, (error) => {
             if (error) return message('error');
             message('pull done');
             console.log('Pull repo success.');
             _copyFile();
         })
+        // .raw([
+        //     'push',
+        //     '-u',
+        //     'origin',
+        //     `${config.get().username}.github.io`
+        // ], (error) => {
+        //     if (error) return message('error');
+        //     message('prePush done');
+        //     console.log('PrePush success.')
+        // })
         .raw([
             'add',
             '--all'
@@ -119,6 +128,7 @@ async function _getRepoPath() {
             console.log('Create an new repo success.')
         }
     }
+    exec(`cd ./user/${config.get().username}.github.io && git config http.sslVerify "false"`);
     return `${userPath}${name}.github.io`;
 }
 
