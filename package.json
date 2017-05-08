@@ -23,6 +23,7 @@
     "css-loader": "^0.27.3",
     "electron": "^1.6.2",
     "electron-devtools-installer": "^2.1.0",
+    "electron-installer-windows": "^0.2.0",
     "electron-packager": "^8.7.0",
     "electron-prebuilt": "^1.4.13",
     "electron-rebuild": "^1.5.7",
@@ -40,8 +41,9 @@
     "start": "electron-rebuild && electron --js-flags=\"--harmony-async-await\" main.js",
     "dev": "webpack-dev-server --content-base",
     "build-mac": "electron-packager . Page.qy --platform=darwin --arch=x64 --icon=build/icon.icns --ignore=node_modules --overwrite --rebuild",
-    "build-win": "electron-packager . Page.qy --platform=win32 --arch=x64 --icon=build/icon.ico --ignore=node_modules --overwrite --rebuild",
-    "build-linux": "electron-packager . Page.qy --platform=linux --arch=x64 --icon=build/icon.icns --ignore=node_modules --overwrite --rebuild"
+    "build-win": "electron-packager . Page.qy --platform=win32 --arch=x64 --out build --icon=build/icon.ico --ignore=node_modules --ignore=dist --ignore=.idea --ignore=webpack.config.js --ignore=yarn --ignore=.gitignore --overwrite --rebuild",
+    "build-linux": "electron-packager . Page.qy --platform=linux --arch=x64 --icon=build/icon.icns --ignore=node_modules --overwrite --rebuild",
+    "setup": "electron-installer-windows --config build/config.json"
   },
   "keywords": [
     "page",
