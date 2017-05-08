@@ -1,5 +1,5 @@
 
-module.exports = [{
+module.exports = app => [{
     label: "Application",
     submenu: [
         { label: "About Application", selector: "orderFrontStandardAboutPanel:" },

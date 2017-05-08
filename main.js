@@ -10,8 +10,8 @@ const github = require('./src/js/github');
 const config = require('./src/js/config');
 const theme = require('./src/js/theme');
 const user = require('./src/js/user');
+const menuTemplate = require('./src/js/menuTemplate');
 const {app, BrowserWindow, Menu } = electron;
-const template = require('./src/js/menu');
 
 
 let win;
@@ -73,7 +73,7 @@ app.on('ready', function () {
                 frame: false
             },
         isLogged);
-    Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+    Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate(app)));
 });
 
 app.on('window-all-closed', () => {

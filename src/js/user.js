@@ -47,12 +47,7 @@ function backupOnGitHub() {
         `../../user/${config.get().username}.github.io/backup/db`));
     config.backup(path.join(__dirname,
         `../../user/${config.get().username}.github.io/backup/`));
-    return new Promise((resolve, reject) => {
-        github.pushRepo(function (message) {
-            message === 'error' && reject();
-            message === 'done' && resolve()
-        });
-    })
+    return github.pushRepo();
 }
 
 

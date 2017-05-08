@@ -30,13 +30,12 @@ const gh = () => (
 );
 
 
-async function pushRepo(message) {
+async function pushRepo() {
     const name = config.get().username;
     const path = await _getRepoPath();
     return Git(path)
         .pull('origin', 'master', (error) => {
-            if (error) return message('error');
-            message('pull done');
+            if (error) console.error(error);
             console.log('Pull repo success.');
             _copyFile();
         })
@@ -44,18 +43,15 @@ async function pushRepo(message) {
             'add',
             '--all'
         ], (error) => {
-            if (error) return message('error');
-            message('add done');
+            if (error) console.error(error);
             console.log('Add files success.')
         })
         .commit(`Update on ${(new Date()).toLocaleString()}`, (error) => {
-            if (error) return message('error');
-            message('commit done');
+            if (error) console.error(error);
             console.log('Pushing repo...');
         })
         .push([`https://${name}:${config.get().password}@github.com/${name}/${name}.github.io.git`], (error) => {
-            if (error) return message('error');
-            message('done');
+            if (error) console.error(error);
             console.log('Push repo success.')
         });
 }
