@@ -10,7 +10,8 @@ const github = require('./src/js/github');
 const config = require('./src/js/config');
 const theme = require('./src/js/theme');
 const user = require('./src/js/user');
-const {app, BrowserWindow} = electron;
+const {app, BrowserWindow, Menu } = electron;
+const template = require('./src/js/menu');
 
 
 let win;
@@ -60,8 +61,8 @@ function openWindow(path, options, isMax) {
 
 // App events
 const isLogged = config.get().username !== '' && config.get().password !== '';
-app.on('ready',
-    openWindow.bind(null,
+app.on('ready', function () {
+    openWindow(
         isLogged ?
             path.join(__dirname, './src/html/index.html') :
             path.join(__dirname, './src/html/login.html'),
@@ -71,8 +72,9 @@ app.on('ready',
                 height: 300,
                 frame: false
             },
-        isLogged)
-);
+        isLogged);
+    Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+});
 
 app.on('window-all-closed', () => {
     platform !== 'darwin' && app.quit()

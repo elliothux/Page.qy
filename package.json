@@ -7,6 +7,7 @@
     "cheerio": "^0.22.0",
     "extract-zip": "^1.6.5",
     "github-api": "^3.0.0",
+    "menu": "^0.2.5",
     "nedb": "^1.8.0",
     "node-fs-extra": "^0.8.1",
     "request": "^2.81.0",
@@ -39,8 +40,6 @@
   "scripts": {
     "start": "electron-rebuild && electron --js-flags=\"--harmony-async-await\" main.js",
     "dev": "webpack-dev-server --content-base",
-    "pack": "build --dir",
-    "dist": "build",
     "build-mac": "electron-packager . Page.qy --platform=darwin --arch=x64 --icon=build/icon.icns --ignore=node_modules --overwrite --rebuild",
     "build-win": "electron-packager . Page.qy --platform=win32 --arch=x64 --icon=build/icon.ico --ignore=node_modules --overwrite --rebuild",
     "build-linux": "electron-packager . Page.qy --platform=linux --arch=x64 --icon=build/icon.icns --ignore=node_modules --overwrite --rebuild"
@@ -54,33 +53,5 @@
   "license": "ISC",
   "ecmaFeatures": {
     "modules": true
-  },
-  "build": {
-    "dmg": {
-      "contents": [
-        {
-          "x": 250,
-          "y": 150
-        },
-        {
-          "x": 500,
-          "y": 150,
-          "type": "link",
-          "path": "/Applications"
-        }
-      ],
-      "icon": "build/icon.icns"
-    },
-    "linux": {
-      "target": [
-        "AppImage",
-        "deb"
-      ],
-      "icon": "build/icon.icns"
-    },
-    "win": {
-      "target": "NSIS",
-      "icon": "build/icon.ico"
-    }
   }
 }

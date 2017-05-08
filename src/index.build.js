@@ -28331,10 +28331,11 @@ var Article = function (_React$Component) {
                         fontSize: '0.8em'
                     },
                     operateContainer: {
-                        width: '100%',
+                        width: 'calc(100% + 2px)',
                         height: '100%',
                         position: 'absolute',
-                        top: 0, left: 0,
+                        top: 0,
+                        left: '-2px',
                         display: 'flex',
                         flexDirection: 'row',
                         flexWrap: 'wrap',
