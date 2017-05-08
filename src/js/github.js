@@ -33,6 +33,7 @@ const gh = () => (
 async function pushRepo(message) {
     const gitPath = await _getRepoPath();
     fs.writeFileSync(path.join(gitPath, '.temp'), '', 'utf-8');
+    _copyFile();
     return Git(gitPath)
         // .pull('origin', `${config.get().username}.github.io`, (error) => {
         //     if (error) return message('error');
