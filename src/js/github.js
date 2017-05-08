@@ -31,16 +31,15 @@ const gh = () => (
 
 
 async function pushRepo(message) {
-    const gitPath = await _getRepoPath();
-    fs.writeFileSync(path.join(gitPath, '.temp'), '', 'utf-8');
-    _copyFile();
-    return Git(gitPath)
-        // .pull('origin', `${config.get().username}.github.io`, (error) => {
-        //     if (error) return message('error');
-        //     message('pull done');
-        //     console.log('Pull repo success.');
-        //     _copyFile();
-        // })
+    const name = config.get().username;
+    const path = await _getRepoPath();
+    return Git(path)
+        .pull('origin', 'master', (error) => {
+            if (error) return message('error');
+            message('pull done');
+            console.log('Pull repo success.');
+            _copyFile();
+        })
         .raw([
             'add',
             '--all'
@@ -54,7 +53,7 @@ async function pushRepo(message) {
             message('commit done');
             console.log('Pushing repo...');
         })
-        .push(['-u', 'origin', 'master'], (error) => {
+        .push([`https://${name}:${config.get().password}@github.com/${name}/${name}.github.io.git`], (error) => {
             if (error) return message('error');
             message('done');
             console.log('Push repo success.')
@@ -119,6 +118,16 @@ async function _getRepoPath() {
             await gh().getUser().createRepo({name: `${name}.github.io`});
             console.log('Create an new repo success.')
         }
+        await new Promise((resolve, reject) => {
+            const repoPath = path.join(userPath, `./${name}.github.io/`);
+            fs.writeFileSync(path.join(repoPath, './.temp'), (new Date()).toLocaleString(), 'utf-8');
+            console.log('Start test push ...');
+            exec(`cd ${repoPath} && git add --all`);
+            exec(`cd ${repoPath} && git commit -m 'Test Push'`);
+            exec(`cd ${repoPath} && git push https://${name}:${config.get().password}@github.com/${name}/${name}.github.io.git`);
+            console.log('Test push success.');
+            resolve();
+        })
     }
     exec(`cd ./user/${config.get().username}.github.io && git config http.sslVerify "false"`);
     return `${userPath}${name}.github.io`;
