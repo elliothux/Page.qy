@@ -60,3 +60,5 @@ fabric.properties
 /dist/mac/
 /dist/Page.qy-0.0.1-mac.zip
 /dist/Page.qy-0.0.1.dmg
+/build/node_modules/
+/build/Page.qy-win32-x64/
