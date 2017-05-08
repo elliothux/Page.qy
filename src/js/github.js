@@ -31,23 +31,14 @@ const gh = () => (
 
 
 async function pushRepo(message) {
-    const path = await _getRepoPath();
-    return Git(path)
-        .pull('origin', `${config.get().username}.github.io`, (error) => {
-            if (error) return message('error');
-            message('pull done');
-            console.log('Pull repo success.');
-            _copyFile();
-        })
-        // .raw([
-        //     'push',
-        //     '-u',
-        //     'origin',
-        //     `${config.get().username}.github.io`
-        // ], (error) => {
+    const gitPath = await _getRepoPath();
+    fs.writeFileSync(path.join(gitPath, '.temp'), '', 'utf-8');
+    return Git(gitPath)
+        // .pull('origin', `${config.get().username}.github.io`, (error) => {
         //     if (error) return message('error');
-        //     message('prePush done');
-        //     console.log('PrePush success.')
+        //     message('pull done');
+        //     console.log('Pull repo success.');
+        //     _copyFile();
         // })
         .raw([
             'add',
