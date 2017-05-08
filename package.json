@@ -7,7 +7,6 @@
     "cheerio": "^0.22.0",
     "extract-zip": "^1.6.5",
     "github-api": "^3.0.0",
-    "menu": "^0.2.5",
     "nedb": "^1.8.0",
     "node-fs-extra": "^0.8.1",
     "request": "^2.81.0",
