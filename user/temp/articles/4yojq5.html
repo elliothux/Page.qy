@@ -2,11 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>hi</title>
+    <title>hi!</title>
     <link type="text/css" rel="stylesheet" href="../statics/style/common.css"/>
     <link type="text/css" rel="stylesheet" href="../statics/style/article.css"/>
     <link type="text/css" rel="stylesheet" href="../statics/style/highlight.css"/>
-</head>
+
+        <script type="text/javascript" src="../statics/script/highlight.min"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        </head>
 <body>
 <div id="header">
     <img src="../statics/statics/nav.jpg">
@@ -16,7 +19,7 @@
         <a href="../archives.html">ARCHIVES</a>
         <a href="../about.html">ABOUT</a>
     </div>
-    <h1 id="headTitle">hi</h1>
+    <h1 id="headTitle">hi!</h1>
     <hr/>
     <p id="introduction">Written By 胡青杨
         on NaN/NaN NaN</p>
@@ -28,13 +31,23 @@
     
 </ul>
 
-<div id="content"><p>Hello</p></div>
+<div id="content"><p>Hello</p><pre style="max-width:100%;overflow-x:auto;"><code class="javascript hljs" codemark="1"><span class="hljs-comment">// reGenerateAll(true).then(a =&gt; console.log(a)).catch(e =&gt; console.error(e))</span>
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">reGenerateAll</span>(<span class="hljs-params">reGenerateArticle=true</span>) </span>{
+    fs.existsSync(target) &amp;&amp; fs.removeSync(target);
+    fs.mkdirpSync(target);
+    <span class="hljs-keyword">await</span> generateHTML(<span class="hljs-string">'all'</span>);
+    _updateStaticFiles();
+    <span class="hljs-keyword">if</span> (reGenerateArticle) {
+        <span class="hljs-keyword">const</span> articles = (<span class="hljs-keyword">await</span> _getData()).articles;
+        <span class="hljs-keyword">for</span> (article <span class="hljs-keyword">of</span> articles)
+            <span class="hljs-keyword">await</span> generateHTML(<span class="hljs-string">'article'</span>, article, <span class="hljs-literal">true</span>);
+    }
+    <span class="hljs-keyword">return</span> target;
+}</code></pre><p><br></p></div>
 
 <hr id="footerLine"/>
 <p id="footer">Powered With ❤ By <a>Page.qy</a></p>
 
 <script type="text/javascript" src="../statics/script/common.js"></script>
-<script type="text/javascript" src="../statics/script/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
 </body>
 </html>

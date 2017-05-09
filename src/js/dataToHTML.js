@@ -32,8 +32,7 @@ async function getPath(type, key) {
     return path;
 }
 
-
-reGenerateAll().then(a => console.log(a)).catch(e => console.error(e))
+// reGenerateAll(true).then(a => console.log(a)).catch(e => console.error(e))
 async function reGenerateAll(reGenerateArticle=true) {
     fs.existsSync(target) && fs.removeSync(target);
     fs.mkdirpSync(target);
@@ -48,7 +47,6 @@ async function reGenerateAll(reGenerateArticle=true) {
 }
 
 
-
 async function generateHTML(type, rawData, onlyGenerateArticle) {
     !fs.existsSync(target) && fs.mkdirSync(target);
     !fs.existsSync(path.join(target, './articles')) &&
@@ -61,10 +59,15 @@ async function generateHTML(type, rawData, onlyGenerateArticle) {
         return;
     }
     const data = await _getData(type, rawData);
-    const template = fs.readFileSync(
+    let template = fs.readFileSync(
         path.join(theme(), `./templates/${type}.html`),
         'utf-8'
     );
+    if (type === 'article')
+        template = template.replace(/\<\/\s*head\>/, `
+        <script type="text/javascript" src="../statics/script/highlight.min"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        </head>`);
     const result = templateEngine.parse(data, template);
     const targetPath = type === 'article' ?
         path.join(target, `./articles/${data.key}.html`) :
@@ -111,6 +114,7 @@ async function _getData(type, rawData) {
         data.archives = _getArchives(type, articles)
     } else
         data = Object.assign(data, _formatArticleData(rawData, 'article'));
+    if (type === 'article') console.log(data);
     return data
 }
 
@@ -285,6 +289,9 @@ function _updateStaticFiles() {
         path.join(theme(), './statics/'),
         path.join(target, './statics/statics/')
     );
+    fs.copySync('./src/lib/highlight.min.js',
+        path.join(target, './statics/script/highlight.min.js')
+    )
 }
 
 
