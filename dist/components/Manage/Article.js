@@ -27,7 +27,7 @@ export default class Article extends React.Component {
 
     componentDidMount() {
         eventProxy.on('updateArticleData', function (data) {
-            if (data.key === this.state.key)
+            if (data.key === this.state.key && this._reactInternalInstance)
                 this.setState(() => ({
                     tags: data.tags,
                     title: data.title,
@@ -53,7 +53,7 @@ export default class Article extends React.Component {
             );
         eventProxy.trigger('viewHistory', {
             historyContent: this.state.historyContent,
-            key: this.props.data.key
+            key: this.props.data.key,
         });
     }
 
@@ -66,7 +66,7 @@ export default class Article extends React.Component {
         this.refs.container.className = 'articleContainer deleted';
         setTimeout(async function () {
             await this.props.db.deleteArticle(this.state.key);
-            await this.props.dataToHTML.reGenerateAll(false);
+            await this.props.dataToHTML.generateHTML();
             eventProxy.trigger('refreshArticleList', null);
             eventProxy.trigger('refreshPreview');
         }.bind(this), 260)
@@ -85,7 +85,7 @@ export default class Article extends React.Component {
             published: !prevState.published
         }));
         await this.props.db.togglePublish(this.state.key);
-        await this.props.dataToHTML.reGenerateAll(false);
+        await this.props.dataToHTML.generateHTML();
         await this.props.dataToHTML.getPath('article', this.state.key);
         eventProxy.trigger('refreshPreview');
     }

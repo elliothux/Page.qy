@@ -28,7 +28,7 @@ export default class HistoryItem extends React.Component {
 
     async handlePreview() {
         this.props.openWindow(
-            await this.props.dataToHTML.generateHTML('article', this.props))
+            await this.props.dataToHTML.generateArticle(this.props))
     }
 
     handleRestore() {
@@ -41,7 +41,7 @@ export default class HistoryItem extends React.Component {
                 title: this.props.title,
                 tags: this.props.tags,
                 content: this.props.content,
-                introduction: this.props.introduction
+                introduction: this.props.introduction,
             };
 
             data = await this.props.db.editArticle(data);
@@ -51,9 +51,9 @@ export default class HistoryItem extends React.Component {
             eventProxy.trigger('updateArticleData', data);
             eventProxy.trigger('message', this.props.language === 'zh' ?
                 '✨ 恢复完成!' : '✨ Restore Done!');
-            await this.props.dataToHTML.generateHTML('article', this.props.articleKey);
+            await this.props.dataToHTML.generateArticle(data);
             eventProxy.trigger('refreshPreview');
-        }.bind(this), 1000);
+        }.bind(this), 900);
     }
 
     render() {return (

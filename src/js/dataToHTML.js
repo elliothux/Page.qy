@@ -21,8 +21,8 @@ const target = path.join(__dirname, '../../user/temp/');
 
 async function getPath(type, key) {
     if (type === 'article') {
-        const target = path.join(__dirname, `../../user/temp/articles/${key}.html`);
-        !fs.existsSync(target) && generateHTML('article', await db.getArticle({key: key}), true);
+        const target = `./user/temp/articles/${key}.html`;
+        !fs.existsSync(target) && generateArticle(await db.getArticle({key: key}));
         return target;
     }
     const paths = {
@@ -35,7 +35,6 @@ async function getPath(type, key) {
 }
 
 
-generateHTML(true).then(a => console.log(a)).catch(e => console.error(e));
 async function generateArticle(rawData, key) {
     !fs.existsSync(path.join(target, './articles')) &&
     fs.mkdirSync(path.join(target, './articles'));

@@ -33,7 +33,7 @@ export default class Nav extends React.Component {
         this.setState({
             showOperate: false
         });
-        await this.props.dataToHTML.reGenerateAll();
+        await this.props.dataToHTML.generateHTML(true);
         eventProxy.trigger('message',
             this.props.config.get().language === 'zh' ?
                 '⚡ 正在重新生成所有页面...' : '⚡ Regenerating...'

@@ -12,7 +12,7 @@ export default class History extends React.Component {
 
         this.state = {
             historyContent: [],
-            key: ''
+            key: '',
         }
 
     }

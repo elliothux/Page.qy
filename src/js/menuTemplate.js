@@ -10,8 +10,8 @@ module.exports = (app, window, ipcMain) => [
                 label: config().language === 'zh' ? '关于Page.qy' : "About Application",
                 selector: "orderFrontStandardAboutPanel:"
             },
-            platform !== 'win32' && {type: "separator"},
-            platform !== 'win32' && {
+            {type: "separator"},
+            {
                 label: config().language === 'zh' ? "退出" : "Quit",
                 accelerator: "CmdOrCtrl+Q",
                 click: app.quit
