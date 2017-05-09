@@ -1,13 +1,15 @@
 const fs = require('node-fs-extra');
 const path = require('path');
+const cheerio = require('cheerio');
 const templateEngine = require('./templateEngine');
 const db = require('./db');
 const getConfig = require('./config').get;
 
 
+
 module.exports.getPath = getPath;
-module.generateHTML = generateHTML;
-module.exports.reGenerateAll = reGenerateAll;
+module.exports.generateHTML = generateHTML;
+module.exports.generateArticle = generateArticle;
 module.exports.formatDate = formatDate;
 
 
@@ -32,53 +34,43 @@ async function getPath(type, key) {
     return path;
 }
 
-// reGenerateAll(true).then(a => console.log(a)).catch(e => console.error(e))
-async function reGenerateAll(reGenerateArticle=true) {
-    fs.existsSync(target) && fs.removeSync(target);
-    fs.mkdirpSync(target);
-    await generateHTML('all');
-    _updateStaticFiles();
-    if (reGenerateArticle) {
-        const articles = (await _getData()).articles;
-        for (article of articles)
-            await generateHTML('article', article, true);
-    }
-    return target;
+
+generateHTML(true).then(a => console.log(a)).catch(e => console.error(e));
+async function generateArticle(rawData, key) {
+    !fs.existsSync(path.join(target, './articles')) &&
+    fs.mkdirSync(path.join(target, './articles'));
+    !rawData && (rawData = await db.getArticle({ key: key }));
+    const data = await _getData('article', rawData);
+    let template = fs.readFileSync(
+        path.join(theme(), `./templates/article.html`),
+        'utf-8'
+    ).replace(/\<\/\s*head\>/, `\n\t<script type="text/javascript" src="../statics/script/highlight.min.js"></script>\n\t<script>hljs.initHighlightingOnLoad();</script>\n</head>`);
+    const result = templateEngine.parse(data, template);
+    const targetPath = path.join(target, `./articles/${data.key}.html`);
+    fs.writeFileSync(targetPath, result, 'utf-8');
+    await db.isArticlePublished(data.key) && await generateHTML();
+    return targetPath;
 }
 
 
-async function generateHTML(type, rawData, onlyGenerateArticle) {
+async function generateHTML(willGenerateArticle=false) {
     !fs.existsSync(target) && fs.mkdirSync(target);
-    !fs.existsSync(path.join(target, './articles')) &&
-        fs.mkdirSync(path.join(target, './articles'));
-    if (type === 'all') {
-        await generateHTML('index');
-        await generateHTML('tags');
-        await generateHTML('archives');
-        await generateHTML('about');
-        return;
+    const data = await _getData();
+    const types = ['index', 'archives', 'tags', 'about'];
+    for (let type of types) {
+        let template = fs.readFileSync(
+            path.join(theme(), `./templates/${type}.html`),
+            'utf-8'
+        );
+        const result = templateEngine.parse(data, template);
+        const targetPath = path.join(target, `./${type}.html`);
+        fs.writeFileSync(targetPath, result, 'utf-8');
     }
-    const data = await _getData(type, rawData);
-    let template = fs.readFileSync(
-        path.join(theme(), `./templates/${type}.html`),
-        'utf-8'
-    );
-    if (type === 'article')
-        template = template.replace(/\<\/\s*head\>/, `
-        <script type="text/javascript" src="../statics/script/highlight.min"></script>
-        <script>hljs.initHighlightingOnLoad();</script>
-        </head>`);
-    const result = templateEngine.parse(data, template);
-    const targetPath = type === 'article' ?
-        path.join(target, `./articles/${data.key}.html`) :
-        path.join(target, `./${type}.html`);
-    fs.writeFileSync(targetPath, result, 'utf-8');
-
-    if (type === 'article' &&
-        await db.isArticlePublished(data.key) &&
-        !onlyGenerateArticle)
-        await generateHTML('all');
-    return targetPath;
+    if (willGenerateArticle) {
+        for (let article of data.articles)
+            await generateArticle(article)
+    }
+    _updateStaticFiles();
 }
 
 
@@ -114,7 +106,6 @@ async function _getData(type, rawData) {
         data.archives = _getArchives(type, articles)
     } else
         data = Object.assign(data, _formatArticleData(rawData, 'article'));
-    if (type === 'article') console.log(data);
     return data
 }
 
@@ -260,20 +251,34 @@ function _formatArticleData(article, type) {
     delete article._id;
     delete article.published;
     delete article.type;
-    const tags = article.tags;
     article.createDate = formatDate(article.createDate);
     article.editDate = formatDate(article.editDate);
     article.link = type === 'article' ?
         `./${article.key}.html` :
         `./articles/${article.key}.html`;
-    article.tags = tags.map(tag => ({
-        name: tag,
-        link: type === 'article' ?
-            `../tags.html#tags-${tag}` :
-            `./tags.html#tags-${tag}`
-    }));
+    article.tags = article.tags.map(tag => {
+        if (typeof tag === 'string') return {
+                name: tag,
+                link: type === 'article' ?
+                    `../tags.html#tags-${tag}` :
+                    `./tags.html#tags-${tag}`
+        };
+        return {
+            name: tag.name,
+            link: `.${tag.link}`
+        }
+    });
+    !article.cover && (
+        article.cover = function () {
+            const $ = cheerio.load(article.content);
+            const img = $('img').attr('src');
+            if (img) return img;
+            return false
+        }()
+    );
     return article
 }
+
 
 
 function _updateStaticFiles() {
@@ -296,7 +301,10 @@ function _updateStaticFiles() {
 
 
 function formatDate(date, language) {
-    date = new Date(date);
+    if (typeof date === 'string')
+        date = new Date(date);
+    else if (typeof date === 'object' && date.constructor !== Date)
+        return date;
     const daysZh = ['日', '一','二','三','四','五','六'];
     const daysEn = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
         'Thursday', 'Friday', 'Saturday'];
