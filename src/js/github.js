@@ -1,7 +1,8 @@
 const fs = require('node-fs-extra');
 const path = require('path');
 const request = require('request');
-const exec = require('child_process').execSync;
+const exec = require('child_process').exec;
+const execSync = require('child_process').execSync;
 const platform = require('os').platform();
 const GitHub = require('github-api');
 const Git = require('simple-git');
@@ -118,11 +119,18 @@ async function _getRepoPath() {
             const repoPath = path.join(userPath, `./${name}.github.io/`);
             fs.writeFileSync(path.join(repoPath, './.temp'), (new Date()).toLocaleString(), 'utf-8');
             console.log('Start test push ...');
-            exec(`cd ${repoPath} && git add --all`);
-            exec(`cd ${repoPath} && git commit -m 'Test Push'`);
-            exec(`cd ${repoPath} && git push https://${name}:${config.get().password}@github.com/${name}/${name}.github.io.git`);
-            console.log('Test push success.');
-            resolve();
+            exec(`cd ${repoPath} && git add --all`, error => {
+                error && reject(error);
+                resolve();
+            });
+        });
+        return new Promise((resolve, reject) => {
+            execSync(`cd ${repoPath} && git commit -m 'Test Push'`);
+            exec(`cd ${repoPath} && git push https://${name}:${config.get().password}@github.com/${name}/${name}.github.io.git`, error => {
+                error && reject(error);
+                console.log('Test push success.');
+                resolve();
+            });
         })
     }
     exec(`cd ./user/${config.get().username}.github.io && git config http.sslVerify "false"`);

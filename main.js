@@ -2,7 +2,6 @@ const electron = require('electron');
 const path = require('path');
 const url = require('url');
 const fs = require('node-fs-extra');
-const env = process.env.NODE_ENV;
 const platform = require('os').platform();
 const db = require('./src/js/db');
 const dataToHTML = require('./src/js/dataToHTML');
@@ -12,7 +11,7 @@ const config = require('./src/js/config');
 const theme = require('./src/js/theme');
 const user = require('./src/js/user');
 const menuTemplate = require('./src/js/menuTemplate');
-const {app, BrowserWindow, Menu } = electron;
+const { app, BrowserWindow, Menu } = electron;
 
 
 let win;
@@ -50,7 +49,7 @@ function openWindow(path, options, isMax) {
         win.show()
     });
 
-    if (env === 'development') {
+    if (process.env.NODE_ENV === 'development') {
         const devToolPath = {
             'win32': `C:\\Users\\HuQingyang\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 1\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\2.1.9_0`,
             'darwin': `/Users/huqingyang/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/2.1.9_0`,
@@ -76,7 +75,7 @@ app.on('ready', function () {
                 frame: false
             },
         isLogged);
-    Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate(app)));
+    Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate(app, win)));
 });
 
 app.on('window-all-closed', () => {

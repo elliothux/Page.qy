@@ -1,0 +1,51 @@
+{
+  "language": "String",
+  "link": {
+    "home": "String",
+    "tags": "String",
+    "archives": "String",
+    "about": "String"
+  },
+  "script": {},
+  "statics": {},
+  "style": {},
+
+  "user": {
+    "avatar": "String",
+    "name": "String",
+    "selfIntroduction": "String",
+    "username": "String",
+    "mail": "String"
+  },
+  "method": {
+    "formatDate": "function"
+  },
+
+  "articles": [
+    {
+      "content": "String",
+      "cover": "String",
+      "createDate": "Date Obj",
+      "editDate": "Date Obj",
+      "tags": [{
+          "name": "String",
+          "link": "String"
+      }],
+      "introduction": "String",
+      "link": "String"
+    }
+  ],
+  "tags": [{
+      "name": "String",
+      "articles": [],
+      "link": "String",
+      "id": "String"
+  }],
+  "archives": [{
+    "year": "String",
+    "months": [{
+        "month": "String",
+        "articles": []
+    }]
+  }]
+}

@@ -6,8 +6,7 @@ const getConfig = require('./config').get;
 
 
 module.exports.getPath = getPath;
-module.exports.getArticlePath = getArticlePath;
-module.exports.dataToArticle = dataToArticle;
+module.generateHTML = generateHTML;
 module.exports.reGenerateAll = reGenerateAll;
 module.exports.formatDate = formatDate;
 
@@ -17,189 +16,177 @@ const theme = () => path.join(__dirname, `../../user/themes/${getConfig().theme}
 const target = path.join(__dirname, '../../user/temp/');
 
 
-function getArticlePath(key) {
-    const target = path.join(__dirname, `../../user/temp/articles/${key}.html`);
-    !fs.existsSync(target) &&
-        dataToArticle(key);
-    return target;
-}
 
-
-function getPath(type) {
-    const path = {
+async function getPath(type, key) {
+    if (type === 'article') {
+        const target = path.join(__dirname, `../../user/temp/articles/${key}.html`);
+        !fs.existsSync(target) && generateHTML('article', await db.getArticle({key: key}), true);
+        return target;
+    }
+    const paths = {
         home: path.join(target, './index.html'),
         tags: path.join(target, './tags.html'),
         archives: path.join(target, './archives.html')
     };
-    if (type) return path[type];
+    if (type) return paths[type];
     return path;
 }
 
 
+reGenerateAll().then(a => console.log(a)).catch(e => console.error(e))
 async function reGenerateAll(reGenerateArticle=true) {
+    fs.existsSync(target) && fs.removeSync(target);
+    fs.mkdirpSync(target);
+    await generateHTML('all');
+    _updateStaticFiles();
     if (reGenerateArticle) {
-        fs.existsSync(target) && fs.removeSync(target);
-        fs.mkdirpSync(target);
-        _updateStaticFiles();
-        const articles = await db.getPublishedArticleList();
+        const articles = (await _getData()).articles;
         for (article of articles)
-            dataToArticle(article);
+            await generateHTML('article', article, true);
     }
-    await _dataToTags();
-    await _dataToArchives();
-    await _dataToHome();
     return target;
 }
 
 
-async function dataToArticle(rawData) {
-    typeof rawData !== 'object' &&
-        (rawData = await db.getArticle({ key: rawData }));
-    const config = getConfig();
-    let article = fs.readFileSync(
-        path.join(theme(), './templates/article.html'),
+
+async function generateHTML(type, rawData, onlyGenerateArticle) {
+    !fs.existsSync(target) && fs.mkdirSync(target);
+    !fs.existsSync(path.join(target, './articles')) &&
+        fs.mkdirSync(path.join(target, './articles'));
+    if (type === 'all') {
+        await generateHTML('index');
+        await generateHTML('tags');
+        await generateHTML('archives');
+        await generateHTML('about');
+        return;
+    }
+    const data = await _getData(type, rawData);
+    const template = fs.readFileSync(
+        path.join(theme(), `./templates/${type}.html`),
         'utf-8'
     );
+    const result = templateEngine.parse(data, template);
+    const targetPath = type === 'article' ?
+        path.join(target, `./articles/${data.key}.html`) :
+        path.join(target, `./${type}.html`);
+    fs.writeFileSync(targetPath, result, 'utf-8');
 
-    const templateData = {
-        data: {
-            date: formatDate(rawData.createDate),
-            content: rawData.content,
-            tags: rawData.tags,
-            introduction: rawData.introduction,
-            archives: rawData.archives,
-            avatar: config.avatar,
-            name: config.name,
-            username: config.username,
-            selfIntroduction: config.selfIntroduction,
-        },
-        link: {
-            home: '../index.html',
-            tags: '../tags.html',
-            archives: '../archives.html',
-            about: '../about.html'
-        },
-        script: `../statics/script`,
-        statics: '../statics/statics',
-        style: `../statics/style`,
-        title: rawData.title,
-        user: {
-            avatar: config.avatar,
-            name: config.name,
-            selfIntroduction: config.selfIntroduction,
-            username: config.username,
-        }
-    };
-    article = templateEngine.parse(templateData, article);
-
-    !fs.existsSync(path.join(target, `./articles/`)) &&
-        fs.mkdirpSync(path.join(target, `./articles/`));
-    const targetPath = path.join(target, `./articles/${rawData.key}.html`);
-    fs.writeFileSync(targetPath, article, 'utf-8');
-    _updateStaticFiles();
-    if (await db.isArticlePublished(rawData.key)) {
-        await _dataToHome();
-        await _dataToArchives();
-        await _dataToTags();
-    }
+    if (type === 'article' &&
+        await db.isArticlePublished(data.key) &&
+        !onlyGenerateArticle)
+        await generateHTML('all');
     return targetPath;
 }
 
 
-
-async function _dataToHome() {
-    const config = getConfig();
-    let home = fs.readFileSync(
-        path.join(theme(), './templates/index.html'),
-        'utf-8'
-    );
-
-    const templateData = {
-        data: (await db.getPublishedArticleList()).map(article => {
-            article.date = formatDate(article.createDate);
-            article.link = `./articles/${article.key}.html`;
-            return article
-        }).sort((a, b) => (
-            (new Date(b.createDate)).getTime() - (new Date(a.createDate)).getTime()
-        )),
-        link: {
+async function _getData(type, rawData) {
+    let data = {
+        language: getConfig().language,
+        links: type === 'article' ? {
+            home: '../index.html',
+            tags: '../tags.html',
+            archives: '../archives.html',
+            about: '../about.html'
+        } : {
             home: './index.html',
             tags: './tags.html',
             archives: './archives.html',
             about: './about.html'
         },
-        script: `./statics/script`,
-        statics: './statics/statics',
-        style: `./statics/style`,
-        title: 'Home',
+        script: _getScript(type),
+        statics: _getStatics(type),
+        style: _getStyle(type),
         user: {
-            avatar: config.avatar,
-            name: config.name,
-            selfIntroduction: config.selfIntroduction,
-            username: config.username,
+            avatar: getConfig().avatar,
+            name: getConfig().name,
+            selfIntroduction: getConfig().selfIntroduction,
+            username: getConfig().username,
+            mail: getConfig().mail
         }
     };
-    home = await templateEngine.parse(templateData, home);
-
-    const targetPath = target;
-    fs.writeFileSync(path.join(targetPath, 'index.html'), home, 'utf-8');
-    return path.join(targetPath, 'index.html')
+    if (type !== 'article') {
+        const articles = await _getArticles(type);
+        data.articles = articles;
+        data.tags = _getTags(type, articles);
+        data.archives = _getArchives(type, articles)
+    } else
+        data = Object.assign(data, _formatArticleData(rawData, 'article'));
+    return data
 }
 
 
-async function _dataToTags() {
-    const config = getConfig();
-    let tags = fs.readFileSync(
-        path.join(theme(), './templates/tags.html'),
-        'utf-8'
-    );
-
-    const templateData = {
-        data: await _getTagsData(),
-        link: {
-            home: './index.html',
-            tags: './tags.html',
-            archives: './archives.html',
-            about: './about.html'
-        },
-        script: `./statics/script`,
-        statics: './statics/statics',
-        style: `./statics/style`,
-        title: 'Tags',
-        user: {
-            avatar: config.avatar,
-            name: config.name,
-            selfIntroduction: config.selfIntroduction,
-            username: config.username,
+function _getScript(type) {
+    const dir = fs.readdirSync(
+        path.join(theme(), './script/'));
+    const script = {};
+    for (let each of dir) {
+        if (each.match(/.+\.js$/)) {
+            const name = each.replace(/\.js$/, '');
+            script[name] = type === 'article' ?
+                `../statics/script/${each}` :
+                `./statics/script/${each}`
         }
-    };
-    tags = await templateEngine.parse(templateData, tags);
-
-    const targetPath = target;
-    fs.writeFileSync(path.join(targetPath, 'tags.html'), tags, 'utf-8');
-    return path.join(targetPath, 'tags.html')
+    }
+    return script
 }
 
-async function _getTagsData() {
-    const articles = (await db.getPublishedArticleList())
+
+function _getStatics(type) {
+    const dir = fs.readdirSync(
+        path.join(theme(), './statics/'));
+    const statics = {};
+    for (let each of dir) {
+        statics[each] = type === 'article' ?
+            `../statics/statics/${each}` :
+            `./statics/statics/${each}`
+    }
+    return statics
+}
+
+
+function _getStyle(type) {
+    const dir = fs.readdirSync(
+        path.join(theme(), './style/'));
+    const style = {};
+    for (let each of dir) {
+        if (each.match(/.+\.css$/)) {
+            const name = each.replace(/\.css$/, '');
+            style[name] = type === 'article' ?
+                `../statics/style/${each}` :
+                `./statics/style/${each}`
+        }
+    }
+    return style
+}
+
+
+async function _getArticles(type) {
+    return (await db.getPublishedArticleList())
+        .map(article => _formatArticleData(article, type))
         .sort((a, b) => (
-            (new Date(b.createDate)).getTime() - (new Date(a.createDate)).getTime()
-        ));
+            (new Date(b.createDate)).getTime() - (new Date(a.createDate)).getTime())
+        )
+}
+
+
+function _getTags(type, articles) {
     let data = [];
     for (article of articles) {
-        article.date = formatDate(article.createDate);
-        article.link = `./articles/${article.key}.html`;
         for (tag of article.tags) {
-            data = pushTagToData(data, tag, article)
+            data = _pushTagToData(data, tag.name, article)
         }
     }
     return data;
 
-    function pushTagToData(data, tag, article) {
+    function _pushTagToData(data, tag, article) {
         if (data.length === 0 ) {
             data.push({
                 name: tag,
-                articles: [article]
+                articles: [article],
+                link: type === 'article' ?
+                    `../tags.html#tags-${tag}` :
+                    `./tags.html#tags-${tag}`,
+                id: `tags-${tag}`
             });
             return data;
         }
@@ -211,7 +198,11 @@ async function _getTagsData() {
             if (each === data[data.length-1]) {
                 data.push({
                     name: tag,
-                    articles: [article]
+                    articles: [article],
+                    link: type === 'article' ?
+                        `../tags.html#tags-${tag}` :
+                        `./tags.html#tags-${tag}`,
+                    id: `tags-${tag}`
                 });
                 return data;
             }
@@ -221,83 +212,64 @@ async function _getTagsData() {
 }
 
 
-async function _dataToArchives() {
-    const config = getConfig();
-    let archives = fs.readFileSync(
-        path.join(theme(), './templates/archives.html'),
-        'utf-8'
-    );
-
-    const templateData = {
-        data: await _getArchiveData(),
-        link: {
-            home: './index.html',
-            tags: './tags.html',
-            archives: './archives.html',
-            about: './about.html'
-        },
-        script: `./statics/script`,
-        statics: './statics/statics',
-        style: `./statics/style`,
-        title: 'Archives',
-        user: {
-            avatar: config.avatar,
-            name: config.name,
-            selfIntroduction: config.selfIntroduction,
-            username: config.username,
-        }
-    };
-
-    archives = await templateEngine.parse(templateData, archives);
-
-    const targetPath = target;
-    fs.writeFileSync(path.join(targetPath, 'archives.html'), archives, 'utf-8');
-    return path.join(targetPath, 'archives.html')
-}
-
-
-async function _getArchiveData() {
-    const articles = (await db.getPublishedArticleList())
-        .sort((a, b) => (
-                (new Date(b.createDate)).getTime() - (new Date(a.createDate)).getTime()
-            ));
+function _getArchives(type, articles) {
     const data = [];
     let yearData = {
         year: null,
-        monthData: []
+        months: []
     };
-    let monthData = {
+    let monthsData = {
         month: null,
         articles: []
     };
     for (article of articles) {
-        article.date = formatDate(article.createDate);
-        article.link = `./articles/${article.key}.html`;
-
-        !monthData.month && (monthData.month = article.date.month);
-        if (monthData.month !== article.date.month) {
-            yearData.monthData.push(monthData);
-            monthData = {
+        !monthsData.month && (monthsData.month =
+            article.createDate.month);
+        if (monthsData.month !==
+            article.createDate.month) {
+            yearData.months.push(monthsData);
+            monthsData = {
                 month: null,
                 articles: []
             };
         }
-        monthData.articles.push(article);
+        monthsData.articles.push(article);
 
-        !yearData.year && (yearData.year = article.date.year);
-        if (yearData.year !== article.date.year) {
+        !yearData.year && (yearData.year =
+            article.createDate.year);
+        if (yearData.year !== article.createDate.year) {
             data.push(yearData);
             yearData = {
                 year: null,
-                monthData: []
+                months: []
             };
         }
     }
-    yearData.monthData.push(monthData);
+    yearData.months.push(monthsData);
     data.push(yearData);
     return data
 }
 
+
+function _formatArticleData(article, type) {
+    delete article.historyContent;
+    delete article._id;
+    delete article.published;
+    delete article.type;
+    const tags = article.tags;
+    article.createDate = formatDate(article.createDate);
+    article.editDate = formatDate(article.editDate);
+    article.link = type === 'article' ?
+        `./${article.key}.html` :
+        `./articles/${article.key}.html`;
+    article.tags = tags.map(tag => ({
+        name: tag,
+        link: type === 'article' ?
+            `../tags.html#tags-${tag}` :
+            `./tags.html#tags-${tag}`
+    }));
+    return article
+}
 
 
 function _updateStaticFiles() {
@@ -316,7 +288,7 @@ function _updateStaticFiles() {
 }
 
 
-function formatDate(date) {
+function formatDate(date, language) {
     date = new Date(date);
     const daysZh = ['日', '一','二','三','四','五','六'];
     const daysEn = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
@@ -327,7 +299,7 @@ function formatDate(date) {
         date: date.getDate()+1 < 10 ? '0' + date.getDate() : date.getDate(),
         hours: date.getHours() < 10 ? '0' + date.getHours() : date.getHours(),
         minutes: date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes(),
-        day: getConfig().language === 'zh' ?
+        day: language === 'zh' ?
             `星期${daysZh[date.getDay()]}`:
             daysEn[date.getDay()]
     }

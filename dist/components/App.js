@@ -47,7 +47,7 @@ export default class App extends React.Component {
                 user={this.props.user}
                 shell={this.props.shell}
                 app={this.props.app}
-                dataToHTML = {this.props.dataToHTML}
+                dataToHTML={this.props.dataToHTML}
             />
             <Preview
                 upload={this.props.upload}

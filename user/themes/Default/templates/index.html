@@ -2,33 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ title }}</title>
-    <link type="text/css" rel="stylesheet" href="{{ style }}/common.css"/>
-    <link type="text/css" rel="stylesheet" href="{{ style }}/index.css"/>
+    <title>Home</title>
+    <link type="text/css" rel="stylesheet" href="{{ style.common }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ style.index }}"/>
 </head>
 <body>
 <div id="header">
-    <img src="{{ statics }}/nav.jpg">
-    <a id="navHome" href="{{ link.home }}">主页</a>
+    <img src="{{ statics['nav.jpg'] }}">
+    <a id="navHome" href="{{ links.home }}">HOME</a>
     <div id="nav">
-        <a href="{{ link.tags }}">TAGS</a>
-        <a href="{{ link.archives }}">ARCHIVES</a>
-        <a href="{{ link.about }}">ABOUT</a>
+        <a href="{{ links.tags }}">TAGS</a>
+        <a href="{{ links.archives }}">ARCHIVES</a>
+        <a href="{{ links.about }}">ABOUT</a>
     </div>
     <h1 id="headTitle">{{ user.username }}'s Blog</h1>
     <hr>
     <p id="introduction">{{ user.selfIntroduction }}</p>
 </div>
 <div id="articles">
-    <template @for="article of data">
+    <template @for="article of articles">
         <div class="article">
             <a class="title" href="{{ article.link }}">{{ article.title }}</a>
             <div class="introduction">{{ article.introduction }}</div>
             <p class="date">Written By {{ user.name }}
-                on {{ article.date.month }}/{{ article.date.date }} {{ article.date.year }}</p>
+                on {{ article.createDate.month }}/{{ article.createDate.date }} {{ article.createDate.year }}</p>
             <ul class="tags">
                 <template @for="tag of article.tags">
-                    <li><a href="{{ link.tags }}#tag-{{ tag }}">#{{ tag }}</a></li>
+                    <li><a href="{{ tag.link }}">#{{ tag.name }}</a></li>
                 </template>
             </ul>
             <hr>
@@ -39,6 +39,6 @@
 
 <p id="footer">Powered With ❤ By <a>Page.qy</a></p>
 
-<script type="text/javascript" src="{{ script }}/common.js"></script>
+<script type="text/javascript" src="{{ script.common }}"></script>
 </body>
 </html>

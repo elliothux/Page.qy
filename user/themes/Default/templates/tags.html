@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Archives</title>
+    <link type="text/css" rel="stylesheet" href="{{ style.common }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ style.tags }}"/>
+</head>
+<body>
+<div id="header">
+    <img src="{{ statics['nav.jpg'] }}">
+    <a id="navHome" href="{{ links.home }}">HOME</a>
+    <div id="nav">
+        <a href="{{ links.tags }}">TAGS</a>
+        <a href="{{ links.archives }}">ARCHIVES</a>
+        <a href="{{ links.about }}">ABOUT</a>
+    </div>
+    <h1 id="headTitle">TAGS</h1>
+    <hr>
+    <p id="introduction">{{ user.selfIntroduction }}</p>
+</div>
+<div id="tags">
+    <template @for="tag of tags">
+        <h2 id="{{ tag.id }}">#{{ tag.name }}</h2>
+        <template @for="article of tag.articles">
+            <a href="{{ article.link }}"><h3>{{ article.title }}</h3></a>
+            <p>Written By {{ user.name }}
+                on {{ article.createDate.month }}/{{ article.createDate.date }} {{ article.createDate.year }}</p>
+        </template>
+    </template>
+</div>
+
+
+<p id="footer">Powered With ❤ By <a>Page.qy</a></p>
+
+<script type="text/javascript" src="{{ script.common }}"></script>
+</body>
+</html>

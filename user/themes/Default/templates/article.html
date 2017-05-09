@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link type="text/css" rel="stylesheet" href="{{ style.common }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ style.article }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ style.highlight }}"/>
+</head>
+<body>
+<div id="header">
+    <img src="{{ statics['nav.jpg'] }}">
+    <a id="navHome" href="{{ links.home }}">HOME</a>
+    <div id="nav">
+        <a href="{{ links.tags }}">TAGS</a>
+        <a href="{{ links.archives }}">ARCHIVES</a>
+        <a href="{{ links.about }}">ABOUT</a>
+    </div>
+    <h1 id="headTitle">{{ title }}</h1>
+    <hr/>
+    <p id="introduction">Written By {{ user.name }}
+        on {{ createDate.month }}/{{ createDate.date }} {{ createDate.year }}</p>
+</div>
+
+<ul id="tags">
+    <template @for="tag of tags">
+        <li><a href="{{ tag.link }}">#{{ tag.name }}</a></li>
+    </template>
+</ul>
+
+<div id="content">{{ content }}</div>
+
+<hr id="footerLine"/>
+<p id="footer">Powered With ❤ By <a>Page.qy</a></p>
+
+<script type="text/javascript" src="{{ script.common }}"></script>
+<script type="text/javascript" src="{{ script['highlight.min'] }}"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

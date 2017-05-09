@@ -72,8 +72,8 @@ export default class Article extends React.Component {
         }.bind(this), 260)
     }
 
-    handlePreview() {
-        const path = this.props.dataToHTML.getArticlePath(this.state.key);
+    async handlePreview() {
+        const path = await this.props.dataToHTML.getPath('article', this.state.key);
         this.props.openWindow(path, {
             width: 1000,
             height: 700
@@ -86,6 +86,7 @@ export default class Article extends React.Component {
         }));
         await this.props.db.togglePublish(this.state.key);
         await this.props.dataToHTML.reGenerateAll(false);
+        await this.props.dataToHTML.getPath('article', this.state.key);
         eventProxy.trigger('refreshPreview');
     }
 

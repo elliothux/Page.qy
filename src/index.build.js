@@ -2274,7 +2274,7 @@ ReactElement.createElement = function (type, config, children) {
     props.children = childArray;
   }
 
-  // Resolve default props
+  // Resolve Default props
   if (type && type.defaultProps) {
     var defaultProps = type.defaultProps;
     for (propName in defaultProps) {
@@ -2361,7 +2361,7 @@ ReactElement.cloneElement = function (element, config, children) {
     for (propName in config) {
       if (hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
         if (config[propName] === undefined && defaultProps !== undefined) {
-          // Resolve default props
+          // Resolve Default props
           props[propName] = defaultProps[propName];
         } else {
           props[propName] = config[propName];
@@ -3121,7 +3121,7 @@ function shouldPreventMouseEvent(name, type, props) {
  *
  *   `executeDispatch` {function(object, function, string)}
  *     Optional, allows plugins to override how an event gets dispatched. By
- *     default, the listener is simply invoked.
+ *     Default, the listener is simply invoked.
  *
  * Each plugin that is injected into `EventsPluginHub` is immediately operable.
  *
@@ -7261,7 +7261,7 @@ function ReactComponent(props, context, updater) {
   this.props = props;
   this.context = context;
   this.refs = emptyObject;
-  // We initialize the default updater but the real one gets injected by the
+  // We initialize the Default updater but the real one gets injected by the
   // renderer.
   this.updater = updater || ReactNoopUpdateQueue;
 }
@@ -7570,7 +7570,7 @@ module.exports = function (module) {
 	if (!module.webpackPolyfill) {
 		module.deprecate = function () {};
 		module.paths = [];
-		// module.parent = undefined by default
+		// module.parent = undefined by Default
 		if (!module.children) module.children = [];
 		Object.defineProperty(module, "loaded", {
 			enumerable: true,
@@ -8024,7 +8024,7 @@ var castPath = __webpack_require__(98),
     toKey = __webpack_require__(39);
 
 /**
- * The base implementation of `_.get` without support for default values.
+ * The base implementation of `_.get` without support for Default values.
  *
  * @private
  * @param {Object} object The object to query.
@@ -9500,7 +9500,7 @@ var ReactDOMSelect = {
       if (props.defaultValue != null) {
         updateOptions(inst, Boolean(props.multiple), props.defaultValue);
       } else {
-        // Revert the select back to its default unselected state.
+        // Revert the select back to its Default unselected state.
         updateOptions(inst, Boolean(props.multiple), props.multiple ? [] : '');
       }
     }
@@ -15157,8 +15157,8 @@ var baseGet = __webpack_require__(95);
  * _.get(object, ['a', '0', 'b', 'c']);
  * // => 3
  *
- * _.get(object, 'a.b.c', 'default');
- * // => 'default'
+ * _.get(object, 'a.b.c', 'Default');
+ * // => 'Default'
  */
 function get(object, path, defaultValue) {
   var result = object == null ? undefined : baseGet(object, path);
@@ -15391,7 +15391,7 @@ var FUNC_ERROR_TEXT = 'Expected a function';
 /**
  * Creates a function that memoizes the result of `func`. If `resolver` is
  * provided, it determines the cache key for storing the result based on the
- * arguments provided to the memoized function. By default, the first argument
+ * arguments provided to the memoized function. By Default, the first argument
  * provided to the memoized function is used as the map cache key. The `func`
  * is invoked with the `this` binding of the memoized function.
  *
@@ -15908,9 +15908,9 @@ function getNativeBeforeInputChars(topLevelType, nativeEvent) {
       /**
        * If native `textInput` events are available, our goal is to make
        * use of them. However, there is a special case: the spacebar key.
-       * In Webkit, preventing default on a spacebar `textInput` event
+       * In Webkit, preventing Default on a spacebar `textInput` event
        * cancels character insertion, but it *also* causes the browser
-       * to fall back to its default spacebar behavior of scrolling the
+       * to fall back to its Default spacebar behavior of scrolling the
        * page.
        *
        * Tracking at:
@@ -16676,7 +16676,7 @@ module.exports = Danger;
  * having plugins be ordered in the same order that they are injected because
  * that ordering would be influenced by the packaging order.
  * `ResponderEventPlugin` must occur before `SimpleEventPlugin` so that
- * preventing default on events is convenient in `SimpleEventPlugin` handlers.
+ * preventing Default on events is convenient in `SimpleEventPlugin` handlers.
  */
 
 var DefaultEventPluginOrder = ['ResponderEventPlugin', 'SimpleEventPlugin', 'TapEventPlugin', 'EnterLeaveEventPlugin', 'ChangeEventPlugin', 'SelectEventPlugin', 'BeforeInputEventPlugin'];
@@ -17878,7 +17878,7 @@ var ReactCompositeComponent = {
    * skipped) the remaining update lifecycle methods are called and the DOM
    * representation is updated.
    *
-   * By default, this implements React's rendering and reconciliation algorithm.
+   * By Default, this implements React's rendering and reconciliation algorithm.
    * Sophisticated clients may wish to override this.
    *
    * @param {ReactReconcileTransaction} transaction
@@ -19690,7 +19690,7 @@ var ReactDOMInput = {
     // Detach value from defaultValue. We won't do anything if we're working on
     // submit or reset inputs as those values & defaultValues are linked. They
     // are not resetable nodes so this operation doesn't matter and actually
-    // removes browser-default values (eg "Submit Query") when no value is
+    // removes browser-Default values (eg "Submit Query") when no value is
     // provided.
 
     switch (props.type) {
@@ -20528,7 +20528,7 @@ var ReactDOMTextarea = {
     var value = LinkedValueUtils.getValue(props);
     var initialValue = value;
 
-    // Only bother fetching default value if we're going to use it
+    // Only bother fetching Default value if we're going to use it
     if (value == null) {
       var defaultValue = props.defaultValue;
       // TODO (yungsters): Remove support for children content in <textarea>.
@@ -21363,7 +21363,7 @@ function inject() {
   ReactInjection.EventPluginUtils.injectTreeTraversal(ReactDOMTreeTraversal);
 
   /**
-   * Some important event plugins included by default (without having to require
+   * Some important event plugins included by Default (without having to require
    * them).
    */
   ReactInjection.EventPluginHub.injectEventPluginsByName({
@@ -25590,7 +25590,7 @@ var ReactClassInterface = {
   /**
    * Updates the component's currently mounted DOM representation.
    *
-   * By default, this implements React's rendering and reconciliation algorithm.
+   * By Default, this implements React's rendering and reconciliation algorithm.
    * Sophisticated clients may wish to override this.
    *
    * @param {ReactReconcileTransaction} transaction
@@ -26682,7 +26682,7 @@ function ReactPureComponent(props, context, updater) {
   this.props = props;
   this.context = context;
   this.refs = emptyObject;
-  // We initialize the default updater but the real one gets injected by the
+  // We initialize the Default updater but the real one gets injected by the
   // renderer.
   this.updater = updater || ReactNoopUpdateQueue;
 }
@@ -27562,7 +27562,7 @@ var App = function (_React$Component) {
             _eventProxy2.default.on('setConfig', function (config) {
                 this.setState({ config: config });
             }.bind(this));
-            _eventProxy2.default.on('miniNav', function (value) {
+            this.props.eventProxy.on('miniNav', function (value) {
                 this.setState({ miniNav: value });
             }.bind(this));
         }
@@ -27588,13 +27588,15 @@ var App = function (_React$Component) {
                     user: this.props.user,
                     shell: this.props.shell,
                     app: this.props.app,
-                    dataToHTML: this.props.dataToHTML
+                    dataToHTML: this.props.dataToHTML,
+                    eventProxy: this.props.eventProxy
                 }),
                 _react2.default.createElement(_Preview2.default, {
                     upload: this.props.upload,
                     show: this.state.viewState === 'preview',
                     config: this.props.config,
-                    miniNav: this.state.miniNav
+                    miniNav: this.state.miniNav,
+                    eventProxy: this.props.eventProxy
                 }),
                 _react2.default.createElement(_Manage2.default, {
                     db: this.props.db,
@@ -27603,7 +27605,8 @@ var App = function (_React$Component) {
                     dataToHTML: this.props.dataToHTML,
                     config: this.props.config,
                     show: this.state.viewState === 'manage',
-                    miniNav: this.state.miniNav
+                    miniNav: this.state.miniNav,
+                    eventProxy: this.props.eventProxy
                 }),
                 _react2.default.createElement(_Options2.default, {
                     db: this.props.db,
@@ -27615,9 +27618,13 @@ var App = function (_React$Component) {
                     miniNav: this.state.miniNav,
                     reGenerateAll: this.props.dataToHTML.reGenerateAll,
                     openURL: this.props.openURL,
-                    platform: this.props.platform
+                    platform: this.props.platform,
+                    eventProxy: this.props.eventProxy
                 }),
-                _react2.default.createElement(_Message2.default, { miniNav: this.state.miniNav })
+                _react2.default.createElement(_Message2.default, {
+                    miniNav: this.state.miniNav,
+                    eventProxy: this.props.eventProxy
+                })
             );
         }
     }, {
@@ -27693,7 +27700,7 @@ var Message = function (_React$Component) {
     _createClass(Message, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            _eventProxy2.default.on('message', function (message) {
+            this.props.eventProxy.on('message', function (message) {
                 this.state.messages.push(message);
                 this.showMessage();
             }.bind(this));
@@ -29578,7 +29585,7 @@ var Nav = function (_React$Component) {
             this.setState({
                 showOperate: false
             });
-            _eventProxy2.default.trigger('miniNav', !preValue);
+            this.props.eventProxy.trigger('miniNav', !preValue);
         }
     }, {
         key: 'handleRegenerate',
@@ -29587,9 +29594,9 @@ var Nav = function (_React$Component) {
                 showOperate: false
             });
             await this.props.dataToHTML.reGenerateAll();
-            _eventProxy2.default.trigger('message', this.props.config.get().language === 'zh' ? '⚡ 正在重新生成所有页面...' : '⚡ Regenerating...');
-            _eventProxy2.default.trigger('refreshPreview');
-            _eventProxy2.default.trigger('message', this.props.config.get().language === 'zh' ? '🎉 完成!' : '🎉 Done!');
+            this.props.eventProxy.trigger('message', this.props.config.get().language === 'zh' ? '⚡ 正在重新生成所有页面...' : '⚡ Regenerating...');
+            this.props.eventProxy.trigger('refreshPreview');
+            this.props.eventProxy.trigger('message', this.props.config.get().language === 'zh' ? '🎉 完成!' : '🎉 Done!');
         }
     }, {
         key: 'handleBackup',
@@ -29603,7 +29610,7 @@ var Nav = function (_React$Component) {
             chooser.directory = true;
             chooser.multiple = true;
             chooser.addEventListener('change', function (e) {
-                _eventProxy2.default.trigger('message', this.props.config.get().language === 'zh' ? '⚡ 正在备份...' : '⚡ Backing up...');
+                this.props.eventProxy.trigger('message', this.props.config.get().language === 'zh' ? '⚡ 正在备份...' : '⚡ Backing up...');
                 var path = e.target.files[0].path;
                 var target = this.props.user.backupOnLocal(path);
                 target && this.props.shell.showItemInFolder(target);
@@ -29623,7 +29630,7 @@ var Nav = function (_React$Component) {
             chooser.multiple = true;
             chooser.addEventListener('change', function (e) {
                 var path = e.target.files[0].path;
-                if (!this.props.user.restore(path)) return _eventProxy2.default.trigger('message', this.props.config.get().language === 'zh' ? '😢 恢复失败!' : '😢 Restore Failed!');
+                if (!this.props.user.restore(path)) return this.props.eventProxy.trigger('message', this.props.config.get().language === 'zh' ? '😢 恢复失败!' : '😢 Restore Failed!');
                 this.props.app.relaunch();
                 this.props.app.exit(0);
             }.bind(this));
@@ -29701,7 +29708,7 @@ var Nav = function (_React$Component) {
                             style: Object.assign({}, this.style().navButtonContainer, this.props.mainView === 'manage' ? { backgroundColor: 'rgba(0, 0, 0, 0.3)' } : { backgroundColor: 'rgba(0, 0, 0, 0.1)' }),
                             onClick: function () {
                                 this.props.handleViewChange('manage');
-                                this.props.mainView === 'manage' && _eventProxy2.default.trigger('backToArticle');
+                                this.props.mainView === 'manage' && this.props.eventProxy.trigger('backToArticle');
                             }.bind(this)
                         },
                         _react2.default.createElement('img', { style: this.style().navButtonImg, src: '../../src/pic/manageNav.svg' }),
@@ -30523,7 +30530,7 @@ var Setting = function (_React$Component) {
             var config = {};
             config[name] = value;
             _eventProxy2.default.trigger('setConfig', this.props.config.set(config));
-            _eventProxy2.default.trigger('message', this.props.config.get().language === 'zh' ? '✨ 设置已保存!' : '✨ Apply Setting Success!');
+            this.props.eventProxy.trigger('message', this.props.config.get().language === 'zh' ? '✨ 设置已保存!' : '✨ Apply Setting Success!');
         }
     }, {
         key: 'render',
@@ -31188,7 +31195,8 @@ _reactDom2.default.render(_react2.default.createElement(
         user: main.user,
         app: _electron.remote.app,
         shell: _electron.shell,
-        openURL: _electron.shell.openExternal
+        openURL: _electron.shell.openExternal,
+        eventProxy: main.eventProxy
     })
 ), document.getElementById('root'));
 

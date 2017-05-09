@@ -3,7 +3,7 @@ Function.prototype.toString = Object.prototype.toString;
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { remote, shell, webFrame } from 'electron';
+import { remote, shell, webFrame, ipcRenderer } from 'electron';
 import App from './components/App';
 
 
@@ -19,7 +19,7 @@ ReactDOM.render(
             path={main.path}
             openWindow={main.openWindow}
             upload={main.upload.openWindow}
-            dataToHTML = {main.dataToHTML}
+            dataToHTML={main.dataToHTML}
             config={main.config}
             theme={main.theme}
             logout={main.logout.start}
