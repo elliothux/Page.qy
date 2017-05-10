@@ -95,12 +95,12 @@ Page.qy的主题模块使用一个非常轻量级的HTML模板引擎, 要使用�
 
 * user (Type: Object): 用户的个人信息, 其值为: 
 ```js
-{
+{   
     avatar (Type: String): 用户 GitHub 账户的头像,
-	name (Type: String): 用户 GitHub 账户的姓名,
-	selfIntroduction (Type: String): 用户的自我介绍,
-	username (Type: String): 用户 GitHub 账户的账户名,
-	mail (Type: String): 用户 GitHub 账户的公开邮箱
+    name (Type: String): 用户 GitHub 账户的姓名,
+    selfIntroduction (Type: String): 用户的自我介绍,
+    username (Type: String): 用户 GitHub 账户的账户名,
+    mail (Type: String): 用户 GitHub 账户的公开邮箱
 }
 ```
 
