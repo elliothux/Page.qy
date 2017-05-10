@@ -25,7 +25,7 @@
 │   │   ├── Preview.js (预览)  
 │   │   ├── Common (通用组件)  
 │   │   │   ├── Message.js (提示消息)  
-│   │   │   └── Select.js (替换丑陋的默认 <select>)  
+│   │   │   └── Select.js (Select.js (替换丑陋的默认 \<select\>))   
 │   │   ├── Manage (管理模块)  
 │   │   │   ├── Article.js (文章)  
 │   │   │   ├── Editor.js (编辑)  
