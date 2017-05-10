@@ -194,8 +194,8 @@ Page.qy的主题模块使用一个非常轻量级的HTML模板引擎, 要使用�
 ### 3. 在 “article.html” 模板中可以引用的值
 * cover(Type: String): 文章的封面 (当文章不存在封面时为false)
 * content(Type: String): 文章的内容
-* createDate(Type: Object, 请参阅: [日期对象](./#date)): 文章的创建时间
-* editDate(Type: Object, 请参阅: 日期对象): 文章最近编辑的时间
+* createDate(Type: Object, 请参阅: [日期对象](#dateObj)): 文章的创建时间
+* editDate(Type: Object, 请参阅: [日期对象](#dateObj)): 文章最近编辑的时间
 * introduction(Type: String): 文章的摘要
 * tags(Type: Array): 文章的所有标签, 其中每个元素的值为一个表示文章标签的对象, 该对象的值为: 
 ```js
@@ -231,7 +231,7 @@ Page.qy的主题模块使用一个非常轻量级的HTML模板引擎, 要使用�
 <div id="content">{{ content }}</div>
 ```
 
-<h3 id="date">4. 日期对象</h3>
+<h3 id="dateObj">4. 日期对象</h3>
 为了方便的显示日期, Page.qy主题模板中所有引用的日期都为一个对象, 该对象的值为: 
 ```js
 { 
