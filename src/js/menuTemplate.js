@@ -23,7 +23,7 @@ module.exports = (app, window, ipcMain) => [
                 accelerator: "CmdOrCtrl+W",
                 click: () => {
                     BrowserWindow.getFocusedWindow() === window ?
-                        platform === 'darwin' ? window.hide() : window.minimize() :
+                        (platform === 'win32' ?  window.minimize() : window.hide()) :
                         BrowserWindow.getFocusedWindow().close()
                 }
             }
