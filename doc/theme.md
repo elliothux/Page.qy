@@ -1,16 +1,16 @@
 # 如何为Page.qy编写主题
 ## 1. 主题的文件结构
 /—— Theme Name  
-	/—— script  
-	/—— statics  
-	/—— style  
-	/—— templates  
-		/—— about.html  
-		/—— archives.html  
-		/—— article.html  
-		/—— index.html  
-		/—— tags.html  
-	/—— info.json  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/—— script  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/—— statics  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/—— style  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/—— templates  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/—— about.html  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/—— archives.html  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/—— article.html  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/—— index.html  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/—— tags.html  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/—— info.json  
 
 其中每个目录:
 * script: 存放 js 文件 **(该目录可以为空, 但必须存在)**
