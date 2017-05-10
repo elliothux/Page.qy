@@ -29,6 +29,7 @@ template 目录:
 Page.qy的主题模块使用一个非常轻量级的HTML模板引擎, 要使用该模块非常简单: 
 
 * 在HTML中使用 **”{{  }}”** 来引用值, 如:
+
 ```html
 <p class="date">
     Written By {{ user.name }} on {{ createDate.month }}/{{ createDate.date }}
@@ -42,6 +43,7 @@ Page.qy的主题模块使用一个非常轻量级的HTML模板引擎, 要使用�
 ```
 
 * 在HTML中的 **”<template>”标签** 中使用 **“@for”属性** 遍历值, 如:
+
 ```html
 <div id="tags">
     <template @for="tag of tags">
@@ -79,19 +81,19 @@ Page.qy的主题模块使用一个非常轻量级的HTML模板引擎, 要使用�
 ```html
 <script type="text/javascript" src="{{ script.common }}"></script>
 ```
-**要引用 js 文件, 必须使用该方法!**
+**注意: 要引用 js 文件, 必须使用该方法!**
 
 * statics (Type: Object): statics 目录中的静态文件的真实资源地址, 如, 引入 statics 目录下的 ‘nav.jpg’ 文件:
 ```html
 <img src="{{ statics['nav.jpg'] }}">
 ```
-**要引用静态文件, 必须使用该方法!**
+**注意: 要引用静态文件, 必须使用该方法!**
 
 * style (Type: Object): style 目录中的 css 文件的真实资源地址, 如, 引入 style 目录下的 ‘common.css’ 文件:
 ```html
 <link type="text/css" rel="stylesheet" href="{{ style.common }}"/>
 ```
-**要引用 css 文件, 必须使用该方法!**
+**注意: 要引用 css 文件, 必须使用该方法!**
 
 * user (Type: Object): 用户的个人信息, 其值为: 
 ```js
