@@ -109,13 +109,13 @@ Page.qy 基于纯 JavaScript 技术开发。
 模板中:
 ```html
 <p class="date">
-Written By {{ user.name }} on {{ createDate.month }}/{{ createDate.date }}
+    Written By {{ user.name }} on {{ createDate.month }}/{{ createDate.date }}
 </p>
 ```
 如果 user.name 的值为字符串 “Joe”, createDate的值为对象 { month: ’05’, date: ’16’ }, 则上面的语句将被模板引擎解析为:
 ```html
 <p class="date">
-Written By Joe on 05/16
+    Written By Joe on 05/16
 </p>
 ```
 模板中:
@@ -129,9 +129,9 @@ Written By Joe on 05/16
 如果tags的值为数组 [“Hello”, “World”, “Page.qy”], 则上面的语句将被模板引擎解析为:
 ```html
 <div id="tags">
-		<a>#Hello</a>
-		<a>#World</a>
-		<a>#Page.qy</a>
+    <a>#Hello</a>
+	<a>#World</a>
+	<a>#Page.qy</a>
 </div>
 ```
 模板引擎大概的实现思路为: 使用 with 语句将需要引用的值注入当前作用域, 解析模板, 使用正则表达式查找引用值并执行 eval(), 然后使用正则表达式将引用替换为 eval() 执行的结果。
