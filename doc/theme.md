@@ -37,7 +37,7 @@ Written By {{ user.name }} on {{ createDate.month }}/{{ createDate.date }}
 如果 user.name 的值为字符串 “Joe”, createDate的值为对象 { month: ’05’, date: ’16’ }, 则上面的语句将被模板引擎解析为:
 ```html
 <p class="date">
-Written By Joe on 05/16
+    Written By Joe on 05/16
 </p>
 ```
 
@@ -68,7 +68,7 @@ Written By Joe on 05/16
 * links (Type: Object): 链接到其他页面的链接, 如:
 ```html
     <div id="nav">
-			<a id="navHome" href="{{ links.home }}">首页</a>
+		<a id="navHome" href="{{ links.home }}">首页</a>
         <a href="{{ links.tags }}">标签</a>
         <a href="{{ links.archives }}">归档</a>
         <a href="{{ links.about }}">关于</a>
@@ -209,7 +209,7 @@ Written By Joe on 05/16
 <div id="header">
     <img src="{{ cover || statics['nav.jpg'] }}">
     <div id="nav">
-			<a id="navHome" href="{{ links.home }}">HOME</a>
+		<a id="navHome" href="{{ links.home }}">HOME</a>
         <a href="{{ links.tags }}">TAGS</a>
         <a href="{{ links.archives }}">ARCHIVES</a>
         <a href="{{ links.about }}">ABOUT</a>
@@ -217,7 +217,8 @@ Written By Joe on 05/16
     <h1 id="headTitle">{{ title }}</h1>
     <hr/>
     <p id="introduction">Written By {{ user.name }}
-        on {{ createDate.month }}/{{ createDate.date }} {{ createDate.year }}</p>
+        on {{ createDate.month }}/{{ createDate.date }} {{ createDate.year }}
+    </p>
 </div>
 
 <ul id="tags">
