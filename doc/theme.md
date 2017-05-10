@@ -42,7 +42,7 @@ Page.qy的主题模块使用一个非常轻量级的HTML模板引擎, 要使用�
 </p>
 ```
 
-* 在HTML中的 **”<template>”标签** 中使用 **“@for”属性** 遍历值, 如:
+* 在HTML中的 **”\<template\>”标签** 中使用 **“@for”属性** 遍历值, 如:
 
 ```html
 <div id="tags">
