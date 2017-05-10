@@ -21,7 +21,7 @@ const target = path.join(__dirname, '../../user/temp/');
 
 async function getPath(type, key) {
     if (type === 'article') {
-        const target = `./user/temp/articles/${key}.html`;
+        const target = path.join(__dirname, `../../user/temp/articles/${key}.html`);
         !fs.existsSync(target) && generateArticle(await db.getArticle({key: key}));
         return target;
     }
@@ -31,7 +31,7 @@ async function getPath(type, key) {
         archives: path.join(target, './archives.html')
     };
     if (type) return paths[type];
-    return path;
+    return paths;
 }
 
 

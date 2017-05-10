@@ -1,5 +1,6 @@
 const config = require('./config').get;
-const platform = require('os').platform();
+const BrowserWindow = require('electron').BrowserWindow;
+
 
 
 module.exports = (app, window, ipcMain) => [
@@ -15,6 +16,15 @@ module.exports = (app, window, ipcMain) => [
                 label: config().language === 'zh' ? "退出" : "Quit",
                 accelerator: "CmdOrCtrl+Q",
                 click: app.quit
+            },
+            {
+                label: config().language === 'zh' ? "关闭" : "Close",
+                accelerator: "CmdOrCtrl+W",
+                click: () => {
+                    BrowserWindow.getFocusedWindow() === window ?
+                        window.hide() :
+                        BrowserWindow.getFocusedWindow().close()
+                }
             }
         ]
     },
@@ -40,9 +50,8 @@ module.exports = (app, window, ipcMain) => [
             {
                 label: config().language === 'zh' ? '打开DevTools' : "Open DevTools",
                 accelerator: "CmdOrCtrl+Alt+i",
-                click: () => { window.webContents.openDevTools() }
+                click: () => { BrowserWindow.getFocusedWindow().webContents.openDevTools() }
             }
         ]
     }
 ];
-
