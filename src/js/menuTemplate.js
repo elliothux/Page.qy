@@ -1,5 +1,6 @@
 const config = require('./config').get;
 const BrowserWindow = require('electron').BrowserWindow;
+const platform = require('os').platform();
 
 
 
@@ -22,7 +23,7 @@ module.exports = (app, window, ipcMain) => [
                 accelerator: "CmdOrCtrl+W",
                 click: () => {
                     BrowserWindow.getFocusedWindow() === window ?
-                        window.hide() :
+                        platform === 'darwin' ? window.hide() : window.minimize() :
                         BrowserWindow.getFocusedWindow().close()
                 }
             }
