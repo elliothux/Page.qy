@@ -26,7 +26,12 @@ module.exports = (app, window, ipcMain) => [
                         (platform === 'win32' ?  window.minimize() : window.hide()) :
                         BrowserWindow.getFocusedWindow().close()
                 }
-            }
+            },
+            {
+                label: config().language === 'zh' ? "刷新" : "Reload",
+                accelerator: "CmdOrCtrl+R",
+                click: () => { BrowserWindow.getFocusedWindow().webContents.reload() }
+            },
         ]
     },
     {

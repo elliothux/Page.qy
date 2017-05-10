@@ -94,16 +94,7 @@ cancelButton.addEventListener('click', function () {
 });
 retryButton.addEventListener('click', retry);
 
-upload.start(messageClient);
-
-function messageClient(message) {
-    switch (message) {
-        case 'error':
-            failed();break;
-        case 'done':
-            success();break;
-    }
-}
+upload.start().then(success).catch(failed);
 
 function success() {
     load.style.display = 'none';
@@ -125,7 +116,7 @@ function retry() {
     retryButton.style.display = 'none';
     message.innerHTML = language === 'zh' ? '\uD83C\uDFC3\u6B63\u5728\u52AA\u529B\u4E0A\u4F20...' : '🏃Working Hard On Uploading...';
     cancelButton.innerHTML = language === 'zh' ? '取消' : 'CANCEL';
-    upload.start(messageClient);
+    upload.start();
     operateArea.className = '';
 }
 

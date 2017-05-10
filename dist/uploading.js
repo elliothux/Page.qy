@@ -24,15 +24,7 @@ cancelButton.addEventListener('click', function () {
 retryButton.addEventListener('click', retry);
 
 
-upload.start(messageClient);
-
-
-function messageClient(message) {
-    switch (message) {
-        case 'error': failed(); break;
-        case 'done': success(); break;
-    }
-}
+upload.start().then(success).catch(failed);
 
 
 function success() {
@@ -61,6 +53,6 @@ function retry() {
         `🏃正在努力上传...` : '🏃Working Hard On Uploading...';
     cancelButton.innerHTML = language === 'zh' ?
         '取消' : 'CANCEL';
-    upload.start(messageClient);
+    upload.start();
     operateArea.className = '';
 }

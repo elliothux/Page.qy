@@ -34,7 +34,7 @@ function initConfig() {
         "selfIntroduction": "",
         "language": "en",
         "editor": "default",
-        "theme": "Default",
+        "theme": "Simple Blog",
         "avatar": "",
         "mail": "",
         "layoutColumn": 3,

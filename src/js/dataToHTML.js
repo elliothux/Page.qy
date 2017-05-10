@@ -51,7 +51,7 @@ async function generateArticle(rawData, key) {
     return targetPath;
 }
 
-
+generateHTML(true).then(a => {})
 async function generateHTML(willGenerateArticle=false) {
     !fs.existsSync(target) && fs.mkdirSync(target);
     const data = await _getData();
@@ -155,11 +155,8 @@ function _getStyle(type) {
 
 
 async function _getArticles(type) {
-    return (await db.getPublishedArticleList())
+    return (await db.getArticleList())
         .map(article => _formatArticleData(article, type))
-        .sort((a, b) => (
-            (new Date(b.createDate)).getTime() - (new Date(a.createDate)).getTime())
-        )
 }
 
 

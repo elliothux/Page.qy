@@ -28016,8 +28016,7 @@ var Article = function (_React$Component) {
             if (this.state.historyContent.length === 0) return _eventProxy2.default.trigger('message', this.props.config.get().language === 'zh' ? '😂 并不存在什么历史!' : '😂 No History!');
             _eventProxy2.default.trigger('viewHistory', {
                 historyContent: this.state.historyContent,
-                key: this.props.data.key,
-                createDate: this.props.createDate
+                key: this.props.data.key
             });
         }
     }, {
@@ -28681,8 +28680,7 @@ var History = function (_React$Component) {
 
         _this.state = {
             historyContent: [],
-            key: '',
-            createDate: ''
+            key: ''
         };
 
         return _this;
@@ -28693,10 +28691,7 @@ var History = function (_React$Component) {
         value: function componentDidMount() {
             _eventProxy2.default.on('viewHistory', function (data) {
                 this.handleViewHistory(data.historyContent);
-                this.setState({
-                    key: data.key,
-                    createDate: data.createDate
-                });
+                this.setState({ key: data.key });
             }.bind(this));
         }
     }, {
@@ -28739,8 +28734,7 @@ var History = function (_React$Component) {
                         language: this.props.config.get().language,
                         openWindow: this.props.openWindow,
                         articleKey: this.state.key,
-                        db: this.props.db,
-                        createDate: this.state.createDate
+                        db: this.props.db
                     }));
                 }.bind(this))
             );
@@ -28863,16 +28857,14 @@ var HistoryItem = function (_React$Component) {
                     title: this.props.title,
                     tags: this.props.tags,
                     content: this.props.content,
-                    introduction: this.props.introduction,
-                    createDate: this.props.createDate,
-                    editDate: this.props.editDate
+                    introduction: this.props.introduction
                 };
 
                 data = await this.props.db.editArticle(data);
                 if (!data) return _eventProxy2.default.trigger('message', this.props.language === 'zh' ? '😢 恢复失败!' : '😢 Restore Failed!');
                 _eventProxy2.default.trigger('updateArticleData', data);
                 _eventProxy2.default.trigger('message', this.props.language === 'zh' ? '✨ 恢复完成!' : '✨ Restore Done!');
-                await this.props.dataToHTML.generateArticle(this.props.articleKey);
+                await this.props.dataToHTML.generateArticle(data);
                 _eventProxy2.default.trigger('refreshPreview');
             }.bind(this), 900);
         }

@@ -34,27 +34,30 @@ const gh = () => (
 async function pushRepo() {
     const name = config.get().username;
     const path = await _getRepoPath();
-    return Git(path)
-        .pull('origin', 'master', (error) => {
-            if (error) console.error(error);
-            console.log('Pull repo success.');
-            _copyFile();
-        })
-        .raw([
-            'add',
-            '--all'
-        ], (error) => {
-            if (error) console.error(error);
-            console.log('Add files success.')
-        })
-        .commit(`Update on ${(new Date()).toLocaleString()}`, (error) => {
-            if (error) console.error(error);
-            console.log('Pushing repo...');
-        })
-        .push([`https://${name}:${config.get().password}@github.com/${name}/${name}.github.io.git`], (error) => {
-            if (error) console.error(error);
-            console.log('Push repo success.')
-        });
+    return new Promise((resolve, reject) => {
+        Git(path)
+            .pull('origin', 'master', (error) => {
+                if (error) reject.error(error);
+                console.log('Pull repo success.');
+                _copyFile();
+            })
+            .raw([
+                'add',
+                '--all'
+            ], (error) => {
+                if (error) reject.error(error);
+                console.log('Add files success.')
+            })
+            .commit(`Update on ${(new Date()).toLocaleString()}`, (error) => {
+                if (error) reject.error(error);
+                console.log('Pushing repo...');
+            })
+            .push([`https://${name}:${config.get().password}@github.com/${name}/${name}.github.io.git`], (error) => {
+                if (error) reject.error(error);
+                console.log('Push repo success.');
+                resolve()
+            });
+    })
 }
 
 

@@ -258,7 +258,10 @@ async function deleteArticle(key) {
 
 // Get articles
 async function getArticleList() {
-    return (await find({type: 'article'}, article));
+    return (await find({type: 'article'}, article))
+        .sort((a, b) => (
+            (new Date(b.createDate)).getTime() - (new Date(a.createDate)).getTime())
+        );
 }
 
 async function getArticle(options) {
@@ -287,7 +290,10 @@ async function isArticlePublished(key) {
 
 
 async function getPublishedArticleList() {
-    return (await find({type: 'article', published: true}, article));
+    return (await find({type: 'article', published: true}, article))
+        .sort((a, b) => (
+            (new Date(b.createDate)).getTime() - (new Date(a.createDate)).getTime())
+        );
 }
 
 

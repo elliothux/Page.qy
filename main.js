@@ -53,7 +53,7 @@ function openWindow(path, options, isMax) {
         const devToolPath = {
             'win32': `C:\\Users\\HuQingyang\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 1\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\2.1.9_0`,
             'darwin': `/Users/huqingyang/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/2.1.9_0`,
-            'linux': '/home/hu/.config/google-chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/2.1.3_0'
+            'linux': '/home/hu/.config/google-chrome/Simple Blog/Extensions/fmkadmapgofadopljbjfkapdkoienihi/2.1.3_0'
         }[platform];
         BrowserWindow.addDevToolsExtension(devToolPath);
     }
@@ -111,20 +111,12 @@ const upload = {
             }, false);
         this.win.show();
     },
-    start: function(message) {
-        this.message = function (msg) {
-            try {
-                message(msg)
-            } catch(error) {
-                console.error(error)
-            }
-        };
-        github.pushRepo(this.message)
+    start: function() {
+        return github.pushRepo()
     },
     end: function () {
         this.win.close();
         this.win = null;
-        this.message = () => {}
     }
 };
 

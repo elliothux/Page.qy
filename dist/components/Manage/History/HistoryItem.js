@@ -21,7 +21,6 @@ export default class HistoryItem extends React.Component {
     }
 
     initState() {
-        if (this.state.unmounted) return;
         this._reactInternalInstance &&
             this.setState({ status: 'init' });
     }
