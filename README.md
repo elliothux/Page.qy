@@ -16,35 +16,35 @@
 	🤑 免费自由开源 => Page.qy 将网站部署在 GitHub Page, 感谢 GitHub 免费提供的服务! Page.qy 基于 React 、Electron、Node.js 等现代 Web 技术构建, 感谢为这些开源项目贡献源码的软件工程师, 你们的开源项目是 Page.qy 的基础! 同时, Page.qy 也开源在 GitHub 并接受 Issues 或共同开发!
 
 ## 3.项目结构
-├── build (项目打包所需文件)  
-├── db	(用户数据库)  
-├── dist (渲染进程中引入的JS文件)  
-│   ├── components (React 组件目录)  
-│   │   ├── App.js (根组件)  
-│   │   ├── Nav.js (导航栏)  
-│   │   ├── Preview.js (预览)  
-│   │   ├── Common (通用组件)  
-│   │   │   ├── Message.js (提示消息)  
+│── build (项目打包所需文件)  
+│── db	(用户数据库)  
+│── dist (渲染进程中引入的JS文件)  
+│   │── components (React 组件目录)  
+│   │   │── App.js (根组件)  
+│   │   │── Nav.js (导航栏)  
+│   │   │── Preview.js (预览)  
+│   │   │── Common (通用组件)  
+│   │   │   │── Message.js (提示消息)  
 │   │   │   └── Select.js (Select.js (替换丑陋的默认 \<select\>))   
-│   │   ├── Manage (管理模块)  
-│   │   │   ├── Article.js (文章)  
-│   │   │   ├── Editor.js (编辑)  
-│   │   │   ├── History (历史模块)  
-│   │   │   │   ├── History.js  
+│   │   │── Manage (管理模块)  
+│   │   │   │── Article.js (文章)  
+│   │   │   │── Editor.js (编辑)  
+│   │   │   │── History (历史模块)  
+│   │   │   │   │── History.js  
 │   │   │   │   └── HistoryItem.js  
 │   │   │   └── Manage.js\
-│   │   ├── Options (选项模块)\
-│   │   │   ├── About.js (关于)\
-│   │   │   ├── Options.js (选项)\
-│   │   │   ├── Setting.js (设置)\
+│   │   │── Options (选项模块)\
+│   │   │   │── About.js (关于)\
+│   │   │   │── Options.js (选项)\
+│   │   │   │── Setting.js (设置)\
 │   │   │   └── Theme.js (主题管理)\
-│   ├── lib (渲染进程所需的JS库文件)\
+│   │── lib (渲染进程所需的JS库文件)\
 │   │   └── eventProxy.js\
-│   ├── index.js	(主窗口)\
-│   ├── login.js (登录窗口)\
-│   ├── logout.js (登出窗口)\
+│   │── index.js	(主窗口)\
+│   │── login.js (登录窗口)\
+│   │── logout.js (登出窗口)\
 │   └── uploading.js (上传窗口)\
-├── src (项目资源文件)\
+│── src (项目资源文件)\
 │   ├── css (样式)\
 │   ├── fonts (字体)\
 │   ├── lib (后台进程所需的JS库文件)\
