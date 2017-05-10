@@ -31,7 +31,7 @@ Page.qy的主题模块使用一个非常轻量级的HTML模板引擎, 要使用�
 * 在HTML中使用 **”{{  }}”** 来引用值, 如:
 ```html
 <p class="date">
-Written By {{ user.name }} on {{ createDate.month }}/{{ createDate.date }}
+    Written By {{ user.name }} on {{ createDate.month }}/{{ createDate.date }}
 </p>
 ```
 如果 user.name 的值为字符串 “Joe”, createDate的值为对象 { month: ’05’, date: ’16’ }, 则上面的语句将被模板引擎解析为:
@@ -67,12 +67,12 @@ Written By {{ user.name }} on {{ createDate.month }}/{{ createDate.date }}
 
 * links (Type: Object): 链接到其他页面的链接, 如:
 ```html
-    <div id="nav">
-		<a id="navHome" href="{{ links.home }}">首页</a>
-        <a href="{{ links.tags }}">标签</a>
-        <a href="{{ links.archives }}">归档</a>
-        <a href="{{ links.about }}">关于</a>
-    </div>
+<div id="nav">
+    <a id="navHome" href="{{ links.home }}">首页</a>
+    <a href="{{ links.tags }}">标签</a>
+    <a href="{{ links.archives }}">归档</a>
+    <a href="{{ links.about }}">关于</a>
+</div>
 ```
 
 * script (Type: Object): script 目录中的 js 文件的真实资源地址, 如, 引入 script 目录下的 ‘common.js’ 文件:
@@ -209,24 +209,23 @@ Written By {{ user.name }} on {{ createDate.month }}/{{ createDate.date }}
 <div id="header">
     <img src="{{ cover || statics['nav.jpg'] }}">
     <div id="nav">
-		<a id="navHome" href="{{ links.home }}">HOME</a>
+        <a id="navHome" href="{{ links.home }}">HOME</a>
         <a href="{{ links.tags }}">TAGS</a>
         <a href="{{ links.archives }}">ARCHIVES</a>
         <a href="{{ links.about }}">ABOUT</a>
     </div>
     <h1 id="headTitle">{{ title }}</h1>
-    <hr/>
     <p id="introduction">Written By {{ user.name }}
         on {{ createDate.month }}/{{ createDate.date }} {{ createDate.year }}
     </p>
 </div>
-
+  
 <ul id="tags">
     <template @for="tag of tags">
         <li><a href="{{ tag.link }}">#{{ tag.name }}</a></li>
     </template>
 </ul>
-
+  
 <div id="content">{{ content }}</div>
 ```
 
@@ -234,12 +233,12 @@ Written By {{ user.name }} on {{ createDate.month }}/{{ createDate.date }}
 为了方便的显示日期, Page.qy主题模板中所有引用的日期都为一个对象, 该对象的值为: 
 ```js
 { 
-	year(Type: String): 年份,
-  month(Type: String): 月份,
-  date(Type: String): 日期,
-  hours(Type: String): 小时,
-  minutes(Type: String): 分钟,
-  day(Type: String): 星期 
+    year(Type: String): 年份,
+    month(Type: String): 月份,
+    date(Type: String): 日期,
+    hours(Type: String): 小时,
+    minutes(Type: String): 分钟,
+    day(Type: String): 星期 
 }
 ```
 
