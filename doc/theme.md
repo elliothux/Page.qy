@@ -53,8 +53,8 @@ Page.qy的主题模块使用一个非常轻量级的HTML模板引擎, 要使用�
 ```html
 <div id="tags">
     <a>#Hello</a>
-	<a>#World</a>
-	<a>#Page.qy</a>
+    <a>#World</a>
+    <a>#Page.qy</a>
 </div>
 ```
 
