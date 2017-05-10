@@ -258,4 +258,4 @@ Page.qy 使用 Highlight.js 实现代码高亮, 只需要在主题中引入相�
 使用 zip 格式压缩主题文件即可。
 
 ### 7. 示例
-参考: [Simple Blog](https://github.com/huqingyang/SimpleBlog)
+参考: [Simple Blog](https://github.com/HuQingyang/Page.qy/tree/master/user/themes/Simple%20Blog)
