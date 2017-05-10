@@ -252,7 +252,7 @@ Page.qy 使用 Highlight.js 实现代码高亮, 只需要在主题中引入相�
 * name(Type: String): 主题名
 * version(Type: String): 版本
 * author(Type: String [Optional]): 作者信息
-* introduction(Type: String [optional]): 主题介绍
+* introduction(Type: String [Optional]): 主题介绍
 
 ### 6. 打包主题
 使用 zip 格式压缩主题文件即可。
