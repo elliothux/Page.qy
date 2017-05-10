@@ -45,37 +45,37 @@
 │   │── logout.js (登出窗口)\
 │   └── uploading.js (上传窗口)\
 │── src (项目资源文件)\
-│   ├── css (样式)\
-│   ├── fonts (字体)\
-│   ├── lib (后台进程所需的JS库文件)\
-│   ├── pic (图片)\
-│   ├── html (渲染进程的HTML文件)\
-│   │   ├── editor.html (编辑)\
-│   │   ├── index.html (主界面)\
-│   │   ├── login.html (登录界面)\
-│   │   ├── logout.html (登出界面)\
+│   │── css (样式)\
+│   │── fonts (字体)\
+│   │── lib (后台进程所需的JS库文件)\
+│   │── pic (图片)\
+│   │── html (渲染进程的HTML文件)\
+│   │   │── editor.html (编辑)\
+│   │   │── index.html (主界面)\
+│   │   │── login.html (登录界面)\
+│   │   │── logout.html (登出界面)\
 │   │   └── uploading.html (上传界面)\
-│   ├── js (后台进程引入的JS文件)\
-│   │   ├── config.js (管理用户配置)\
-│   │   ├── contentProcess.js (处理内容)\
-│   │   ├── dataToHTML.js (根据数据生成HTML)\
-│   │   ├── db.js (操作数据库)\
-│   │   ├── github.js (部署网站)\
-│   │   ├── menuTemplate.js (应用菜单栏)\
-│   │   ├── templateEngine.js (模板引擎)\
-│   │   ├── theme.js (管理主题)\
+│   │── js (后台进程引入的JS文件)\
+│   │   │── config.js (管理用户配置)\
+│   │   │── contentProcess.js (处理内容)\
+│   │   │── dataToHTML.js (根据数据生成HTML)\
+│   │   │── db.js (操作数据库)\
+│   │   │── github.js (部署网站)\
+│   │   │── menuTemplate.js (应用菜单栏)\
+│   │   │── templateEngine.js (模板引擎)\
+│   │   │── theme.js (管理主题)\
 │   │   └── user.js (管理用户)\
-│   ├── index.build.js (打包的主窗口引入的JS文件)\
-│   ├── login.build.js (打包的登录口引入的JS文件)\
-│   ├── logout.build.js (打包的登出口引入的JS文件)\
+│   │── index.build.js (打包的主窗口引入的JS文件)\
+│   │── login.build.js (打包的登录口引入的JS文件)\
+│   │── logout.build.js (打包的登出口引入的JS文件)\
 │   └── uploading.build.js (打包的上传窗口引入的JS文件)\
-├── user (用户文件)\
-│   ├── avatar.jpg (头像)\
-│   ├── config.json (用户配置)\
-│   ├── temp (临时文件)\
+│── user (用户文件)\
+│   │── avatar.jpg (头像)\
+│   │── config.json (用户配置)\
+│   │── temp (临时文件)\
 │   └── themes (主题文件)\
-├── webpack.config.js (webpack配置)\
-├── main.js (主进程)\
+│── webpack.config.js (webpack配置)\
+│── main.js (主进程)\
 └── package.json (项目信息文件)\
 
 ## 4. 技术栈
