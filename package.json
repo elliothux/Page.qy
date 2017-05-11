@@ -1,6 +1,7 @@
 {
   "name": "Page.qy",
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "productName": "Page.qy",
   "description": "A simple way to build static website for everyone.",
   "main": "main.js",
   "dependencies": {
@@ -47,7 +48,7 @@
     "setup": "electron-installer-windows --config build/config.json"
   },
   "keywords": [
-    "page",
+    "Page",
     "website",
     "blog"
   ],

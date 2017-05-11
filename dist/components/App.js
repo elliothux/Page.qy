@@ -12,7 +12,8 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.style = this.style.bind(this);
-        this.handleViewChange = this.handleViewChange.bind(this)
+        this.handleViewChange = this.handleViewChange.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
 
         this.state = {
             viewState: this.props.config.get().initView,
@@ -27,7 +28,37 @@ export default class App extends React.Component {
         }.bind(this));
         eventProxy.on('miniNav', function (value) {
             this.setState({ miniNav: value })
-        }.bind(this))
+        }.bind(this));
+        eventProxy.on('checkUpdate',async function () {
+            const data = await this.props.autoUpdate.check();
+            if (!data) return eventProxy.trigger('message',
+                this.props.config.get('language') === 'zh' ?
+                    '已更新到最新版!' : 'Already Updated!');
+            else this.handleUpdate(data[0], data[1])
+
+        }.bind(this));
+        this.handleUpdate();
+    }
+
+    async handleUpdate(info, path) {
+        if (!info || !path)
+            [info, path] = await this.props.autoUpdate.check();
+        if(window.confirm(
+            this.props.config.get('language') === 'zh' ?
+                `Page.qy 有新版本啦! 立即安装?\n\n${info.description}` :
+                `A New Version of Page.qy!\n\n${info.description}! Install Now?`
+            ))
+            await this.props.autoUpdate.install(path);
+
+        if (window.confirm(
+            this.props.config.get('language') === 'zh' ?
+                `更新完成, 是否立即重启 Page.qy ?` :
+                'Update install success! Restart Page.qy?'
+            )) {
+            this.props.app.relaunch();
+            this.props.app.exit(0);
+        }
+
     }
 
     handleViewChange(view) {
@@ -75,6 +106,7 @@ export default class App extends React.Component {
                 reGenerateAll={this.props.dataToHTML.reGenerateAll}
                 openURL={this.props.openURL}
                 platform={this.props.platform}
+                version={this.props.version}
             />
             <Message miniNav={this.state.miniNav}/>
         </div>

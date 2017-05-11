@@ -1,56 +1,58 @@
 const fs = require('node-fs-extra');
 const path = require('path');
 const extract = require('extract-zip');
-const download = require('download-file');
 const request = require('request');
 const preVersion = require('../../package.json').version;
 
 
 module.exports.check = check;
+module.exports.install = install;
 
 
 const URL = "http://123.206.184.175/api/update";
 const target = path.join(__dirname, "../../upgrade/");
 
 
-// 开始检查更新
 async function check() {
     fs.existsSync(target) && fs.removeSync(target);
     const info = JSON.parse(await _getData(URL));
     if (info.version === preVersion) return false;
-    let filePath = await downloadFile(
-        info.url, target, `v${info.version}.zip`);
-    return info;
+    fs.mkdirsSync(target);
+    let filePath = await _downloadFile(
+        info.url, path.join(target, `./v${info.version}.zip`));
+    return [info, filePath];
 }
 
-async function start() {
-    console.log('Start updating...');
 
+async function install(filePath) {
+    console.log('Start install update...');
     filePath = await _extractUpdateFile(filePath);
-    _getInstallPath(filePath).map(each => _installUpdate(each));
+    for (let paths of  _getInstallPath(filePath))
+        _installUpdate(paths);
+    console.log('Done')
 }
 
 
-function _installUpdate(data) {
-    const filePath = data.filePath;
-    const installPath = data.installPath;
-    fs.copySync(filePath, installPath, {overwrite: true});
+function _installUpdate(paths) {
+    const { from, to } = paths;
+    fs.existsSync(to) && fs.removeSync(to);
+    !fs.existsSync(path.join(to, '../')) && fs.mkdirSync(path.join(to, '../'));
+    fs.copySync(from, to);
 }
 
 
-function _getInstallPath(dirPath) {
-    const fileList=[];
+function _getInstallPath(dirPath, fileList=[]) {
     fs.readdirSync(dirPath).map(file => {
         if (file === '.DS_Store') return;
-        const realPath = path.join(dirPath, file);
-        if (fs.lstatSync(realPath).isDirectory())
-            _getInstallPath(realPath, fileList);
+        const from = path.join(dirPath, file);
+        if (fs.lstatSync(from).isDirectory())
+            _getInstallPath(from, fileList);
         else
-            fileList.push(realPath)
+            fileList.push(from)
     });
-    return(fileList).map(filePath => ({
-        filePath: filePath,
-        installPath: path.join(__dirname, '../../', filePath.split('upgrade')[1])
+    return(fileList).map(from => ({
+        from: from,
+        to: path.join(__dirname, '../../', from.split('upgrade')[1])
     }))
 }
 
@@ -58,14 +60,14 @@ function _getInstallPath(dirPath) {
 
 function _extractUpdateFile(filePath) {
     return new Promise((resolve, reject) => {
-        return extract(
+        extract(
             filePath,
             {dir: path.join(filePath, '../')},
             error => {
                 if (error) reject(error);
                 else {
+                    fs.removeSync(filePath);
                     resolve(path.join(filePath, '../'));
-                    fs.unlink(filePath)
                 }
             }
         )
@@ -83,16 +85,12 @@ function _getData(url) {
 }
 
 
-// 传入 URL 、路径及文件名, 下载文件, 并返回文件路径
-function _downloadFile(url, dirName, fileName) {
+function _downloadFile(url, pathName) {
     return new Promise((resolve, reject) => {
-        const options = {
-            directory: dirName,
-            filename: fileName
-        };
-        download(url, options, (error) => {
-            if (error) reject(`Download file failed: ${error}`);
-            resolve(`${options.directory}/${fileName}`);
-        })
+        request.head(url, function(){
+            request(url).pipe(fs.createWriteStream(pathName))
+                .on('close', () => resolve(pathName))
+                .on('error', error =>  reject(error))
+        });
     })
 }

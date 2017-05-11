@@ -24,6 +24,8 @@ ReactDOM.render(
             theme={main.theme}
             logout={main.logout.start}
             user={main.user}
+            autoUpdate={main.autoUpdate}
+            version={main.version}
             app={remote.app}
             shell={shell}
             openURL={shell.openExternal}

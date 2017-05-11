@@ -118,6 +118,7 @@ export default class Options extends React.Component {
                     mainPath={this.props.mainPath}
                     openURL={this.props.openURL}
                     platform={this.props.platform}
+                    version={this.props.version}
                 />
             </div>
         </div>

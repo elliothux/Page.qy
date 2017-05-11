@@ -1,5 +1,7 @@
 import React from 'react';
 import reactCSS from 'reactcss';
+import eventProxy from '../../lib/eventProxy';
+
 
 
 export default class About extends React.Component {
@@ -16,6 +18,7 @@ export default class About extends React.Component {
             />
             {
                 <div style={this.style().text}>
+                    <p>🌟当前版本: Page.qy-v{this.props.version}</p><br/>
                     <p>Page.qy致力于让每个人都能轻松地免费建立专属自己的网站，无需任何编程或操作服务器等专业知识。Page.qy 适用于个人博客、在线文档等静态网站。</p><br/>
                     <p>Page.qy将网页代码托管于<a style={this.style().link} onClick={this.props.openURL.bind(null, 'https://pages.github.com/')}>
                         GitHub Pages</a>，感谢GitHub提供的服务。</p><br/>
@@ -30,8 +33,16 @@ export default class About extends React.Component {
                     <p>欢迎关注我的<a style={this.style().link} onClick={this.props.openURL.bind(null, 'https://www.zhihu.com/people/hu-qing-yang-67/activities')}>知乎</a>向我提交Bug或建议。</p>
                 </div>
             }
-            <button style={this.style().button}>{
-                this.props.language === 'zh' ? '检测更新': 'Check Update'
+            <button
+                style={this.style().button}
+                onClick={() => {
+                    eventProxy.trigger('message',
+                        this.props.language === 'zh' ?
+                            '正在检查更新...' : 'Checking Update...');
+                    eventProxy.trigger('checkUpdate');
+                }}
+            >{
+                this.props.language === 'zh' ? '检查更新': 'Check Update'
             }
             </button>
             <a style={this.style().externalLink}>{
