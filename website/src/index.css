@@ -31,18 +31,41 @@ input, button, textarea, :focus {
     overflow: hidden;
     top: 0; left: 0;
     background-color: #f9f9f9;
+    opacity: 0;
+    transition: all 800ms ease-in;
 }
 
-.circle {
-    width: 50px;
+.circle, #logoText {
+    width: 0;
+    height: 0;
+    position: fixed;
+    transition: all ease 600ms;
 }
+.circle { z-index: 1 }
+#logoText { z-index: 2 }
+
 
 #title {
-    font-size: 1.5em;
     color: black;
     text-align: center;
     line-height: 1.5em;
     position: fixed;
-    bottom: 50px;
     width: 100%;
+    transition: all ease 600ms;
+}
+
+
+.intro {
+    width: 20%;
+    text-align: center;
+    position: fixed;
+    transition: all ease 600ms;
+    top: 100%;
+}
+.intro h2 {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+.intro p {
+    font-size: 1em;
 }
