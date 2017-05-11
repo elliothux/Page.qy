@@ -1,0 +1,48 @@
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+
+a:link, a:visited {
+    text-decoration: none;
+}
+
+:not(input):not(textarea),
+:not(input):not(textarea)::after,
+:not(input):not(textarea)::before {
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+input, button, textarea, :focus {
+    outline: none;
+}
+
+
+#root {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    overflow: hidden;
+    top: 0; left: 0;
+    background-color: #f9f9f9;
+}
+
+.circle {
+    width: 50px;
+}
+
+#title {
+    font-size: 1.5em;
+    color: black;
+    text-align: center;
+    line-height: 1.5em;
+    position: fixed;
+    bottom: 50px;
+    width: 100%;
+}
