@@ -5,6 +5,7 @@
   "main": "main.js",
   "dependencies": {
     "cheerio": "^0.22.0",
+    "download-file": "^0.1.5",
     "extract-zip": "^1.6.5",
     "github-api": "^3.0.0",
     "nedb": "^1.8.0",

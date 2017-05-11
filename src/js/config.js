@@ -11,11 +11,12 @@ module.exports.restore = restore;
 
 
 const target = path.join(__dirname, '../../user/config.json');
-const config = JSON.parse(fs.readFileSync(target, 'utf-8'));
+const config = require(target);
 
 
-function getConfig() {
-    return JSON.parse(fs.readFileSync(target, 'utf-8'))
+function getConfig(option) {
+    return option ?
+        require(target)[option] : require(target)
 }
 
 
