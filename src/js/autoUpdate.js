@@ -9,14 +9,14 @@ const preVersion = require('../../package.json').version;
 module.exports.check = check;
 
 
-const IP = "";
+const URL = "http://123.206.184.175/api/update";
 const target = path.join(__dirname, "../../upgrade/");
 
 
 // 开始检查更新
 async function check() {
     fs.existsSync(target) && fs.removeSync(target);
-    const info = JSON.parse(await _getData(`${IP}/api/updateInfo`));
+    const info = JSON.parse(await _getData(URL));
     if (info.version === preVersion) return false;
     let filePath = await downloadFile(
         info.url, target, `v${info.version}.zip`);
