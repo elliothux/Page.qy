@@ -64,3 +64,4 @@ fabric.properties
 /build/Page.qy-win32-x64/
 /build/installers/
 /template.json
+/website/node_modules/

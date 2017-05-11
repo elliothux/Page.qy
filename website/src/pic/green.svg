@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400px" height="400px" viewBox="0 0 400 400" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
+    <title>Oval 4</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="24.6745606%" y1="27.3212004%" x2="86.1862988%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#D0FFAE" offset="0%"></stop>
+            <stop stop-color="#34EBE9" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Website" transform="translate(-548.000000, -493.000000)" fill="url(#linearGradient-1)">
+            <path d="M748,893 C858.45695,893 948,803.45695 948,693 C948,582.54305 858.45695,493 748,493 C637.54305,493 548,582.54305 548,693 C548,803.45695 637.54305,893 748,893 Z" id="Oval-4"></path>
+        </g>
+    </g>
+</svg>
