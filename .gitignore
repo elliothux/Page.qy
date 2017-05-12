@@ -65,3 +65,5 @@ fabric.properties
 /build/installers/
 /template.json
 /website/node_modules/
+/build/Page.qy-linux-x64/
+/build/Page.qy-darwin-x64/
