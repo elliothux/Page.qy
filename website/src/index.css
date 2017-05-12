@@ -42,7 +42,8 @@ input, button, textarea, :focus {
     transition: all ease 600ms;
 }
 .circle { z-index: 1 }
-#logoText { z-index: 2 }
+#circle0 { z-index: 2 }
+#logoText { z-index: 3 }
 
 
 #title {
