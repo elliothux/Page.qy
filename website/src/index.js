@@ -157,16 +157,19 @@ function init() {
         top: `100%`,
         left: '8%',
         opacity: 0,
+        fontSize: `${height * 0.3 / 12}px`,
     });
     setStyle(intro[4], {
         top: `100%`,
         left: '40%',
-        opacity: 0
+        opacity: 0,
+        fontSize: `${height * 0.3 / 12}px`,
     });
     setStyle(intro[5], {
         top: `100%`,
         right: '10%',
-        opacity: 0
+        opacity: 0,
+        fontSize: `${height * 0.3 / 12}px`,
     });
     setStyle(button[0], {
         bottom: '-45px',
@@ -296,6 +299,9 @@ function goIntro1() {
 }
 
 function goIntro2() {
+    const download = document.getElementById('download');
+    download.style.display = 'none';
+    download.style.opacity = 0;
     const [width, height] = [window.innerWidth, window.innerHeight];
     setStyle(title, {
         top: '-30%',
@@ -529,13 +535,13 @@ function end() {
         transitionDelay: '0ms'
 });
     setStyle(button[1], {
-        bottom: '37%',
+        bottom: 'calc(45% - 50px)',
         display: 'block',
         opacity: 1,
         transitionDelay: '70ms'
     });
     setStyle(button[2], {
-        bottom: '29%',
+        bottom: 'calc(45% - 100px)',
         display: 'block',
         opacity: 1,
         transitionDelay: '120ms'
