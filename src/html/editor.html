@@ -22,6 +22,8 @@
         const editor = new wangEditor('editorContainer');
         language === 'en' && (editor.config.lang = wangEditor.langs['en']);
         editor.config.zindex = 10;
+        editor.config.jsFilter = false;
+        editor.config.printLog = false;
         editor.config.uploadImgUrl = 'http://0.0.0.0';
         editor.config.menus = [
             'source',

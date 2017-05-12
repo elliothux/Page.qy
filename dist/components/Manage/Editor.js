@@ -125,7 +125,7 @@ export default class Editor extends React.Component {
                 onChange={this.handleTitleChange}
                 type="text" style={this.style().title}
                 placeholder={this.props.config.get().language === 'zh' ?
-                    '(￣︶￣)↗ 在这里输入你的标题...' : '(￣︶￣)↗ TYPE TITLE HERE...'}
+                    '输入你的标题...' : 'TYPE TITLE HERE...'}
             />
             <input
                 ref="tags"

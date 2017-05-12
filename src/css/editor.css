@@ -1,5 +1,4 @@
 
-
 *::-webkit-scrollbar {
     display: none;
 }
@@ -41,6 +40,7 @@ body {
 .wangEditor-menu-container.wangEditor-menu-shadow {
     position: static;
     top: 80px;
+    z-index: 20;
 }
 
 #editorContainer {
