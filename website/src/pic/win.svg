@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="49px" height="48px" viewBox="0 0 49 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="100%" y1="0%" x2="14.1389222%" y2="81.7335031%" id="linearGradient-1">
+            <stop stop-color="#55CBF2" offset="0%"></stop>
+            <stop stop-color="#2F81ED" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Website" transform="translate(-605.000000, -755.000000)" fill="url(#linearGradient-1)">
+            <g id="Group" transform="translate(605.000000, 751.000000)">
+                <path d="M0.958900347,11.2020056 L20.8114891,7.95613219 L20.8114891,27.5390792 L0.955591031,27.5390792 L0.958900347,11.2020056 L0.958900347,11.2020056 Z M20.8114891,48.7539384 L0.962209664,45.5031692 L0.955591031,29.1709914 L20.8114891,29.1709914 L20.8114891,48.7539384 Z M22.4661472,7.95613219 L48.935714,4.69230769 L48.940678,27.5390792 L22.4661472,27.5390792 L22.4661472,7.95613219 L22.4661472,7.95613219 Z M48.940678,29.1709914 L48.935714,52.0063395 L22.4661472,48.7539384 L22.4661472,29.1709914 L48.940678,29.1709914 L48.940678,29.1709914 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

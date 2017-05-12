@@ -3,6 +3,9 @@ const title = document.getElementById('title');
 const logoText = document.getElementById('logoText');
 const circle = document.getElementsByClassName('circle');
 const intro = document.getElementsByClassName('intro');
+const button = document.getElementsByClassName('button');
+const download = document.getElementsByClassName('download');
+const downloadText = document.getElementById('downloadText');
 
 
 const changeStatus = [init, goIntro1, goIntro2, end];
@@ -10,8 +13,42 @@ let index = 0;
 
 
 window.addEventListener('load', changeStatus[index]);
-window.addEventListener('resize', changeStatus[index]);
+window.addEventListener('resize', () => { changeStatus[index] });
 window.addEventListener('mousewheel', handleMouseWheel);
+button[2].addEventListener('click', function () {
+    const download = document.getElementById('download');
+    if (download.style.display === 'none') {
+        download.style.display = 'block';
+        setTimeout(function () {
+            download.style.opacity = 1;
+        }, 50)
+    } else {
+        download.style.opacity = 0;
+        setTimeout(function () {
+            download.style.display = 'none';
+        }, 400)
+    }
+});
+download[0].addEventListener('mouseover', function () {
+    downloadText.innerHTML = 'Page.qy for Windows'
+});
+download[0].addEventListener('mouseout', function () {
+    downloadText.innerHTML = ''
+});
+download[1].addEventListener('mouseover', function () {
+    downloadText.innerHTML = 'Page.qy for macOS'
+});
+download[1].addEventListener('mouseout', function () {
+    downloadText.innerHTML = ''
+});
+download[2].addEventListener('mouseover', function () {
+    downloadText.innerHTML = 'Page.qy for Linux'
+});
+download[2].addEventListener('mouseout', function () {
+    downloadText.innerHTML = ''
+});
+
+
 
 function handleMouseWheel(e) {
     if (Math.abs(e.deltaY) < 10) return;
@@ -22,18 +59,20 @@ function handleMouseWheel(e) {
     window.removeEventListener('mousewheel', handleMouseWheel);
     setTimeout(function () {
         window.addEventListener('mousewheel', handleMouseWheel);
-    }, 1000);
+    }, 750);
+}
+
+function setStyle(ele, option, delay) {
+    setTimeout(function () {
+        for (let name in option)
+            if (option.hasOwnProperty(name))
+                ele.style[name] = option[name];
+    }, delay || 0);
 }
 
 
 function init() {
     const [width, height] = [window.innerWidth, window.innerHeight];
-    setStyle(circle[0], {
-        height: `55%`,
-        width: 'auto',
-        top: '10%',
-        left: `calc(50% - ${0.55 * height * 0.5}px)`
-    });
     setStyle(title, {
         top: '70%',
         height: '30%',
@@ -44,6 +83,12 @@ function init() {
         height: 'auto',
         top: '32.5%',
         left: `calc(50% - ${0.5 * height * 0.46}px)`
+    });
+    setStyle(circle[0], {
+        height: `55%`,
+        width: 'auto',
+        top: '10%',
+        left: `calc(50% - ${0.55 * height * 0.5}px)`
     });
     setStyle(circle[1], {
         width: `20%`,
@@ -75,6 +120,21 @@ function init() {
         left: '10%',
         bottom: `-${width * 0.17* 0.6}px`
     });
+    setStyle(circle[6], {
+        width: '10%',
+        bottom: `-${width * 0.1}px`
+    });
+    setStyle(circle[7], {
+        width: '25%',
+        left: '-25%',
+        bottom: `-${width * 0.25}px`
+    });
+    setStyle(circle[8], {
+        width: '6%',
+        height: 'auto',
+        right: '95%',
+        bottom: `-${width * 0.06}px`
+    });
     setStyle(intro[0], {
         top: '100%',
         left: '43%',
@@ -93,17 +153,40 @@ function init() {
         fontSize: `${height * 0.3 / 12}px`,
         opacity: 0
     });
+    setStyle(intro[3], {
+        top: `100%`,
+        left: '8%',
+        opacity: 0,
+    });
+    setStyle(intro[4], {
+        top: `100%`,
+        left: '40%',
+        opacity: 0
+    });
+    setStyle(intro[5], {
+        top: `100%`,
+        right: '10%',
+        opacity: 0
+    });
+    setStyle(button[0], {
+        bottom: '-45px',
+        display: 'none'
+    });
+    setStyle(button[1], {
+        bottom: '-45px',
+        display: 'none'
+    });
+    setStyle(button[2], {
+        bottom: '-45px',
+        display: 'none'
+    });
     setStyle(root, {
         opacity: 1
-    }, 450);
+    }, 500);
 }
 
 function goIntro1() {
     const [width, height] = [window.innerWidth, window.innerHeight];
-    setStyle(circle[0], {
-        top: `-30%`,
-        left: `calc(50% - ${0.55 * height * 0.5}px)`
-    });
     setStyle(title, {
         top: '-30%',
     });
@@ -112,6 +195,10 @@ function goIntro1() {
         height: 'auto',
         top: '8%',
         left: `calc(50% - ${0.5 * height * 0.3}px)`,
+    });
+    setStyle(circle[0], {
+        top: `-30%`,
+        left: `calc(50% - ${0.55 * height * 0.5}px)`
     });
     setStyle(circle[1], {
         width: `10%`,
@@ -152,6 +239,12 @@ function goIntro1() {
         left: '-25%',
         bottom: `-${width * 0.25}px`
     });
+    setStyle(circle[8], {
+        width: '6%',
+        height: 'auto',
+        right: '95%',
+        bottom: `-${width * 0.06}px`
+    });
     setStyle(intro[0], {
         top: `calc(100% - ${height * 0.55}px)`,
         fontSize: `${height * 0.3 / 12}px`,
@@ -178,39 +271,74 @@ function goIntro1() {
         left: '8%',
         opacity: 0,
     });
+    setStyle(intro[4], {
+        top: `100%`,
+        left: '40%',
+        opacity: 0
+    });
+    setStyle(intro[5], {
+        top: `100%`,
+        right: '10%',
+        opacity: 0
+    });
+    setStyle(button[0], {
+        bottom: '-65px',
+        display: 'block'
+    });
+    setStyle(button[1], {
+        bottom: '-65px',
+        display: 'block'
+    });
+    setStyle(button[2], {
+        bottom: '-65px',
+        display: 'block'
+    });
 }
 
 function goIntro2() {
     const [width, height] = [window.innerWidth, window.innerHeight];
+    setStyle(title, {
+        top: '-30%',
+    });
+    setStyle(logoText, {
+        width: `${height * 0.3}px`,
+        height: 'auto',
+        top: '8%',
+        left: `calc(50% - ${0.5 * height * 0.3}px)`,
+    });
+    setStyle(circle[0], {
+        top: `-30%`,
+        left: `calc(50% - ${0.55 * height * 0.5}px)`
+    });
     setStyle(circle[1], {
+        width: `18%`,
+        height: 'auto',
+        left: '-14%',
+        top: `${width * 0.18 * 1.4}px`,
+    });
+    setStyle(circle[2], {
+        width: '16%',
+        height: 'auto',
+        right: '42%',
+        top: `-${width * 0.16 * 0.6}px`
+    });
+    setStyle(circle[3], {
         width: `7%`,
         height: 'auto',
         left: '48%',
         top: `${width * 0.01}px`,
     });
-    setStyle(circle[2], {
-        width: '14%',
-        height: 'auto',
-        right: '43%',
-        top: `-${width * 0.14 * 0.5}px`
-    });
-    setStyle(circle[3], {
-        width: '20%',
-        height: 'auto',
-        left: '-10%',
-        top: `-${width * 0.15}px`
-    });
     setStyle(circle[4], {
         width: '18%',
         height: 'auto',
         right: '8%',
-        bottom: `${width * 0.24 * 1.3}px`
+        bottom: `${height - width * 0.18 * 1.2}px`
     });
     setStyle(circle[5], {
         width: '10%',
         height: 'auto',
         left: '12%',
-        bottom: `${width * 0.06* 6.5}px`
+        bottom: `${height - width * 0.12}px`
     });
     setStyle(circle[6], {
         width: '16%',
@@ -223,6 +351,12 @@ function goIntro2() {
         height: 'auto',
         left: '40%',
         bottom: `${width * 0.25}px`
+    });
+    setStyle(circle[8], {
+        width: '6%',
+        height: 'auto',
+        right: '95%',
+        bottom: `-${width * 0.06}px`
     });
     setStyle(intro[0], {
         height: '15%',
@@ -246,13 +380,140 @@ function goIntro2() {
         opacity: 0,
     });
     setStyle(intro[3], {
-        top: `55%`,
+        height: 'auto',
+        top: `40%`,
         left: '8%',
         opacity: 1,
+        fontSize: `${height * 0.3 / 12}px`,
     });
     setStyle(intro[4], {
-        top: `68%`,
+        height: 'auto',
+        top: `65%`,
         left: '40%',
+        opacity: 1,
+        fontSize: `${height * 0.3 / 12}px`,
+    });
+    setStyle(intro[5], {
+        top: `50%`,
+        height: 'auto',
+        right: '10%',
+        opacity: 1,
+        fontSize: `${height * 0.3 / 12}px`,
+    });
+    setStyle(button[0], {
+        bottom: '-65px',
+        display: 'block',
+        transitionDelay: '120ms'
+    });
+    setStyle(button[1], {
+        bottom: '-65px',
+        display: 'block',
+        transitionDelay: '70ms'
+    });
+    setStyle(button[2], {
+        bottom: '-65px',
+        display: 'block',
+        transitionDelay: '0ms'
+    });
+}
+
+function end() {
+    const [width, height] = [window.innerWidth, window.innerHeight];
+    setStyle(title, {
+        top: '-30%',
+    });
+    setStyle(logoText, {
+        width: `${height * 0.3}px`,
+        height: 'auto',
+        top: '8%',
+        left: `calc(50% - ${0.5 * height * 0.3}px)`,
+    });
+    setStyle(circle[0], {
+        top: `-30%`,
+        left: `calc(50% - ${0.55 * height * 0.5}px)`
+    });
+    setStyle(circle[1], {
+        width: `16%`,
+        height: 'auto',
+        left: '-3%',
+        top: `-${width * 0.16 * 0.6}px`,
+    });
+    setStyle(circle[2], {
+        width: '16%',
+        height: 'auto',
+        right: '42%',
+        top: `-${width * 0.16 * 0.6}px`
+    });
+    setStyle(circle[3], {
+        width: `7%`,
+        height: 'auto',
+        left: '48%',
+        top: `${width * 0.01}px`,
+    });
+    setStyle(circle[4], {
+        width: '8%',
+        height: 'auto',
+        right: '46%',
+        bottom: `${height - width * 0.04}px`
+    });
+    setStyle(circle[5], {
+        width: '18%',
+        height: 'auto',
+        left: '41%',
+        bottom: `${height - width * 0.09}px`
+    });
+    setStyle(circle[6], {
+        width: '5%',
+        height: 'auto',
+        right: '75%',
+        bottom: `${height - width * 0.05 * 5}px`
+    });
+    setStyle(circle[7], {
+        width: '13%',
+        height: 'auto',
+        left: '76%',
+        bottom: `${height - width * 0.13 * 2}px`
+    });
+    setStyle(circle[8], {
+        width: '22%',
+        height: 'auto',
+        right: '65%',
+        bottom: `-${width * 0.22 * 0.8}px`
+    });
+    setStyle(intro[0], {
+        height: '15%',
+        overflow: 'hidden',
+        top: `-15%`,
+        left: '40%',
+        opacity: 0,
+    });
+    setStyle(intro[1], {
+        height: '15%',
+        overflow: 'hidden',
+        top: `-15%`,
+        left: '40%',
+        opacity: 0,
+    });
+    setStyle(intro[2], {
+        height: '15%',
+        overflow: 'hidden',
+        top: `-15%`,
+        right: '40%',
+        opacity: 0,
+    });
+    setStyle(intro[3], {
+        height: '15%',
+        overflow: 'hidden',
+        top: `-15%`,
+        left: '40%',
+        opacity: 0,
+    });
+    setStyle(intro[4], {
+        height: '15%',
+        overflow: 'hidden',
+        top: `-15%`,
+        left: '40%',
+        opacity: 0,
     });
     setStyle(intro[5], {
         height: '15%',
@@ -261,17 +522,22 @@ function goIntro2() {
         right: '40%',
         opacity: 0,
     });
-}
-
-function end() {
-    // console.log(4)
-}
-
-
-function setStyle(ele, option, delay) {
-    setTimeout(function () {
-        for (let name in option)
-            if (option.hasOwnProperty(name))
-                ele.style[name] = option[name];
-    }, delay || 0);
+    setStyle(button[0], {
+        bottom: '45%',
+        display: 'block',
+        opacity: 1,
+        transitionDelay: '0ms'
+});
+    setStyle(button[1], {
+        bottom: '37%',
+        display: 'block',
+        opacity: 1,
+        transitionDelay: '70ms'
+    });
+    setStyle(button[2], {
+        bottom: '29%',
+        display: 'block',
+        opacity: 1,
+        transitionDelay: '120ms'
+    });
 }
