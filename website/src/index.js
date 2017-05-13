@@ -14,21 +14,37 @@ let index = 0;
 
 window.addEventListener('load', changeStatus[index]);
 window.addEventListener('resize', () => { changeStatus[index] });
-window.addEventListener('mousewheel', handleMouseWheel);
+window.addEventListener('scroll', handleScroll);
 button[2].addEventListener('click', function () {
-    const download = document.getElementById('download');
-    if (download.style.display === 'none') {
-        download.style.display = 'block';
-        setTimeout(function () {
-            download.style.opacity = 1;
-        }, 50)
-    } else {
-        download.style.opacity = 0;
-        setTimeout(function () {
-            download.style.display = 'none';
-        }, 400)
+const download = document.getElementById('download');
+if (download.style.display === 'none') {
+    download.style.display = 'block';
+    setTimeout(function () {
+        download.style.opacity = 1;
+    }, 50)
+} else {
+    download.style.opacity = 0;
+    setTimeout(function () {
+        download.style.display = 'none';
+    }, 400)
+}
+});
+
+const scroller = new scrollDirection({
+    minHeight: 200,
+    step: 32,
+    orientation: 'vertical',
+    scrollUp: function() {
+        if (index < 3)
+            changeStatus[++index]();
+    },
+    scrollDown: function() {
+        if (index > 0)
+            changeStatus[--index]();
     }
 });
+scroller.init();
+
 download[0].addEventListener('mouseover', function () {
     downloadText.innerHTML = 'Page.qy for Windows'
 });
@@ -50,15 +66,16 @@ download[2].addEventListener('mouseout', function () {
 
 
 
-function handleMouseWheel(e) {
+function handleScroll(e) {
+    console.log(e)
     if (Math.abs(e.deltaY) < 10) return;
     if (e.deltaY > 0 && index < 3)
         changeStatus[++index]();
     else if (e.deltaY < 0 && index > 0)
         changeStatus[--index]();
-    window.removeEventListener('mousewheel', handleMouseWheel);
+    window.removeEventListener('mousewheel', handleScroll);
     setTimeout(function () {
-        window.addEventListener('mousewheel', handleMouseWheel);
+        window.addEventListener('mousewheel', handleScroll);
     }, 750);
 }
 
@@ -546,4 +563,74 @@ function end() {
         opacity: 1,
         transitionDelay: '120ms'
     });
+}
+
+
+
+//FUNCTION
+function scrollDirection ( option ) {
+    const option = option || {};
+    this.posNew = 0;
+    this.posOld = 0;
+    this.direction = null;
+    this.point = 0;
+    this.distance = 0;
+    this.status = null;
+
+    // container scroll
+    this.$scroller = option.scroller || $( window );
+    // Orientation of scroll
+    this.orientation = option.orientation || 'vertical';
+    // Number of pixel scrolled to trigger a function
+    this.step = option.step || 10;
+    // height min before enable stepsensor()
+    this.minHeight = option.minHeight || 0;
+
+    // Event on scroll
+    this.eventScroll = option.scroll || function (){ return false };
+    // Event on scroll UP
+    this.eventScrollUp = option.scrollUp || function (){ return false };
+    // Event on scroll DOWN
+    this.eventScrollDown = option.scrollDown || function (){ return false };
+
+    // Get scroll top
+    this.getScrollPos = function (){
+        if ( this.orientation === 'vertical' ) return this.$scroller.scrollTop();
+        if ( this.orientation === 'horizontal' ) return this.$scroller.scrollLeft();
+    }
+
+    // Detect direction of scroll
+    this.directionSensor = function (){
+        this.posNew = this.getScrollPos();
+        console.log(this.posNew);
+        if ( this.posNew > this.posOld && this.posNew > this.minHeight ) this.stepSensor( false ); ;
+        if ( this.posNew < this.posOld && this.posNew > this.minHeight ) this.stepSensor( true ); ;
+        this.posOld = this.posNew;
+    };
+
+    // calcul distance scrolled and trigger a function
+    this.stepSensor = function ( bool ) {
+
+        console.log('stepSensor enable');
+
+        if ( bool !== this.status ){
+            this.point = this.getScrollPos();
+            this.distance = 0;
+        }
+
+        this.distance = this.point - this.getScrollPos();
+
+        if ( this.distance > this.step ) this.eventScrollDown();
+        if ( this.distance < - this.step ) this.eventScrollUp();
+
+        this.status = bool;
+
+        this.eventScroll();
+    };
+
+    //init plugin
+    this.init = function () {
+        const that = this;
+        this.$scroller.on( 'scroll', function () { that.directionSensor() });
+    };
 }
