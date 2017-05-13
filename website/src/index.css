@@ -4,10 +4,6 @@
     padding: 0;
 }
 
-*::-webkit-scrollbar {
-    display: none;
-}
-
 body {
     font-family: 'SourceHan-S-SCaa1324a01174d3';
     position: absolute;
