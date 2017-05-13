@@ -10,11 +10,17 @@ const downloadText = document.getElementById('downloadText');
 
 const changeStatus = [init, goIntro1, goIntro2, end];
 let index = 0;
-let maxScroll = window.innerHeight * 2;
+let maxScroll = document.body.offsetHeight * 5 / 6;
 
 
-window.addEventListener('load', changeStatus[index]);
-window.addEventListener('resize', () => { changeStatus[index] });
+window.addEventListener('load', () => {
+    document.body.scrollTop = 0;
+    changeStatus[index]();
+});
+window.addEventListener('resize', () => {
+    maxScroll = document.body.offsetHeight * 5 / 6;
+    changeStatus[index]();
+});
 window.addEventListener('scroll', handleScroll);
 download[0].addEventListener('mouseover', function () {
     downloadText.innerHTML = 'Page.qy for Windows'
@@ -52,14 +58,26 @@ button[2].addEventListener('click', function () {
 
 
 function handleScroll() {
-    const scroll = window.scrollY;
-    if (scroll < maxScroll / 3)
-        return changeStatus[0]();
-    else if (scroll < maxScroll / 3 * 2)
-        return changeStatus[1]();
-    else if (scroll < maxScroll)
-        return changeStatus[2]();
-    return changeStatus[3]();
+    const scroll = document.body.scrollTop;
+    if (scroll < maxScroll / 6) {
+        if (index === 0) return;
+        index = 0;
+        changeStatus[index]();
+    }
+    else if (scroll <= maxScroll / 6 * 3) {
+        if (index === 1) return;
+        index = 1;
+        changeStatus[index]();
+    }
+    else if (scroll <= maxScroll / 6 * 5) {
+        if (index === 2) return;
+        index = 2;
+        changeStatus[index]();
+    } else {
+        if (index === 3) return;
+        index = 3;
+        changeStatus[index]();
+    }
 }
 
 

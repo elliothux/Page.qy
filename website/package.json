@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "PORT=80 node app.js",
-    "dev": "PORT=3000 ./node_modules/.bin/nodemon app.js",
+    "dev": "PORT=3000 node app.js",
     "dev:page": "webpack-dev-server --content-base"
   },
   "dependencies": {
