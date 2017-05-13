@@ -14,6 +14,7 @@ let maxScroll = document.body.offsetHeight * 5 / 6;
 
 
 window.addEventListener('load', () => {
+    window.screenTop = 0;
     document.body.scrollTop = 0;
     changeStatus[index]();
 });
@@ -69,7 +70,7 @@ function handleScroll() {
         index = 1;
         changeStatus[index]();
     }
-    else if (scroll <= maxScroll / 6 * 5) {
+    else if (scroll <= maxScroll / 10 * 8) {
         if (index === 2) return;
         index = 2;
         changeStatus[index]();
