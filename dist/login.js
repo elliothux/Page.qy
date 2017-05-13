@@ -10,7 +10,14 @@ import { remote, shell } from 'electron';
 const user = remote.require('./main.js').user;
 const config = remote.require('./main.js').config;
 const reGenerateAll = remote.require('./main.js').dataToHTML.reGenerateAll;
+const platform = remote.require('./main.js').platform;
 const app = remote.app;
+const openURL = shell.openExternal;
+const gitLink = {
+    darwin: "https://sourceforge.net/projects/git-osx-installer/files/git-2.13.0-intel-universal-mavericks.dmg/download?use_mirror=autoselect",
+    win32: "https://github.com/git-for-windows/git/releases/download/v2.13.0.windows.1/Git-2.13.0-64-bit.exe",
+    linux: "https://git-scm.com/download/linux"
+};
 
 
 class App extends React.Component {
@@ -32,6 +39,7 @@ class App extends React.Component {
         this.state = {
             status: 'language',
             selected: 'github',
+            installed: false,
             language: this.props.config.get().language
         }
     }
@@ -64,7 +72,7 @@ class App extends React.Component {
             language: this.state.language
         });
         this.setState({
-            status: 'init'
+            status: 'install'
         })
     }
 
@@ -137,6 +145,7 @@ class App extends React.Component {
     handleOperate() {
         switch (this.state.status) {
             case 'language': return this.handleSetLanguage();
+            case 'install': return this.state.installed ? this.setState({status: 'init'}) : openURL(gitLink[platform]);
             case 'init': return this.handleLogin();
             case 'login': return this.setState({ status: 'init' });
             case 'failed': return this.handleLogin();
@@ -160,6 +169,9 @@ class App extends React.Component {
                         case 'language':
                             return this.state.language === 'zh' ?
                                 '🇨🇳 选择语言' : '🌎 LANGUAGE';
+                        case 'install':
+                            return this.state.language === 'zh' ?
+                                '⚙ 安装 Git' : '⚙ INSTALL GIT';
                         case 'init':
                             return this.state.language === 'zh' ?
                                 '🚀 登录' : '🚀 LOGIN';
@@ -195,6 +207,29 @@ class App extends React.Component {
                         this.style().operateButtonSelected :
                         this.style().operateButton}
                 >ENGLISH</button>
+            </div>
+            <p style={this.style().installText}>{this.state.language === 'zh' ?
+                'Page.qy 需要 Git 才能运行, 你是否安装 Git?' : 'Git is required for Page.qy, install Git?'}
+            </p>
+            <div style={this.style().installArea}>
+                <button
+                    onClick={this.setState.bind(this, { installed: false }, () => {})}
+                    style={!this.state.installed ?
+                        this.style().operateButtonSelected :
+                        this.style().operateButton}
+                >
+                    {this.state.language === 'zh' ?
+                        '立即安装' : 'INSTALL NOW'}
+                </button>
+                <button
+                    onClick={this.setState.bind(this, { installed: true }, () => {})}
+                    style={this.state.installed ?
+                        this.style().operateButtonSelected :
+                        this.style().operateButton}
+                >
+                    {this.state.language === 'zh' ?
+                        '我已安装' : 'I HAVE INSTALLED'}
+                </button>
             </div>
             <div style={this.style().inputArea}>
                 <input
@@ -277,6 +312,8 @@ class App extends React.Component {
                     {function () {
                         switch (this.state.status) {
                             case 'language':
+                                return this.state.language === 'zh' ? '继续' : 'CONTINUE';
+                            case 'install':
                                 return this.state.language === 'zh' ? '继续' : 'CONTINUE';
                             case 'init':
                                 return this.state.language === 'zh' ? '登录' : 'LOGIN';
@@ -374,6 +411,28 @@ class App extends React.Component {
                 flexWrap: 'wrap',
                 position: 'absolute',
                 top: '110px',
+                left: '30%'
+            },
+            installText: {
+                color: 'white',
+                position: 'absolute',
+                top: '70px',
+                width: '100%',
+                textAlign: 'center',
+                display: this.state.status === 'install' ?
+                    'block' : 'none',
+                fontWeight: 'lighter'
+            },
+            installArea: {
+                width: '40%',
+                display: this.state.status === 'install' ?
+                    'flex' : 'none',
+                color: 'white',
+                flexDirection: 'column',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+                position: 'absolute',
+                top: '130px',
                 left: '30%'
             },
             operateArea: {
