@@ -35,7 +35,7 @@ async function getPath(type, key) {
 }
 
 
-async function generateArticle(rawData, key) {
+async function generateArticle(rawData, key, isTemp) {
     !fs.existsSync(path.join(target, './articles')) &&
     fs.mkdirSync(path.join(target, './articles'));
     !rawData && (rawData = await db.getArticle({ key: key }));
@@ -45,9 +45,11 @@ async function generateArticle(rawData, key) {
         'utf-8'
     ).replace(/\<\/\s*head\>/, `\n\t<script type="text/javascript" src="../statics/script/highlight.min.js"></script>\n\t<script>hljs.initHighlightingOnLoad();</script>\n</head>`);
     const result = templateEngine.parse(data, template);
-    const targetPath = path.join(target, `./articles/${data.key}.html`);
+    const targetPath = isTemp ?
+        path.join(target, `./articles/_temp.html`) :
+        path.join(target, `./articles/${data.key}.html`);
     fs.writeFileSync(targetPath, result, 'utf-8');
-    await db.isArticlePublished(data.key) && await generateHTML();
+    !isTemp && (await db.isArticlePublished(data.key) && await generateHTML());
     return targetPath;
 }
 

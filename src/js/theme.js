@@ -16,7 +16,7 @@ const target = path.join(__dirname, `../../user/themes/`);
 
 function set(theme) {
     config.set({theme: theme});
-    return dataToHTML.reGenerateAll();
+    return dataToHTML.generateHTML(true);
 }
 
 

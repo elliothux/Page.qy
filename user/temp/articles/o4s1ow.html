@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>如何为 Page.qy 编写主题</title>
+    <title>💅如何为 Page.qy 编写主题</title>
     <link type="text/css" rel="stylesheet" href="../statics/style/common.css"/>
     <link type="text/css" rel="stylesheet" href="../statics/style/article.css"/>
     <link type="text/css" rel="stylesheet" href="../statics/style/highlight.css"/>
@@ -12,14 +12,14 @@
 </head>
 <body>
 <div id="header">
-    <img src="../statics/statics/nav.jpg">
+    <div id="headBackground" style="background-image: url(../statics/statics/nav.jpg)"></div>
     <a id="navHome" href="../index.html">HOME</a>
     <div id="nav">
         <a href="../tags.html">TAGS</a>
         <a href="../archives.html">ARCHIVES</a>
         <a href="../about.html">ABOUT</a>
     </div>
-    <h1 id="headTitle">如何为 Page.qy 编写主题</h1>
+    <h1 id="headTitle">💅如何为 Page.qy 编写主题</h1>
     <hr/>
     <p id="introduction">Written By 胡青杨
         on 04/12 2017</p>
@@ -37,11 +37,243 @@
     
 </ul>
 
-<div id="content"></div>
+<div id="content"><h2><a id="user-content-1-主题的文件结构" class="anchor" href="#1-主题的文件结构" aria-hidden="true"></a>1. 主题的文件结构</h2>
+<p>/—— Theme Name<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/—— script<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/—— statics<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/—— style<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/—— templates<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/—— about.html<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/—— archives.html<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/—— article.html<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/—— index.html<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/—— tags.html<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/—— info.json</p><p><br></p>
+<p>其中每个目录:</p>
+<ul>
+<li>script: 存放 js 文件 <strong>(该目录可以为空, 但必须存在)</strong></li>
+<li>statics: 存放图标、图片、音频等静态资源 <strong>(该目录可以为空, 但必须存在)</strong></li>
+<li>style: 存放 css 文件 <strong>(该目录可以为空, 但必须存在)</strong></li>
+<li>templates: 存放HTML模板文件 <strong>(必须)</strong></li>
+<li>info.json: 该主题的信息 <strong>(必须)</strong></li>
+</ul>
+<p>template 目录:</p>
+<ul>
+<li>about.html: “关于” 页面的模板文件 <strong>(必须)</strong></li>
+<li>archives.html: “归档” 页面的模板文件 <strong>(必须)</strong></li>
+<li>index.html: “首页” 的模板文件 <strong>(必须)</strong></li>
+<li>tags.html: “标签” 页面的模板文件 <strong>(必须)</strong></li>
+</ul>
+<h2><a id="user-content-2-html模板" class="anchor" href="#2-html模板" aria-hidden="true"></a>2. HTML模板</h2>
+<p>Page.qy的主题模块使用一个非常轻量级的HTML模板引擎, 要使用该模块非常简单:</p>
+<ul>
+<li>在HTML中使用 <strong>”{{  }}”</strong> 来引用值, 如:</li>
+</ul>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">p</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>date<span class="pl-pds">"</span></span>&gt;
+    Written By {{ user.name }} on {{ createDate.month }}/{{ createDate.date }}
+&lt;/<span class="pl-ent">p</span>&gt;</pre></div>
+<p>如果 user.name 的值为字符串 “Joe”, createDate的值为对象 { month: ’05’, date: ’16’ }, 则上面的语句将被模板引擎解析为:</p>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">p</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>date<span class="pl-pds">"</span></span>&gt;
+    Written By Joe on 05/16
+&lt;/<span class="pl-ent">p</span>&gt;</pre></div>
+<ul>
+<li>在HTML中的 <strong>”&lt;template&gt;”标签</strong> 中使用 <strong>“@for”属性</strong> 遍历值, 如:</li>
+</ul>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">div</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>tags<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">template</span> @<span class="pl-e">for</span>=<span class="pl-s"><span class="pl-pds">"</span>tag of tags<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">a</span>&gt;#{{ tag }}&lt;/<span class="pl-ent">a</span>&gt;
+    &lt;/<span class="pl-ent">template</span>&gt;
+&lt;/<span class="pl-ent">div</span>&gt;</pre></div>
+<p>如果tags的值为数组 [“Hello”, “World”, “Page.qy”], 则上面的语句将被模板引擎解析为:</p>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">div</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>tags<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">a</span>&gt;#Hello&lt;/<span class="pl-ent">a</span>&gt;
+    &lt;<span class="pl-ent">a</span>&gt;#World&lt;/<span class="pl-ent">a</span>&gt;
+    &lt;<span class="pl-ent">a</span>&gt;#Page.qy&lt;/<span class="pl-ent">a</span>&gt;
+&lt;/<span class="pl-ent">div</span>&gt;</pre></div>
+<h2><a id="user-content-3-在模板中可以引用的值" class="anchor" href="#3-在模板中可以引用的值" aria-hidden="true"></a>3. 在模板中可以引用的值</h2>
+<h3><a id="user-content-1在所有模板中可以引用的值" class="anchor" href="#1在所有模板中可以引用的值" aria-hidden="true"></a>1.在所有模板中可以引用的值</h3>
+<ul>
+<li>language (Type: String; Value: “zh” || “en”): 用户的当前的设置的语言, 如:</li>
+</ul>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">a</span>&gt;{{ language === 'zh' ? '首页' : 'HOME' }}&lt;/<span class="pl-ent">a</span>&gt;</pre></div>
+<ul>
+<li>links (Type: Object): 链接到其他页面的链接, 如:</li>
+</ul>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">div</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>nav<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">a</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>navHome<span class="pl-pds">"</span></span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>{{ links.home }}<span class="pl-pds">"</span></span>&gt;首页&lt;/<span class="pl-ent">a</span>&gt;
+    &lt;<span class="pl-ent">a</span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>{{ links.tags }}<span class="pl-pds">"</span></span>&gt;标签&lt;/<span class="pl-ent">a</span>&gt;
+    &lt;<span class="pl-ent">a</span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>{{ links.archives }}<span class="pl-pds">"</span></span>&gt;归档&lt;/<span class="pl-ent">a</span>&gt;
+    &lt;<span class="pl-ent">a</span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>{{ links.about }}<span class="pl-pds">"</span></span>&gt;关于&lt;/<span class="pl-ent">a</span>&gt;
+&lt;/<span class="pl-ent">div</span>&gt;</pre></div>
+<ul>
+<li>script (Type: Object): script 目录中的 js 文件的真实资源地址, 如, 引入 script 目录下的 ‘common.js’ 文件:</li>
+</ul>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">script</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text/javascript<span class="pl-pds">"</span></span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>../statics/script/common.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</pre></div>
+<p><strong>注意: 要引用 js 文件, 必须使用该方法!</strong></p>
+<ul>
+<li>statics (Type: Object): statics 目录中的静态文件的真实资源地址, 如, 引入 statics 目录下的 ‘nav.jpg’ 文件:</li>
+</ul>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">img</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>{{ statics['nav.jpg'] }}<span class="pl-pds">"</span></span>&gt;</pre></div>
+<p><strong>注意: 要引用静态文件, 必须使用该方法!</strong></p>
+<ul>
+<li>style (Type: Object): style 目录中的 css 文件的真实资源地址, 如, 引入 style 目录下的 ‘common.css’ 文件:</li>
+</ul>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">link</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text/css<span class="pl-pds">"</span></span> <span class="pl-e">rel</span>=<span class="pl-s"><span class="pl-pds">"</span>stylesheet<span class="pl-pds">"</span></span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>{{ style.common }}<span class="pl-pds">"</span></span>/&gt;</pre></div>
+<p><strong>注意: 要引用 css 文件, 必须使用该方法!</strong></p>
+<ul>
+<li>user (Type: Object): 用户的个人信息, 其值为:</li>
+</ul>
+<div class="highlight highlight-source-js"><pre>{   
+    <span class="pl-en">avatar</span> (Type<span class="pl-k">:</span> <span class="pl-c1">String</span>)<span class="pl-k">:</span> 用户 GitHub 账户的头像,
+    <span class="pl-en">name</span> (Type<span class="pl-k">:</span> <span class="pl-c1">String</span>)<span class="pl-k">:</span> 用户 GitHub 账户的姓名,
+    <span class="pl-en">selfIntroduction</span> (Type<span class="pl-k">:</span> <span class="pl-c1">String</span>)<span class="pl-k">:</span> 用户的自我介绍,
+    <span class="pl-en">username</span> (Type<span class="pl-k">:</span> <span class="pl-c1">String</span>)<span class="pl-k">:</span> 用户 GitHub 账户的账户名,
+    <span class="pl-en">mail</span> (Type<span class="pl-k">:</span> <span class="pl-c1">String</span>)<span class="pl-k">:</span> 用户 GitHub 账户的公开邮箱
+}</pre></div>
+<h3><a id="user-content-2在所有除-articlehtml-之外的所有模板中可以引用的值" class="anchor" href="#2在所有除-articlehtml-之外的所有模板中可以引用的值" aria-hidden="true"></a>2.在所有除 ”article.html” 之外的所有模板中可以引用的值</h3>
+<ul>
+<li>articles (Type: Array): 所有的文章, 其中每个元素的值为一个存储一篇文章信息的对象, 该对象的值为:</li>
+</ul>
+<div class="highlight highlight-source-js"><pre>{
+	<span class="pl-en">cover</span>(Type<span class="pl-k">:</span> <span class="pl-c1">String</span>)<span class="pl-k">:</span> 文章的封面 (可选)
+	<span class="pl-en">content</span>(Type<span class="pl-k">:</span> <span class="pl-c1">String</span>)<span class="pl-k">:</span> 文章的内容,
+	<span class="pl-en">createDate</span>(Type<span class="pl-k">:</span> <span class="pl-c1">Object</span>, 请参阅<span class="pl-k">:</span> 日期对象)<span class="pl-k">:</span> 文章的创建时间,
+	<span class="pl-en">editDate</span>(Type<span class="pl-k">:</span> <span class="pl-c1">Object</span>, 请参阅<span class="pl-k">:</span> 日期对象)<span class="pl-k">:</span> 文章最近编辑的时间,
+	<span class="pl-en">introduction</span>(Type<span class="pl-k">:</span> <span class="pl-c1">String</span>)<span class="pl-k">:</span> 文章的摘要
+	<span class="pl-en">tags</span>(Type<span class="pl-k">:</span> <span class="pl-c1">Array</span>)<span class="pl-k">:</span> 文章的所有标签, 其中每个元素的值为一个表示文章标签的对象, 该对象的值为<span class="pl-k">:</span> 
+	{
+		<span class="pl-en">name</span>(Type<span class="pl-k">:</span> <span class="pl-c1">String</span>)<span class="pl-k">:</span> 该标签名,
+		<span class="pl-en">link</span>(Type<span class="pl-k">:</span> <span class="pl-c1">String</span>)<span class="pl-k">:</span> 链接到所有该标签文章的链接
+	},
+	<span class="pl-en">title</span>(Type<span class="pl-k">:</span> <span class="pl-c1">String</span>)<span class="pl-k">:</span> 文章的标题,
+	<span class="pl-en">link</span>(Type<span class="pl-k">:</span> <span class="pl-c1">String</span>)<span class="pl-k">:</span> 链接到该文章的链接
+}</pre></div>
+<p>如:</p>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">div</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>articles<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">template</span> @<span class="pl-e">for</span>=<span class="pl-s"><span class="pl-pds">"</span>article of articles<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>article<span class="pl-pds">"</span></span>&gt;
+            &lt;<span class="pl-ent">a</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>title<span class="pl-pds">"</span></span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>{{ article.link }}<span class="pl-pds">"</span></span>&gt;{{ article.title }}&lt;/<span class="pl-ent">a</span>&gt;
+            &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>introduction<span class="pl-pds">"</span></span>&gt;{{ article.introduction }}&lt;/<span class="pl-ent">div</span>&gt;
+            &lt;<span class="pl-ent">p</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>date<span class="pl-pds">"</span></span>&gt;Written on {{ article.createDate.month }}/{{ article.createDate.date }} {{ article.createDate.year }}&lt;/<span class="pl-ent">p</span>&gt;
+            &lt;<span class="pl-ent">ul</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>tags<span class="pl-pds">"</span></span>&gt;
+                &lt;<span class="pl-ent">template</span> @<span class="pl-e">for</span>=<span class="pl-s"><span class="pl-pds">"</span>tag of article.tags<span class="pl-pds">"</span></span>&gt;
+                    &lt;<span class="pl-ent">li</span>&gt;&lt;<span class="pl-ent">a</span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>{{ tag.link }}<span class="pl-pds">"</span></span>&gt;#{{ tag.name }}&lt;/<span class="pl-ent">a</span>&gt;&lt;/<span class="pl-ent">li</span>&gt;
+                &lt;/<span class="pl-ent">template</span>&gt;
+            &lt;/<span class="pl-ent">ul</span>&gt;
+            &lt;<span class="pl-ent">hr</span>&gt;
+        &lt;/<span class="pl-ent">div</span>&gt;
+    &lt;/<span class="pl-ent">template</span>&gt;
+&lt;/<span class="pl-ent">div</span>&gt;</pre></div>
+<ul>
+<li>tags (Type: Array): 所有的标签信息, 其中每个元素的值为一个存储一个标签信息的对象, 该对象的值为:</li>
+</ul>
+<div class="highlight highlight-source-js"><pre>{
+	<span class="pl-en">name</span>(Type<span class="pl-k">:</span> <span class="pl-c1">String</span>)<span class="pl-k">:</span> 该标签名,
+	<span class="pl-en">articles</span>(Type<span class="pl-k">:</span> <span class="pl-c1">Array</span>)<span class="pl-k">:</span> 该标签的所有文章, 其中每个元素的值为一个存储一篇文章信息的对象 (该对象的值请参考<span class="pl-k">:</span> articles),
+	<span class="pl-en">link</span>(Type<span class="pl-k">:</span> <span class="pl-c1">String</span>)<span class="pl-k">:</span> 链接到所有该标签文章的链接,
+	<span class="pl-en">id</span>(Type<span class="pl-k">:</span> <span class="pl-c1">String</span>)<span class="pl-k">:</span> 用于在 <span class="pl-s"><span class="pl-pds">"</span>tags.html<span class="pl-pds">"</span></span> 中指定链接到所有该标签文章的链接锚点
+}</pre></div>
+<p>如:</p>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">div</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>tags<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">template</span> @<span class="pl-e">for</span>=<span class="pl-s"><span class="pl-pds">"</span>tag of tags<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">h2</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>{{ tag.id }}<span class="pl-pds">"</span></span>&gt;#{{ tag.name }}&lt;/<span class="pl-ent">h2</span>&gt;
+        &lt;<span class="pl-ent">template</span> @<span class="pl-e">for</span>=<span class="pl-s"><span class="pl-pds">"</span>article of tag.articles<span class="pl-pds">"</span></span>&gt;
+            &lt;<span class="pl-ent">a</span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>{{ article.link }}<span class="pl-pds">"</span></span>&gt;&lt;<span class="pl-ent">h3</span>&gt;{{ article.title }}&lt;/<span class="pl-ent">h3</span>&gt;&lt;/<span class="pl-ent">a</span>&gt;
+        &lt;/<span class="pl-ent">template</span>&gt;
+    &lt;/<span class="pl-ent">template</span>&gt;
+&lt;/<span class="pl-ent">div</span>&gt;</pre></div>
+<ul>
+<li>archives(Type: Array): 所有的归档信息, 其中每个元素的值为一个存储某一年的归档信息的对象, 该对象的值为:</li>
+</ul>
+<div class="highlight highlight-source-js"><pre>{ 
+	<span class="pl-en">year</span>(Type<span class="pl-k">:</span> <span class="pl-c1">String</span>)<span class="pl-k">:</span> 该年的文字, 
+	<span class="pl-en">months</span>(Type<span class="pl-k">:</span> <span class="pl-c1">Array</span>)<span class="pl-k">:</span> 该年所有月份的归档信息, 其中每个元素的值为一个存储该年某一月的归档信息的对象, 该对象的值为<span class="pl-k">:</span> 
+	{
+		<span class="pl-en">month</span>(Type<span class="pl-k">:</span> <span class="pl-c1">String</span>)<span class="pl-k">:</span> 该月份的文字,
+		<span class="pl-en">articles</span>(Type<span class="pl-k">:</span> <span class="pl-c1">Array</span>)<span class="pl-k">:</span> 该月份的所有文章, 其中每个元素的值为一个存储一篇文章信息的对象 (该对象的值请参考<span class="pl-k">:</span> articles)
+	}
+}</pre></div>
+<p>如:</p>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">div</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>archives<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">template</span> @<span class="pl-e">for</span>=<span class="pl-s"><span class="pl-pds">"</span>yearData of archives<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">h1</span>&gt;YEAR {{ yearData.year }}&lt;/<span class="pl-ent">h1</span>&gt;
+        &lt;<span class="pl-ent">template</span> @<span class="pl-e">for</span>=<span class="pl-s"><span class="pl-pds">"</span>monthData of yearData.months<span class="pl-pds">"</span></span>&gt;
+            &lt;<span class="pl-ent">h2</span>&gt;MONTH {{ monthData.month }}&lt;/<span class="pl-ent">h2</span>&gt;
+            &lt;<span class="pl-ent">template</span> @<span class="pl-e">for</span>=<span class="pl-s"><span class="pl-pds">"</span>article of monthData.articles<span class="pl-pds">"</span></span>&gt;
+                &lt;<span class="pl-ent">a</span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>{{ article.link }}<span class="pl-pds">"</span></span>&gt;&lt;<span class="pl-ent">h3</span>&gt;{{ article.title }}&lt;/<span class="pl-ent">h3</span>&gt;&lt;/<span class="pl-ent">a</span>&gt;
+            &lt;/<span class="pl-ent">template</span>&gt;
+        &lt;/<span class="pl-ent">template</span>&gt;
+    &lt;/<span class="pl-ent">template</span>&gt;
+&lt;/<span class="pl-ent">div</span>&gt;</pre></div>
+<h3><a id="user-content-3-在-articlehtml-模板中可以引用的值" class="anchor" href="#3-在-articlehtml-模板中可以引用的值" aria-hidden="true"></a>3. 在 “article.html” 模板中可以引用的值</h3>
+<ul>
+<li>cover(Type: String): 文章的封面 (当文章不存在封面时为false)</li>
+<li>content(Type: String): 文章的内容</li>
+<li>createDate(Type: Object, 请参阅: <a href="#dateObj">日期对象</a>): 文章的创建时间</li>
+<li>editDate(Type: Object, 请参阅: <a href="#dateObj">日期对象</a>): 文章最近编辑的时间</li>
+<li>introduction(Type: String): 文章的摘要</li>
+<li>tags(Type: Array): 文章的所有标签, 其中每个元素的值为一个表示文章标签的对象, 该对象的值为:</li>
+</ul>
+<div class="highlight highlight-source-js"><pre>{
+	<span class="pl-en">name</span>(Type<span class="pl-k">:</span> <span class="pl-c1">String</span>)<span class="pl-k">:</span> 该标签名,
+	<span class="pl-en">link</span>(Type<span class="pl-k">:</span> <span class="pl-c1">String</span>)<span class="pl-k">:</span> 链接到所有该标签文章的链接
+}</pre></div>
+<ul>
+<li>title(Type: String): 文章的标题,</li>
+<li>link(Type: String): 链接到该文章的链接
+如:</li>
+</ul>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">div</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>header<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">img</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>{{ cover || statics['nav.jpg'] }}<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">div</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>nav<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">a</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>navHome<span class="pl-pds">"</span></span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>{{ links.home }}<span class="pl-pds">"</span></span>&gt;HOME&lt;/<span class="pl-ent">a</span>&gt;
+        &lt;<span class="pl-ent">a</span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>{{ links.tags }}<span class="pl-pds">"</span></span>&gt;TAGS&lt;/<span class="pl-ent">a</span>&gt;
+        &lt;<span class="pl-ent">a</span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>{{ links.archives }}<span class="pl-pds">"</span></span>&gt;ARCHIVES&lt;/<span class="pl-ent">a</span>&gt;
+        &lt;<span class="pl-ent">a</span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>{{ links.about }}<span class="pl-pds">"</span></span>&gt;ABOUT&lt;/<span class="pl-ent">a</span>&gt;
+    &lt;/<span class="pl-ent">div</span>&gt;
+    &lt;<span class="pl-ent">h1</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>headTitle<span class="pl-pds">"</span></span>&gt;{{ title }}&lt;/<span class="pl-ent">h1</span>&gt;
+    &lt;<span class="pl-ent">p</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>introduction<span class="pl-pds">"</span></span>&gt;Written By {{ user.name }}
+        on {{ createDate.month }}/{{ createDate.date }} {{ createDate.year }}
+    &lt;/<span class="pl-ent">p</span>&gt;
+&lt;/<span class="pl-ent">div</span>&gt;
+  
+&lt;<span class="pl-ent">ul</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>tags<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">template</span> @<span class="pl-e">for</span>=<span class="pl-s"><span class="pl-pds">"</span>tag of tags<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">li</span>&gt;&lt;<span class="pl-ent">a</span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>{{ tag.link }}<span class="pl-pds">"</span></span>&gt;#{{ tag.name }}&lt;/<span class="pl-ent">a</span>&gt;&lt;/<span class="pl-ent">li</span>&gt;
+    &lt;/<span class="pl-ent">template</span>&gt;
+&lt;/<span class="pl-ent">ul</span>&gt;
+  
+&lt;<span class="pl-ent">div</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>content<span class="pl-pds">"</span></span>&gt;{{ content }}&lt;/<span class="pl-ent">div</span>&gt;</pre></div>
+<h3 id="user-content-dateObj"><a id="user-content-4-日期对象" class="anchor" href="#4-日期对象" aria-hidden="true"></a>4. 日期对象</h3><p>
+为了方便的显示日期, Page.qy主题模板中所有引用的日期都为一个对象, 该对象的值为: 
+```js
+{ 
+    year(Type: String): 年份,
+    month(Type: String): 月份,
+    date(Type: String): 日期,
+    hours(Type: String): 小时,
+    minutes(Type: String): 分钟,
+    day(Type: String): 星期 
+}
+```
+</p><h2><a id="user-content-4-代码高亮" class="anchor" href="#4-代码高亮" aria-hidden="true"></a>4. 代码高亮</h2>
+<p>Page.qy 使用 Highlight.js 实现代码高亮, 只需要在主题中引入相应的  css 主题文件。</p>
+<h2><a id="user-content-5-infojson" class="anchor" href="#5-infojson" aria-hidden="true"></a>5. info.json</h2>
+<p>主题的信息, 其有效的值为</p>
+<ul>
+<li>name(Type: String): 主题名</li>
+<li>version(Type: String): 版本</li>
+<li>author(Type: String [Optional]): 作者信息</li>
+<li>introduction(Type: String [Optional]): 主题介绍</li>
+</ul>
+<h3><a id="user-content-6-打包主题" class="anchor" href="#6-打包主题" aria-hidden="true"></a>6. 打包主题</h3>
+<p>使用 zip 格式压缩主题文件即可。</p>
+<h3><a id="user-content-7-示例" class="anchor" href="#7-示例" aria-hidden="true"></a>7. 示例</h3>
+<p>参考: <a href="https://github.com/HuQingyang/Page.qy/tree/master/user/themes/Simple%20Blog">Simple Blog</a></p><p><br></p></div>
 
 <hr id="footerLine"/>
 <p id="footer">Powered With ❤ By <a>Page.qy</a></p>
 
-<script type="text/javascript" src="../statics/script/common.js"></script>
+<script type="text/javascript" src="{{ script.common }}"></script>
 </body>
 </html>

@@ -27,7 +27,9 @@ export default class HistoryItem extends React.Component {
 
     async handlePreview() {
         this.props.openWindow(
-            await this.props.dataToHTML.generateArticle(this.props))
+            await this.props.dataToHTML.generateArticle(
+                Object.assign({}, await this.props.db.getArticle({key: this.props.articleKey}), this.props)
+            ))
     }
 
     handleRestore() {
@@ -86,6 +88,7 @@ export default class HistoryItem extends React.Component {
                                     style={this.style().tagImage}
                                     src={`${this.props.mainPath}/src/pic/tag.svg`}
                                 />
+                                {tag}
                                 {tag}
                             </li>
                         ))}

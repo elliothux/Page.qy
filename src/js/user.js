@@ -81,7 +81,7 @@ async function restore(folderPath) {
         console.error(error);
         return false;
     }
-    dataToHTML.reGenerateAll();
+    dataToHTML.generateHTML(true);
     return true;
 }
 

@@ -372,7 +372,7 @@ export default class Article extends React.Component {
             confirmButton: {
                 width: '70px',
                 display: 'inline-block',
-                padding: '8px 10px',
+                padding: '0px 15px 10px 15px',
                 margin: '0 15px',
                 backgroundColor: 'rgba(255, 255, 255, 0.15)',
                 cursor: 'pointer',

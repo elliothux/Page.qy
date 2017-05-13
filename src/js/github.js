@@ -118,22 +118,19 @@ async function _getRepoPath() {
             await gh().getUser().createRepo({name: `${name}.github.io`});
             console.log('Create an new repo success.')
         }
-        await new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             const repoPath = path.join(userPath, `./${name}.github.io/`);
             fs.writeFileSync(path.join(repoPath, './.temp'), (new Date()).toLocaleString(), 'utf-8');
             console.log('Start test push ...');
             exec(`cd ${repoPath} && git add --all`, error => {
                 error && reject(error);
-                resolve();
-            });
-        });
-        return new Promise((resolve, reject) => {
-            execSync(`cd ${repoPath} && git commit -m 'Test Push'`);
-            exec(`cd ${repoPath} && git push https://${name}:${config.get().password}@github.com/${name}/${name}.github.io.git`, error => {
-                error && reject(error);
-                console.log('Test push success.');
-                resolve();
-            });
+                execSync(`cd ${repoPath} && git commit -m 'Test Push'`);
+                exec(`cd ${repoPath} && git push https://${name}:${config.get().password}@github.com/${name}/${name}.github.io.git`, error => {
+                    error && reject(error);
+                    console.log('Test push success.');
+                    resolve()
+                })
+            })
         })
     }
     exec(`cd ./user/${config.get().username}.github.io && git config http.sslVerify "false"`);

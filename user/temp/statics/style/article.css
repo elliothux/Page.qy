@@ -13,6 +13,7 @@
     top: -45px;
     margin-left: 15%;
     list-style: none;
+    z-index: 2;
 }
 
 #tags > li {
