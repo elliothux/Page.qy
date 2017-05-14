@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    font-family: Microsoft Yahei, "Microsoft Sans Serif", "Apple Braille";
 }
 
 a {
@@ -12,116 +13,99 @@ hr {
 }
 
 body {
-    background-color: #f2f2f2;
-    font-family: "Merriweather", -apple-system, system-ui, "Microsoft YaHei UI","Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    background-color: #fafafa;
 }
 
 
 #header {
+    width: 100%;
+    height: 400px;
+    background: #000000;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #434343, #000000);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #434343, #000000); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    position: relative;
+    overflow: hidden;
+}
+
+#header * {
+    z-index: 2;
+    position: relative;
+}
+
+#headBackground {
     position: absolute;
-    width: calc(100% - 10%);
-    height: 250px;
-    padding: 40px 5%;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    z-index: 1;
+    opacity: 0.7;
+}
+
+#nav {
+    width: calc(100%);
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    background-color: #d62742;
-    color: white;
-}
-#nav {
-    margin-top: 22px;
-}
-#nav > a {
-    width: 90px;
-    height: 40px;
-    color: white;
-    padding: 8px 10px;
-    margin-left: 15px;
-    font-size: 0.8em;
-    letter-spacing: 0.05em;
-    transition: all ease 300ms;
-}
-#nav > a.selected, #nav > a:hover {
-    background-color: rgba(155, 32, 51, 0.5);
-    box-shadow: 0 5px 15px 0 rgba(0,0,0,0.2);
+    justify-content: flex-end;
 }
 
-#username {
-    font-size: 2em;
-    letter-spacing: 0.05em;
-    font-family: Typo;
-    font-weight: lighter;
-    color: white;
-    margin-top: 10px;
-}
-
-#footer {
-    margin-top: 200px;
-    text-align: center;
-    color: rgba(0, 0, 0, 0.4);
-}
-#footer h3 {
-    font-family: Typo;
-    letter-spacing: 0.07em;
-}
-#footer p {
-    font-size: 0.8em;
-}
-
-
-.article {
-    width: 66%;
-    margin-left: 17%;
-    margin-bottom: 50px;
-    display: block;
-    color: black;
-}
-
-.article .title, #article .title {
-    font-size: 2.2em;
-    font-weight: bolder;
-    letter-spacing: 0.03em;
-    color: black;
-    margin-left: -5px;
-}
-
-.article .introduction, #article .introduction {
-    margin: 15px 0;
-    font-size: 1em;
-    letter-spacing: 0.05em;
-}
-
-.article .date, #article .date{
-    display: block;
-    font-style: italic;
-    font-family: cursive;
-    font-weight: bolder;
-    color: rgba(0, 0, 0, 0.7);
-    margin-bottom: 20px;
-    font-size: 0.85em;
-    letter-spacing: 0.05em;
-}
-
-.article .tags, #article .tags {
-    margin-top: 20px;
-}
-
-.article .tags li, #article .tags li {
-    list-style: none;
+#nav > a, #navHome{
     display: inline-block;
-    margin-right: 12px;
-}
-
-.article .tags li a, #article .tags li a {
-    font-family: cursive;
-    color: black;
-    font-style: italic;
+    font-size: 1em;
     font-weight: bolder;
-    font-size: 0.85em;
-    letter-spacing: 0.05em;
+    color: white;
+    margin: 20px 50px 20px 0;
+    transition: all ease-out 200ms;
+    letter-spacing: 0.1em;
 }
 
-.article .tags li:hover a,
-#article .tags li:hover a{
-    color: #e42642;
+#navHome {
+    margin: 20px 0 20px 50px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+}
+
+#nav > a:hover, #navHome:hover {
+    opacity: 0.5;
+}
+
+#headTitle {
+    font-size: 3em;
+    font-weight: bolder;
+    color: white;
+    text-align: center;
+    margin-top: 80px;
+    margin-bottom: 30px;
+    letter-spacing: 0.08em;
+}
+
+#header hr {
+    width: 16%;
+    height: 3px;
+    background-color: white;
+    margin-left: calc(50% - 8%);
+}
+
+#introduction {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 1em;
+    font-weight: lighter;
+    letter-spacing: 0.1em;
+    color: white;
+}
+
+#footerLine {
+    margin: 50px 0 20px 0;
+    height: 0;
+    width: 70%;
+    margin-left: 15%;
+}
+#footer {
+    text-align: center;
+    font-size: 0.8em;
+    color: #898989;
+    margin-bottom: 30px;
+    letter-spacing: 0.1em;
 }

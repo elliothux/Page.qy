@@ -11,37 +11,33 @@
 	<script>hljs.initHighlightingOnLoad();</script>
 </head>
 <body>
-<style type="text/css" rel="stylesheet">
-    @font-face {
-        font-family: 'Typo';
-        font-style: normal;
-        src: local('Typo'), local('Typo'), url(../statics/statics/TypoGraphica.otf);
-    }
-</style>
 <div id="header">
-    <a id="username" href="../index.html">HuQingyang</a>
+    <div id="headBackground" style="background-image: url(../statics/statics/nav.jpg)"></div>
+    <a id="navHome" href="../index.html">HOME</a>
     <div id="nav">
-        <a href="../index.html">HOME</a>
         <a href="../tags.html">TAGS</a>
         <a href="../archives.html">ARCHIVES</a>
         <a href="../about.html">ABOUT</a>
     </div>
+    <h1 id="headTitle">💅如何为 Page.qy 编写主题</h1>
+    <hr/>
+    <p id="introduction">Written By 胡青杨
+        on 04/12 2017</p>
 </div>
 
-<div id="article">
-    <h1 id="title">💅如何为 Page.qy 编写主题</h1>
-    <ul class="tags">
-        
-            <li><a href="../tags.html#tags-教程">#教程</a></li>
-        
-            <li><a href="../tags.html#tags-主题">#主题</a></li>
-        
-            <li><a href="../tags.html#tags-Tutorial ">#Tutorial </a></li>
-        
-            <li><a href="../tags.html#tags-Theme">#Theme</a></li>
-        
-    </ul>
-    <div class="content" id="content"><h2><a id="user-content-1-主题的文件结构" class="anchor" href="#1-主题的文件结构" aria-hidden="true"></a>1. 主题的文件结构</h2>
+<ul id="tags">
+    
+        <li><a href="../tags.html#tags-教程">#教程</a></li>
+    
+        <li><a href="../tags.html#tags-主题">#主题</a></li>
+    
+        <li><a href="../tags.html#tags-Tutorial ">#Tutorial </a></li>
+    
+        <li><a href="../tags.html#tags-Theme">#Theme</a></li>
+    
+</ul>
+
+<div id="content"><h2><a id="user-content-1-主题的文件结构" class="anchor" href="#1-主题的文件结构" aria-hidden="true"></a>1. 主题的文件结构</h2>
 <p>/—— Theme Name<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/—— script<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/—— statics<br>
@@ -74,7 +70,7 @@
 <li>在HTML中使用 <strong>”{{  }}”</strong> 来引用值, 如:</li>
 </ul>
 <div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">p</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>date<span class="pl-pds">"</span></span>&gt;
-    Written By 胡青杨 on 04/12
+    Written By {{ user.name }} on {{ createDate.month }}/{{ createDate.date }}
 &lt;/<span class="pl-ent">p</span>&gt;</pre></div>
 <p>如果 user.name 的值为字符串 “Joe”, createDate的值为对象 { month: ’05’, date: ’16’ }, 则上面的语句将被模板引擎解析为:</p>
 <div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">p</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>date<span class="pl-pds">"</span></span>&gt;
@@ -237,7 +233,7 @@
     &lt;/<span class="pl-ent">div</span>&gt;
     &lt;<span class="pl-ent">h1</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>headTitle<span class="pl-pds">"</span></span>&gt;{{ title }}&lt;/<span class="pl-ent">h1</span>&gt;
     &lt;<span class="pl-ent">p</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>introduction<span class="pl-pds">"</span></span>&gt;Written By {{ user.name }}
-        on {{ createDate.month }}/{{ createDate.date }} 2017
+        on {{ createDate.month }}/{{ createDate.date }} {{ createDate.year }}
     &lt;/<span class="pl-ent">p</span>&gt;
 &lt;/<span class="pl-ent">div</span>&gt;
   
@@ -274,16 +270,9 @@
 <p>使用 zip 格式压缩主题文件即可。</p>
 <h3><a id="user-content-7-示例" class="anchor" href="#7-示例" aria-hidden="true"></a>7. 示例</h3>
 <p>参考: <a href="https://github.com/HuQingyang/Page.qy/tree/master/user/themes/Simple%20Blog">Simple Blog</a></p><p><br></p></div>
-    <p class="date">Written By {{ user.name }}
-        on {{ createDate.month }}/{{ createDate.date }} {{ createDate.year }}
-    </p>
-</div>
 
-<div id="footer">
-    <h3>Material</h3>
-    <p>Powered With ❤ By <a>Page.qy</a></p>
-</div>
-
+<hr id="footerLine"/>
+<p id="footer">Powered With ❤ By <a>Page.qy</a></p>
 
 </body>
 </html>

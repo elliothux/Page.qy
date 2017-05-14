@@ -1,72 +1,36 @@
 
 #tags {
-    width: 90%;
-    margin-left: 5%;
-    position: relative;
-    background-color: white;
-    z-index: 1;
-    top: 130px;
-    box-shadow: 0 10px 20px 0 rgba(0,0,0,0.2);
-    padding-top: 80px;
-    padding-bottom: 30px;
-    margin-bottom: 150px;
-}
-#tags > * {
-    width: 66%;
-    margin-left: 17%;
+    width: 70%;
+    margin-left: 15%;
+    margin-top: 20px;
+    font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
 }
 
-#tags h4 {
-    text-align: center;
-    letter-spacing: 0.08em;
-}
-#tags > hr {
-    width: 60px;
-    height: 1px;
-    border: none;
-    background-color: rgba(0, 0, 0, 0.8);
-    margin: 15px calc(50% - 30px) 60px calc(50% - 30px);
-}
-
-.tag {
-    margin-bottom: 50px;
-}
-
-.tag h2 {
+#tags h2 {
+    margin: 20px 0;
     font-size: 2em;
     padding-bottom: 5px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
     font-weight: bolder;
     font-style: italic;
     display: inline-block;
     letter-spacing: 0.03em;
-    border-bottom: 1px solid;
-    margin-bottom: 25px;
 }
 
-.tag #title {
-    display: block;
-}
-
-.tag h3 {
+#tags h3 {
     margin-top: 10px;
     margin-bottom: 2px;
     font-size: 1.5em;
+    font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
     font-weight: bolder;
     letter-spacing: 0.03em;
     color: black;
-    transition: all ease 400ms;
-}
-.tag #title:hover h3 {
-    color: #e42642;
 }
 
-.tag p {
-    display: block;
-    font-style: italic;
+#tags p {
+    margin-bottom: 25px;
     font-family: cursive;
-    font-weight: bolder;
+    font-size: 1em;
     color: rgba(0, 0, 0, 0.7);
-    margin-bottom: 20px;
-    font-size: 0.85em;
-    letter-spacing: 0.05em;
 }

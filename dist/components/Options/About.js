@@ -45,11 +45,24 @@ export default class About extends React.Component {
                 this.props.language === 'zh' ? '检查更新': 'Check Update'
             }
             </button>
-            <a style={this.style().externalLink}>{
+            <a
+                style={this.style().externalLink}
+                onClick={this.props.openURL.bind(null, 'https://github.com/HuQingyang/Page.qy/blob/master/doc/theme.md')}
+            >{
+                this.props.language === 'zh' ? '💅 开发主题' : '💅 Develop Theme'
+            }
+            </a>
+            <a
+                style={this.style().externalLink}
+                onClick={this.props.openURL.bind(null, 'http://123.206.184.175/')}
+            >{
                 this.props.language === 'zh' ? '🌏 访问网站' : '🌏 Visit Website'
             }
             </a>
-            <a style={this.style().externalLink}>
+            <a
+                style={this.style().externalLink}
+                onClick={this.props.openURL.bind(null, 'http://123.206.184.175/')}
+            >
                 {function () {
                     switch (this.props.platform) {
                         case 'darwin': return this.props.language === 'zh' ?
