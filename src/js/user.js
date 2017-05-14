@@ -72,8 +72,10 @@ function backupOnLocal(folderPath) {
 async function restore(folderPath) {
     try {
         if (folderPath) {
-            db.restore(path.join(folderPath, './db'));
-            config.restore(path.join(folderPath, './config.json'));
+            fs.existsSync(path.join(folderPath, './db')) &&
+                db.restore(path.join(folderPath, './db'));
+            fs.existsSync(path.join(folderPath, './config.json')) &&
+                config.restore(path.join(folderPath, './config.json'));
         } else {
             await github.updateRepo();
             db.restore(path.join(__dirname,

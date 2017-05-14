@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 app.get('/api/update', (req, res) => {
     res.json(Object.assign(
         JSON.parse(fs.readFileSync('./package.json', 'utf-8')).update,
-        { url: getUpdateUrl(platform)}
+        { url: getUpdateUrl(req.query.platform)}
     ));
 });
 app.get('/download/win', (req, res) => {
