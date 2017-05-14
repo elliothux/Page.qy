@@ -18,7 +18,8 @@
   "update": {
     "version": "0.0.2",
     "fullVersion": "0.0.2",
-    "description": "Test update!"
+    "description": "Test update!",
+    "type": "hot-patch"
   },
   "ecmaFeatures": {
     "modules": true

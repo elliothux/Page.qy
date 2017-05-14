@@ -35,10 +35,11 @@ const getLatestRelease = () => {
 };
 
 const getUpdateUrl = (platform) => {
-    if (process.env.NODE_ENV === 'development')
-        return 'http://localhost:3000';
+    if (JSON.parse(fs.readFileSync(
+        './package.json', 'utf-8')).update.type === 'full')
+        return getUpdateUrl(platform);
     else
-        return `http://oprticelb.bkt.clouddn.com/${platform}-x64-${getLatestRelease()}.zip`
+        return `http://oprticelb.bkt.clouddn.com/v${getLatestRelease()}.zip`
 };
 
 const getDownloadURL = (platform) => {
