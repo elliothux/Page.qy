@@ -1,0 +1,48 @@
+
+#archives {
+    width: 70%;
+    margin-left: 15%;
+    margin-top: 20px;
+    font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+
+#archives h1 {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-weight: bolder;
+    font-style: italic;
+    letter-spacing: 0.03em;
+}
+
+#archives h2 {
+    margin: 20px 0;
+    font-size: 1.8em;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-weight: bolder;
+    font-style: italic;
+    display: inline-block;
+    letter-spacing: 0.03em;
+}
+
+#archives h3 {
+    margin-top: 10px;
+    margin-bottom: 2px;
+    font-size: 1.5em;
+    font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-weight: bolder;
+    letter-spacing: 0.03em;
+    color: black;
+}
+
+#archives p {
+    margin-bottom: 25px;
+    font-family: cursive;
+    font-size: 1em;
+    color: rgba(0, 0, 0, 0.7);
+}
