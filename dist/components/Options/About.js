@@ -19,14 +19,14 @@ export default class About extends React.Component {
             {
                 <div style={this.style().text}>
                     <p>🌟当前版本: Page.qy-v{this.props.version}</p><br/>
-                    <p>Page.qy致力于让每个人都能轻松地免费建立专属自己的网站，无需任何编程或操作服务器等专业知识。Page.qy 适用于个人博客、在线文档等静态网站。</p><br/>
-                    <p>Page.qy将网页代码托管于<a style={this.style().link} onClick={this.props.openURL.bind(null, 'https://pages.github.com/')}>
-                        GitHub Pages</a>，感谢GitHub提供的服务。</p><br/>
-                    <p>Page.qy基于
-                        <a style={this.style().link} onClick={this.props.openURL.bind(null, 'https://facebook.github.io/react/')}>React</a>、
-                        <a style={this.style().link} onClick={this.props.openURL.bind(null, 'https://electron.atom.io/')}>Electron</a>
-                        及<a style={this.style().link} onClick={this.props.openURL.bind(null, 'https://nodejs.org/en/')}>Node.js</a>构建。
-                        感谢他们的开源项目让Page.qy的开发更加轻松。
+                    <p>Page.qy 致力于让每个不会编程的人都能轻松地免费建立专属自己的网站。Page.qy 适用于个人博客、在线文档等简单的静态网站。</p><br/>
+                    <p>Page.qy 将网页代码托管于<a style={this.style().link} onClick={this.props.openURL.bind(null, 'https://pages.github.com/')}>
+                        &nbsp;GitHub Pages </a>，感谢 GitHub 提供的服务。</p><br/>
+                    <p>Page.qy 基于
+                        <a style={this.style().link} onClick={this.props.openURL.bind(null, 'https://facebook.github.io/react/')}> React </a>、
+                        <a style={this.style().link} onClick={this.props.openURL.bind(null, 'https://electron.atom.io/')}> Electron </a>
+                        及<a style={this.style().link} onClick={this.props.openURL.bind(null, 'https://nodejs.org/en/')}> Node.js </a>
+                        等现代 Web 技术构建, 感谢为这些开源项目贡献源码的软件工程师, 你们的开源项目是 Page.qy 的基础!
                     </p><br/>
                     <p>Page.qy开源并将代码托管在<a style={this.style().link} onClick={this.props.openURL.bind(null, 'https://github.com/HuQingyang/Page.qy')}>GitHub</a>,
                     欢迎Star、提交Issues或者参与共同开发。</p><br/>
