@@ -103,7 +103,7 @@ export default class App extends React.Component {
                 show={this.state.viewState === 'options'}
                 logout={this.props.logout}
                 miniNav={this.state.miniNav}
-                reGenerateAll={this.props.dataToHTML.reGenerateAll}
+                generateHTML={this.props.dataToHTML.generateHTML}
                 openURL={this.props.openURL}
                 platform={this.props.platform}
                 version={this.props.version}

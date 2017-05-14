@@ -27495,6 +27495,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(14);
@@ -27547,6 +27549,7 @@ var App = function (_React$Component) {
 
         _this.style = _this.style.bind(_this);
         _this.handleViewChange = _this.handleViewChange.bind(_this);
+        _this.handleUpdate = _this.handleUpdate.bind(_this);
 
         _this.state = {
             viewState: _this.props.config.get().initView,
@@ -27565,6 +27568,30 @@ var App = function (_React$Component) {
             _eventProxy2.default.on('miniNav', function (value) {
                 this.setState({ miniNav: value });
             }.bind(this));
+            _eventProxy2.default.on('checkUpdate', async function () {
+                var data = await this.props.autoUpdate.check();
+                if (!data) return _eventProxy2.default.trigger('message', this.props.config.get('language') === 'zh' ? '已更新到最新版!' : 'Already Updated!');else this.handleUpdate(data[0], data[1]);
+            }.bind(this));
+            this.handleUpdate();
+        }
+    }, {
+        key: 'handleUpdate',
+        value: async function handleUpdate(info, path) {
+            if (!info || !path) {
+                ;
+
+                var _ref = await this.props.autoUpdate.check();
+
+                var _ref2 = _slicedToArray(_ref, 2);
+
+                info = _ref2[0];
+                path = _ref2[1];
+            }if (window.confirm(this.props.config.get('language') === 'zh' ? 'Page.qy \u6709\u65B0\u7248\u672C\u5566! \u7ACB\u5373\u5B89\u88C5?\n\n' + info.description : 'A New Version of Page.qy!\n\n' + info.description + '! Install Now?')) await this.props.autoUpdate.install(path);
+
+            if (window.confirm(this.props.config.get('language') === 'zh' ? '\u66F4\u65B0\u5B8C\u6210, \u662F\u5426\u7ACB\u5373\u91CD\u542F Page.qy ?' : 'Update install success! Restart Page.qy?')) {
+                this.props.app.relaunch();
+                this.props.app.exit(0);
+            }
         }
     }, {
         key: 'handleViewChange',
@@ -27613,9 +27640,10 @@ var App = function (_React$Component) {
                     show: this.state.viewState === 'options',
                     logout: this.props.logout,
                     miniNav: this.state.miniNav,
-                    reGenerateAll: this.props.dataToHTML.reGenerateAll,
+                    generateHTML: this.props.dataToHTML.generateHTML,
                     openURL: this.props.openURL,
-                    platform: this.props.platform
+                    platform: this.props.platform,
+                    version: this.props.version
                 }),
                 _react2.default.createElement(_Message2.default, { miniNav: this.state.miniNav })
             );
@@ -28392,7 +28420,7 @@ var Article = function (_React$Component) {
                     confirmButton: {
                         width: '70px',
                         display: 'inline-block',
-                        padding: '8px 10px',
+                        padding: '0px 15px 10px 15px',
                         margin: '0 15px',
                         backgroundColor: 'rgba(255, 255, 255, 0.15)',
                         cursor: 'pointer',
@@ -28566,7 +28594,7 @@ var Editor = function (_React$Component) {
                     value: this.state.title,
                     onChange: this.handleTitleChange,
                     type: 'text', style: this.style().title,
-                    placeholder: this.props.config.get().language === 'zh' ? '(￣︶￣)↗ 在这里输入你的标题...' : '(￣︶￣)↗ TYPE TITLE HERE...'
+                    placeholder: this.props.config.get().language === 'zh' ? '输入你的标题...' : 'TYPE TITLE HERE...'
                 }),
                 _react2.default.createElement('input', {
                     ref: 'tags',
@@ -28838,13 +28866,12 @@ var HistoryItem = function (_React$Component) {
     }, {
         key: 'initState',
         value: function initState() {
-            if (this.state.unmounted) return;
             this._reactInternalInstance && this.setState({ status: 'init' });
         }
     }, {
         key: 'handlePreview',
         value: async function handlePreview() {
-            this.props.openWindow((await this.props.dataToHTML.generateArticle(this.props)));
+            this.props.openWindow((await this.props.dataToHTML.generateArticle(Object.assign({}, (await this.props.db.getArticle({ key: this.props.articleKey })), this.props))));
         }
     }, {
         key: 'handleRestore',
@@ -28937,6 +28964,7 @@ var HistoryItem = function (_React$Component) {
                                         style: _this2.style().tagImage,
                                         src: _this2.props.mainPath + '/src/pic/tag.svg'
                                     }),
+                                    tag,
                                     tag
                                 );
                             })
@@ -29932,6 +29960,10 @@ var _reactcss = __webpack_require__(26);
 
 var _reactcss2 = _interopRequireDefault(_reactcss);
 
+var _eventProxy = __webpack_require__(47);
+
+var _eventProxy2 = _interopRequireDefault(_eventProxy);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -29955,6 +29987,8 @@ var About = function (_React$Component) {
     _createClass(About, [{
         key: 'render',
         value: function render() {
+            var _this2 = this;
+
             return _react2.default.createElement(
                 'div',
                 { style: this.style().container },
@@ -29965,6 +29999,13 @@ var About = function (_React$Component) {
                 _react2.default.createElement(
                     'div',
                     { style: this.style().text },
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        '\uD83C\uDF1F\u5F53\u524D\u7248\u672C: Page.qy-v',
+                        this.props.version
+                    ),
+                    _react2.default.createElement('br', null),
                     _react2.default.createElement(
                         'p',
                         null,
@@ -30033,8 +30074,14 @@ var About = function (_React$Component) {
                 ),
                 _react2.default.createElement(
                     'button',
-                    { style: this.style().button },
-                    this.props.language === 'zh' ? '检测更新' : 'Check Update'
+                    {
+                        style: this.style().button,
+                        onClick: function onClick() {
+                            _eventProxy2.default.trigger('message', _this2.props.language === 'zh' ? '正在检查更新...' : 'Checking Update...');
+                            _eventProxy2.default.trigger('checkUpdate');
+                        }
+                    },
+                    this.props.language === 'zh' ? '检查更新' : 'Check Update'
                 ),
                 _react2.default.createElement(
                     'a',
@@ -30215,7 +30262,7 @@ var Options = function (_React$Component) {
                             editIntroduction: false
                         });
                         _eventProxy2.default.trigger('message', this.props.config.get().language === 'zh' ? '✨ 保存成功!' : '✨ Saved!');
-                        await this.props.reGenerateAll();
+                        await this.props.generateHTML();
                         _eventProxy2.default.trigger('refreshPreview');
                     }
                 }.bind(this));
@@ -30320,7 +30367,8 @@ var Options = function (_React$Component) {
                         language: this.props.config.get().language,
                         mainPath: this.props.mainPath,
                         openURL: this.props.openURL,
-                        platform: this.props.platform
+                        platform: this.props.platform,
+                        version: this.props.version
                     })
                 )
             );
@@ -31187,6 +31235,8 @@ _reactDom2.default.render(_react2.default.createElement(
         theme: main.theme,
         logout: main.logout.start,
         user: main.user,
+        autoUpdate: main.autoUpdate,
+        version: main.version,
         app: _electron.remote.app,
         shell: _electron.shell,
         openURL: _electron.shell.openExternal

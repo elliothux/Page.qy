@@ -40,7 +40,7 @@ export default class Options extends React.Component {
                         this.props.config.get().language === 'zh' ?
                         '✨ 保存成功!' : '✨ Saved!'
                     );
-                    await this.props.reGenerateAll();
+                    await this.props.generateHTML();
                     eventProxy.trigger('refreshPreview');
                 }
             }.bind(this))

@@ -27477,8 +27477,15 @@ Function.prototype.toString = Object.prototype.toString;
 
 var user = _electron.remote.require('./main.js').user;
 var config = _electron.remote.require('./main.js').config;
-var reGenerateAll = _electron.remote.require('./main.js').dataToHTML.reGenerateAll;
+var generateHTML = _electron.remote.require('./main.js').dataToHTML.generateHTML;
+var platform = _electron.remote.require('./main.js').platform;
 var app = _electron.remote.app;
+var openURL = _electron.shell.openExternal;
+var gitLink = {
+    darwin: "https://sourceforge.net/projects/git-osx-installer/files/git-2.13.0-intel-universal-mavericks.dmg/download?use_mirror=autoselect",
+    win32: "https://github.com/git-for-windows/git/releases/download/v2.13.0.windows.1/Git-2.13.0-64-bit.exe",
+    linux: "https://git-scm.com/download/linux"
+};
 
 var App = function (_React$Component) {
     _inherits(App, _React$Component);
@@ -27504,6 +27511,7 @@ var App = function (_React$Component) {
         _this.state = {
             status: 'language',
             selected: 'github',
+            installed: false,
             language: _this.props.config.get().language
         };
         return _this;
@@ -27540,7 +27548,7 @@ var App = function (_React$Component) {
                 language: this.state.language
             });
             this.setState({
-                status: 'init'
+                status: 'install'
             });
         }
     }, {
@@ -27602,7 +27610,7 @@ var App = function (_React$Component) {
             this.props.config.set({
                 selfIntroduction: value
             });
-            await this.props.reGenerateAll();
+            await this.props.generateHTML(true);
             this.props.app.relaunch();
             this.props.app.exit(0);
         }
@@ -27612,6 +27620,8 @@ var App = function (_React$Component) {
             switch (this.state.status) {
                 case 'language':
                     return this.handleSetLanguage();
+                case 'install':
+                    return this.state.installed ? this.setState({ status: 'init' }) : openURL(gitLink[platform]);
                 case 'init':
                     return this.handleLogin();
                 case 'login':
@@ -27647,6 +27657,8 @@ var App = function (_React$Component) {
                         switch (this.state.status) {
                             case 'language':
                                 return this.state.language === 'zh' ? '🇨🇳 选择语言' : '🌎 LANGUAGE';
+                            case 'install':
+                                return this.state.language === 'zh' ? '⚙ 安装 Git' : '⚙ INSTALL GIT';
                             case 'init':
                                 return this.state.language === 'zh' ? '🚀 登录' : '🚀 LOGIN';
                             case 'login':
@@ -27682,6 +27694,31 @@ var App = function (_React$Component) {
                             style: this.state.language === 'en' ? this.style().operateButtonSelected : this.style().operateButton
                         },
                         'ENGLISH'
+                    )
+                ),
+                _react2.default.createElement(
+                    'p',
+                    { style: this.style().installText },
+                    this.state.language === 'zh' ? 'Page.qy 需要 Git 才能运行, 你是否安装 Git?' : 'Git is required for Page.qy, install Git?'
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { style: this.style().installArea },
+                    _react2.default.createElement(
+                        'button',
+                        {
+                            onClick: this.setState.bind(this, { installed: false }, function () {}),
+                            style: !this.state.installed ? this.style().operateButtonSelected : this.style().operateButton
+                        },
+                        this.state.language === 'zh' ? '立即安装' : 'INSTALL NOW'
+                    ),
+                    _react2.default.createElement(
+                        'button',
+                        {
+                            onClick: this.setState.bind(this, { installed: true }, function () {}),
+                            style: this.state.installed ? this.style().operateButtonSelected : this.style().operateButton
+                        },
+                        this.state.language === 'zh' ? '我已安装' : 'I HAVE INSTALLED'
                     )
                 ),
                 _react2.default.createElement(
@@ -27796,6 +27833,8 @@ var App = function (_React$Component) {
                             switch (this.state.status) {
                                 case 'language':
                                     return this.state.language === 'zh' ? '继续' : 'CONTINUE';
+                                case 'install':
+                                    return this.state.language === 'zh' ? '继续' : 'CONTINUE';
                                 case 'init':
                                     return this.state.language === 'zh' ? '登录' : 'LOGIN';
                                 case 'login':
@@ -27890,6 +27929,26 @@ var App = function (_React$Component) {
                         flexWrap: 'wrap',
                         position: 'absolute',
                         top: '110px',
+                        left: '30%'
+                    },
+                    installText: {
+                        color: 'white',
+                        position: 'absolute',
+                        top: '70px',
+                        width: '100%',
+                        textAlign: 'center',
+                        display: this.state.status === 'install' ? 'block' : 'none',
+                        fontWeight: 'lighter'
+                    },
+                    installArea: {
+                        width: '40%',
+                        display: this.state.status === 'install' ? 'flex' : 'none',
+                        color: 'white',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        flexWrap: 'wrap',
+                        position: 'absolute',
+                        top: '130px',
                         left: '30%'
                     },
                     operateArea: {
@@ -27996,7 +28055,7 @@ _reactDom2.default.render(_react2.default.createElement(App, {
     user: user,
     app: app,
     openURL: _electron.shell.openExternal,
-    reGenerateAll: reGenerateAll
+    generateHTML: generateHTML
 }), document.getElementById('root'));
 
 /***/ })
