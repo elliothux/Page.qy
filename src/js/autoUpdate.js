@@ -15,7 +15,9 @@ const target = path.join(__dirname, "../../upgrade/");
 
 async function check() {
     fs.existsSync(target) && fs.removeSync(target);
-    const info = JSON.parse(await _getData(URL));
+    let data = await _getData(URL);
+    if (!data) return;
+    let info = JSON.parse(data);
     if (info.version === preVersion) return false;
     fs.mkdirsSync(target);
     let filePath = await _downloadFile(

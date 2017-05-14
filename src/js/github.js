@@ -34,6 +34,7 @@ const gh = () => (
 async function pushRepo() {
     const name = config.get().username;
     const path = await _getRepoPath();
+    console.log(`https://${name}:${config.get('password')}@github.com/${name}/${name}.github.io.git`)
     return new Promise((resolve, reject) => {
         Git(path)
             .pull('origin', 'master', (error) => {
@@ -52,8 +53,8 @@ async function pushRepo() {
                 if (error) reject.error(error);
                 console.log('Pushing repo...');
             })
-            .push([`https://${name}:${config.get().password}@github.com/${name}/${name}.github.io.git`], (error) => {
-                if (error) reject.error(error);
+            .push([`https://${name}:${config.get('password')}@github.com/${name}/${name}.github.io.git`], (error) => {
+                if (error) reject(error);
                 console.log('Push repo success.');
                 resolve()
             });

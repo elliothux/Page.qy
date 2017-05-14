@@ -1,0 +1,25 @@
+#about {
+    text-align: center;
+}
+
+#avatar {
+    border-radius: 100%;
+    width: 10%;
+    margin: 30px;
+}
+
+.info {
+    text-align: center;
+    font-size: 0.8em;
+    margin: 30px 17%;
+    display: block;
+    color: black;
+}
+.info :hover {
+    text-decoration: underline;
+}
+
+.info img {
+    width: 30px;
+    height: 30px;
+}

@@ -188,7 +188,7 @@ class App extends React.Component {
                         this.props.quit();
                     }.bind(this)}
                 >
-                    {this.props.language === 'zh' ? '取消' : 'CANCEL'}
+                    {this.props.language === 'zh' ? '退出' : 'QUIT'}
                 </button>
             </div>
         </div>

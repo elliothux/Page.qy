@@ -2,9 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>About</title>
+    <title>Archives</title>
+    <link type="text/css" rel="stylesheet" href="{{ style.common }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ style.about }}"/>
 </head>
 <body>
-<h1>About</h1>
+<div id="header">
+    <div id="headBackground" style="background-image: url({{ statics['nav.jpg'] }})"></div>
+    <a id="navHome" href="{{ links.home }}">HOME</a>
+    <div id="nav">
+        <a href="{{ links.tags }}">TAGS</a>
+        <a href="{{ links.archives }}">ARCHIVES</a>
+        <a href="{{ links.about }}">ABOUT</a>
+    </div>
+    <h1 id="headTitle">ABOUT</h1>
+    <hr>
+    <p id="introduction">{{ user.selfIntroduction }}</p>
+</div>
+<div id="about">
+    <img id="avatar" src="{{ user.avatar }}">
+    <h2 id="name">{{ user.name || user.username }}</h2>
+    <a class="info" href="https://github.com/{{user.username}}">
+        <img src="{{ statics['git.svg'] }}"/>
+        <p>GITHUB<br/>{{ user.username }}</p>
+    </a>
+    <a class="info" href="mailto:{{ user.mail }}">
+        <img src="{{ statics['mail.svg'] }}"/>
+        <p>MAIL<br/>{{ user.mail }}</p>
+    </a>
+</div>
+
+
+
+<p id="footer">Powered With ❤ By <a>Page.qy</a></p>
+
 </body>
 </html>

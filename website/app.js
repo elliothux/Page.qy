@@ -13,16 +13,11 @@ app.use(express.static(path.join(__dirname, './src')));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, './src/index.html'));
 });
-app.get('/updates/latest', (req, res) => {
-    const latest = getLatestRelease();
-    const clientVersion = req.query.v;
-    if (clientVersion === latest) {
-        res.status(204).end();
-    } else {
-        res.json({
-            url: getUpdateUrl('darwin', 'x64')
-        });
-    }
+app.get('/api/update', (req, res) => {
+    res.json(Object.assign(
+        JSON.parse(fs.readFileSync('./package.json', 'utf-8')).update,
+        { url: getUpdateUrl(platform)}
+    ));
 });
 app.get('/download/win', (req, res) => {
     res.redirect(getDownloadURL('win'));
@@ -39,11 +34,11 @@ const getLatestRelease = () => {
     return JSON.parse(fs.readFileSync('./package.json', 'utf-8')).update.version;
 };
 
-const getUpdateUrl = (platform, arch) => {
+const getUpdateUrl = (platform) => {
     if (process.env.NODE_ENV === 'development')
         return 'http://localhost:3000';
     else
-        return `http://oprticelb.bkt.clouddn.com/${platform}-${arch}-${getLatestRelease()}.zip`
+        return `http://oprticelb.bkt.clouddn.com/${platform}-x64-${getLatestRelease()}.zip`
 };
 
 const getDownloadURL = (platform) => {

@@ -1,0 +1,127 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+hr {
+    display: inline-block;
+}
+
+body {
+    background-color: #f2f2f2;
+    font-family: "Merriweather", -apple-system, system-ui, "Microsoft YaHei UI","Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+
+#header {
+    position: absolute;
+    width: calc(100% - 10%);
+    height: 250px;
+    padding: 40px 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #d62742;
+    color: white;
+}
+#nav {
+    margin-top: 22px;
+}
+#nav > a {
+    width: 90px;
+    height: 40px;
+    color: white;
+    padding: 8px 10px;
+    margin-left: 15px;
+    font-size: 0.8em;
+    letter-spacing: 0.05em;
+    transition: all ease 300ms;
+}
+#nav > a.selected, #nav > a:hover {
+    background-color: rgba(155, 32, 51, 0.5);
+    box-shadow: 0 5px 15px 0 rgba(0,0,0,0.2);
+}
+
+#username {
+    font-size: 2em;
+    letter-spacing: 0.05em;
+    font-family: Typo;
+    font-weight: lighter;
+    color: white;
+    margin-top: 10px;
+}
+
+#footer {
+    margin-top: 200px;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.4);
+}
+#footer h3 {
+    font-family: Typo;
+    letter-spacing: 0.07em;
+}
+#footer p {
+    font-size: 0.8em;
+}
+
+
+.article {
+    width: 66%;
+    margin-left: 17%;
+    margin-bottom: 50px;
+    display: block;
+    color: black;
+}
+
+.article .title, #article .title {
+    font-size: 2.2em;
+    font-weight: bolder;
+    letter-spacing: 0.03em;
+    color: black;
+    margin-left: -5px;
+}
+
+.article .introduction, #article .introduction {
+    margin: 15px 0;
+    font-size: 1em;
+    letter-spacing: 0.05em;
+}
+
+.article .date, #article .date{
+    display: block;
+    font-style: italic;
+    font-family: cursive;
+    font-weight: bolder;
+    color: rgba(0, 0, 0, 0.7);
+    margin-bottom: 20px;
+    font-size: 0.85em;
+    letter-spacing: 0.05em;
+}
+
+.article .tags, #article .tags {
+    margin-top: 20px;
+}
+
+.article .tags li, #article .tags li {
+    list-style: none;
+    display: inline-block;
+    margin-right: 12px;
+}
+
+.article .tags li a, #article .tags li a {
+    font-family: cursive;
+    color: black;
+    font-style: italic;
+    font-weight: bolder;
+    font-size: 0.85em;
+    letter-spacing: 0.05em;
+}
+
+.article .tags li:hover a,
+#article .tags li:hover a{
+    color: #e42642;
+}

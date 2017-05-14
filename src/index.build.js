@@ -30085,12 +30085,26 @@ var About = function (_React$Component) {
                 ),
                 _react2.default.createElement(
                     'a',
-                    { style: this.style().externalLink },
+                    {
+                        style: this.style().externalLink,
+                        onClick: this.props.openURL.bind(null, 'https://github.com/HuQingyang/Page.qy/blob/master/doc/theme.md')
+                    },
+                    this.props.language === 'zh' ? '💅 开发主题' : '💅 Develop Theme'
+                ),
+                _react2.default.createElement(
+                    'a',
+                    {
+                        style: this.style().externalLink,
+                        onClick: this.props.openURL.bind(null, 'http://123.206.184.175/')
+                    },
                     this.props.language === 'zh' ? '🌏 访问网站' : '🌏 Visit Website'
                 ),
                 _react2.default.createElement(
                     'a',
-                    { style: this.style().externalLink },
+                    {
+                        style: this.style().externalLink,
+                        onClick: this.props.openURL.bind(null, 'http://123.206.184.175/')
+                    },
                     function () {
                         switch (this.props.platform) {
                             case 'darwin':

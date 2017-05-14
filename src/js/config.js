@@ -48,7 +48,7 @@ function initConfig() {
 
 function backup(target) {
     const configData = JSON.stringify(
-        Object.assign(config, { password: '*' }));
+        Object.assign({}, config, { password: '*' }));
     !fs.existsSync(target) && fs.mkdirsSync(target);
     fs.writeFileSync(path.join(target, './config.json'), configData, 'utf-8');
     return path.join(target, './config.json');
