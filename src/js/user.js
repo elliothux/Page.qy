@@ -34,9 +34,13 @@ function logout() {
         `../../user/temp`);
     const avatarPath = path.join(__dirname,
         `../../user/avatar.jpg`);
-    fs.existsSync(repoPath) && fs.removeSync(repoPath);
-    fs.existsSync(tempPath) && fs.removeSync(tempPath);
-    fs.existsSync(avatarPath) && fs.removeSync(avatarPath);
+    try {
+        fs.existsSync(repoPath) && fs.removeSync(repoPath);
+        fs.existsSync(tempPath) && fs.removeSync(tempPath);
+        fs.existsSync(avatarPath) && fs.removeSync(avatarPath);
+    } catch (error) {
+        console.log(error)
+    }
     config.initConfig();
     fs.mkdirsSync(tempPath);
 }
