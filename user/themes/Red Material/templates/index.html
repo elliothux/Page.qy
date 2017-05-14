@@ -28,7 +28,9 @@
     <hr/>
     <template @for="article of articles">
         <div class="article">
-            <h1 class="title">{{ article.title }}</h1>
+            <a class="titleLink" href="{{ article.link }}">
+                <h1 class="title">{{ article.title }}</h1>
+            </a>
             <ul class="tags">
                 <template @for="tag of article.tags">
                     <li><a href="{{ tag.link }}">#{{ tag.name }}</a></li>
@@ -49,6 +51,5 @@
     <p>Powered With ❤ By <a>Page.qy</a></p>
 </div>
 
-<script type="text/javascript" src="{{ script.common }}"></script>
 </body>
 </html>

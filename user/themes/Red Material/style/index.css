@@ -21,7 +21,12 @@
     background-color: rgba(0, 0, 0, 0.8);
     margin: 15px calc(50% - 30px) 60px calc(50% - 30px);
 }
-
+#articles .title {
+    transition: all ease 300ms;
+}
+#articles .titleLink:hover .title {
+    color: #e42642;
+}
 
 .article hr {
     width: 60px;

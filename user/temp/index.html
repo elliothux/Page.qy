@@ -7,37 +7,60 @@
     <link type="text/css" rel="stylesheet" href="./statics/style/index.css"/>
 </head>
 <body>
+<style type="text/css" rel="stylesheet">
+    @font-face {
+        font-family: 'Typo';
+        font-style: normal;
+        src: local('Typo'), local('Typo'), url(./statics/statics/TypoGraphica.otf);
+    }
+</style>
 <div id="header">
-    <div id="headBackground" style="background-image: url(./statics/statics/nav.jpg)"></div>
-    <a id="navHome" href="./index.html">HOME</a>
+    <a id="username" href="./index.html">HuQingyang</a>
     <div id="nav">
+        <a class="selected" href="./index.html">HOME</a>
         <a href="./tags.html">TAGS</a>
         <a href="./archives.html">ARCHIVES</a>
         <a href="./about.html">ABOUT</a>
     </div>
-    <h1 id="headTitle">HuQingyang's Blog</h1>
-    <hr>
-    <p id="introduction">Test</p>
 </div>
 <div id="articles">
+    <h4>RECENT POST</h4>
+    <hr/>
     
         <div class="article">
-            <a class="title" href="./articles/q9h7ws.html">Hi!</a>
-            <div class="introduction">Hello!
-
-......</div>
-            <p class="date">Written By 胡青杨
-                on 04/13 2017</p>
+            <a class="titleLink" href="./articles/q9h7ws.html">
+                <h1 class="title">Hi!</h1>
+            </a>
             <ul class="tags">
                 
                     <li><a href="./tags.html#tags-test">#test</a></li>
                 
             </ul>
+            <div class="introduction">Hello!
+
+......</div>
+            <p class="date">Written By 胡青杨
+                on 04/13 2017
+            </p>
+            <a class="more" href="./articles/q9h7ws.html">READ MORE</a>
             <hr>
         </div>
     
         <div class="article">
-            <a class="title" href="./articles/o4s1ow.html">💅如何为 Page.qy 编写主题</a>
+            <a class="titleLink" href="./articles/o4s1ow.html">
+                <h1 class="title">💅如何为 Page.qy 编写主题</h1>
+            </a>
+            <ul class="tags">
+                
+                    <li><a href="./tags.html#tags-教程">#教程</a></li>
+                
+                    <li><a href="./tags.html#tags-主题">#主题</a></li>
+                
+                    <li><a href="./tags.html#tags-Tutorial ">#Tutorial </a></li>
+                
+                    <li><a href="./tags.html#tags-Theme">#Theme</a></li>
+                
+            </ul>
             <div class="introduction">1. 主题的文件结构
 /—— Theme Name
 
@@ -53,26 +76,18 @@
 
 ......</div>
             <p class="date">Written By 胡青杨
-                on 04/12 2017</p>
-            <ul class="tags">
-                
-                    <li><a href="./tags.html#tags-教程">#教程</a></li>
-                
-                    <li><a href="./tags.html#tags-主题">#主题</a></li>
-                
-                    <li><a href="./tags.html#tags-Tutorial ">#Tutorial </a></li>
-                
-                    <li><a href="./tags.html#tags-Theme">#Theme</a></li>
-                
-            </ul>
+                on 04/12 2017
+            </p>
+            <a class="more" href="./articles/o4s1ow.html">READ MORE</a>
             <hr>
         </div>
     
 </div>
 
+<div id="footer">
+    <h3>Material</h3>
+    <p>Powered With ❤ By <a>Page.qy</a></p>
+</div>
 
-<p id="footer">Powered With ❤ By <a>Page.qy</a></p>
-
-<script type="text/javascript" src="./statics/script/common.js"></script>
 </body>
 </html>

@@ -26,6 +26,17 @@
 <div id="about">
     <h4>About</h4>
     <hr/>
+    <img id="avatar" src="{{ user.avatar }}">
+    <h2 id="name">{{ user.name || user.username }}</h2>
+    <h4 id="introduction">{{ user.selfIntroduction }}</h4>
+    <a class="info" href="https://github.com/{{user.username}}">
+        <img src="{{ statics['git.svg'] }}"/>
+        <p>GitHub: {{ user.username }}</p>
+    </a>
+    <a class="info" href="mailto:{{ user.mail }}">
+        <img src="{{ statics['mail.svg'] }}"/>
+        <p>Mail: {{ user.mail }}</p>
+    </a>
 </div>
 
 <div id="footer">
@@ -33,6 +44,5 @@
     <p>Powered With ❤ By <a>Page.qy</a></p>
 </div>
 
-<script type="text/javascript" src="{{ script.common }}"></script>
 </body>
 </html>

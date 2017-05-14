@@ -38,10 +38,13 @@ body {
     margin-left: 15px;
     font-size: 0.8em;
     letter-spacing: 0.05em;
+    transition: all ease 300ms;
 }
-#nav > a.selected {
-    background-color: rgba(187, 35, 57, 0.5);
+#nav > a.selected, #nav > a:hover {
+    background-color: rgba(155, 32, 51, 0.5);
+    box-shadow: 0 5px 15px 0 rgba(0,0,0,0.2);
 }
+
 #username {
     font-size: 2em;
     letter-spacing: 0.05em;
