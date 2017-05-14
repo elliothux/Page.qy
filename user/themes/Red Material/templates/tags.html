@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Archives</title>
+    <link type="text/css" rel="stylesheet" href="{{ style.common }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ style.tags }}"/>
+</head>
+<body>
+<style type="text/css" rel="stylesheet">
+    @font-face {
+        font-family: 'Typo';
+        font-style: normal;
+        src: local('Typo'), local('Typo'), url({{ statics['TypoGraphica.otf'] }});
+    }
+</style>
+<div id="header">
+    <a id="username" href="{{ links.home }}">{{ user.username }}</a>
+    <div id="nav">
+        <a href="{{ links.home }}">HOME</a>
+        <a class="selected" href="{{ links.tags }}">TAGS</a>
+        <a href="{{ links.archives }}">ARCHIVES</a>
+        <a href="{{ links.about }}">ABOUT</a>
+    </div>
+</div>
+<div id="tags">
+    <h4>TAGS</h4>
+    <hr>
+    <template @for="tag of tags">
+        <div class="tag">
+            <h2 id="{{ tag.id }}">#{{ tag.name }}</h2>
+            <template @for="article of tag.articles">
+                <a id="title" href="{{ article.link }}"><h3>{{ article.title }}</h3></a>
+                <p>Written By {{ user.name }}
+                    on {{ article.createDate.month }}/{{ article.createDate.date }} {{ article.createDate.year }}</p>
+            </template>
+        </div>
+    </template>
+</div>
+
+
+<div id="footer">
+    <h3>Material</h3>
+    <p>Powered With ❤ By <a>Page.qy</a></p>
+</div>
+
+<script type="text/javascript" src="{{ script.common }}"></script>
+</body>
+</html>

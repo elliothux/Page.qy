@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About</title>
+    <link type="text/css" rel="stylesheet" href="{{ style.common }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ style.about }}"/>
+</head>
+<body>
+<style type="text/css" rel="stylesheet">
+    @font-face {
+        font-family: 'Typo';
+        font-style: normal;
+        src: local('Typo'), local('Typo'), url({{ statics['TypoGraphica.otf'] }});
+    }
+</style>
+<div id="header">
+    <a id="username" href="{{ links.home }}">{{ user.username }}</a>
+    <div id="nav">
+        <a href="{{ links.home }}">HOME</a>
+        <a href="{{ links.tags }}">TAGS</a>
+        <a href="{{ links.archives }}">ARCHIVES</a>
+        <a class="selected" href="{{ links.about }}">ABOUT</a>
+    </div>
+</div>
+<div id="about">
+    <h4>About</h4>
+    <hr/>
+</div>
+
+<div id="footer">
+    <h3>Material</h3>
+    <p>Powered With ❤ By <a>Page.qy</a></p>
+</div>
+
+<script type="text/javascript" src="{{ script.common }}"></script>
+</body>
+</html>

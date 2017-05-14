@@ -1,0 +1,74 @@
+
+#archives {
+    width: 90%;
+    margin-left: 5%;
+    position: relative;
+    background-color: white;
+    z-index: 1;
+    top: 130px;
+    box-shadow: 0 10px 20px 0 rgba(0,0,0,0.2);
+    padding-top: 80px;
+    padding-bottom: 30px;
+    margin-bottom: 150px;
+}
+
+#archives > * {
+    width: 66%;
+    margin-left: 17%;
+}
+
+#archives h4 {
+    text-align: center;
+    letter-spacing: 0.08em;
+}
+#archives > hr {
+    width: 60px;
+    height: 1px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.8);
+    margin: 15px calc(50% - 30px) 60px calc(50% - 30px);
+}
+
+#archives h1 {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    font-weight: bolder;
+    font-style: italic;
+    letter-spacing: 0.03em;
+}
+
+#archives h2 {
+    margin: 20px 0;
+    font-size: 1.8em;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-weight: bolder;
+    font-style: italic;
+    display: inline-block;
+    letter-spacing: 0.03em;
+}
+
+#archives h3 {
+    margin-top: 10px;
+    margin-bottom: 2px;
+    font-size: 1.5em;
+    font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-weight: bolder;
+    letter-spacing: 0.03em;
+    color: black;
+    transition: all ease 400ms;
+}
+#archives a:hover h3 {
+    color: #e42642;
+}
+
+#archives p {
+    margin-bottom: 25px;
+    font-family: cursive;
+    font-size: 1em;
+    color: rgba(0, 0, 0, 0.7);
+}

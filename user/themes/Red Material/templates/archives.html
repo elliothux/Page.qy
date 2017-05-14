@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Archives</title>
+    <link type="text/css" rel="stylesheet" href="{{ style.common }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ style.archives }}"/>
+</head>
+<body>
+<style type="text/css" rel="stylesheet">
+    @font-face {
+        font-family: 'Typo';
+        font-style: normal;
+        src: local('Typo'), local('Typo'), url({{ statics['TypoGraphica.otf'] }});
+    }
+</style>
+<div id="header">
+    <a id="username" href="{{ links.home }}">{{ user.username }}</a>
+    <div id="nav">
+        <a href="{{ links.home }}">HOME</a>
+        <a href="{{ links.tags }}">TAGS</a>
+        <a class="selected" href="{{ links.archives }}">ARCHIVES</a>
+        <a href="{{ links.about }}">ABOUT</a>
+    </div>
+</div>
+<div id="archives">
+    <h4>ARCHIVES</h4>
+    <hr>
+    <template @for="yearData of archives">
+        <h1>YEAR {{ yearData.year }}</h1>
+        <template @for="monthData of yearData.months">
+            <div class="tag">
+                <h2>MONTH {{ monthData.month }}</h2>
+                <template @for="article of monthData.articles">
+                    <a href="{{ article.link }}"><h3>{{ article.title }}</h3></a>
+                    <p>Written By {{ user.name }}
+                        on {{ article.createDate.month }}/{{ article.createDate.date }} {{ article.createDate.year }}</p>
+                </template>
+            </div>
+        </template>
+    </template>
+</div>
+
+
+<div id="footer">
+    <h3>Material</h3>
+    <p>Powered With ❤ By <a>Page.qy</a></p>
+</div>
+
+
+<script type="text/javascript" src="{{ script.common }}"></script>
+</body>
+</html>

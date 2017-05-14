@@ -1,0 +1,23 @@
+
+#about {
+    width: 90%;
+    margin-left: 5%;
+    position: relative;
+    background-color: white;
+    z-index: 1;
+    top: 130px;
+    box-shadow: 0 10px 20px 0 rgba(0,0,0,0.2);
+    padding-top: 80px;
+    margin-bottom: 150px;
+}
+#about h4 {
+    text-align: center;
+    letter-spacing: 0.08em;
+}
+#about > hr {
+    width: 60px;
+    height: 1px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.8);
+    margin: 15px calc(50% - 30px) 60px calc(50% - 30px);
+}
