@@ -2,6 +2,7 @@ const fs = require('node-fs-extra');
 const path = require('path');
 const extract = require('extract-zip');
 const request = require('request');
+const platform = require('os').platform();
 const preVersion = require('../../package.json').version;
 
 
@@ -9,7 +10,7 @@ module.exports.check = check;
 module.exports.install = install;
 
 
-const URL = "http://123.206.184.175/api/update";
+const URL = `http://123.206.184.175/api/update?platform=${platform}`;
 const target = path.join(__dirname, "../../upgrade/");
 
 

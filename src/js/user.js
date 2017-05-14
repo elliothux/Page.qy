@@ -77,7 +77,6 @@ async function restore(folderPath) {
             fs.existsSync(path.join(folderPath, './config.json')) &&
                 config.restore(path.join(folderPath, './config.json'));
         } else {
-            await github.updateRepo();
             db.restore(path.join(__dirname,
                 `../../user/${config.get().username}.github.io/backup/db`));
             config.restore(path.join(__dirname,

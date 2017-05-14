@@ -20,13 +20,13 @@ app.get('/api/update', (req, res) => {
     ));
 });
 app.get('/download/win', (req, res) => {
-    res.redirect(getDownloadURL('win'));
+    res.redirect(getDownloadURL('win32'));
 });
 app.get('/download/mac', (req, res) => {
-    res.redirect(getDownloadURL('mac'));
+    res.redirect(getDownloadURL('darwin'));
 });
 app.get('/download/linux', (req, res) => {
-    res.redirect(getDownloadURL('win'));
+    res.redirect(getDownloadURL('linux'));
 });
 
 
@@ -37,7 +37,7 @@ const getLatestRelease = () => {
 const getUpdateUrl = (platform) => {
     if (JSON.parse(fs.readFileSync(
         './package.json', 'utf-8')).update.type === 'full')
-        return getUpdateUrl(platform);
+        return getDownloadURL(platform);
     else
         return `http://oprticelb.bkt.clouddn.com/v${getLatestRelease()}.zip`
 };
@@ -45,8 +45,8 @@ const getUpdateUrl = (platform) => {
 const getDownloadURL = (platform) => {
     const latest = JSON.parse(fs.readFileSync('./package.json', 'utf-8')).update.fullVersion;
     return {
-        mac: `http://oprticelb.bkt.clouddn.com/Page.qy-v${latest}.dmg`,
-        win: `http://oprticelb.bkt.clouddn.com/Page.qy-v${latest}.exe`,
+        darwin: `http://oprticelb.bkt.clouddn.com/Page.qy-v${latest}.dmg`,
+        win32: `http://oprticelb.bkt.clouddn.com/Page.qy-v${latest}.exe`,
         linux: `http://oprticelb.bkt.clouddn.com/Page.qy-v${latest}.zip`,
     }[platform]
 };

@@ -42,9 +42,9 @@
   "scripts": {
     "start": "electron-rebuild && electron --js-flags=\"--harmony-async-await\" main.js",
     "dev": "webpack-dev-server --content-base",
-    "build-mac": "electron-packager . Page.qy --platform=darwin --arch=x64 --out build --icon=build/icon.icns --ignore=node_modules --ignore=dist --ignore=.idea --ignore=webpack.config.js --ignore=yarn --ignore=.gitignore  --overwrite --rebuild",
+    "build-mac": "electron-packager . Page.qy --platform=darwin --arch=x64 --out build --icon=build/icon.icns --ignore=node_modules --ignore=dist --ignore=doc --ignore=node_modules --ignore=website --ignore=README.md --ignore=.idea --ignore=webpack.config.js --ignore=yarn --ignore=.gitignore --overwrite --rebuild",
     "build-win": "electron-packager . Page.qy --platform=win32 --arch=x64 --out build --icon=build/icon.ico --ignore=node_modules --ignore=dist --ignore=doc --ignore=node_modules --ignore=website --ignore=README.md --ignore=.idea --ignore=webpack.config.js --ignore=yarn --ignore=.gitignore --overwrite --rebuild",
-    "build-linux": "electron-packager . Page.qy --platform=linux --arch=x64 --out build --icon=build/icon.icns --ignore=node_modules --ignore=dist --ignore=.idea --ignore=webpack.config.js --ignore=yarn --ignore=.gitignore  --overwrite --rebuild",
+    "build-linux": "electron-packager . Page.qy --platform=linux --arch=x64 --out build --icon=build/icon.icns --ignore=node_modules --ignore=dist --ignore=doc --ignore=node_modules --ignore=website --ignore=README.md --ignore=.idea --ignore=webpack.config.js --ignore=yarn --ignore=.gitignore --overwrite --rebuild",
     "setup": "electron-installer-windows --config build/config.json"
   },
   "keywords": [
