@@ -21,20 +21,20 @@ async function login(username, password) {
         password: password
     });
     await github.getUserInfo(username, password);
+    const dbPath = path.join(__dirname,
+        `../../db/article`);
+    fs.existsSync(dbPath) && fs.removeSync(dbPath);
 }
 
 
 function logout() {
     const repoPath = path.join(__dirname,
         `../../user/${config.get().username}.github.io/`);
-    const dbPath = path.join(__dirname,
-        `../../db`);
     const tempPath = path.join(__dirname,
         `../../user/temp`);
     const avatarPath = path.join(__dirname,
         `../../user/avatar.jpg`);
     fs.existsSync(repoPath) && fs.removeSync(repoPath);
-    fs.existsSync(dbPath) && fs.removeSync(dbPath);
     fs.existsSync(tempPath) && fs.removeSync(tempPath);
     fs.existsSync(avatarPath) && fs.removeSync(avatarPath);
     config.initConfig();

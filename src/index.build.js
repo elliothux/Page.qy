@@ -28420,7 +28420,7 @@ var Article = function (_React$Component) {
                     confirmButton: {
                         width: '70px',
                         display: 'inline-block',
-                        padding: '0px 15px 10px 15px',
+                        padding: '7px 10px',
                         margin: '0 15px',
                         backgroundColor: 'rgba(255, 255, 255, 0.15)',
                         cursor: 'pointer',
