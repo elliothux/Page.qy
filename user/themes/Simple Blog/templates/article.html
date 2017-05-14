@@ -9,7 +9,7 @@
 </head>
 <body>
 <div id="header">
-    <div id="headBackground" style="background-image: url({{ statics['nav.jpg'] }})"></div>
+    <div id="headBackground" style="background-image: url({{ cover || statics['nav.jpg'] }})"></div>
     <a id="navHome" href="{{ links.home }}">HOME</a>
     <div id="nav">
         <a href="{{ links.tags }}">TAGS</a>

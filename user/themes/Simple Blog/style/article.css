@@ -4,6 +4,10 @@
     margin-left: 15%;
 }
 
+#headTitle {
+    margin-top: 40px;
+}
+
 #header hr {
     margin-left: 15%;
 }
@@ -13,6 +17,7 @@
     top: -45px;
     margin-left: 15%;
     list-style: none;
+    z-index: 2;
 }
 
 #tags > li {
@@ -28,6 +33,7 @@
 #tags > li a {
     color: white;
 }
+
 
 #content {
     width: 70%;
@@ -65,20 +71,28 @@
     margin: 25px 0 8px 0;
 }
 
-#content h4, #content h5, #content h6 {
+#content h4,
+#content h5,
+#content h6 {
     font-size: 1.15em;
     line-height: 1.8em;
     margin: 15px 0 5px 0;
 }
 
-#content p, #content dl, #content ol,
-#content ul, #content pre, #content code {
-    margin: 7px 0;
+#content p,
+#content dl,
+#content ol,
+#content ul,
+#content pre,
+#content code {
+    margin: 0;
+    padding: 0;
     font-size: 1.05em;
     line-height: 1.8em;
 }
 
-#content ul, #content ol {
+#content ul,
+#content ol {
     margin: 20px;
 }
 
@@ -93,12 +107,14 @@
 
 #content pre {
     color: #898989;
-    background-color: white;
-    padding: 10px 15px;
-    border: 1px solid #dbdbdb;
-    border-radius: 8px;
-    font-size: 0.9em;
+    padding: 15px 18px;
+    margin: 25px 0;
+    font-size: 13px;
     line-height: 1.5em;
+    background-color: rgba(0,0,0, 0.02);
+    border-radius: 0;
+    border: none;
+    box-shadow: 0 3px 20px 0 rgba(0,0,0,0.2);
 }
 
 #content table {
@@ -117,8 +133,11 @@
 
 #content img {
     display: block;
-    margin: 20px auto;
-    border-radius: 8px;
+    margin: 25px auto;
+    border-radius: 0;
+    box-shadow: 0 3px 15px 1px rgba(0,0,0,0.2);
+    width: 100%;
+    height: auto;
 }
 
 #content table {
@@ -135,7 +154,8 @@
     border-collapse: collapse;
 }
 
-#content table td, #content table th {
+#content table td,
+#content table th {
     border: 1px solid #999;
     padding: 3px 5px;
     min-width: 50px;
@@ -144,7 +164,7 @@
 }
 
 #content blockquote {
-    padding: 5px 0 5px 15px;
+    padding: 5px 15px;
     border-left: 5px solid gray;
     background-color: rgba(0, 0, 0, 0.05);
     margin: 20px 0;
