@@ -54,14 +54,14 @@ export default class About extends React.Component {
             </a>
             <a
                 style={this.style().externalLink}
-                onClick={this.props.openURL.bind(null, 'http://123.206.184.175/')}
+                onClick={this.props.openURL.bind(null, 'http://page.huqingyang.top/')}
             >{
                 this.props.language === 'zh' ? '🌏 访问网站' : '🌏 Visit Website'
             }
             </a>
             <a
                 style={this.style().externalLink}
-                onClick={this.props.openURL.bind(null, 'http://123.206.184.175/')}
+                onClick={this.props.openURL.bind(null, 'http://page.huqingyang.top/')}
             >
                 {function () {
                     switch (this.props.platform) {
