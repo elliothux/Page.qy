@@ -123,9 +123,9 @@ async function _getRepoPath() {
             const repoPath = path.join(userPath, `./${name}.github.io/`);
             fs.writeFileSync(path.join(repoPath, './.temp'), (new Date()).toLocaleString(), 'utf-8');
             console.log('Start test push ...');
-            exec(`cd ${repoPath} && git add --all`, error => {
+            exec(`cd ${repoPath} && git add ./.temp`, error => {
                 error && reject(error);
-                execSync(`cd ${repoPath} && git commit -m 'Test Push'`);
+                execSync(`cd ${repoPath} && git commit ./.temp -m 'Test Push'`);
                 exec(`cd ${repoPath} && git push https://${name}:${config.get().password}@github.com/${name}/${name}.github.io.git`, error => {
                     error && reject(error);
                     console.log('Test push success.');
