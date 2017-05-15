@@ -1,5 +1,0 @@
-{
-  "src": "build/Page.qy-win32-x64/",
-  "dest": "build/installers/",
-  "icon": "build/icon.ico"
-}
