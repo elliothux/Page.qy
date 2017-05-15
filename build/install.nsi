@@ -2,15 +2,14 @@
 
 ; 安装程序初始定义常量
 !define PRODUCT_NAME "Page.qy"
-!define PRODUCT_VERSION "0.0.1"
-!define PRODUCT_PUBLISHER "Github@HuQingyang"
-!define PRODUCT_WEB_SITE "http://page.huqingyang.top"
+!define PRODUCT_VERSION "0.0.3"
+!define PRODUCT_PUBLISHER "GitHub@HuQingyang"
+!define PRODUCT_WEB_SITE "http://page.huqingyang.top/"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\Page.qy.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
 
-SetCompressor /SOLID lzma
-SetCompressorDictSize 32
+SetCompressor lzma
 
 ; ------ MUI 现代界面定义 (1.67 版本以上兼容) ------
 !include "MUI.nsh"
@@ -6424,6 +6423,8 @@ Section "MainSection" SEC01
   File "Page.qy-win32-x64\resources\app\src\pic\uploadManage.svg"
   SetOutPath "$INSTDIR\resources\app\src"
   File "Page.qy-win32-x64\resources\app\src\uploading.build.js"
+  SetOutPath "$INSTDIR\resources\app\upgrade"
+  File "Page.qy-win32-x64\resources\app\upgrade\v0.0.2.zip"
   SetOutPath "$INSTDIR\resources\app\user"
   File "Page.qy-win32-x64\resources\app\user\config.json"
   SetOutPath "$INSTDIR\resources\app\user\themes\Red Material"
@@ -6545,6 +6546,7 @@ Section Uninstall
   Delete "$INSTDIR\resources\app\user\themes\Red Material\statics\git.svg"
   Delete "$INSTDIR\resources\app\user\themes\Red Material\info.json"
   Delete "$INSTDIR\resources\app\user\config.json"
+  Delete "$INSTDIR\resources\app\upgrade\v0.0.2.zip"
   Delete "$INSTDIR\resources\app\src\uploading.build.js"
   Delete "$INSTDIR\resources\app\src\pic\uploadManage.svg"
   Delete "$INSTDIR\resources\app\src\pic\upload.svg"
@@ -12084,6 +12086,7 @@ Section Uninstall
   RMDir "$INSTDIR\resources\app\user\themes\Red Material\statics"
   RMDir "$INSTDIR\resources\app\user\themes\Red Material"
   RMDir "$INSTDIR\resources\app\user"
+  RMDir "$INSTDIR\resources\app\upgrade"
   RMDir "$INSTDIR\resources\app\src\pic"
   RMDir "$INSTDIR\resources\app\src\lib"
   RMDir "$INSTDIR\resources\app\src\js"
