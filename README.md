@@ -22,7 +22,7 @@ Page.qy 是**一个一站式管理、生成、部署静态网站**的工具, 只
 
 ⚙ 永远保持最新 => Page.qy 支持无缝的更新体验, 有时甚至无需重启软件k即可完成更新!    
 
-🤑 免费自由开源 => Page.qy 将网站部署在 GitHub Page, 感谢 GitHub 免费提供的服务! Page.qy 基于 React 、Electron、Node.js 等现代 Web 技术构建, 感谢为这些开源项目贡献源码的软件工程师, 你们的开源项目是 Page.qy 的基础! 同时, Page.qy 也开源在 GitHub 并接受 Issues 或共同开发!  
+❤ 免费自由开源 => Page.qy 将网站部署在 GitHub Page, 感谢 GitHub 免费提供的服务! Page.qy 基于 React 、Electron、Node.js 等现代 Web 技术构建, 感谢为这些开源项目贡献源码的软件工程师, 你们的开源项目是 Page.qy 的基础! 同时, Page.qy 也开源在 GitHub 并接受 Issues 或共同开发!  
 
 ## 3.项目结构
 │── build (项目打包所需文件)  
