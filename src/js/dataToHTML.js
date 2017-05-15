@@ -292,9 +292,10 @@ function _updateStaticFiles() {
         path.join(theme(), './statics/'),
         path.join(target, './statics/statics/')
     );
-    fs.copySync(path.join(__dirname, '../lib/highlight.min.js'),
-        path.join(target, './statics/script/highlight.min.js')
-    )
+    fs.existsSync(path.join(__dirname, '../lib/highlight.min.js')) &&
+        fs.copySync(path.join(__dirname, '../lib/highlight.min.js'),
+            path.join(target, './statics/script/highlight.min.js')
+        )
 }
 
 
