@@ -1,0 +1,63 @@
+
+#about {
+    width: 90%;
+    margin-left: 5%;
+    position: relative;
+    background-color: white;
+    z-index: 1;
+    top: 130px;
+    box-shadow: 0 10px 20px 0 rgba(0,0,0,0.2);
+    padding-top: 80px;
+    padding-bottom: 30px;
+    margin-bottom: 150px;
+    text-align: center;
+}
+#about > * {
+    width: 66%;
+    margin-left: 17%;
+}
+#about h4 {
+    text-align: center;
+    letter-spacing: 0.08em;
+}
+#about > hr {
+    width: 60px;
+    height: 1px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.8);
+    margin: 15px calc(50% - 30px) 60px calc(50% - 30px);
+}
+
+#avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    margin: 0 0 30px 0;
+    box-shadow: 0 5px 20px 1px rgba(0,0,0,0.2);
+}
+
+#name {
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+
+#introduction {
+    font-weight: normal;
+
+}
+
+#about > .info {
+    text-align: center;
+    font-size: 0.8em;
+    margin: 30px 17%;
+    display: block;
+    color: black;
+}
+.info :hover {
+    text-decoration: underline;
+}
+
+.info img {
+    width: 30px;
+    height: 30px;
+}
