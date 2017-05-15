@@ -114,6 +114,7 @@ body {
 
 .wangEditor-txt#editorContainer li {
     margin: 6px 0 6px 0;
+    line-height: 1.5em;
 }
 
 .wangEditor-txt#editorContainer abbr {
@@ -131,6 +132,7 @@ body {
     border-radius: 0;
     border: none;
     box-shadow: 0 3px 20px 0 rgba(0,0,0,0.2);
+    overflow-x: auto;
 }
 
 .wangEditor-txt#editorContainer table {
@@ -148,6 +150,8 @@ body {
 }
 
 .wangEditor-txt#editorContainer img {
+    max-width: 100%;
+    height: auto;
     display: block;
     margin: 25px auto;
     border-radius: 0;

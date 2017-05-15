@@ -27586,11 +27586,12 @@ var App = function (_React$Component) {
 
                 info = _ref2[0];
                 path = _ref2[1];
-            }if (window.confirm(this.props.config.get('language') === 'zh' ? 'Page.qy \u6709\u65B0\u7248\u672C\u5566! \u7ACB\u5373\u5B89\u88C5?\n\n' + info.description : 'A New Version of Page.qy!\n\n' + info.description + '! Install Now?')) await this.props.autoUpdate.install(path);
-
-            if (window.confirm(this.props.config.get('language') === 'zh' ? '\u66F4\u65B0\u5B8C\u6210, \u662F\u5426\u7ACB\u5373\u91CD\u542F Page.qy ?' : 'Update install success! Restart Page.qy?')) {
-                this.props.app.relaunch();
-                this.props.app.exit(0);
+            }if (window.confirm(this.props.config.get('language') === 'zh' ? 'Page.qy \u6709\u65B0\u7248\u672C\u5566! \u7ACB\u5373\u5B89\u88C5?\n\n' + info.description : 'A New Version of Page.qy!\n\n' + info.description + '! Install Now?')) {
+                await this.props.autoUpdate.install(path);
+                if (window.confirm(this.props.config.get('language') === 'zh' ? '\u66F4\u65B0\u5B8C\u6210, \u662F\u5426\u7ACB\u5373\u91CD\u542F Page.qy ?' : 'Update install success! Restart Page.qy?')) {
+                    this.props.app.relaunch();
+                    this.props.app.exit(0);
+                }
             }
         }
     }, {

@@ -35,7 +35,6 @@ export default class App extends React.Component {
                 this.props.config.get('language') === 'zh' ?
                     '已更新到最新版!' : 'Already Updated!');
             else this.handleUpdate(data[0], data[1])
-
         }.bind(this));
         this.handleUpdate();
     }
@@ -47,18 +46,17 @@ export default class App extends React.Component {
             this.props.config.get('language') === 'zh' ?
                 `Page.qy 有新版本啦! 立即安装?\n\n${info.description}` :
                 `A New Version of Page.qy!\n\n${info.description}! Install Now?`
-            ))
-            await this.props.autoUpdate.install(path);
-
-        if (window.confirm(
-            this.props.config.get('language') === 'zh' ?
-                `更新完成, 是否立即重启 Page.qy ?` :
-                'Update install success! Restart Page.qy?'
             )) {
-            this.props.app.relaunch();
-            this.props.app.exit(0);
+            await this.props.autoUpdate.install(path);
+            if (window.confirm(
+                    this.props.config.get('language') === 'zh' ?
+                        `更新完成, 是否立即重启 Page.qy ?` :
+                        'Update install success! Restart Page.qy?'
+                )) {
+                this.props.app.relaunch();
+                this.props.app.exit(0);
+            }
         }
-
     }
 
     handleViewChange(view) {
