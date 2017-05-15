@@ -30009,43 +30009,43 @@ var About = function (_React$Component) {
                     _react2.default.createElement(
                         'p',
                         null,
-                        'Page.qy\u81F4\u529B\u4E8E\u8BA9\u6BCF\u4E2A\u4EBA\u90FD\u80FD\u8F7B\u677E\u5730\u514D\u8D39\u5EFA\u7ACB\u4E13\u5C5E\u81EA\u5DF1\u7684\u7F51\u7AD9\uFF0C\u65E0\u9700\u4EFB\u4F55\u7F16\u7A0B\u6216\u64CD\u4F5C\u670D\u52A1\u5668\u7B49\u4E13\u4E1A\u77E5\u8BC6\u3002Page.qy \u9002\u7528\u4E8E\u4E2A\u4EBA\u535A\u5BA2\u3001\u5728\u7EBF\u6587\u6863\u7B49\u9759\u6001\u7F51\u7AD9\u3002'
+                        'Page.qy \u81F4\u529B\u4E8E\u8BA9\u6BCF\u4E2A\u4E0D\u4F1A\u7F16\u7A0B\u7684\u4EBA\u90FD\u80FD\u8F7B\u677E\u5730\u514D\u8D39\u5EFA\u7ACB\u4E13\u5C5E\u81EA\u5DF1\u7684\u7F51\u7AD9\u3002Page.qy \u9002\u7528\u4E8E\u4E2A\u4EBA\u535A\u5BA2\u3001\u5728\u7EBF\u6587\u6863\u7B49\u7B80\u5355\u7684\u9759\u6001\u7F51\u7AD9\u3002'
                     ),
                     _react2.default.createElement('br', null),
                     _react2.default.createElement(
                         'p',
                         null,
-                        'Page.qy\u5C06\u7F51\u9875\u4EE3\u7801\u6258\u7BA1\u4E8E',
+                        'Page.qy \u5C06\u7F51\u9875\u4EE3\u7801\u6258\u7BA1\u4E8E',
                         _react2.default.createElement(
                             'a',
                             { style: this.style().link, onClick: this.props.openURL.bind(null, 'https://pages.github.com/') },
-                            'GitHub Pages'
+                            '\xA0GitHub Pages '
                         ),
-                        '\uFF0C\u611F\u8C22GitHub\u63D0\u4F9B\u7684\u670D\u52A1\u3002'
+                        '\uFF0C\u611F\u8C22 GitHub \u63D0\u4F9B\u7684\u670D\u52A1\u3002'
                     ),
                     _react2.default.createElement('br', null),
                     _react2.default.createElement(
                         'p',
                         null,
-                        'Page.qy\u57FA\u4E8E',
+                        'Page.qy \u57FA\u4E8E',
                         _react2.default.createElement(
                             'a',
                             { style: this.style().link, onClick: this.props.openURL.bind(null, 'https://facebook.github.io/react/') },
-                            'React'
+                            ' React '
                         ),
                         '\u3001',
                         _react2.default.createElement(
                             'a',
                             { style: this.style().link, onClick: this.props.openURL.bind(null, 'https://electron.atom.io/') },
-                            'Electron'
+                            ' Electron '
                         ),
                         '\u53CA',
                         _react2.default.createElement(
                             'a',
                             { style: this.style().link, onClick: this.props.openURL.bind(null, 'https://nodejs.org/en/') },
-                            'Node.js'
+                            ' Node.js '
                         ),
-                        '\u6784\u5EFA\u3002 \u611F\u8C22\u4ED6\u4EEC\u7684\u5F00\u6E90\u9879\u76EE\u8BA9Page.qy\u7684\u5F00\u53D1\u66F4\u52A0\u8F7B\u677E\u3002'
+                        '\u7B49\u73B0\u4EE3 Web \u6280\u672F\u6784\u5EFA, \u611F\u8C22\u4E3A\u8FD9\u4E9B\u5F00\u6E90\u9879\u76EE\u8D21\u732E\u6E90\u7801\u7684\u8F6F\u4EF6\u5DE5\u7A0B\u5E08, \u4F60\u4EEC\u7684\u5F00\u6E90\u9879\u76EE\u662F Page.qy \u7684\u57FA\u7840!'
                     ),
                     _react2.default.createElement('br', null),
                     _react2.default.createElement(
