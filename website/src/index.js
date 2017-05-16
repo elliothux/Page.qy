@@ -10,12 +10,10 @@ const downloadText = document.getElementById('downloadText');
 
 const changeStatus = [init, goIntro1, goIntro2, end];
 let index = 0;
-let maxScroll = document.body.offsetHeight * 5 / 6;
+let flag = true;
 
 
 window.addEventListener('load', () => {
-    window.screenTop = 0;
-    document.body.scrollTop = 0;
     changeStatus[index]();
 });
 window.addEventListener('resize', () => {
@@ -59,6 +57,8 @@ button[2].addEventListener('click', function () {
 
 
 function handleScroll(e) {
+    console.log(e);
+    if (!flag) return;
     const distance = e.wheelDeltaY;
     if (distance < 0 && index === 3) return;
     if (distance > 0 && index === 0) return;
@@ -66,10 +66,11 @@ function handleScroll(e) {
         changeStatus[++index]();
     else if (distance > 0)
         changeStatus[--index]();
-    window.removeEventListener('mousewheel', handleScroll);
+    flag = false;
     setTimeout(function () {
-        window.addEventListener('mousewheel', handleScroll)
-    }, 800)
+        flag = true;
+    }, 800);
+    return false
 }
 
 
