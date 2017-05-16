@@ -31,68 +31,73 @@ Page.qy 不适用于: ❌ 动态网站
 ❤ 免费自由开源 => Page.qy 将网站部署在 GitHub Page, 感谢 GitHub 免费提供的服务! Page.qy 基于 React 、Electron、Node.js 等现代 Web 技术构建, 感谢为这些开源项目贡献源码的软件工程师, 你们的开源项目是 Page.qy 的基础! 同时, Page.qy 也开源在 GitHub 并接受 Issues 或共同开发!  
 
 ## 3.项目结构
-│── build (项目打包所需文件)  
-│── db	(用户数据库)  
-│── dist (渲染进程中引入的JS文件)  
-│   │── components (React 组件目录)  
-│   │   │── App.js (根组件)  
-│   │   │── Nav.js (导航栏)  
-│   │   │── Preview.js (预览)  
-│   │   │── Common (通用组件)  
-│   │   │   │── Message.js (提示消息)  
-│   │   │   └── Select.js (Select.js (替换丑陋的默认 \<select\>))   
-│   │   │── Manage (管理模块)  
-│   │   │   │── Article.js (文章)  
-│   │   │   │── Editor.js (编辑)  
-│   │   │   │── History (历史模块)  
-│   │   │   │   │── History.js  
-│   │   │   │   └── HistoryItem.js  
-│   │   │   └── Manage.js\
-│   │   │── Options (选项模块)\
-│   │   │   │── About.js (关于)\
-│   │   │   │── Options.js (选项)\
-│   │   │   │── Setting.js (设置)\
-│   │   │   └── Theme.js (主题管理)\
-│   │── lib (渲染进程所需的JS库文件)\
-│   │   └── eventProxy.js\
-│   │── index.js	(主窗口)\
-│   │── login.js (登录窗口)\
-│   │── logout.js (登出窗口)\
-│   └── uploading.js (上传窗口)\
-│── src (项目资源文件)\
-│   │── css (样式)\
-│   │── fonts (字体)\
-│   │── lib (后台进程所需的JS库文件)\
-│   │── pic (图片)\
-│   │── html (渲染进程的HTML文件)\
-│   │   │── editor.html (编辑)\
-│   │   │── index.html (主界面)\
-│   │   │── login.html (登录界面)\
-│   │   │── logout.html (登出界面)\
-│   │   └── uploading.html (上传界面)\
-│   │── js (后台进程引入的JS文件)\
-│   │   │── autoUpdate.js (自动更新)\
-│   │   │── config.js (管理用户配置)\
-│   │   │── contentProcess.js (处理内容)\
-│   │   │── dataToHTML.js (根据数据生成HTML)\
-│   │   │── db.js (操作数据库)\
-│   │   │── github.js (部署网站)\
-│   │   │── menuTemplate.js (应用菜单栏)\
-│   │   │── templateEngine.js (模板引擎)\
-│   │   │── theme.js (管理主题)\
-│   │   └── user.js (管理用户)\
-│   │── index.build.js (打包的主窗口引入的JS文件)\
-│   │── login.build.js (打包的登录口引入的JS文件)\
-│   │── logout.build.js (打包的登出口引入的JS文件)\
-│   └── uploading.build.js (打包的上传窗口引入的JS文件)\
-│── user (用户文件)\
-│   │── avatar.jpg (头像)\
-│   │── config.json (用户配置)\
-│   │── temp (临时文件)\
-│   └── themes (主题文件)\
-│── webpack.config.js (webpack配置)\
-│── main.js (主进程)\
-└── package.json (项目信息文件)
+<pre style={max-height: 500px; overflow: auto}>
+    <code>
+    │── build (项目打包所需文件)  
+    │── db	(用户数据库)  
+    │── dist (渲染进程中引入的JS文件)  
+    │   │── components (React 组件目录)  
+    │   │   │── App.js (根组件)  
+    │   │   │── Nav.js (导航栏)  
+    │   │   │── Preview.js (预览)  
+    │   │   │── Common (通用组件)  
+    │   │   │   │── Message.js (提示消息)  
+    │   │   │   └── Select.js (Select.js (替换丑陋的默认 \<select\>))   
+    │   │   │── Manage (管理模块)  
+    │   │   │   │── Article.js (文章)  
+    │   │   │   │── Editor.js (编辑)  
+    │   │   │   │── History (历史模块)  
+    │   │   │   │   │── History.js  
+    │   │   │   │   └── HistoryItem.js  
+    │   │   │   └── Manage.js\
+    │   │   │── Options (选项模块)\
+    │   │   │   │── About.js (关于)\
+    │   │   │   │── Options.js (选项)\
+    │   │   │   │── Setting.js (设置)\
+    │   │   │   └── Theme.js (主题管理)\
+    │   │── lib (渲染进程所需的JS库文件)\
+    │   │   └── eventProxy.js\
+    │   │── index.js	(主窗口)\
+    │   │── login.js (登录窗口)\
+    │   │── logout.js (登出窗口)\
+    │   └── uploading.js (上传窗口)\
+    │── src (项目资源文件)\
+    │   │── css (样式)\
+    │   │── fonts (字体)\
+    │   │── lib (后台进程所需的JS库文件)\
+    │   │── pic (图片)\
+    │   │── html (渲染进程的HTML文件)\
+    │   │   │── editor.html (编辑)\
+    │   │   │── index.html (主界面)\
+    │   │   │── login.html (登录界面)\
+    │   │   │── logout.html (登出界面)\
+    │   │   └── uploading.html (上传界面)\
+    │   │── js (后台进程引入的JS文件)\
+    │   │   │── autoUpdate.js (自动更新)\
+    │   │   │── config.js (管理用户配置)\
+    │   │   │── contentProcess.js (处理内容)\
+    │   │   │── dataToHTML.js (根据数据生成HTML)\
+    │   │   │── db.js (操作数据库)\
+    │   │   │── github.js (部署网站)\
+    │   │   │── menuTemplate.js (应用菜单栏)\
+    │   │   │── templateEngine.js (模板引擎)\
+    │   │   │── theme.js (管理主题)\
+    │   │   └── user.js (管理用户)\
+    │   │── index.build.js (打包的主窗口引入的JS文件)\
+    │   │── login.build.js (打包的登录口引入的JS文件)\
+    │   │── logout.build.js (打包的登出口引入的JS文件)\
+    │   └── uploading.build.js (打包的上传窗口引入的JS文件)\
+    │── user (用户文件)\
+    │   │── avatar.jpg (头像)\
+    │   │── config.json (用户配置)\
+    │   │── temp (临时文件)\
+    │   └── themes (主题文件)\
+    │── webpack.config.js (webpack配置)\
+    │── main.js (主进程)\
+    └── package.json (项目信息文件)
+
+    </code>
+</pre>
 
 ## 4. 技术栈
 Page.qy 基于纯 JavaScript 技术开发。
@@ -121,10 +126,10 @@ Electron 有很多自动更新的模块可用, 但是都感觉过于繁琐, 索�
     "url": "https://updateUrl.com/v0.0.4"
 }
 ```
-其中, "type" 有三种类型:
-* hotPatch: 适用于只更新了渲染进程的情况, 更新完不需要重启软件
-* patch: 适用于更新了后台进程的情况, 更新完需要重启软件
-* full : 适用于大的版本更新, 需要重新下载安装
+其中, "type" 有三种类型:  
+* hotPatch: 适用于只更新了渲染进程的情况, 更新完不需要重启软件  
+* patch: 适用于更新了后台进程的情况, 更新完需要重启软件  
+* full : 适用于大的版本更新, 需要重新下载安装  
 
 如果有新版本, 且类型为 hotPatch 或者 patch, 则立即下载更新包, 然后解压并替换现有文件。如果类型为 full, 则跳转到浏览器下载安装包。
 
@@ -160,8 +165,8 @@ Electron 有很多自动更新的模块可用, 但是都感觉过于繁琐, 索�
 ```html
 <div id="tags">
     <a>#Hello</a>
-	<a>#World</a>
-	<a>#Page.qy</a>
+    <a>#World</a>
+    <a>#Page.qy</a>
 </div>
 ```
 模板引擎大概的实现思路为: 使用 with 语句将需要引用的值注入当前作用域, 解析模板, 使用正则表达式查找引用值并执行 eval(), 然后使用正则表达式将引用替换为 eval() 执行的结果。
@@ -172,6 +177,6 @@ Electron 有很多自动更新的模块可用, 但是都感觉过于繁琐, 索�
 Page.qy 会继续更新, 后期会加入 Markdown 支持。一直在寻找合适的编辑器, 如果没找到合适的, 可能会自己写(都说编辑器是神坑, 想尝试一下😂)…
 
 最后, 如果你觉得项目很赞的话, 请大力的 Star 👻!  
-另外, 最近正在找暑期前端实习, 如果哪位大佬对我有兴趣的话, 请联系我的邮箱 <a href="mailto://hqy841440305@gmail.com">hqy841440305@Gmail.com<a/>, 十分感谢!
+另外, 最近正在找暑期前端实习, 如果哪位大佬对我有兴趣的话, 请联系我的邮箱 <a href="mailto://hqy841440305@gmail.com">hqy841440305@Gmail.com</a>, 十分感谢!
 
-#EOF
+## \#EOF

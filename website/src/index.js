@@ -22,7 +22,7 @@ window.addEventListener('resize', () => {
     maxScroll = document.body.offsetHeight * 5 / 6;
     changeStatus[index]();
 });
-window.addEventListener('scroll', handleScroll);
+window.addEventListener('mousewheel', handleScroll);
 download[0].addEventListener('mouseover', function () {
     downloadText.innerHTML = 'Page.qy for Windows'
 });
@@ -58,27 +58,18 @@ button[2].addEventListener('click', function () {
 
 
 
-function handleScroll() {
-    const scroll = document.body.scrollTop;
-    if (scroll < maxScroll / 6) {
-        if (index === 0) return;
-        index = 0;
-        changeStatus[index]();
-    }
-    else if (scroll <= maxScroll / 6 * 3) {
-        if (index === 1) return;
-        index = 1;
-        changeStatus[index]();
-    }
-    else if (scroll <= maxScroll / 10 * 8) {
-        if (index === 2) return;
-        index = 2;
-        changeStatus[index]();
-    } else {
-        if (index === 3) return;
-        index = 3;
-        changeStatus[index]();
-    }
+function handleScroll(e) {
+    const distance = e.wheelDeltaY;
+    if (distance < 0 && index === 3) return;
+    if (distance > 0 && index === 0) return;
+    if (distance < 0)
+        changeStatus[++index]();
+    else if (distance > 0)
+        changeStatus[--index]();
+    window.removeEventListener('mousewheel', handleScroll);
+    setTimeout(function () {
+        window.addEventListener('mousewheel', handleScroll)
+    }, 800)
 }
 
 
