@@ -15,8 +15,9 @@ const config = require(target);
 
 
 function getConfig(option) {
+    const config = fs.readJSONFileSync(target, 'utf-8');
     return option ?
-        require(target)[option] : require(target)
+        config[option] : config
 }
 
 

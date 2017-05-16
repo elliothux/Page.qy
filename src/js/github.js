@@ -34,7 +34,7 @@ const gh = () => (
 async function pushRepo() {
     const name = config.get().username;
     const path = await _getRepoPath();
-    console.log(`https://${name}:${config.get('password')}@github.com/${name}/${name}.github.io.git`)
+    console.log(`https://${name}:${config.get('password')}@github.com/${name}/${name}.github.io.git`);
     return new Promise((resolve, reject) => {
         Git(path)
             .pull('origin', 'master', (error) => {
@@ -99,6 +99,7 @@ async function getUserInfo() {
                 .on('close', resolve)
         });
     });
+    execSync(`git config --global user.email "${mail || 'Page.qy@test.test'}" && git config --global user.name "${name || username}"`);
     console.log('Get user info success.');
     await _getRepoPath();
 }
@@ -125,7 +126,7 @@ async function _getRepoPath() {
             console.log('Start test push ...');
             exec(`cd ${repoPath} && git add ./.temp`, error => {
                 error && reject(error);
-                execSync(`cd ${repoPath} && git commit ./.temp -m "Test Push"`);
+                execSync(`cd ${repoPath} && git commit ./.temp --author="${name} <>" -m "Test Push"`);
                 exec(`cd ${repoPath} && git push https://${name}:${config.get().password}@github.com/${name}/${name}.github.io.git`, error => {
                     error && reject(error);
                     console.log('Test push success.');
@@ -158,9 +159,9 @@ function _copyFile() {
     const from = path.join(__dirname, '../../user/temp/');
     const to = `${userPath}${name}.github.io`;
     fs.existsSync(path.join(to, './articles')) &&
-        fs.removeSync(path.join(to, './articles'));
+    fs.removeSync(path.join(to, './articles'));
     fs.existsSync(path.join(to, './statics')) &&
-        fs.removeSync(path.join(to, './statics'));
+    fs.removeSync(path.join(to, './statics'));
     for (each of fs.readdirSync(from))
         fs.copySync(
             path.join(from, `./${each}`),
