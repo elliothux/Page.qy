@@ -1,5 +1,7 @@
 # Page.qy => 🤘 以简单的方式, 建立你的个人网站, 无需一行代码
 
+下载地址: [Page.qy](http://page.huqingyang.top)
+
 ## 1.简介
 对于很多想要拥有自己网站的人, 大多数都会首先上网搜索”如何建立一个网站”, 然而基本上所有的答案都是下面几个标准的步骤: 申请域名 => 购买云服务器 => 在服务器上部署 Web 应用 (balabalabala…)。  
 
@@ -96,7 +98,7 @@ Page.qy 不适用于: ❌ 动态网站
 Page.qy 基于纯 JavaScript 技术开发。
 
 前端使用 React, 采用 reactCSS 实现 css in js, 采用 react-addons-pure-render-mixin 来提升组件渲染速度, 富文本编辑器使用 wangEditor, 开发时使用 WebpackDevServer, 使用 babel 和 Webpack 打包 JS 文件。
-后台使用 Node.js。HTML模板引擎采用 cheerio 结合正则表达式实现。考虑到Windows上的兼容性(依赖 C++ 的 Node 模块在 Windows 上有时执行 electron-rebuild 失败)数据库使用纯 JavaScript 实现的 nedb。Git 操作使用 simple-git 和 github-api。
+后台使用 Node.js。HTML模板引擎采用 cheerio 结合正则表达式实现。考虑到Windows上的兼容性(依赖 C++ 的 Node 模块在 Windows 上有时执行 electron-rebuild 失败)数据库使用纯 JavaScript 实现的 nedb。Git 操作使用 simple-git 和 github-api。<br/><br/>
 
 前端 View 部分使用 React, 但是 model 部分没有使用 Redux, 因为最初对于 Page.qy 的定位是一个轻量级的工具, 但是后期开发中加入了太多(最初没想到又必不可少的)的功能, Redux 的重要性便逐渐显现出来, 后期可能会使用 Redux (或者Mobx?) 重构整个前端部分。
 
@@ -106,7 +108,30 @@ Page.qy 基于纯 JavaScript 技术开发。
 `Warning: setState(...): Can only update a mounted or mounting component. This usually means you called setState() on an unmounted component.`  
 由于 React 还未及时销毁一些已经 unmounted 的 HistoryItem 实例, 这些实例中的 eventProxy 接收到消息并初始化该实例的状态而引发的错误;  
 正常情况下, 应该在组件中使用 componentWillUnmount() 方法取消订阅 eventProxy 的监听, 但是, 这样会取消其他组件中的相同的监听, 因此行不通;   
-最终只能选择采用一种很 Trick 的方法来避免这个错误: 检测`this._reactInternalInstance === undefined`, 因为在组件在 unmount 之前 _reactInternalInstance 的值为一个对象, unmount 之后该值为 undefined. 不过这种方法实在是下策; 优秀的解决方案应该是开发之前合理的设计!
+最终只能选择采用一种很 Trick 的方法来避免这个错误: 检测`this._reactInternalInstance === undefined`, 因为在组件在 unmount 之前 _reactInternalInstance 的值为一个对象, unmount 之后该值为 undefined. 不过这种方法实在是下策; 优秀的解决方案应该是开发之前合理的设计!<br/><br/>
+
+Electron 有很多自动更新的模块可用, 但是都感觉过于繁琐, 索性自己手写了一个轻量级的自动更新模块。实现了增量更新与热更新。  
+每次软件启动时或者用户点击检查更新按钮时, 更新服务自动从服务器上获取一段 JSON 格式的更新信息, 大概像这样:
+``` json
+{
+    "version":"0.0.4",
+    "fullVersion":"0.0.4",
+    "description":"Fix an layout  issue of editor.",
+    "type":"full",
+    "url": "https://updateUrl.com/v0.0.4"
+}
+```
+其中, "type" 有三种类型:
+* hotPatch: 适用于只更新了渲染进程的情况, 更新完不需要重启软件
+* patch: 适用于更新了后台进程的情况, 更新完需要重启软件
+* full : 适用于大的版本更新, 需要重新下载安装
+
+如果有新版本, 且类型为 hotPatch 或者 patch, 则立即下载更新包, 然后解压并替换现有文件。如果类型为 full, 则跳转到浏览器下载安装包。
+
+大多数时候, 更新都只需要 hotPatch, 更新完毕后只需要执行 `BrowserWindow.getFocusedWindow().webContents.reload()` 即可在不重启软件的情况下实现无痛更新!
+
+同时, 相比于其他的完全更新, 大多数时候的增量更新只需要下载大小不超过几M的更新包, 既能节省服务器资源, 而且也不会因为频繁更新影响到用户。<br/><br/>
+
 
 后台进程中最有意思的是一个功能就是基于自定义主题生成 HTMl (data + template => HTML)。
 为了实现这个功能, 写了一个轻量级的 HTML 静态模板引擎, 用于将静态的数据结合模板转为静态 HTML 文件。  
@@ -147,6 +172,6 @@ Page.qy 基于纯 JavaScript 技术开发。
 Page.qy 会继续更新, 后期会加入 Markdown 支持。一直在寻找合适的编辑器, 如果没找到合适的, 可能会自己写(都说编辑器是神坑, 想尝试一下😂)…
 
 最后, 如果你觉得项目很赞的话, 请大力的 Star 👻!  
-Happy hacking!
+另外, 最近正在找暑期前端实习, 如果哪位大佬对我有兴趣的话, 亲联系我的邮箱 <a href="mailto://hqy841440305@gmail.com">hqy841440305@Gmail.com<a/>
 
 #EOF
