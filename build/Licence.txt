@@ -3,3 +3,5 @@ Page.qy
 以简单的方式
 建立你的个人网站
 无需一行代码
+
+该软件开源在GitHub: https://github.com/HuQingyang/Page.qy

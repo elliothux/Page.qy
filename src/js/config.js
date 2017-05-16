@@ -64,6 +64,7 @@ function restore(filePath) {
             name: config.name,
             mail: config.mail,
             avatar: config.avatar,
+            theme: "Simple Blog",
         }
     );
     setConfig(configData);
