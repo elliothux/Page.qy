@@ -1,6 +1,6 @@
 {
   "name": "Page.qy",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "productName": "Page.qy",
   "description": "A simple way to build static website for everyone.",
   "main": "main.js",
