@@ -39,36 +39,3 @@ function parseTemplate(rawData, template) {
         return template;
     }
 }
-
-
-function test() {
-    const template = `
-     <template @for="article of data">
-        <a class="article">
-            <h1 class="title">{{ article.title }}</h1>
-            <ul class="tags">
-                <template @for="tag of article.tags">
-                    <li><a>#{{ tag }}</a></li>
-                </template>
-            </ul>
-            <hr>
-        </a>
-    </template>
-    `;
-    const data = {
-            data: [
-                {
-                    title: '1',
-                    tags: ['test1_1', 'test1_2']
-                },
-                {
-                    title: '2',
-                    tags: ['test2_1', 'test2_2']
-                }
-            ]
-    };
-    return parse(data, template);
-}
-
-// console.log(Test());
-// Test();
