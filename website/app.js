@@ -39,7 +39,7 @@ const getUpdateUrl = (platform) => {
         './package.json', 'utf-8')).update.type === 'full')
         return getDownloadURL(platform);
     else
-        return `http://oprticelb.bkt.clouddn.com/v${getLatestRelease()}.zip`
+        return `http://oprticelb.bkt.clouddn.com/v${getLatestRelease()}.zip?attname=`
 };
 
 const getDownloadURL = (platform) => {
