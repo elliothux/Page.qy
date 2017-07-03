@@ -16,9 +16,9 @@
     "nodemon": "^1.11.0"
   },
   "update": {
-    "version": "0.0.2",
-    "fullVersion": "0.0.2",
-    "description": "Test update!",
+    "version": "0.0.6",
+    "fullVersion": "0.0.6",
+    "description": "修复了日期显示的Bug (更新后请点击右下角按钮重新生成所有页面)\n修复了<",
     "type": "hot-patch"
   },
   "ecmaFeatures": {
